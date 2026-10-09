@@ -158,7 +158,7 @@
 					"label": "啓発・キャンペーン"
 				},
 				{
-					"slug": "office",
+					"slug": "info",
 					"label": "事務局から"
 				}
 			]
@@ -177,7 +177,7 @@
 					"label": "年次報告"
 				},
 				{
-					"slug": "activity",
+					"slug": "monthly",
 					"label": "活動レポート"
 				}
 			]
@@ -325,7 +325,7 @@
 				},
 				"taxonomies": {
 					"news_category": [
-						"office"
+						"info"
 					]
 				}
 			}

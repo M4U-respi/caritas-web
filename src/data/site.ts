@@ -33,7 +33,7 @@ export const COLLECTIONS = {
 			{ slug: "emergency", label: "緊急支援", tag: "red" },
 			{ slug: "donation", label: "募金・献金", tag: "yellow" },
 			{ slug: "campaign", label: "啓発・キャンペーン", tag: "yellow" },
-			{ slug: "office", label: "事務局から", tag: "blue" },
+			{ slug: "info", label: "事務局から", tag: "blue" },
 		],
 	},
 	report: {
@@ -43,7 +43,7 @@ export const COLLECTIONS = {
 		taxonomy: "report_category",
 		terms: [
 			{ slug: "annual", label: "年次報告", tag: "blue" },
-			{ slug: "activity", label: "活動レポート", tag: "yellow" },
+			{ slug: "monthly", label: "活動レポート", tag: "yellow" },
 		],
 	},
 	publication: {
