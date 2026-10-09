@@ -10,6 +10,13 @@
 			"database_name": "caritas-web",
 		},
 	],
+	// Astro のセッション用 KV(初回デプロイ時に自動作成されたもの)
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "40a03479b678451188960f6f0c316a0c",
+		},
+	],
 	"r2_buckets": [
 		{
 			"binding": "MEDIA",
