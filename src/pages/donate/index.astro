@@ -1,0 +1,29 @@
+---
+/* 寄付する:本文未支給。「受け付け中の募金」(#funds)は お知らせ>緊急支援 の記事を自動表示 */
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import EntryList from "../../components/EntryList.astro";
+import { listEntries } from "../../lib/cms";
+
+const funds = await listEntries("news", { term: "emergency", limit: 10 });
+if (Astro.cache?.enabled && funds.cacheHint) Astro.cache.set(funds.cacheHint);
+---
+<Layout title="寄付する">
+	<PageHeader title="寄付する" en="DONATE" />
+	<div class="page-body l-container">
+		<div class="page-empty">
+			<p>このページは現在準備中です。</p>
+		</div>
+		<ul class="donate-links">
+			<li><a class="btn-pill btn-pill--red" href="/donate/card/"><span>クレジットカードで寄付</span><svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
+			<li><a class="btn-pill btn-pill--red" href="/donate/monthly/"><span>マンスリーサポーター</span><svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
+		</ul>
+
+		<section class="funds" id="funds" aria-labelledby="funds-title">
+			<h2 class="heading-lg funds__title" id="funds-title">受け付け中の募金</h2>
+			{funds.items.length > 0
+				? <EntryList items={funds.items} variant="urgent" showTags={false} class="funds__list" />
+				: <p class="page-empty">現在、受け付け中の緊急募金はありません。</p>}
+		</section>
+	</div>
+</Layout>

@@ -1,0 +1,334 @@
+{
+	"$schema": "https://emdashcms.com/seed.schema.json",
+	"version": "1",
+	"meta": {
+		"name": "Caritas Japan",
+		"description": "カリタスジャパン 公式サイト",
+		"author": "Caritas Japan"
+	},
+	"settings": {
+		"title": "カリタスジャパン",
+		"tagline": "世界と、つながる。",
+		"timezone": "Asia/Tokyo"
+	},
+	"collections": [
+		{
+			"slug": "news",
+			"label": "お知らせ",
+			"labelSingular": "お知らせ",
+			"urlPattern": "/news/{slug}/",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview",
+				"scheduling",
+				"search",
+				"seo"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "featured_image",
+					"label": "アイキャッチ画像",
+					"type": "image"
+				},
+				{
+					"slug": "excerpt",
+					"label": "概要(一覧・SNS共有用)",
+					"type": "text"
+				},
+				{
+					"slug": "content",
+					"label": "本文",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "report",
+			"label": "活動報告",
+			"labelSingular": "活動報告",
+			"urlPattern": "/report/{slug}/",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview",
+				"scheduling",
+				"search",
+				"seo"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "featured_image",
+					"label": "アイキャッチ画像",
+					"type": "image"
+				},
+				{
+					"slug": "excerpt",
+					"label": "概要(一覧・SNS共有用)",
+					"type": "text"
+				},
+				{
+					"slug": "content",
+					"label": "本文",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		},
+		{
+			"slug": "publication",
+			"label": "発行物",
+			"labelSingular": "発行物",
+			"urlPattern": "/publication/{slug}/",
+			"supports": [
+				"drafts",
+				"revisions",
+				"preview",
+				"scheduling",
+				"search",
+				"seo"
+			],
+			"fields": [
+				{
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
+				},
+				{
+					"slug": "cover",
+					"label": "表紙画像",
+					"type": "image"
+				},
+				{
+					"slug": "file",
+					"label": "PDFファイル",
+					"type": "file"
+				},
+				{
+					"slug": "excerpt",
+					"label": "概要(一覧・SNS共有用)",
+					"type": "text"
+				},
+				{
+					"slug": "content",
+					"label": "本文",
+					"type": "portableText",
+					"searchable": true
+				}
+			]
+		}
+	],
+	"taxonomies": [
+		{
+			"name": "news_category",
+			"label": "お知らせカテゴリ",
+			"labelSingular": "カテゴリ",
+			"hierarchical": true,
+			"collections": [
+				"news"
+			],
+			"terms": [
+				{
+					"slug": "emergency",
+					"label": "緊急支援"
+				},
+				{
+					"slug": "donation",
+					"label": "募金・献金"
+				},
+				{
+					"slug": "campaign",
+					"label": "啓発・キャンペーン"
+				},
+				{
+					"slug": "office",
+					"label": "事務局から"
+				}
+			]
+		},
+		{
+			"name": "report_category",
+			"label": "活動報告カテゴリ",
+			"labelSingular": "カテゴリ",
+			"hierarchical": true,
+			"collections": [
+				"report"
+			],
+			"terms": [
+				{
+					"slug": "annual",
+					"label": "年次報告"
+				},
+				{
+					"slug": "activity",
+					"label": "活動レポート"
+				}
+			]
+		},
+		{
+			"name": "publication_category",
+			"label": "発行物カテゴリ",
+			"labelSingular": "カテゴリ",
+			"hierarchical": true,
+			"collections": [
+				"publication"
+			],
+			"terms": [
+				{
+					"slug": "we-are-caritas",
+					"label": "We are Caritas"
+				},
+				{
+					"slug": "booklet",
+					"label": "小冊子・資料"
+				}
+			]
+		}
+	],
+	"content": {
+		"news": [
+			{
+				"id": "news-1",
+				"slug": "kumamoto-2026-appeal",
+				"status": "published",
+				"data": {
+					"title": "【令和8年熊本地震】緊急募金へのご協力のお願い",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"emergency"
+					]
+				}
+			},
+			{
+				"id": "news-2",
+				"slug": "noto-2024-interim-report",
+				"status": "published",
+				"data": {
+					"title": "【令和6年能登半島地震】緊急募金 中間報告と現地の状況について",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"emergency"
+					]
+				}
+			},
+			{
+				"id": "news-3",
+				"slug": "lent-thanks",
+				"status": "published",
+				"data": {
+					"title": "四旬節「愛の献金」へのご協力に御礼申し上げます",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"donation"
+					]
+				}
+			},
+			{
+				"id": "news-4",
+				"slug": "debt-to-hope-report",
+				"status": "published",
+				"data": {
+					"title": "「債務を希望に変えよう」キャンペーン報告会のご案内",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"campaign"
+					]
+				}
+			},
+			{
+				"id": "news-5",
+				"slug": "summer-holiday",
+				"status": "published",
+				"data": {
+					"title": "夏季休業期間のお知らせ",
+					"content": [
+						{
+							"_type": "block",
+							"style": "normal",
+							"children": [
+								{
+									"_type": "span",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"office"
+					]
+				}
+			}
+		]
+	}
+}

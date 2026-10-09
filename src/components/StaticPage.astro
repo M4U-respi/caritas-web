@@ -1,0 +1,24 @@
+---
+/* 固定ページ(本文未支給のため準備中表示)。本文が届いたら <slot /> に記述する */
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "./PageHeader.astro";
+interface Props {
+	title: string;
+	en?: string;
+	crumbs?: { label: string; href?: string }[];
+	description?: string;
+}
+const { title, en, crumbs, description } = Astro.props;
+const hasBody = Astro.slots.has("default");
+---
+<Layout title={title} description={description}>
+	<PageHeader title={title} en={en} crumbs={crumbs} />
+	<div class="page-body l-container">
+		{hasBody ? <div class="prose"><slot /></div> : (
+			<div class="page-empty">
+				<p>このページは現在準備中です。</p>
+				<p><a class="btn-outline btn-outline--md" href="/"><span>TOPへ戻る</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></p>
+			</div>
+		)}
+	</div>
+</Layout>

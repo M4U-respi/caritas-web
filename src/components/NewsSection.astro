@@ -1,0 +1,46 @@
+---
+/* TOP「お知らせ」:EmDash の news コレクションから取得 */
+import EntryList from "./EntryList.astro";
+import { listEntries } from "../lib/cms";
+
+const [urgent, normal] = await Promise.all([
+	listEntries("news", { term: "emergency", limit: 2 }),
+	listEntries("news", { term: ["donation", "campaign", "office"], limit: 3 }),
+]);
+if (Astro.cache?.enabled) {
+	if (urgent.cacheHint) Astro.cache.set(urgent.cacheHint);
+	if (normal.cacheHint) Astro.cache.set(normal.cacheHint);
+}
+---
+<section class="news" id="news" aria-labelledby="news-title">
+	<div class="l-container">
+		<div class="news__head reveal">
+			<div class="news__head-text">
+				<p class="section-label"><span lang="en">NEWS</span><span class="section-label__slash" aria-hidden="true"></span><span>最新情報</span></p>
+				<h2 class="heading-lg news__title" id="news-title">お知らせ</h2>
+			</div>
+		</div>
+
+		{urgent.items.length > 0 && (
+			<section class="news-urgent reveal" aria-labelledby="news-urgent-title">
+				<div class="news-urgent__head">
+					<div class="news-urgent__head-main">
+						<img class="news-urgent__icon" src="/assets/img/icon-megaphone.png" alt="" width="36" height="35" />
+						<h3 class="news-urgent__badge" id="news-urgent-title">緊急支援</h3>
+					</div>
+					<p class="news-urgent__lead">いま受け付けている緊急募金と、被災地の状況です。</p>
+				</div>
+				<EntryList items={urgent.items} variant="urgent" showTags={false} />
+				<div class="news-urgent__foot">
+					<a class="btn-outline btn-outline--sm" href="/news/category/emergency/"><span>緊急支援の一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+				</div>
+			</section>
+		)}
+
+		<EntryList items={normal.items} class="reveal" />
+
+		<p class="news__more">
+			<a class="btn-outline btn-outline--md" href="/news/"><span>お知らせ一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+		</p>
+	</div>
+</section>

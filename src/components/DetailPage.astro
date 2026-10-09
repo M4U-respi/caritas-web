@@ -1,0 +1,53 @@
+---
+/* CMS 記事の詳細ページ */
+import { getEntryTerms } from "emdash";
+import { Image, PortableText } from "emdash/ui";
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "./PageHeader.astro";
+import { COLLECTIONS, formatDate, isoDate, type CollectionKey } from "../data/site";
+
+// entry はページ側(src/pages/{news,report,publication}/[slug].astro)で取得して渡す(404 判定をレスポンス開始前に行うため)
+interface Props { collection: CollectionKey; slug: string; entry: any }
+const { collection, slug, entry } = Astro.props;
+const conf = COLLECTIONS[collection];
+
+const d: any = entry.data;
+const terms = ((await getEntryTerms(collection, d.id, conf.taxonomy)) ?? []) as any[];
+const date = d.publishedAt ?? d.createdAt;
+const image = d.featured_image ?? d.cover;
+const file = d.file;
+const imageEdit = d.featured_image ? entry.edit?.featured_image : entry.edit?.cover;
+const titleEdit = entry.edit?.title;
+const fileLabel = file?.filename ? `資料をダウンロード(${file.filename})` : "資料をダウンロード";
+const termTags = terms.map((t) => ({
+	slug: t.slug,
+	label: t.label,
+	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
+}));
+---
+<Layout title={d.title} description={d.excerpt} content={{ collection, id: d.id, slug }}>
+	<PageHeader title={conf.label} en={conf.en} crumbs={[]} />
+	<article class="article l-container">
+		<header class="article__head">
+			<p class="article__meta">
+				<time datetime={isoDate(date)}>{formatDate(date)}</time>
+				{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}category/${t.slug}/`}>{t.label}</a>)}
+			</p>
+			<h2 class="article__title" {...titleEdit}>{d.title}</h2>
+		</header>
+		{image && (
+			<figure class="article__image" {...imageEdit}>
+				<Image image={image} />
+			</figure>
+		)}
+		{d.content && <div class="prose"><PortableText value={d.content} /></div>}
+		{file?.url && (
+			<p class="article__file">
+				<a class="btn-outline btn-outline--md" href={file.url} target="_blank" rel="noopener"><span>{fileLabel}</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+			</p>
+		)}
+		<p class="article__back">
+			<a class="btn-outline btn-outline--md" href={conf.base}><span>{conf.label}一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+		</p>
+	</article>
+</Layout>

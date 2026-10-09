@@ -1,0 +1,49 @@
+---
+/* CMS コレクションの一覧ページ(カテゴリ絞り込み・ページ送り) */
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "./PageHeader.astro";
+import EntryList from "./EntryList.astro";
+import { listEntries } from "../lib/cms";
+import { COLLECTIONS, type CollectionKey } from "../data/site";
+
+interface Props {
+	collection: CollectionKey;
+	term?: string;
+}
+const { collection, term } = Astro.props;
+const conf = COLLECTIONS[collection];
+const current = term ? conf.terms.find((t) => t.slug === term) : undefined;
+const cursor = Astro.url.searchParams.get("cursor") || undefined;
+const { items, cacheHint, nextCursor, error } = await listEntries(collection, { term, limit: 20, cursor });
+if (error) console.error(`[${collection}] 一覧の取得に失敗`, error);
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+
+const title = current ? `${current.label}` : conf.label;
+const crumbs = current ? [{ label: conf.label, href: conf.base }] : [];
+---
+<Layout title={current ? `${current.label}｜${conf.label}` : conf.label}>
+	<PageHeader title={title} en={conf.en} crumbs={crumbs} />
+	<div class="page-body l-container">
+		<nav class="archive-tabs" aria-label={`${conf.label}のカテゴリ`}>
+			<ul class="archive-tabs__list">
+				<li><a class="archive-tabs__link" href={conf.base} aria-current={!current ? "page" : undefined}>すべて</a></li>
+				{conf.terms.map((t) => (
+					<li><a class="archive-tabs__link" href={`${conf.base}category/${t.slug}/`} aria-current={current?.slug === t.slug ? "page" : undefined}>{t.label}</a></li>
+				))}
+			</ul>
+		</nav>
+
+		{items.length > 0 ? (
+			<EntryList items={items} class="archive-list" />
+		) : (
+			<p class="page-empty">{error ? "記事を読み込めませんでした。時間をおいて再度お試しください。" : "現在、掲載している記事はありません。"}</p>
+		)}
+
+		{(cursor || nextCursor) && (
+			<nav class="pager" aria-label="ページ送り">
+				{cursor && <a class="btn-outline btn-outline--md" href={Astro.url.pathname}><span>最新へ戻る</span></a>}
+				{nextCursor && <a class="btn-outline btn-outline--md" href={`${Astro.url.pathname}?cursor=${encodeURIComponent(nextCursor)}`}><span>さらに見る</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>}
+			</nav>
+		)}
+	</div>
+</Layout>

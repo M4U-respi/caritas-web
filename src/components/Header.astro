@@ -1,0 +1,64 @@
+---
+import { GNAV } from "../data/site";
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
+---
+<header class="header" id="header">
+	<div class="header__inner">
+		<a class="header__logo" href="/">
+			<img src="/assets/img/logo.png" alt="Caritas Japan カリタスジャパン" width="191" height="48" />
+		</a>
+
+		<div class="header__menu" id="global-menu">
+			<nav class="gnav" aria-label="グローバルナビゲーション">
+				<ul class="gnav__list">
+					{GNAV.map((item) => (
+						<li class:list={["gnav__item", item.children && "gnav__item--has-child"]}>
+							<a class="gnav__link" href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
+								<span class="gnav__label">{item.label}</span>
+								{item.children && (
+									<svg class="gnav__caret" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
+								)}
+							</a>
+							{item.children && (
+								<ul class="gnav__sub">
+									{item.children.map((c) => (
+										<li><a class="gnav__sub-link" href={c.href}>{c.label}</a></li>
+									))}
+								</ul>
+							)}
+						</li>
+					))}
+				</ul>
+			</nav>
+			<div class="header__actions">
+				<!-- TODO(要確認): 言語切替の方式・対象言語は検討中 -->
+				<a class="lang-btn" href="#" data-todo="url" lang="ja">
+					<svg width="14" height="14" aria-hidden="true"><use href="#i-globe" /></svg>
+					<span>日本語</span>
+				</a>
+				<a class="btn-donate header__donate" href="/donate/">
+					<svg class="btn-donate__icon" width="16" height="16" aria-hidden="true"><use href="#i-heart" /></svg>
+					<span>寄付で支援する</span>
+				</a>
+			</div>
+		</div>
+
+		<a class="btn-donate btn-donate--compact header__donate-sp" href="/donate/">
+			<svg class="btn-donate__icon" width="14" height="14" aria-hidden="true"><use href="#i-heart" /></svg>
+			<span>寄付で支援する</span>
+		</a>
+		<button class="hamburger" id="menu-toggle" type="button" aria-expanded="false" aria-controls="global-menu" aria-label="メニューを開く">
+			<span class="hamburger__bars" aria-hidden="true"><span></span><span></span><span></span></span>
+		</button>
+	</div>
+</header>
+
+<!-- 緊急バナー(文言・リンクはここで変更) -->
+<aside class="alert-bar" aria-label="緊急のお知らせ">
+	<a class="alert-bar__link" href="/news/category/emergency/">
+		<span class="alert-bar__badge">緊急</span>
+		<span class="alert-bar__text">令和8年熊本地震 緊急募金へのご協力をお願いいたします</span>
+		<svg class="alert-bar__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
+	</a>
+</aside>

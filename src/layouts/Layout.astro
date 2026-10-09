@@ -1,0 +1,78 @@
+---
+import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
+import { createPublicPageContext } from "emdash/page";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE } from "../data/site";
+
+interface Props {
+	/** ページ名(未指定ならサイト既定タイトル) */
+	title?: string;
+	description?: string | null;
+	image?: string | null;
+	/** <head> に追加する preload 画像 */
+	preloadImage?: string;
+	/** CMSコンテンツページの場合に指定 */
+	content?: { collection: string; id: string; slug?: string | null };
+	bodyClass?: string;
+}
+
+const { title, description, image, preloadImage, content, bodyClass } = Astro.props;
+const fullTitle = title ? `${title}｜${SITE.titleSuffix}` : SITE.defaultTitle;
+const pageDescription = description ?? SITE.description;
+
+const pageCtx = createPublicPageContext({
+	Astro,
+	kind: content ? "content" : "custom",
+	pageType: "website",
+	title: fullTitle,
+	pageTitle: title ?? SITE.defaultTitle,
+	description: pageDescription,
+	image,
+	content,
+	siteName: SITE.name,
+});
+---
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>{fullTitle}</title>
+		<meta name="description" content={pageDescription} />
+		<meta name="format-detection" content="telephone=no" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+		{preloadImage && <link rel="preload" as="image" href={preloadImage} />}
+		<link rel="stylesheet" href="/assets/css/style.css" />
+		<link rel="stylesheet" href="/assets/css/pages.css" />
+		<script is:inline>
+			/* JS 有効時のみ .js を付与。main.js が読めない場合は外してコンテンツを必ず表示する */
+			(function (d) { d.classList.add("js"); setTimeout(function () { if (!window.__caritasReady) d.classList.remove("js"); }, 4000); })(document.documentElement);
+		</script>
+		<EmDashHead page={pageCtx} />
+	</head>
+	<body class={bodyClass}>
+		<EmDashBodyStart page={pageCtx} />
+
+		<svg class="svg-sprite" aria-hidden="true" focusable="false" width="0" height="0">
+			<symbol id="i-chevron" viewBox="0 0 8 12"><path d="M1.5 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" /></symbol>
+			<symbol id="i-heart" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></symbol>
+			<symbol id="i-globe" viewBox="0 0 16 16"><g fill="none" stroke="#4FA8D8" stroke-width="1"><circle cx="8" cy="8" r="7" /><ellipse cx="8" cy="8" rx="3" ry="7" /><path d="M1 8h14M2.2 4.5h11.6M2.2 11.5h11.6" /></g></symbol>
+		</svg>
+
+		<a class="skip-link" href="#main">本文へスキップ</a>
+
+		<Header />
+
+		<main id="main">
+			<slot />
+		</main>
+
+		<Footer />
+
+		<script is:inline src="/assets/js/main.js" defer onerror="document.documentElement.classList.remove('js')"></script>
+		<EmDashBodyEnd page={pageCtx} />
+	</body>
+</html>

@@ -1,0 +1,12 @@
+---
+import { getEmDashEntry } from "emdash";
+import DetailPage from "../../components/DetailPage.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.rewrite("/404/");
+const { entry, cacheHint, error } = await getEmDashEntry("publication", slug);
+if (error) console.error("[publication] 記事の取得に失敗", error);
+if (!entry) return Astro.rewrite("/404/");
+if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+---
+<DetailPage collection="publication" slug={slug} entry={entry} />

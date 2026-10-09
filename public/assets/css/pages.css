@@ -1,0 +1,108 @@
+/* ==========================================================================
+   pages.css — 下層ページ・ドロップダウン・CMS 記事(style.css の後に読み込む)
+   ========================================================================== */
+
+.tag--red { color: var(--c-red); }
+a.tag:hover { opacity: .7; }
+
+/* ---------- グローバルナビ:ドロップダウン(PC) ---------- */
+.gnav__item { position: relative; }
+.gnav__link[aria-current="page"] { color: var(--c-red); }
+.gnav__sub {
+  position: absolute; top: calc(100% + 18px); left: 50%; z-index: 110;
+  min-width: 220px; padding: 10px 0;
+  background: var(--c-white); border-radius: 8px; box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+  opacity: 0; visibility: hidden; transform: translate(-50%, -6px);
+  transition: opacity var(--ease), transform var(--ease), visibility 0s linear .25s;
+}
+.gnav__sub::before { content: ""; position: absolute; left: 0; right: 0; top: -18px; height: 18px; }
+.gnav__item--has-child:hover > .gnav__sub,
+.gnav__item--has-child:focus-within > .gnav__sub {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+  transition: opacity var(--ease), transform var(--ease), visibility 0s;
+}
+.gnav__sub-link {
+  display: block; padding: 10px 22px;
+  font-size: 14px; line-height: 1.5; color: var(--c-text-strong); white-space: nowrap;
+}
+.gnav__sub-link:hover { background: var(--c-cream-light); color: var(--c-red); }
+
+@media (max-width: 1099.98px) {
+  .gnav__sub {
+    position: static; min-width: 0; padding: 0 0 12px 12px;
+    background: none; border-radius: 0; box-shadow: none;
+    opacity: 1; visibility: visible; transform: none; transition: none;
+  }
+  .gnav__sub::before { display: none; }
+  .gnav__sub-link { padding: 8px 0; font-size: 15px; color: var(--c-text); }
+  .gnav__item--has-child > .gnav__link .gnav__caret { display: none; }
+}
+
+/* ---------- 下層:ページ見出し ---------- */
+.page-head {
+  position: relative; padding: 72px 0 calc(64px + var(--curve));
+  background: var(--c-cream);
+}
+.page-head__title { margin-top: 16px; }
+.page-head .section-label + .page-head__title { margin-top: 18px; }
+.page-head__curve { color: var(--c-white); }
+
+.breadcrumb { padding: 20px 0 0; }
+.breadcrumb__list { display: flex; flex-wrap: wrap; gap: 4px 0; font-size: 13px; line-height: 1.6; color: var(--c-text-mute); }
+.breadcrumb__item + .breadcrumb__item::before { content: "/"; margin: 0 10px; color: #BBB; }
+.breadcrumb__item a:hover { color: var(--c-red); text-decoration: underline; text-underline-offset: 3px; }
+
+.page-body { padding: 56px 0 120px; }
+.page-empty { padding: 24px 0; font-size: 16px; line-height: 2; color: var(--c-text); }
+.page-empty p + p { margin-top: 24px; }
+
+/* ---------- 一覧:カテゴリタブ ---------- */
+.archive-tabs__list { display: flex; flex-wrap: wrap; gap: 10px; }
+.archive-tabs__link {
+  display: inline-flex; align-items: center; min-height: 38px; padding: 4px 18px;
+  border: 1px solid var(--c-line); border-radius: 999px;
+  font-size: 14px; font-weight: 600; line-height: 1.3; color: var(--c-text-strong); background: var(--c-white);
+}
+.archive-tabs__link:hover { border-color: var(--c-red); color: var(--c-red); }
+.archive-tabs__link[aria-current="page"] { border-color: var(--c-red); background: var(--c-red); color: var(--c-white); }
+.archive-list { margin-top: 40px; border-top: 1px solid var(--c-line); }
+.archive-list .news-list__item { border-bottom-color: var(--c-line); }
+.archive-list .news-list__link { min-height: 64px; padding: 12px 8px; }
+.archive-list .news-list__title { font-size: 16px; }
+.pager { display: flex; justify-content: center; gap: 16px; margin-top: 48px; }
+
+/* ---------- 記事詳細 ---------- */
+.article { max-width: 880px; padding: 56px 0 120px; }
+.article__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; font-size: 14px; color: var(--c-text-mute); }
+.article__title { margin-top: 16px; font-size: clamp(22px, 2.4vw, 30px); font-weight: 700; line-height: 1.6; letter-spacing: .03em; color: var(--c-text-strong); }
+.article__head { padding-bottom: 28px; border-bottom: 1px solid var(--c-line); }
+.article__image { margin-top: 40px; }
+.article__image img { width: 100%; height: auto; border-radius: 8px; }
+.article__file, .article__back { margin-top: 56px; }
+.article__back { display: flex; justify-content: center; }
+
+.prose { margin-top: 40px; font-size: 16px; line-height: 2; color: var(--c-text); }
+.prose > * + * { margin-top: 1.4em; }
+.prose h2 { margin-top: 2.4em; padding-left: 14px; border-left: 4px solid var(--c-red); font-size: 24px; font-weight: 700; line-height: 1.5; color: var(--c-text-strong); }
+.prose h3 { margin-top: 2em; font-size: 20px; font-weight: 700; line-height: 1.5; color: var(--c-text-strong); }
+.prose a { color: var(--c-red); text-decoration: underline; text-underline-offset: 3px; }
+.prose ul { padding-left: 1.4em; list-style: disc; }
+.prose ol { padding-left: 1.4em; list-style: decimal; }
+.prose blockquote { padding: 16px 24px; background: var(--c-cream-light); border-left: 3px solid var(--c-line-cream); }
+.prose img { border-radius: 8px; }
+
+/* ---------- 寄付する ---------- */
+.donate-links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; }
+.btn-pill--red { width: 304px; background: var(--c-red); color: var(--c-white); }
+.btn-pill--red:hover { background: var(--c-red-dark); }
+.funds { margin-top: 96px; scroll-margin-top: calc(var(--header-h) + 24px); }
+.funds__list { margin-top: 32px; border: 1px solid var(--c-line); border-radius: 10px; overflow: hidden; background: var(--c-white); }
+
+@media (max-width: 767.98px) {
+  .page-head { padding: 48px 0 calc(40px + var(--curve)); }
+  .page-body { padding: 40px 0 80px; }
+  .article { padding: 40px 0 80px; }
+  .archive-list .news-list__link { padding-inline: 0; }
+  .btn-pill--red { width: 100%; }
+  .funds { margin-top: 64px; }
+}

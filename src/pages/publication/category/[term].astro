@@ -1,0 +1,7 @@
+---
+import ArchivePage from "../../../components/ArchivePage.astro";
+import { COLLECTIONS } from "../../../data/site";
+const { term } = Astro.params;
+if (!term || !COLLECTIONS.publication.terms.some((t) => t.slug === term)) return Astro.rewrite("/404/");
+---
+<ArchivePage collection="publication" term={term} />

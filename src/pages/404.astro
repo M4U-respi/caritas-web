@@ -1,0 +1,13 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+---
+<Layout title="ページが見つかりません">
+	<PageHeader title="ページが見つかりません" en="404 NOT FOUND" />
+	<div class="page-body l-container">
+		<div class="page-empty">
+			<p>お探しのページは移動または削除された可能性があります。</p>
+			<p><a class="btn-outline btn-outline--md" href="/"><span>TOPへ戻る</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></p>
+		</div>
+	</div>
+</Layout>

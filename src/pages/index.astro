@@ -1,0 +1,232 @@
+---
+import Layout from "../layouts/Layout.astro";
+import NewsSection from "../components/NewsSection.astro";
+---
+<Layout preloadImage="/assets/img/fv-01.jpg">
+	<!-- ==================== FV カルーセル ==================== -->
+	<section class="fv" id="fv" role="region" aria-roledescription="カルーセル" aria-label="メインビジュアル">
+	  <div class="fv__slides" id="fv-slides" aria-live="off">
+	    <div class="fv__slide fv__slide--01 is-active" role="group" aria-roledescription="スライド" aria-label="1 / 3">
+	      <img src="/assets/img/fv-01.jpg" alt="笑顔で見つめ合う少女と女性スタッフ" width="1747" height="968" loading="eager" fetchpriority="high" decoding="async">
+	    </div>
+	    <div class="fv__slide fv__slide--02" role="group" aria-roledescription="スライド" aria-label="2 / 3" aria-hidden="true">
+	      <img src="/assets/img/fv-02.jpg" alt="青いポロシャツの女性たち" width="2880" height="1588" loading="lazy" decoding="async">
+	    </div>
+	    <div class="fv__slide fv__slide--03" role="group" aria-roledescription="スライド" aria-label="3 / 3" aria-hidden="true">
+	      <img src="/assets/img/fv-03.jpg" alt="高齢の女性と赤いジャケットの男性" width="2880" height="1588" loading="lazy" decoding="async">
+	    </div>
+	  </div>
+	  <div class="fv__shade" aria-hidden="true"></div>
+
+	  <div class="fv__content">
+	    <h1 class="fv__catch"><span class="fv__catch-line"><em class="u-red">世界</em>と、</span><span class="fv__catch-line">つながる。</span></h1>
+	    <p class="fv__lead">あなたの想いが、だれかにつながる。<br class="u-pc-only">カリタスジャパンは、国内外で困難な状況にある人々に寄り添い続ける、<br class="u-pc-only">カトリック教会の公式な援助機関です。</p>
+	  </div>
+
+	  <div class="fv__pager" role="group" aria-label="スライドの選択">
+	    <button class="fv__pager-btn" type="button" aria-label="スライド 1 を表示" aria-controls="fv-slides" aria-current="true"><span>01</span></button>
+	    <button class="fv__pager-btn" type="button" aria-label="スライド 2 を表示" aria-controls="fv-slides"><span>02</span></button>
+	    <button class="fv__pager-btn" type="button" aria-label="スライド 3 を表示" aria-controls="fv-slides"><span>03</span></button>
+	  </div>
+	  <button class="fv__toggle" type="button" aria-pressed="false">スライドの自動再生を停止</button>
+
+	  <svg class="curve curve--up fv__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor"/></svg>
+	</section>
+
+	<!-- ==================== MISSION ==================== -->
+	<section class="mission" id="mission" aria-labelledby="mission-title">
+	  <div class="mission__inner l-container">
+	    <div class="mission__body reveal">
+	      <p class="section-label"><span lang="en">MISSION</span><span class="section-label__slash" aria-hidden="true"></span><span>使命</span></p>
+	      <h2 class="heading-xl" id="mission-title"><em class="u-red">愛</em>を、行動に。</h2>
+	      <div class="mission__text">
+	        <p>カリタスジャパンは、支援活動を通してカトリック教会の愛を実践する団体です。世界160以上の国と地域のカリタスからなる国際カリタスの一員として、「貧しい人々への奉仕を通して神の愛を証しすること」を使命としています。</p>
+	        <p>近年、日本の各教区では、災害支援をはじめ、地域のつながりの希薄化、孤立や貧困といった課題に向き合い、支え合う社会づくりに取り組んでいます。カリタスジャパンは、こうした取り組みに連帯し、ともに歩みます。</p>
+	      </div>
+	      <a class="btn-outline mission__btn" href="/about/"><span>私たちについて</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a>
+	    </div>
+	    <!-- 注意: 小円は必ず大円の左下に重ねる(素材の補完ピクセルを隠すため) -->
+	    <div class="mission__media reveal">
+	      <img class="mission__photo mission__photo--main" src="/assets/img/mission-main.jpg" alt="支援先で子どもたちと向き合う女性" width="736" height="736" loading="lazy" decoding="async">
+	      <img class="mission__photo mission__photo--sub" src="/assets/img/mission-sub.jpg" alt="横断幕を囲む参加者の集合写真" width="300" height="300" loading="lazy" decoding="async">
+	    </div>
+	  </div>
+	</section>
+
+	<!-- ==================== VALUE ==================== -->
+	<section class="value" id="value" aria-labelledby="value-title">
+	  <div class="value__inner">
+	    <header class="section-head section-head--center reveal">
+	      <p class="section-label section-label--white"><span lang="en">VALUE</span><span class="section-label__slash" aria-hidden="true"></span><span>価値観</span></p>
+	      <h2 class="heading-lg value__title" id="value-title">わたしたちが大切にしていること</h2>
+	    </header>
+	    <ul class="value__list">
+	      <li class="value__item reveal">
+	        <div class="value__icon"><img src="/assets/img/icon-value-01.png" alt="" width="102" height="102" loading="lazy"></div>
+	        <div class="value__body">
+	          <h3 class="value__heading">人の尊厳を守ること</h3>
+	          <p class="value__text">すべての人が、かけがえのない存在であるという価値を尊重します。</p>
+	        </div>
+	      </li>
+	      <li class="value__item reveal">
+	        <div class="value__icon"><img src="/assets/img/icon-value-02.png" alt="" width="102" height="102" loading="lazy"></div>
+	        <div class="value__body">
+	          <h3 class="value__heading">愛を行動で示すこと</h3>
+	          <p class="value__text">助けを必要とする人々に寄り添い、具体的な支援を行います。</p>
+	        </div>
+	      </li>
+	      <li class="value__item reveal">
+	        <div class="value__icon"><img src="/assets/img/icon-value-03.png" alt="" width="102" height="102" loading="lazy"></div>
+	        <div class="value__body">
+	          <h3 class="value__heading">祈りと連帯を大切に</h3>
+	          <p class="value__text">苦しむ人々と心を合わせ、国内外の仲間と支え合います。</p>
+	        </div>
+	      </li>
+	      <li class="value__item reveal">
+	        <div class="value__icon"><img src="/assets/img/icon-value-04.png" alt="" width="102" height="102" loading="lazy"></div>
+	        <div class="value__body">
+	          <h3 class="value__heading">より良い社会を目指す</h3>
+	          <p class="value__text">誰もが希望を持てる社会の実現を目指します。</p>
+	        </div>
+	      </li>
+	    </ul>
+	  </div>
+	</section>
+
+	<!-- ==================== WAY TO HELP ==================== -->
+	<section class="way" id="way" aria-labelledby="way-title">
+	  <div class="l-container">
+	    <header class="section-head section-head--center reveal">
+	      <p class="section-label"><span lang="en">WAY TO HELP</span><span class="section-label__slash" aria-hidden="true"></span><span>参加・支援の方法</span></p>
+	      <h2 class="heading-lg" id="way-title">世界とつながる、<br class="u-sp-only"><em class="u-red">4つ</em>の関わり方</h2>
+	      <p class="way__lead">あなたの想いが、だれかにつながる。支援には、さまざまなかたちがあります。</p>
+	    </header>
+	    <ul class="way__list">
+	      <li class="way__item reveal">
+	        <a class="way-card way-card--01" href="/donate/">
+	          <div class="way-card__panel">
+	            <p class="way-card__num" aria-hidden="true">01</p>
+	            <h3 class="way-card__title"><span>支える</span><span class="way-card__arrow" aria-hidden="true"><svg width="5" height="8"><use href="#i-chevron"/></svg></span></h3>
+	            <p class="way-card__text">クリスマス募金や四旬節「愛の献金」、マンスリーサポーターなど、募金を通して世界・日本とつながります。</p>
+	          </div>
+	          <div class="way-card__photo"><img src="/assets/img/way-01.jpg" alt="" width="349" height="286" loading="lazy" decoding="async"></div>
+	        </a>
+	      </li>
+	      <li class="way__item reveal">
+	        <a class="way-card way-card--02" href="#" data-todo="url">
+	          <div class="way-card__panel">
+	            <p class="way-card__num" aria-hidden="true">02</p>
+	            <h3 class="way-card__title"><span>参加する</span><span class="way-card__arrow" aria-hidden="true"><svg width="5" height="8"><use href="#i-chevron"/></svg></span></h3>
+	            <p class="way-card__text">被災地支援や地域カリタスの活動、イベントなど、実際にさまざまな活動にご参加いただけます。</p>
+	          </div>
+	          <div class="way-card__photo"><img src="/assets/img/way-02.jpg" alt="" width="350" height="286" loading="lazy" decoding="async"></div>
+	        </a>
+	      </li>
+	      <li class="way__item reveal">
+	        <a class="way-card way-card--03" href="/publication/">
+	          <div class="way-card__panel">
+	            <p class="way-card__num" aria-hidden="true">03</p>
+	            <h3 class="way-card__title"><span>分かち合う</span><span class="way-card__arrow" aria-hidden="true"><svg width="5" height="8"><use href="#i-chevron"/></svg></span></h3>
+	            <p class="way-card__text">発行物などを通して、世界や国内の社会問題を知ること・学ぶこと・伝えることも、世界とつながる大切な一歩です。</p>
+	          </div>
+	          <div class="way-card__photo"><img src="/assets/img/way-03.jpg" alt="" width="349" height="285" loading="lazy" decoding="async"></div>
+	        </a>
+	      </li>
+	      <li class="way__item reveal">
+	        <a class="way-card way-card--04" href="#" data-todo="url">
+	          <div class="way-card__panel">
+	            <p class="way-card__num" aria-hidden="true">04</p>
+	            <h3 class="way-card__title"><span>祈る</span><span class="way-card__arrow" aria-hidden="true"><svg width="5" height="8"><use href="#i-chevron"/></svg></span></h3>
+	            <p class="way-card__text">苦しみの中にある人々を忘れず、心を寄せ、ともに祈ることから、愛の業は始まります。</p>
+	          </div>
+	          <div class="way-card__photo"><img src="/assets/img/way-04.jpg" alt="" width="350" height="285" loading="lazy" decoding="async"></div>
+	        </a>
+	      </li>
+	    </ul>
+	  </div>
+	</section>
+
+
+	<NewsSection />
+
+	<!-- ==================== SOCIAL ==================== -->
+	<section class="social" id="social" aria-labelledby="social-title">
+	  <div class="social__inner l-container">
+	    <div class="social__body reveal">
+	      <p class="section-label"><span lang="en">SOCIAL</span><span class="section-label__slash" aria-hidden="true"></span><span>公式SNS</span></p>
+	      <h2 class="heading-lg" id="social-title"><em class="u-red">現地</em>からの最新の様子</h2>
+	      <p class="social__text">発災直後の状況や、支援先からの短い報告など、お知らせに載せるまでもない細かな動きはFacebookでお伝えしています。更新はこちらのほうが早くなります。</p>
+	      <ul class="social__btns">
+	        <li><a class="btn-outline btn-outline--md social__btn social__btn--wide" href="https://www.facebook.com/caritasjapan/" target="_blank" rel="noopener"><span>Facebookページを見る</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+	        <li><a class="btn-outline btn-outline--md social__btn" href="https://www.instagram.com/caritas_japan/" target="_blank" rel="noopener"><span>Instagram</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+	        <li><a class="btn-outline btn-outline--md social__btn" href="https://www.youtube.com/@caritasjapan9712" target="_blank" rel="noopener"><span>YouTube</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+	      </ul>
+	    </div>
+	    <div class="social__embed reveal">
+	      <!-- Facebook Page Plugin(タイムライン)。幅は main.js でコンテナ幅に合わせて再設定(180〜500px) -->
+	      <div class="social__embed-frame">
+	        <iframe class="social__embed-iframe" data-fb-page="https://www.facebook.com/caritasjapan/"
+	          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcaritasjapan%2F&amp;tabs=timeline&amp;width=380&amp;height=514&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false"
+	          width="380" height="514" title="カリタスジャパン Facebookページ" loading="lazy" scrolling="no" frameborder="0" allowfullscreen
+	          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+	<!-- ==================== 写真帯 ==================== -->
+	<div class="photo-strip">
+	  <svg class="curve curve--down photo-strip__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q720 84 1440 0 Z" fill="currentColor"/></svg>
+	  <ul class="photo-strip__list">
+	    <li class="photo-strip__item"><img src="/assets/img/strip-01.jpg" alt="田んぼで活動する子どもたち" width="432" height="479" loading="lazy" decoding="async"></li>
+	    <li class="photo-strip__item"><img src="/assets/img/strip-02.jpg" alt="テントの前に並ぶ若者のグループ" width="431" height="479" loading="lazy" decoding="async"></li>
+	    <li class="photo-strip__item"><img src="/assets/img/strip-03.jpg" alt="カリタスジャパンの発行物" width="432" height="479" loading="lazy" decoding="async"></li>
+	    <li class="photo-strip__item"><img src="/assets/img/strip-04.jpg" alt="シスターと女の子" width="431" height="479" loading="lazy" decoding="async"></li>
+	  </ul>
+	</div>
+
+	<!-- ==================== DONATION ==================== -->
+	<section class="donation" id="donation" aria-labelledby="donation-title">
+	  <div class="donation__card reveal">
+	    <header class="donation__head">
+	      <p class="donation__label" lang="en">DONATION</p>
+	      <h2 class="donation__title" id="donation-title">寄付のお願い</h2>
+	    </header>
+	    <div class="donation__body">
+	      <div class="donation__text">
+	        <h3 class="donation__heading">その<em class="u-red">想い</em>を、行動に。</h3>
+	        <p class="donation__lead">カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。</p>
+	        <p class="donation__desc">全世界のカリタスと連携し、世界各地で厳しい生活を余儀なくされている人々の自立への後押し、貧困の撲滅、人権、教育、保健衛生などの優先課題に力を注いでいます。ご支援、ご協力をお願い申し上げます。</p>
+	      </div>
+	      <!-- 注意: donation-illust.png は背景色 #FAF7EE 付き。カード背景色を変えないこと -->
+	      <div class="donation__illust"><img src="/assets/img/donation-illust.png" alt="" width="226" height="346" loading="lazy" decoding="async"></div>
+	      <div class="donation__box">
+	        <h3 class="donation__box-title"><span>ご支援の方法はこちら</span></h3>
+	        <p class="donation__box-text">どこでも、いくらからでも。<br>それぞれに合ったご支援方法をご案内しています。</p>
+	        <ul class="donation__btns">
+	          <li><a class="btn-pill" href="/donate/"><svg class="btn-pill__heart" width="16" height="16" aria-hidden="true"><use href="#i-heart"/></svg><span>寄付で支援する</span></a></li>
+	          <li><a class="btn-pill" href="/donate/monthly/"><span>毎月の支援（マンスリー）</span><svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </div>
+	</section>
+
+	<!-- ==================== PARTNERS ==================== -->
+	<section class="partners" id="partners" aria-labelledby="partners-title">
+	  <div class="partners__inner l-container reveal">
+	    <div class="partners__head">
+	      <p class="section-label partners__label" lang="en">PARTNERS</p>
+	      <h2 class="heading-lg partners__title" id="partners-title">関連団体</h2>
+	    </div>
+	    <ul class="partners__list">
+	      <li><a class="partners__link" href="https://www.caritas.org/" target="_blank" rel="noopener"><img src="/assets/img/partner-caritas.png" alt="Caritas Internationalis" width="260" height="110" loading="lazy"></a></li>
+	      <li><a class="partners__link" href="https://www.cbcj.catholic.jp/" target="_blank" rel="noopener"><img src="/assets/img/partner-cbcj.png" alt="Catholic Bishops' Conference of Japan カトリック中央協議会" width="265" height="110" loading="lazy"></a></li>
+	      <li><a class="partners__link" href="https://cj-news.org/" target="_blank" rel="noopener"><img src="/assets/img/partner-catholic-japan-news.png" alt="カトリックジャパンニュース" width="258" height="100" loading="lazy"></a></li>
+	      <li><a class="partners__link" href="https://www.vatican.va/content/vatican/en.html" target="_blank" rel="noopener"><img src="/assets/img/partner-holy-see.png" alt="THE HOLY SEE" width="255" height="100" loading="lazy"></a></li>
+	    </ul>
+	  </div>
+	  <svg class="curve curve--up partners__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor"/></svg>
+	</section>
+
+</Layout>

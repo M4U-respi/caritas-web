@@ -1,0 +1,27 @@
+---
+interface Crumb { label: string; href?: string }
+interface Props {
+	title: string;
+	en?: string;
+	/** パンくず(TOP は自動で先頭に付く) */
+	crumbs?: Crumb[];
+}
+const { title, en, crumbs = [] } = Astro.props;
+const list: Crumb[] = [{ label: "TOP", href: "/" }, ...crumbs, { label: title }];
+---
+<div class="page-head">
+	<div class="l-container">
+		{en && <p class="section-label"><span lang="en">{en}</span></p>}
+		<h1 class="heading-xl page-head__title">{title}</h1>
+	</div>
+	<svg class="curve curve--up page-head__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor" /></svg>
+</div>
+<nav class="breadcrumb l-container" aria-label="パンくずリスト">
+	<ol class="breadcrumb__list">
+		{list.map((c, i) => (
+			<li class="breadcrumb__item">
+				{c.href && i < list.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
+			</li>
+		))}
+	</ol>
+</nav>

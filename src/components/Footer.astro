@@ -1,0 +1,43 @@
+---
+import { FOOTER_NAV, FOOTER_SUB, SNS } from "../data/site";
+---
+<footer class="footer">
+	<div class="footer__inner">
+		<div class="footer__main">
+			<div class="footer__info">
+				<a class="footer__logo" href="/"><img src="/assets/img/logo-white.png" alt="Caritas Japan カリタスジャパン" width="228" height="57" loading="lazy" /></a>
+				<address class="footer__address">
+					<p class="footer__org">宗教法人カトリック中央協議会 カリタスジャパン</p>
+					<p class="footer__addr">〒135-8585 東京都江東区潮見2-10-10 日本カトリック会館6F</p>
+					<div class="footer__contact">
+						<dl class="footer__tel">
+							<div><dt>電話</dt><dd>03-5632-4439</dd></div>
+							<div><dt>FAX</dt><dd>03-5632-4464</dd></div>
+						</dl>
+						<ul class="footer__sns">
+							<li><a href={SNS.facebook} target="_blank" rel="noopener"><img src="/assets/img/sns-facebook.png" alt="Facebook" width="41" height="41" loading="lazy" /></a></li>
+							<li><a href={SNS.instagram} target="_blank" rel="noopener"><img src="/assets/img/sns-instagram.png" alt="Instagram" width="41" height="41" loading="lazy" /></a></li>
+							<li><a href={SNS.youtube} target="_blank" rel="noopener"><img src="/assets/img/sns-youtube.png" alt="YouTube" width="41" height="41" loading="lazy" /></a></li>
+						</ul>
+					</div>
+				</address>
+			</div>
+			<nav class="footer__nav" aria-label="フッターナビゲーション">
+				{FOOTER_NAV.map((col) => (
+					<div class="footer__col">
+						<h2 class="footer__heading">{col.heading}</h2>
+						<ul class="footer__links">
+							{col.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+						</ul>
+					</div>
+				))}
+			</nav>
+		</div>
+		<div class="footer__bottom">
+			<ul class="footer__sub">
+				{FOOTER_SUB.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+			</ul>
+			<p class="footer__copy"><small lang="en">© Caritas Japan. All rights reserved.</small></p>
+		</div>
+	</div>
+</footer>
