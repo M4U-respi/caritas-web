@@ -8,6 +8,7 @@
 		{
 			"binding": "DB",
 			"database_name": "caritas-web",
+			"database_id": "33150d7e-2314-404b-9f58-fd75674ed5a0",
 		},
 	],
 	// Astro のセッション用 KV(初回デプロイ時に自動作成されたもの)
