@@ -174,3 +174,22 @@ D1 データベース、R2 バケット、`EMDASH_ENCRYPTION_KEY` の3点を必�
 - 言語切替の方式(ヘッダーの「日本語」ボタン)
 - お知らせの仮データ5件の削除
 - 写真・ロゴの元データへの差し替え(現在はデザインカンプからの切り出し)
+
+---
+
+## トラブル対応:CMS が「EmDash is not initialized」になる
+
+新しい D1 で最初にアクセスしたとき、EmDash はデータベースの表を自動で作ります(全90段階のマイグレーション)。途中で処理が打ち切られると「作業中」のロックが残り、管理画面に入れなくなります(Workers 無料プランで発生)。
+
+1. Cloudflare ダッシュボード → D1 → `caritas-web` → Console で状態を確認
+   ```sql
+   SELECT * FROM _emdash_migrations_lock;   -- is_locked が 0 以外ならロックが残っている
+   SELECT count(*) FROM _emdash_migrations; -- 90 なら完了
+   ```
+2. ロックを外す(数字は `is_locked` に表示された値)
+   ```sql
+   UPDATE _emdash_migrations_lock SET is_locked = 0 WHERE is_locked = <表示された値>;
+   ```
+3. 1分ほど待って `/_emdash/admin/setup` を開くと続きから再開する。90 になるまで繰り返す。
+
+EmDash を更新して新しいマイグレーションが追加されたときも同じ現象が起きる可能性があります。Workers Paid プランへの切り替え、または `emdash migrate` によるデプロイ時の適用(公式ドキュメント「Core migrations」)を検討してください。
