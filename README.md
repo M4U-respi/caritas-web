@@ -11,6 +11,7 @@ Astro + EmDash(CMS)+ Cloudflare Workers で構築したカリタスジャパン�
 | メディア保存 | Cloudflare R2(`caritas-web-media`) |
 | ソース管理 | GitHub `M4U-respi/caritas-web` |
 | 確認用URL | https://caritas-web.respiration.workers.dev/ (管理画面 `/_emdash/admin`) |
+| 閲覧制限 | 合言葉 `caritas`(`wrangler.jsonc` の `vars.SITE_PASSWORD`。削除すると制限解除。管理画面 `/_emdash/` は対象外) |
 
 ---
 

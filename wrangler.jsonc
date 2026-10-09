@@ -5,6 +5,10 @@
 	"compatibility_date": "2026-02-24",
 	"compatibility_flags": ["nodejs_compat"],
 	// エラーログを Cloudflare ダッシュボード(Observability)で確認できるようにする
+	// 開発サイトの合言葉(正式公開時はこの vars ごと削除するとゲートが外れる)
+	"vars": {
+		"SITE_PASSWORD": "caritas",
+	},
 	"observability": {
 		"enabled": true,
 	},
