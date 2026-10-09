@@ -63,7 +63,7 @@ export type CollectionKey = keyof typeof COLLECTIONS;
 const termLinks = (key: CollectionKey): NavLink[] =>
 	COLLECTIONS[key].terms.map((t) => ({
 		label: t.label,
-		href: `${COLLECTIONS[key].base}category/${t.slug}/`,
+		href: `${COLLECTIONS[key].base}${t.slug}/`,
 	}));
 
 /** グローバルナビ(ヘッダー) */

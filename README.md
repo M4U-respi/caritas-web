@@ -52,7 +52,7 @@ Astro + EmDash(CMS)+ Cloudflare Workers で構築したカリタスジャパン�
 
 | コレクション | URL | カテゴリ(スラッグ) | 項目 |
 |---|---|---|---|
-| お知らせ `news` | 一覧 `/news/`・記事 `/news/{slug}/`・カテゴリ `/news/category/{term}/` | 緊急支援 `emergency` / 募金・献金 `donation` / 啓発・キャンペーン `campaign` / 事務局から `info` | タイトル・アイキャッチ画像・概要・本文 |
+| お知らせ `news` | 一覧 `/news/`・記事 `/news/{slug}/`・カテゴリ `/news/{term}/`(記事のスラッグにカテゴリと同じ文字列は使わない) | 緊急支援 `emergency` / 募金・献金 `donation` / 啓発・キャンペーン `campaign` / 事務局から `info` | タイトル・アイキャッチ画像・概要・本文 |
 | 活動報告 `report` | `/report/` ほか同様 | 年次報告 `annual` / 活動レポート `monthly` | タイトル・アイキャッチ画像・概要・本文 |
 | 発行物 `publication` | `/publication/` ほか同様 | We are Caritas `we-are-caritas` / 小冊子・資料 `booklet` | タイトル・表紙画像・PDFファイル・概要・本文 |
 

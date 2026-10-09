@@ -1,12 +1,24 @@
 ---
+/*
+ * /publication/{slug}/ … slug がカテゴリ(src/data/site.ts の COLLECTIONS.publication.terms)ならカテゴリ一覧、
+ * それ以外は記事詳細。記事のスラッグにカテゴリと同じ文字列は使わないこと(カテゴリ一覧が優先される)。
+ */
 import { getEmDashEntry } from "emdash";
+import ArchivePage from "../../components/ArchivePage.astro";
 import DetailPage from "../../components/DetailPage.astro";
+import { COLLECTIONS } from "../../data/site";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.rewrite("/404/");
-const { entry, cacheHint, error } = await getEmDashEntry("publication", slug);
-if (error) console.error("[publication] 記事の取得に失敗", error);
-if (!entry) return Astro.rewrite("/404/");
-if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
+const isTerm = COLLECTIONS.publication.terms.some((t) => t.slug === slug);
+
+let entry: any = null;
+if (!isTerm) {
+	const res = await getEmDashEntry("publication", slug);
+	if (res.error) console.error("[publication] 記事の取得に失敗", res.error);
+	if (!res.entry) return Astro.rewrite("/404/");
+	if (Astro.cache?.enabled && res.cacheHint) Astro.cache.set(res.cacheHint);
+	entry = res.entry;
+}
 ---
-<DetailPage collection="publication" slug={slug} entry={entry} />
+{isTerm ? <ArchivePage collection="publication" term={slug} /> : <DetailPage collection="publication" slug={slug} entry={entry} />}

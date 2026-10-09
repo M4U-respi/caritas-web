@@ -31,7 +31,7 @@ const termTags = terms.map((t) => ({
 		<header class="article__head">
 			<p class="article__meta">
 				<time datetime={isoDate(date)}>{formatDate(date)}</time>
-				{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}category/${t.slug}/`}>{t.label}</a>)}
+				{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}${t.slug}/`}>{t.label}</a>)}
 			</p>
 			<h2 class="article__title" {...titleEdit}>{d.title}</h2>
 		</header>

@@ -1,7 +1,5 @@
 ---
-import ArchivePage from "../../../components/ArchivePage.astro";
-import { COLLECTIONS } from "../../../data/site";
+/* 旧URL /publication/category/{term}/ → /publication/{term}/ へ恒久リダイレクト */
 const { term } = Astro.params;
-if (!term || !COLLECTIONS.publication.terms.some((t) => t.slug === term)) return Astro.rewrite("/404/");
+return Astro.redirect(`/publication/${term ?? ""}/`, 301);
 ---
-<ArchivePage collection="publication" term={term} />

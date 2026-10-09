@@ -32,6 +32,7 @@ npx emdash types   # 起動中サイトから型を再生成
 - Astro の frontmatter で `/* … */` コメントに `*/` を含むパス(例 `src/pages/*/x`)を書かない。
 - `trailingSlash` は `"ignore"`(`"always"` にすると EmDash の API が 404 になる)。サイト内リンクは末尾スラッシュ付きで書く。
 - CSS は `style.css`(TOP デザイン)を極力触らず、下層ページ用は `pages.css` に追加する。
+- カテゴリ一覧は `/{collection}/{term}/`(記事詳細と同じ `[slug].astro` で判定)。記事スラッグとカテゴリslugを重複させない。
 - URL・電話番号・文言を推測で作らない。未支給のリンクは `href="#" data-todo="url"`。
 
 ## EmDash ドキュメント

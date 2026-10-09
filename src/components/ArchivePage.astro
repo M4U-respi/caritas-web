@@ -28,7 +28,7 @@ const crumbs = current ? [{ label: conf.label, href: conf.base }] : [];
 			<ul class="archive-tabs__list">
 				<li><a class="archive-tabs__link" href={conf.base} aria-current={!current ? "page" : undefined}>すべて</a></li>
 				{conf.terms.map((t) => (
-					<li><a class="archive-tabs__link" href={`${conf.base}category/${t.slug}/`} aria-current={current?.slug === t.slug ? "page" : undefined}>{t.label}</a></li>
+					<li><a class="archive-tabs__link" href={`${conf.base}${t.slug}/`} aria-current={current?.slug === t.slug ? "page" : undefined}>{t.label}</a></li>
 				))}
 			</ul>
 		</nav>
