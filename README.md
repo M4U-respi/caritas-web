@@ -10,6 +10,7 @@ Astro + EmDash(CMS)+ Cloudflare Workers で構築したカリタスジャパン�
 | データベース | Cloudflare D1(`caritas-web`) |
 | メディア保存 | Cloudflare R2(`caritas-web-media`) |
 | ソース管理 | GitHub `M4U-respi/caritas-web` |
+| 確認用URL | https://caritas-web.respiration.workers.dev/ (管理画面 `/_emdash/admin`) |
 
 ---
 
