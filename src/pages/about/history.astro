@@ -56,7 +56,7 @@ const eras: { period: string; name: string; rows: [string, string][] }[] = [
 ---
 <Layout title="成り立ちと歴史" description={lead}>
 	<!-- TODO(要確認): パンくずに「カリタスジャパンとは」を挟むか(カンプは挟まない) -->
-	<PageHeader title="成り立ちと歴史" en="HISTORY" ja="歩み" lead={lead} />
+	<PageHeader title="成り立ちと歴史" en="HISTORY" ja="歩み" lead={lead} crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
 
 	<div class="sub-section history-body">
 		<div class="l-container">
