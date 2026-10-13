@@ -510,7 +510,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   margin-top: 78px; padding-top: 23px; border-top: 1px solid var(--c-line-footer);
   font-size: 14px; line-height: 1.6; letter-spacing: 0; color: #F0F0F0;
 }
-.footer__sub { display: flex; flex-wrap: wrap; gap: 4px 23px; }
+.footer__sub { display: flex; flex-wrap: wrap; gap: 4px 23px; font-size: 12px; }
 .footer__copy small { font-size: 12px; }
 
 /* ==========================================================================
