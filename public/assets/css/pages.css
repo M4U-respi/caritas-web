@@ -1231,7 +1231,11 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   /* 写真帯+アーチ:4 枚横並び */
   .photo-strip--arch-bottom .photo-strip__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; }
-  .photo-strip--arch-bottom .photo-strip__item { height: 27.8vw; aspect-ratio: auto; }
+  .photo-strip--arch-bottom .photo-strip__item { height: 27.8vw; aspect-ratio: auto; border-radius: 0; }
+  /* デザインどおり:下辺アーチは PC と同比率(1440 で 42px)の浅いカーブ、写真は中央でトリミング */
+  .photo-strip--arch-bottom .photo-strip__curve { height: calc(100vw * 42 / 1440); }
+  .photo-strip--arch-bottom .photo-strip__item img { object-position: center center; }
+  .photo-strip--gap-green .photo-strip__list { background: var(--c-white); }
 
   /* /about/ イントロ */
   .about-intro { padding-top: 64px; }

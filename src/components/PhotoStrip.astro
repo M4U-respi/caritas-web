@@ -4,14 +4,14 @@
  *   <PhotoStrip gap="cream" photos={[{ src: "/assets/img/…", alt: "…", width: 714, height: 800 }, …]} />
  * gap: 写真の隙間の色(上のセクションの色)"cream" | "green" | "white"
  */
-interface Photo { src: string; alt: string; width: number; height: number }
+interface Photo { src: string; alt: string; width: number; height: number; /** トリミング位置(object-position。省略時は中央) */ pos?: string }
 interface Props { photos: Photo[]; gap?: "cream" | "green" | "white" }
 const { photos, gap = "cream" } = Astro.props;
 ---
 <div class:list={["photo-strip", "photo-strip--arch-bottom", `photo-strip--gap-${gap}`]}>
 	<ul class="photo-strip__list">
 		{photos.map((p) => (
-			<li class="photo-strip__item"><img src={p.src} alt={p.alt} width={p.width} height={p.height} loading="lazy" decoding="async" /></li>
+			<li class="photo-strip__item"><img src={p.src} alt={p.alt} width={p.width} height={p.height} loading="lazy" decoding="async" style={p.pos ? `object-position: ${p.pos}` : undefined} /></li>
 		))}
 	</ul>
 	<svg class="curve curve--up photo-strip__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor" /></svg>
