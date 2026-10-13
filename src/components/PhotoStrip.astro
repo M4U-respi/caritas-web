@@ -2,10 +2,10 @@
 /*
  * 写真帯+アーチ(下辺に白の上膨らみカーブ)。about ヒーロー下 / social 活動セクション下
  *   <PhotoStrip gap="cream" photos={[{ src: "/assets/img/…", alt: "…", width: 714, height: 800 }, …]} />
- * gap: 写真の隙間の色(上のセクションの色)"cream" | "green"
+ * gap: 写真の隙間の色(上のセクションの色)"cream" | "green" | "white"
  */
 interface Photo { src: string; alt: string; width: number; height: number }
-interface Props { photos: Photo[]; gap?: "cream" | "green" }
+interface Props { photos: Photo[]; gap?: "cream" | "green" | "white" }
 const { photos, gap = "cream" } = Astro.props;
 ---
 <div class:list={["photo-strip", "photo-strip--arch-bottom", `photo-strip--gap-${gap}`]}>

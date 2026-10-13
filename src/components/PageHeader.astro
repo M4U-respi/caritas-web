@@ -4,6 +4,7 @@
  *   <PageHeader title="援助活動" en="AID" ja="援助" lead="…" crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
  * - H1 の一部を赤くするときは slot="title" に HTML を渡す(title はパンくず・代替に使う)
  *     <Fragment slot="title"><em class="u-red">カリタスジャパン</em>について</Fragment>
+ * - リードを改行するときは slot="lead" に HTML を渡す
  * - crumbs は「ホーム」と現在地の間の階層。現在地は current(省略時 title)
  * - flat: 下辺のカーブなし(about のように直下に写真帯+アーチが来る場合)
  */
@@ -20,6 +21,7 @@ interface Props {
 }
 const { title, en, ja, lead, crumbs = [], current, flat = false } = Astro.props;
 const hasTitleSlot = Astro.slots.has("title");
+const hasLeadSlot = Astro.slots.has("lead");
 ---
 <div class:list={["sub-hero", flat && "sub-hero--flat"]}>
 	<Breadcrumb items={[...crumbs, { label: current ?? title }]} class="sub-hero__crumbs" />
@@ -31,7 +33,7 @@ const hasTitleSlot = Astro.slots.has("title");
 			</p>
 		)}
 		<h1 class="sub-hero__title">{hasTitleSlot ? <slot name="title" /> : title}</h1>
-		{lead && <p class="sub-hero__lead">{lead}</p>}
+		{(lead || hasLeadSlot) && <p class="sub-hero__lead">{hasLeadSlot ? <slot name="lead" /> : lead}</p>}
 	</div>
 	{!flat && <svg class="curve curve--up sub-hero__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor" /></svg>}
 </div>

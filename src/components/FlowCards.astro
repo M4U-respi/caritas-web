@@ -1,20 +1,22 @@
 ---
 /*
- * フロー(ステップ)カード 4 枚。lent「献金の届き方」/ aid「援助の流れ」
+ * フロー(ステップ)カード。lent「献金の届き方」/ aid「援助の流れ」/ 寄付ページの手続き
  *   <FlowCards items={[{ title, text, img: { src, width, height } }, …]} />
+ * - img を省くと文字だけのカード(寄付ページ)。列数は items の数(最大 4)
+ * - text は HTML 可(<br> や注記記号など)
  */
-interface Item { title: string; text: string; img: { src: string; width: number; height: number; alt?: string } }
-interface Props { items: Item[] }
-const { items } = Astro.props;
+interface Item { title: string; text: string; img?: { src: string; width: number; height: number; alt?: string } }
+interface Props { items: Item[]; class?: string }
+const { items, class: cls } = Astro.props;
 ---
-<ol class="flow">
+<ol class:list={["flow", `flow--cols-${Math.min(items.length, 4)}`, !items.some((i) => i.img) && "flow--text", cls]}>
 	{items.map((item, i) => (
 		<li class="flow__item">
-			<img class="flow__img" src={item.img.src} alt={item.img.alt ?? ""} width={item.img.width} height={item.img.height} loading="lazy" decoding="async" />
+			{item.img && <img class="flow__img" src={item.img.src} alt={item.img.alt ?? ""} width={item.img.width} height={item.img.height} loading="lazy" decoding="async" />}
 			<div class="flow__body">
 				<p class="flow__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
 				<h3 class="flow__title">{item.title}</h3>
-				<p class="flow__text">{item.text}</p>
+				<p class="flow__text" set:html={item.text} />
 			</div>
 		</li>
 	))}

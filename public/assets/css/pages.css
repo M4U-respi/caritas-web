@@ -101,6 +101,8 @@ a.tag:hover { opacity: .7; }
 }
 .sub-hero__lead { margin-top: 15px; max-width: 900px; font-size: 18px; font-weight: 700; line-height: 36px; letter-spacing: .04em; color: var(--c-text); }
 .sub-hero__curve { color: var(--c-white); }
+/* 改行位置を指定したリード(寄付ページ)は幅を制限しない */
+.sub-hero__lead:has(br) { max-width: none; }
 .sub-hero__title, .sub-head__title, .timeline__head, .policy h2 { word-break: auto-phrase; }
 
 /* ---------- セクション(白 / クリーム / 緑) ---------- */
@@ -202,6 +204,8 @@ a.tag:hover { opacity: .7; }
 
 /* ---------- フロー(ステップ)カード ---------- */
 .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px; counter-reset: none; }
+.flow--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.flow--cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .flow__item { position: relative; display: flex; flex-direction: column; border: 1px solid var(--c-line); border-radius: 8px; background: var(--c-white); }
 .flow__item:not(:last-child)::after {
   content: ""; position: absolute; top: 50%; right: -22px; width: 7px; height: 11px; margin-top: -5px;
@@ -212,6 +216,13 @@ a.tag:hover { opacity: .7; }
 .flow__num { font-size: 20px; font-weight: 500; line-height: 1; color: var(--c-red); }
 .flow__title { margin-top: 10px; font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-text-strong); }
 .flow__text { margin-top: 6px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+/* 文字だけのカード(寄付ページ) */
+.flow--text .flow__body { padding: 28px 24px 26px; }
+.flow--text .flow__title { margin-top: 16px; letter-spacing: 0; }
+.flow--text .flow__text { letter-spacing: 0; }
+.flow--compact .flow__body { padding: 12px 16px 16px; }
+.flow--compact .flow__title { margin-top: 10px; }
+.flow__mark { margin-left: 2px; }
 
 /* ---------- 表(団体概要) ---------- */
 .def-table { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 1.6; }
@@ -254,6 +265,7 @@ a.tag:hover { opacity: .7; }
 .related-nav__list { display: grid; gap: 8px 16px; margin-top: 40px; }
 .related-nav--news .related-nav__list { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 25px; }
 .related-nav--publication .related-nav__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.related-nav--donate .related-nav__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
 .related-nav__grid { display: grid; grid-template-columns: minmax(0, 469fr) minmax(0, 586fr); gap: 24px; margin-top: 40px; }
 .related-nav__grid .related-nav__list { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 0; }
 .related-nav__btn {
@@ -661,13 +673,142 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .prose__table td { font-weight: 400; color: var(--c-text); }
 .prose__table-wrap + h2 { margin-top: 64px; }
 
-/* ---------- 寄付する ---------- */
-.donate-links { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 24px; }
-.btn-pill--red { width: 304px; background: var(--c-red); color: var(--c-white); }
-.btn-pill--red:hover { background: var(--c-red-dark); }
-.funds { margin-top: 96px; scroll-margin-top: calc(var(--header-h) + 24px); }
-.funds__list { margin-top: 32px; border: 1px solid var(--c-line); border-radius: 10px; overflow: hidden; background: var(--c-white); }
+/* ==========================================================================
+   寄付する(/donate/ /donate/card/ /donate/monthly/)
+   ========================================================================== */
+/* 共通:赤い左線のカード(細いピンクの外枠つき) */
+.ways__card, .bank .tel-card, .bequest__card, .donate-contact .tel-card, .notice-card, .apply-form {
+  border: 1px solid #F9DFE1; border-left: 3px solid var(--c-red);
+}
+.subheading-bar--red::before { background: var(--c-red); }
 
+/* 赤ボタン(塗り) */
+.btn-solid {
+  display: inline-flex; align-items: center; justify-content: center; gap: 16px;
+  min-width: 270px; max-width: 100%; min-height: 48px; padding: 6px 32px;
+  border-radius: 999px; background: var(--c-red); color: var(--c-white);
+  font-size: 16px; font-weight: 700; line-height: 1.3; letter-spacing: .03em;
+}
+.btn-solid:hover { background: var(--c-red-dark); }
+.btn-solid svg { flex: none; transition: transform var(--ease); }
+.btn-solid:hover .btn-solid__chevron { transform: translateX(4px); }
+.btn-solid--lg { min-width: 272px; }
+.btn-outline--lg { width: 288px; min-height: 50px; }
+
+/* 表(項目名を広く) */
+.def-table--wide th { width: 264px; padding-right: 24px; }
+.def-table--wide th, .def-table--wide td { padding-block: 21px; }
+.def-table--wide th, .def-table--wide td { vertical-align: top; }
+.def-table--wide th { line-height: 32px; }
+.def-table--wide td { line-height: 32px; letter-spacing: .02em; }
+
+/* 中黒の箇条書き */
+.dot-list { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.dot-list li { position: relative; padding-left: 24px; }
+.dot-list li::before { content: "・"; position: absolute; left: 0; top: 0; }
+
+/* チラシ・申込書の表紙 */
+.flyer-thumb { display: block; width: 161px; height: auto; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
+
+/* ---------- 寄付の方法 ---------- */
+.ways { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 24px; border-radius: 8px; background: var(--c-cream); }
+.ways__card { display: flex; flex-direction: column; padding: 17px 24px 32px 16px; border-radius: 8px; background: var(--c-white); }
+.ways__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.ways__num { margin-top: 8px; font-size: 20px; font-weight: 500; line-height: 1; color: var(--c-red); }
+.ways__icon { flex: none; width: 34px; height: 34px; color: var(--c-teal); }
+.ways__title { margin-top: 28px; font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: 0; color: var(--c-text-strong); }
+.ways__text { margin-top: 16px; font-size: 14px; font-weight: 400; line-height: 25px; color: var(--c-text); }
+.ways__btn { margin-top: auto; padding-top: 24px; }
+.ways__btn .btn-outline { width: 100%; }
+
+/* ---------- 受付中の募金 ---------- */
+.funds { display: grid; gap: 24px; scroll-margin-top: calc(var(--header-h) + 24px); }
+#funds { scroll-margin-top: var(--header-h); }
+.funds__box { padding: 32px 40px; }
+.funds__title { padding-bottom: 20px; border-bottom: 2px solid var(--c-text-strong); }
+.funds__table { width: 100%; border-collapse: collapse; }
+.funds__table th, .funds__table td { height: 73px; padding: 12px 0; border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: middle; }
+.funds__name { width: 244px; padding-right: 24px !important; font-size: 16px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; color: var(--c-text-strong); white-space: nowrap; }
+.funds__desc { font-size: 14px; font-weight: 400; line-height: 1.7; color: var(--c-text); }
+.funds__code { width: 1%; padding-left: 24px !important; font-size: 22px; font-weight: 700; line-height: 1; text-align: right !important; color: var(--c-red); white-space: nowrap; font-variant-numeric: lining-nums; }
+
+/* ---------- 郵便局・銀行から ---------- */
+.donate-bank { padding-bottom: 12px; scroll-margin-top: var(--header-h); }
+.bank { display: grid; gap: 24px; }
+.bank__box { padding: 38px 40px 40px; border-radius: 8px; background: var(--c-cream); }
+.bank__desc { margin-top: 18px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.bank__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
+.bank__grid--postal { grid-template-columns: minmax(0, 400px) minmax(0, 1fr); }
+.bank__box > .subheading-bar + .bank__text { margin-top: 24px; }
+.bank .tel-card { border-radius: 8px; }
+.bank__card--row { min-height: 80px; }
+.bank__card--wide { grid-column: 1 / -1; }
+.bank__value { margin-left: 24px; font-size: 16px; font-weight: 400; line-height: 1.8; color: var(--c-text-strong); }
+.bank__text { display: block; min-height: 0; padding: 22px 32px; }
+.bank__text p { font-size: 16px; font-weight: 400; line-height: 29px; letter-spacing: .02em; color: var(--c-text); }
+.bank__note { margin-top: 16px; }
+
+/* ---------- 遺贈 ---------- */
+.donate-bequest { scroll-margin-top: var(--header-h); }
+.bequest { display: grid; grid-template-columns: minmax(0, 598fr) minmax(0, 354fr); gap: 48px; padding: 40px; border-radius: 8px; background: var(--c-cream); }
+.bequest__cards { display: grid; gap: 16px; align-content: start; }
+.bequest__card { display: block; min-height: 0; padding: 26px 32px 28px; border-radius: 8px; }
+.bequest__title { font-size: 16px; font-weight: 700; line-height: 1.6; letter-spacing: .02em; color: var(--c-teal); }
+.bequest__title + .dot-list { margin-top: 20px; }
+.bequest__pdf { padding-top: 4px; }
+.bequest__thumb { margin: 24px auto 0; }
+.bequest__btn { display: flex; justify-content: center; margin-top: 24px; }
+.bequest__btn .btn-outline { gap: 10px; }
+.bequest__btn .btn-outline svg { flex: none; }
+.bequest__text { margin-top: 24px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.bequest__steps { margin-top: 40px; }
+.donate-ask { margin-top: 44px; }
+.donate-ask__btns { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+.donate-ask__btn { width: 250px; min-height: 40px; gap: 12px; }
+.donate-ask__btn span { flex: none; }
+.donate-ask__tel { flex: none; margin-right: 4px; }
+.donate-ask__btn:has(.donate-ask__tel) { font-size: 16px; }
+
+/* ---------- ご確認いただきたいこと(緑) ---------- */
+.donate-notice__box { padding: 32px 40px; }
+.notice-card { padding: 25px 32px 24px; border-color: #F2D2C9; border-left-color: var(--c-red); border-radius: 8px; background: var(--c-cream); }
+.notice-card__title { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-red); }
+.notice-card__text { margin-top: 8px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.notice-card + .def-table { margin-top: 24px; }
+.donate-contact { margin-top: 24px; padding: 32px 40px; }
+.donate-contact__head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+.donate-contact .tel-box__grid { margin-top: 24px; }
+.tel-card--cream { border-radius: 8px; background: var(--c-cream); }
+
+/* ---------- クレジットカード ---------- */
+.amounts { margin-top: 24px; padding: 42px 40px 40px; border-radius: 8px; background: var(--c-cream); }
+.amounts__list { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+.amounts__btn {
+  display: flex; align-items: baseline; justify-content: center; gap: 5px; height: 72px; padding: 0 8px;
+  border-radius: 6px; background: var(--c-white); color: var(--c-red); white-space: nowrap;
+}
+.amounts__btn { align-items: center; }
+.amounts__num { font-size: 20px; font-weight: 700; line-height: 1; letter-spacing: .02em; }
+.amounts__unit { margin-top: 6px; font-size: 12px; font-weight: 400; line-height: 1; color: var(--c-text-mute); }
+.amounts__btn:hover { box-shadow: 0 0 0 2px var(--c-red); }
+.amounts__note { margin-top: 28px; }
+.external-note { margin-top: 32px; }
+.external-note__title { font-size: 16px; font-weight: 700; line-height: 1.6; color: var(--c-text-strong); }
+.external-note__text { margin-top: 4px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+
+/* ---------- マンスリーサポーター ---------- */
+.monthly-overview { padding-bottom: 80px; }
+.photo-strip--gap-white .photo-strip__list { background: var(--c-white); }
+.monthly-apply { padding-top: 90px; }
+.apply-form { display: flex; align-items: center; gap: 56px; padding: 40px 56px; border-radius: 8px; background: var(--c-cream); }
+.apply-form__thumb { flex: none; }
+.apply-form__body { flex: 1; min-width: 0; }
+.apply-form__text { margin-top: 18px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.apply-form__btns { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 26px; }
+.apply-method { display: grid; grid-template-columns: minmax(0, 296px) minmax(0, 1fr); column-gap: 13px; margin-top: 48px; }
+.apply-method__head { padding-top: 2px; }
+.apply-method__title { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-teal); }
+.apply-method__desc { margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 
 /* ==========================================================================
    下層: 1024〜1339px(PC 狭め)
@@ -681,6 +822,12 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .related-nav__logo { width: 150px; margin-right: 16px; }
   .related-nav--news .related-nav__list { gap: 16px; }
   .tel-card__num { font-size: 28px; }
+  .ways { gap: 12px; padding: 16px; }
+  .ways__card { padding-inline: 14px 16px; }
+  .ways__title { font-size: 18px; }
+  .amounts__list { gap: 8px; }
+  .amounts__num { font-size: 18px; }
+  .funds__name { width: 200px; }
 }
 
 /* ==========================================================================
@@ -748,6 +895,22 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .history-body { padding-bottom: 24px; }
   .policy-body { padding-top: 64px; }
+
+  .flow--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .ways { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .def-table--wide th { width: 200px; }
+  .funds__box { padding: 28px 32px; }
+  .funds__name { width: auto; white-space: normal; }
+  .bequest { grid-template-columns: minmax(0, 1fr); }
+  .bequest__pdf { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 32px; align-items: start; }
+  .bequest__pdf-title { grid-column: 1 / -1; }
+  .bequest__thumb { grid-row: 2 / span 2; margin: 24px 0 0; }
+  .bequest__btn { justify-content: flex-start; }
+  .amounts__list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .apply-form { gap: 40px; padding: 40px; }
+  .bank__grid, .bank__grid--postal { grid-template-columns: minmax(0, 1fr); }
+  .donate-contact .tel-box__grid { grid-template-columns: minmax(0, 1fr); }
+  .apply-method { grid-template-columns: minmax(0, 1fr); row-gap: 24px; }
 }
 
 /* ==========================================================================
@@ -830,7 +993,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .related-nav { padding-top: 64px; }
   .related-nav__title { margin-top: 20px; font-size: 18px; }
   .related-nav__list, .related-nav__grid { margin-top: 24px; }
-  .related-nav--news .related-nav__list, .related-nav--publication .related-nav__list, .related-nav__grid .related-nav__list { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .related-nav--news .related-nav__list, .related-nav--publication .related-nav__list, .related-nav--donate .related-nav__list, .related-nav__grid .related-nav__list { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .related-nav__btn { min-height: 48px; }
   .related-nav__btn--lead { justify-content: center; min-height: 48px; padding: 6px 12px; font-size: 14px; }
   .related-nav__btn--lead .circle-arrow { margin-left: 8px; }
@@ -958,7 +1121,55 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .prose__table th, .prose__table td { padding: 0; border: 0; white-space: normal; font-size: 15px; }
   .prose__table td { margin-top: 4px; }
   .btn-pill--red { width: 100%; }
-  .funds { margin-top: 64px; }
+
+  .flow--cols-3 { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .flow--text .flow__body { padding: 18px 20px 20px; }
+  .flow--text .flow__title { margin-top: 8px; }
+  .ways { grid-template-columns: minmax(0, 1fr); padding: 12px; }
+  .ways__card { padding: 16px 20px 24px 18px; }
+  .ways__title { margin-top: 12px; }
+  .ways__btn .btn-outline { min-height: 40px; font-size: 13px; }
+  .funds { gap: 16px; }
+  .funds__box { padding: 20px; }
+  .funds__title { padding-bottom: 14px; }
+  .funds__table, .funds__table tbody { display: block; }
+  .funds__table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--c-line); }
+  .funds__table th, .funds__table td { height: auto; padding: 0 !important; border: 0; }
+  .funds__name { width: auto; font-size: 15px; }
+  .funds__desc { grid-column: 1; grid-row: 2; margin-top: 4px; font-size: 13px; }
+  .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 20px; }
+  .bank__box { padding: 24px 20px; }
+  .bank__grid, .bank__grid--postal { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .bank .tel-card { flex-direction: column; align-items: flex-start; justify-content: center; padding: 12px 16px 14px 18px; min-height: 0; }
+  .bank .tel-card__label { line-height: 1.6; }
+  .bank .tel-card__num { margin: 2px 0 0; }
+  .bank__value { margin: 2px 0 0; font-size: 15px; }
+  .bank__text { padding: 16px 18px; }
+  .bank__text p { font-size: 15px; line-height: 1.9; }
+  .bequest { gap: 32px; padding: 20px; }
+  .bequest__card { padding: 20px 18px; }
+  .dot-list { font-size: 15px; line-height: 1.9; }
+  .dot-list li { padding-left: 18px; }
+  .bequest__pdf { display: block; }
+  .bequest__thumb { margin: 20px auto 0; }
+  .bequest__btn { justify-content: center; }
+  .donate-ask__btns { flex-direction: column; }
+  .donate-ask__btn { width: 100%; max-width: 360px; min-height: 48px; }
+  .donate-notice__box, .donate-contact { padding: 20px; }
+  .notice-card { padding: 18px 18px 18px 20px; }
+  .notice-card__title { font-size: 18px; }
+  .notice-card__text { font-size: 15px; line-height: 1.9; }
+  .btn-solid { width: 100%; min-width: 0; }
+  .amounts { padding: 24px 20px; }
+  .amounts__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .amounts__btn { height: 60px; }
+  .monthly-overview { padding-bottom: 56px; }
+  .monthly-apply { padding-top: 64px; }
+  .apply-form { flex-direction: column; align-items: stretch; gap: 24px; padding: 24px 20px; }
+  .apply-form__thumb { margin-inline: auto; width: 140px; }
+  .apply-form__btns { flex-direction: column; align-items: stretch; }
+  .apply-form__btns .btn-solid, .apply-form__btns .btn-outline { width: 100%; }
+  .apply-method { margin-top: 40px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

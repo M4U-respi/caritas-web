@@ -34,12 +34,12 @@ Astro + EmDash(CMS)+ Cloudflare Workers で構築したカリタスジャパン�
 | 寄付する | `/donate/` | `src/pages/donate/index.astro` |
 | クレジットカードで寄付 | `/donate/card/` | `src/pages/donate/card.astro` |
 | マンスリーサポーター | `/donate/monthly/` | `src/pages/donate/monthly.astro` |
-| 受け付け中の募金 | `/donate/#funds` | お知らせ「緊急支援」の記事を自動表示 |
+| 受け付け中の募金 | `/donate/#funds` | 募金名・番号は `src/data/donate.ts` の `FUNDS` を編集 |
 | お問い合わせ | `/contact/` | `src/pages/contact.astro` |
 | サイトポリシー | `/site-policy/` | `src/pages/site-policy.astro` |
 | プライバシーポリシー | `/privacy-policy/` | `src/pages/privacy-policy.astro` |
 
-固定ページは本文が未支給のため「準備中」表示です。本文は各ファイルの `<StaticPage>` の中に HTML で書くと表示されます。
+「わたしたちの想い」は本文が未支給のため「準備中」表示です。本文は各ファイルの `<StaticPage>` の中に HTML で書くと表示されます。
 
 ```astro
 <StaticPage title="わたしたちの想い" en="OUR MISSION">
@@ -68,6 +68,7 @@ Astro + EmDash(CMS)+ Cloudflare Workers で構築したカリタスジャパン�
 | ファイル | 内容 |
 |---|---|
 | `src/data/site.ts` | ナビ・フッターのリンク、CMS コレクション定義、SNS URL |
+| `src/data/donate.ts` | 寄付ページの募金一覧(番号)・カード寄付の金額・事務局の電話/FAX |
 | `src/layouts/Layout.astro` | 全ページ共通の `<head>`・ヘッダー・フッター |
 | `src/components/Header.astro` | グローバルナビ(ドロップダウン)・**緊急バナーの文言とリンク** |
 | `src/components/Footer.astro` | フッター |
@@ -176,6 +177,7 @@ D1 データベース、R2 バケット、`EMDASH_ENCRYPTION_KEY` の3点を必�
 - 固定ページの本文(未支給)
 - 「WAY TO HELP」の「参加する」「祈る」のリンク先(`src/pages/index.astro` の `data-todo="url"`)
 - 言語切替の方式(ヘッダーの「日本語」ボタン)
+- 寄付ページ:カード寄付の各金額の決済ページ URL(`src/data/donate.ts`)、遺贈チラシ・マンスリーサポーター申込書の PDF と表紙画像、申込書の郵送請求の受付先、FAQ の未支給の回答、「ご利用いただけるカード」「決済サービスについて」の正式文言
 - 仮データ(お知らせ10件・活動報告10件・発行物6件)の削除と、`seed/demo-dates.sql` の削除
 - 写真・ロゴの元データへの差し替え(現在はデザインカンプからの切り出し)
 

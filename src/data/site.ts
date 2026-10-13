@@ -125,6 +125,16 @@ export const RELATED_NAV = {
 		items: [{ label: "お知らせ", href: "/news/" }, ...termLinks("news")],
 	},
 	publication: { en: "PUBLICATIONS", ja: "刊行物", title: "全ての発行物", items: termLinks("publication") },
+	donate: {
+		en: "PAGE LINKS",
+		ja: undefined,
+		title: "寄付するの各ページ",
+		items: [
+			{ label: "寄付する", href: "/donate/" },
+			{ label: "クレジットカード", href: "/donate/card/" },
+			{ label: "マンスリーサポーター", href: "/donate/monthly/" },
+		],
+	},
 } as const;
 
 /** フッターナビ */
@@ -143,11 +153,7 @@ export const FOOTER_NAV: { heading: string; links: NavLink[] }[] = [
 		links: [
 			{ label: "援助活動", href: "/about/aid/" },
 			{ label: "啓発活動", href: "/about/social/" },
-			{
-		label: "活動報告",
-		href: "/report/",
-		children: [{ label: "活動報告", href: "/report/" }, ...termLinks("report")],
-	},
+			{ label: "活動報告", href: "/report/" },
 			{ label: "発行物", href: "/publication/" },
 			{ label: "お知らせ", href: "/news/" },
 		],

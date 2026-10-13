@@ -1,29 +1,216 @@
 ---
-/* 寄付する:本文未支給。「受け付け中の募金」(#funds)は お知らせ>緊急支援 の記事を自動表示 */
 import Layout from "../../layouts/Layout.astro";
 import PageHeader from "../../components/PageHeader.astro";
-import EntryList from "../../components/EntryList.astro";
-import { listEntries } from "../../lib/cms";
+import PhotoStrip from "../../components/PhotoStrip.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import GreenSection from "../../components/GreenSection.astro";
+import FlowCards from "../../components/FlowCards.astro";
+import DonateNotice from "../../components/DonateNotice.astro";
+import Faq from "../../components/Faq.astro";
+import RelatedNav from "../../components/RelatedNav.astro";
+import Partners from "../../components/Partners.astro";
+import { CONTACT, FUNDS } from "../../data/donate";
 
-const funds = await listEntries("news", { term: "emergency", limit: 10 });
-if (Astro.cache?.enabled && funds.cacheHint) Astro.cache.set(funds.cacheHint);
+const description = "カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。いただいた募金は、国内外でもっとも援助を必要としている人々のもとへ届けられます。";
+
+const strip = [
+	{ src: "/assets/img/sub/donate/donate-strip-01.jpg", alt: "子どもの絵が描かれたカリタスジャパンの献金箱", width: 800, height: 570 },
+	{ src: "/assets/img/sub/donate/donate-strip-02.jpg", alt: "ウクライナへの祈りを込めた手作りの鳩の飾り", width: 552, height: 384 },
+	{ src: "/assets/img/sub/donate/donate-strip-03.jpg", alt: "支援物資の箱を受け取る人々", width: 621, height: 800 },
+	{ src: "/assets/img/sub/donate/donate-strip-04.jpg", alt: "カリタスジャパンの募金箱", width: 584, height: 561 },
+];
+
+const ways = [
+	{ title: "クレジットカード", text: "一回かぎりの寄付に向いています。オンラインで完結し、その場で手続きが終わります。", btn: "くわしく見る", href: "/donate/card/", icon: "card" },
+	{ title: "郵便局・銀行から", text: "郵便振替、ゆうちょダイレクト、他の銀行からのお振込です。ゆうちょダイレクトならオンラインで完結します。", btn: "送金先を見る", href: "#bank", icon: "bank" },
+	{ title: "マンスリーサポーター", text: "毎月続けてご支援いただく方法です。お申し込みには申込書のご提出が必要です。", btn: "くわしく見る", href: "/donate/monthly/", icon: "calendar" },
+	{ title: "遺贈によるご寄付", text: "遺産の一部を寄付するかたちでのご支援です。まずは事務局へご相談ください。", btn: "くわしく見る", href: "#bequest", icon: "bequest" },
+];
+
+const bequestSteps = [
+	{ title: "ご相談", text: "事務局までお電話またはお問い合わせフォームからご連絡ください。ご意向をうかがいます。" },
+	{ title: "ご検討", text: "寄付の方法や使いみちについて、ご希望にそう形をご一緒に考えます。" },
+	{ title: "お手続き", text: "必要に応じて専門家をまじえ、遺言書の作成やお手続きを進めていただきます。" },
+];
+
+const notice = [
+	{ th: "領収書", td: "払込票1枚ごとに、記入欄に書かれたとおりに発行します。団体や教会の募金を個人名で送金される場合は、通信欄に領収書の宛名をご記入ください。複数の払込票で送金される場合は、通信欄にページ番号（例: 1/3）をご記入ください。" },
+	{ th: "送金手数料", td: "2022年1月17日より、ゆうちょ銀行の窓口・ATMでの現金払込に手数料がかかります。専用の払込取扱票をお使いの場合も同様です。手数料を差し引いて送金された場合は、実際の送金額で領収書を発行します。" },
+	{ th: "10万円を超える送金", td: "払込時に本人確認を求められることがあります。払込票1枚あたり10万円までとして、複数枚に分けて送金いただくこともできます。" },
+	{ th: "お名前の掲載", td: "献金者名簿への氏名の掲載を控えたい場合は、匿名希望の旨をお知らせください。" },
+];
+
+const faq = [
+	{ q: "どのような寄付の方法がありますか。", a: "クレジットカード、郵便振替、ゆうちょダイレクト、他の銀行からのお振込、マンスリーサポーター（毎月の継続支援）、遺贈によるご寄付の方法があります。", open: true },
+	/* TODO(要確認): 以下は回答未支給のため非表示(Faq は a の無い項目を出さない)
+	{ q: "支援先を指定できますか。" },
+	{ q: "郵便振替の口座番号を教えてください。" },
+	{ q: "寄付金控除は受けられますか。" },
+	{ q: "領収書はもらえますか。" },
+	{ q: "名前を出さずに寄付できますか。" },
+	{ q: "他の銀行から振り込む場合、事前の連絡は必要ですか。" },
+	*/
+];
 ---
-<Layout title="寄付する">
-	<PageHeader title="寄付する" en="DONATE" />
-	<div class="page-body l-container">
-		<div class="page-empty">
-			<p>このページは現在準備中です。</p>
-		</div>
-		<ul class="donate-links">
-			<li><a class="btn-pill btn-pill--red" href="/donate/card/"><span>クレジットカードで寄付</span><svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
-			<li><a class="btn-pill btn-pill--red" href="/donate/monthly/"><span>マンスリーサポーター</span><svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
-		</ul>
+<Layout title="寄付する" description={description}>
+	<PageHeader title="寄付する" en="DONATION" ja="寄付" flat>
+		<Fragment slot="title"><em class="u-red">寄付</em>する</Fragment>
+		<Fragment slot="lead">カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。<br class="u-pc-only" />いただいた募金は、国内外でもっとも援助を必要としている人々のもとへ届けられます。</Fragment>
+	</PageHeader>
+	<PhotoStrip photos={strip} gap="cream" />
 
-		<section class="funds" id="funds" aria-labelledby="funds-title">
-			<h2 class="heading-lg funds__title" id="funds-title">受け付け中の募金</h2>
-			{funds.items.length > 0
-				? <EntryList items={funds.items} variant="urgent" showTags={false} class="funds__list" />
-				: <p class="page-empty">現在、受け付け中の緊急募金はありません。</p>}
-		</section>
-	</div>
+	<!-- 寄付の方法 -->
+	<section class="sub-section donate-ways" aria-labelledby="ways-title">
+		<div class="l-container">
+			<SectionHead en="WAYS TO GIVE" id="ways-title" lead="手続きにかかる手間と、完了するまでの時間が異なります。ご都合にあう方法をお選びください。">
+				<Fragment slot="title">寄付の<em class="u-red">方法</em></Fragment>
+			</SectionHead>
+			<ol class="ways">
+				{ways.map((w, i) => (
+					<li class="ways__card">
+						<div class="ways__head">
+							<p class="ways__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
+							<svg class="ways__icon" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								{w.icon === "card" && <><rect x="1.5" y="7" width="33" height="22" rx="3" /><path d="M1.5 14.5h33M8 22h6" /></>}
+								{w.icon === "bank" && <><path d="M4 11 18 3.5 32 11H4ZM9 15.5v12M15 15.5v12M21 15.5v12M27 15.5v12M3 33h30" /></>}
+								{w.icon === "calendar" && <><rect x="3" y="5.5" width="30" height="28" rx="3" /><path d="M3 12.5h30M10.5 2.5v6M25.5 2.5v6M12.5 23l4 4 7.5-7.5" /></>}
+								{w.icon === "bequest" && <><path d="M7 2.5h15.5l7.5 7.5v20.5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-25a3 3 0 0 1 3-3Z" /><path d="M22 2.5V10h8" /><path d="M17 28.2l-4.6-4.4a3 3 0 0 1 4.6-3.8 3 3 0 0 1 4.6 3.8Z" /></>}
+							</svg>
+						</div>
+						<h3 class="ways__title">{w.title}</h3>
+						<p class="ways__text">{w.text}</p>
+						<p class="ways__btn"><a class="btn-outline btn-outline--sm" href={w.href}><span>{w.btn}</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></p>
+					</li>
+				))}
+			</ol>
+		</div>
+	</section>
+
+	<!-- 受付中の募金 -->
+	<GreenSection id="funds" labelledby="funds-title" class="donate-funds">
+		<SectionHead en="FUNDS" title="受付中の募金" id="funds-title">
+			<Fragment slot="lead">どの活動にあてるかをお選びいただけます。ご意向の記入がない場合は、最優先の援助にあてさせていただきます。番号は、<br class="u-pc-only" />ゆうちょダイレクトの通信欄またはメッセージ欄にご入力ください。</Fragment>
+		</SectionHead>
+		<div class="funds">
+			{FUNDS.map((group, gi) => (
+				<div class="white-box funds__box">
+					<h3 class="subheading-bar funds__title" id={`funds-group-${gi + 1}`}>{group.title}</h3>
+					<table class="funds__table" aria-labelledby={`funds-group-${gi + 1}`}>
+						<thead class="visually-hidden"><tr><th scope="col">募金名</th><th scope="col">内容</th><th scope="col">番号</th></tr></thead>
+						<tbody>
+							{group.items.map((f) => (
+								<tr>
+									<th scope="row" class="funds__name">{f.name}</th>
+									<td class="funds__desc">{f.desc}</td>
+									<td class="funds__code">{f.code}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			))}
+		</div>
+	</GreenSection>
+
+	<!-- 郵便局・銀行から寄付する -->
+	<section class="sub-section donate-bank" id="bank" aria-labelledby="bank-title">
+		<div class="l-container">
+			<SectionHead en="BANK TRANSFER" id="bank-title">
+				<Fragment slot="title"><em class="u-red">郵便局・銀行</em>から寄付する</Fragment>
+			</SectionHead>
+			<div class="bank">
+				<div class="bank__box">
+					<h3 class="subheading-bar subheading-bar--red">郵便振替</h3>
+					<p class="bank__desc">郵便局の窓口から送金する方法です。送金手数料をカリタスジャパンが負担する専用の払込用紙もご用意しています。</p>
+					<dl class="bank__grid bank__grid--postal">
+						<div class="tel-card"><dt class="tel-card__label">口座番号</dt><dd class="tel-card__num">00170-5-95979</dd></div>
+						<div class="tel-card"><dt class="tel-card__label">加入者名</dt><dd class="bank__value">宗教法人カトリック中央協議会 カリタスジャパン</dd></div>
+					</dl>
+					<p class="sub-note bank__note">※ 専用払込用紙をご希望の方は、お電話（{CONTACT.tel}）またはお問い合わせフォームからご連絡ください。</p>
+				</div>
+
+				<div class="bank__box">
+					<h3 class="subheading-bar subheading-bar--red">ゆうちょダイレクト</h3>
+					<div class="tel-card bank__text">
+						<p>ゆうちょ銀行の口座をお持ちの方は、インターネットから送金できます。通信欄またはメッセージ欄に、上の一覧にある番号をご入力ください。</p>
+					</div>
+					<p class="sub-note bank__note">※ ご住所・お名前・募金のご意向が入力されているかご確認ください。<br />※ 献金者名簿への氏名の掲載を控えたい場合は、番号のあとに「000」を付けてください（例: 6100000）。</p>
+				</div>
+
+				<div class="bank__box">
+					<h3 class="subheading-bar subheading-bar--red">他の銀行からのお振込</h3>
+					<p class="bank__desc">他行からお振込みの場合、振込情報が限定的にしか伝わらないため、事前のご連絡をお願いしています。</p>
+					<dl class="bank__grid">
+						<div class="tel-card bank__card--row"><dt class="tel-card__label">銀行名</dt><dd class="bank__value">ゆうちょ銀行（金融機関コード 9900）</dd></div>
+						<div class="tel-card bank__card--row"><dt class="tel-card__label">店名・店番</dt><dd class="bank__value">〇一九（ゼロイチキュウ）店 ／ 019</dd></div>
+						<div class="tel-card"><dt class="tel-card__label">口座番号</dt><dd class="tel-card__num">0095979</dd></div>
+						<div class="tel-card"><dt class="tel-card__label">預金種目</dt><dd class="bank__value">当座</dd></div>
+						<div class="tel-card bank__card--row bank__card--wide"><dt class="tel-card__label">加入者名</dt><dd class="bank__value">宗教法人カトリック中央協議会 カリタスジャパン</dd></div>
+					</dl>
+					<p class="sub-note bank__note">※ お振込（予定）日／金額／募金のご意向／お名前／ご住所／電話番号またはメールアドレスを、事前にお知らせください。<br />電話 {CONTACT.tel} ／ FAX {CONTACT.fax}</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- 遺贈によるご寄付 -->
+	<section class="sub-section donate-bequest" id="bequest" aria-labelledby="bequest-title">
+		<div class="l-container">
+			<SectionHead en="BEQUEST" id="bequest-title" lead="遺産の一部を寄付するかたちでのご支援も承っています。人生を通じて大切にされてきた想いを、これからを生きる人々のために役立てる方法です。">
+				<Fragment slot="title"><em class="u-red">遺贈</em>によるご寄付</Fragment>
+			</SectionHead>
+			<div class="bequest">
+				<div class="bequest__cards">
+					<div class="tel-card bequest__card">
+						<h3 class="bequest__title">遺言によるご寄付</h3>
+						<ul class="dot-list">
+							<li>遺言書で、財産の一部をカリタスジャパンへ寄付する旨を定めます。</li>
+							<li>金額や割合、使いみちのご意向を指定できます。</li>
+							<li>作成にあたっては、公証役場や専門家へのご相談をおすすめします。</li>
+						</ul>
+					</div>
+					<div class="tel-card bequest__card">
+						<h3 class="bequest__title">相続財産からのご寄付</h3>
+						<ul class="dot-list">
+							<li>ご遺族が相続された財産の中から寄付いただく方法です。</li>
+							<li>故人のお名前でお預かりすることもできます。</li>
+							<li>お手続きの時期については、事務局へご相談ください。</li>
+						</ul>
+					</div>
+				</div>
+				<div class="bequest__pdf">
+					<h3 class="subheading-bar bequest__pdf-title">遺贈によるご寄付のご案内（PDF）</h3>
+					<!-- TODO(要確認): チラシの PDF・表紙画像(現在はカンプの仮画像) -->
+					<img class="flyer-thumb bequest__thumb" src="/assets/img/sub/donate/flyer-bequest.jpg" alt="遺贈によるご寄付のご案内(表紙)" width="322" height="411" loading="lazy" decoding="async" />
+					<p class="bequest__btn"><a class="btn-outline btn-outline--sm" href="#" data-todo="url" download><span>PDFダウンロード</span><svg width="12" height="12" aria-hidden="true"><use href="#i-download" /></svg></a></p>
+					<p class="bequest__text">遺贈の考え方、寄付の方法、お手続きの流れをまとめたチラシです。ご家族やご相談先と一緒にご覧いただけます。</p>
+				</div>
+			</div>
+
+			<FlowCards items={bequestSteps} class="flow--compact bequest__steps" />
+
+			<div class="donate-ask">
+				<h3 class="subheading-bar">事務局まで、問い合わせフォームまたはお電話にてお問合せ下さい。</h3>
+				<ul class="donate-ask__btns">
+					<li><a class="btn-outline btn-outline--md donate-ask__btn" href="/contact/"><span>お問い合わせフォーム</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
+					<li><a class="btn-outline btn-outline--md donate-ask__btn" href={CONTACT.telHref}><svg class="donate-ask__tel" width="18" height="18" aria-hidden="true"><use href="#i-phone" /></svg><span>{CONTACT.tel}</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- ご確認いただきたいこと -->
+	<DonateNotice rows={notice} />
+
+	<!-- よくあるご質問 -->
+	<section class="sub-section sub-section--cream faq-section" aria-labelledby="faq-title">
+		<div class="l-container">
+			<SectionHead en="FAQ" title="よくあるご質問" id="faq-title" />
+			<Faq items={faq} />
+		</div>
+		<svg class="curve curve--down sub-section__curve-down" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q720 84 1440 0 Z" fill="currentColor" /></svg>
+	</section>
+
+	<RelatedNav preset="donate" />
+	<Partners class="partners--after-nav" />
 </Layout>

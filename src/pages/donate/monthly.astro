@@ -1,4 +1,120 @@
 ---
-import StaticPage from "../../components/StaticPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import PhotoStrip from "../../components/PhotoStrip.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import FlowCards from "../../components/FlowCards.astro";
+import DonateNotice from "../../components/DonateNotice.astro";
+import Faq from "../../components/Faq.astro";
+import RelatedNav from "../../components/RelatedNav.astro";
+import Partners from "../../components/Partners.astro";
+
+const description = "毎月継続してご支援くださる方を、マンスリーサポーターと呼んでいます。支援を長く続けるためには、先の見通しが立つことがなによりの力になります。";
+
+const strip = [
+	{ src: "/assets/img/sub/donate/monthly-strip-01.jpg", alt: "祭壇に並べられたロザリオと献金箱", width: 1000, height: 750 },
+	{ src: "/assets/img/sub/donate/monthly-strip-02.jpg", alt: "陶芸をする子どもとボランティア", width: 1000, height: 750 },
+	{ src: "/assets/img/sub/donate/donate-strip-01.jpg", alt: "子どもの絵が描かれたカリタスジャパンの献金箱", width: 800, height: 570 },
+	{ src: "/assets/img/sub/donate/monthly-strip-04.jpg", alt: "聖堂の祭壇", width: 600, height: 800 },
+];
+
+const methods = [
+	{
+		title: "口座自動振替",
+		desc: "ご指定の口座から毎月自動で引き落とします。<br />一度お手続きいただければ、その後の作業はありません。",
+		steps: [
+			{ title: "申込書を用意する", text: "上の申込書（PDF）をダウンロードして印刷いただくか、事務局までご請求ください。" },
+			{ title: "申込書を返送する", text: "各月20日を返送の期日としています。" },
+			{ title: "引き落としの開始", text: "原則として、返送いただいた月の翌々月10日から引き落としが始まります。" },
+		],
+	},
+	{
+		title: "通常払込み",
+		desc: "払込票でその都度お支払いいただく方法です。",
+		steps: [
+			{ title: "申込書を返送する", text: "各月20日を締め切りとしています。" },
+			{ title: "払込票が届く", text: "月末に、年間12枚分の払込票をお送りします。" },
+			{ title: "毎月お支払いいただく", text: "お手元の払込票で、郵便局からお支払いください。" },
+		],
+	},
+];
+
+const notice = [
+	{ th: "領収書", td: "通常払込みの場合は毎回、口座自動振替の場合は年1回まとめて発行します。" },
+	{ th: "金額の変更", td: "途中での変更が可能です。事務局までご連絡ください。" },
+	{ th: "匿名でのご支援", td: "献金者名簿への氏名の掲載を控えたい場合は、匿名希望の旨をお知らせください。" },
+];
+
+const faq = [
+	{ q: "マンスリーサポーターとは何ですか。", a: "毎月継続してご支援くださる方のことです。個人のほか、ご家族、仲間、学校、小教区、修道院などのグループでもご登録いただけます。", open: true },
+	/* TODO(要確認): 以下は回答未支給のため非表示(Faq は a の無い項目を出さない)
+	{ q: "いくらから始められますか。" },
+	{ q: "オンラインで申し込めますか。" },
+	{ q: "引き落としはいつから始まりますか。" },
+	{ q: "領収書はいつ発行されますか。" },
+	{ q: "寄付金控除は受けられますか。" },
+	*/
+];
 ---
-<StaticPage title="マンスリーサポーター" en="DONATE" crumbs={[{ label: "寄付する", href: "/donate/" }]} />
+<Layout title="マンスリーサポーター" description={description}>
+	<PageHeader title="マンスリーサポーター" en="MONTHLY SUPPORTER" ja="毎月の支援" crumbs={[{ label: "寄付する", href: "/donate/" }]}>
+		<Fragment slot="lead">毎月継続してご支援くださる方を、マンスリーサポーターと呼んでいます。<br class="u-pc-only" />支援を長く続けるためには、先の見通しが立つことがなによりの力になります。</Fragment>
+	</PageHeader>
+
+	<!-- どなたでも、いくらからでも -->
+	<section class="sub-section monthly-overview" aria-labelledby="overview-title">
+		<div class="l-container">
+			<SectionHead en="OVERVIEW" id="overview-title">
+				<Fragment slot="title"><em class="u-red">どなた</em>でも、<em class="u-red">いくら</em>からでも</Fragment>
+				<Fragment slot="lead">個人のかたはもちろん、ご家族、仲間、学校、小教区、修道院などのグループでご登録いただくこともできます。<br class="u-pc-only" />募金額はご自由に設定いただけます。途中での変更も可能です。</Fragment>
+			</SectionHead>
+		</div>
+	</section>
+	<PhotoStrip photos={strip} gap="white" />
+
+	<!-- お申し込み方法 -->
+	<section class="sub-section monthly-apply" aria-labelledby="apply-title">
+		<div class="l-container">
+			<SectionHead en="HOW TO APPLY" title="お申し込み方法" id="apply-title" lead="2つの方法からお選びいただけます。どちらも申込書のご提出が必要です。" />
+
+			<div class="apply-form">
+				<!-- TODO(要確認): 申込書の PDF・表紙画像(現在はカンプの仮画像) -->
+				<img class="flyer-thumb apply-form__thumb" src="/assets/img/sub/donate/flyer-monthly.jpg" alt="マンスリーサポーター申込書(表紙)" width="322" height="411" loading="lazy" decoding="async" />
+				<div class="apply-form__body">
+					<h3 class="subheading-bar">マンスリーサポーター申込書（PDF）</h3>
+					<p class="apply-form__text">印刷してご記入のうえ、事務局までご返送ください。郵送でのご請求も承ります。</p>
+					<ul class="apply-form__btns">
+						<li><a class="btn-solid btn-solid--lg" href="#" data-todo="url" download><span>申込書をダウンロード</span><svg width="14" height="14" aria-hidden="true"><use href="#i-download" /></svg></a></li>
+						<!-- TODO(要確認): 郵送請求の受付方法(フォーム・電話など)のリンク先 -->
+						<li><a class="btn-outline btn-outline--lg" href="#" data-todo="url"><span>申込書を郵送で請求する</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
+					</ul>
+				</div>
+			</div>
+
+			{methods.map((m) => (
+				<div class="apply-method">
+					<div class="apply-method__head">
+						<h3 class="apply-method__title">{m.title}</h3>
+						<p class="apply-method__desc" set:html={m.desc} />
+					</div>
+					<FlowCards items={m.steps} class="apply-method__steps" />
+				</div>
+			))}
+		</div>
+	</section>
+
+	<!-- ご確認いただきたいこと -->
+	<DonateNotice rows={notice} />
+
+	<!-- よくあるご質問 -->
+	<section class="sub-section sub-section--cream faq-section" aria-labelledby="faq-title">
+		<div class="l-container">
+			<SectionHead en="FAQ" title="よくあるご質問" id="faq-title" />
+			<Faq items={faq} />
+		</div>
+		<svg class="curve curve--down sub-section__curve-down" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q720 84 1440 0 Z" fill="currentColor" /></svg>
+	</section>
+
+	<RelatedNav preset="donate" />
+	<Partners class="partners--after-nav" />
+</Layout>

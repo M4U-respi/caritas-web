@@ -1,0 +1,46 @@
+---
+/*
+ * 寄付ページ共通「ご確認いただきたいこと」(緑セクション)
+ *   <DonateNotice rows={[{ th: "領収書", td: "…" }, …]} />
+ * 上に「寄付金控除について」、下に「お問い合わせ」(フォーム・電話・FAX)を表示する
+ */
+import GreenSection from "./GreenSection.astro";
+import SectionHead from "./SectionHead.astro";
+import { CONTACT } from "../data/donate";
+
+interface Row { th: string; td: string }
+interface Props { rows: Row[] }
+const { rows } = Astro.props;
+---
+<GreenSection labelledby="notice-title" class="donate-notice">
+	<SectionHead en="NOTICE" title="ご確認いただきたいこと" id="notice-title" />
+	<div class="white-box donate-notice__box">
+		<div class="notice-card">
+			<h3 class="notice-card__title">寄付金控除について</h3>
+			<p class="notice-card__text">カリタスジャパンへの募金は、寄付金控除を受けることができません。あらかじめご了承いただきますようお願い申し上げます。</p>
+		</div>
+		<table class="def-table def-table--wide">
+			<tbody>
+				{rows.map((r) => (
+					<tr><th scope="row">{r.th}</th><td set:html={r.td} /></tr>
+				))}
+			</tbody>
+		</table>
+	</div>
+	<div class="white-box donate-contact">
+		<div class="donate-contact__head">
+			<h3 class="subheading-bar">お問い合わせ</h3>
+			<a class="btn-solid" href="/contact/"><span>お問い合わせフォーム</span><svg class="btn-solid__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+		</div>
+		<dl class="tel-box__grid">
+			<div class="tel-card tel-card--cream">
+				<dt class="tel-card__label"><img src="/assets/img/sub/contact/icon-tel.png" alt="" width="18" height="20" />電話</dt>
+				<dd class="tel-card__num"><a href={CONTACT.telHref}>{CONTACT.tel}</a></dd>
+			</div>
+			<div class="tel-card tel-card--cream">
+				<dt class="tel-card__label"><img src="/assets/img/sub/contact/icon-fax.png" alt="" width="26" height="26" />FAX</dt>
+				<dd class="tel-card__num">{CONTACT.fax}</dd>
+			</div>
+		</dl>
+	</div>
+</GreenSection>

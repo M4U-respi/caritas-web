@@ -1,7 +1,7 @@
 ---
 /*
  * 関連ページナビ(ページ末尾の「各ページ」リンク群)
- *   <RelatedNav preset="about" />   … about / news / publication(src/data/site.ts の RELATED_NAV)
+ *   <RelatedNav preset="about" />   … about / news / publication / donate(src/data/site.ts の RELATED_NAV)
  * 現在のページは自動で aria-current="page"
  */
 import { RELATED_NAV } from "../data/site";
@@ -18,7 +18,7 @@ const titleId = `related-${preset}-title`;
 <section class:list={["related-nav", `related-nav--${preset}`]} aria-labelledby={titleId}>
 	<div class="l-container">
 		<p class="section-label">
-			<span lang="en">{nav.en}</span><span class="section-label__slash" aria-hidden="true"></span><span>{nav.ja}</span>
+			<span lang="en">{nav.en}</span>{nav.ja && <><span class="section-label__slash" aria-hidden="true"></span><span>{nav.ja}</span></>}
 		</p>
 		<h2 class="related-nav__title" id={titleId}>{nav.title}</h2>
 		{preset === "about" ? (
