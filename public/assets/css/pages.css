@@ -1221,6 +1221,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-section { padding: 70px 0 64px; }
   .sub-section--roomy { padding-top: 76px; }
   .section--green { padding: calc(var(--curve) + 72px) 0 64px; }
+  /* 背景:SP デザインの筆跡テクスチャ(sp02 から書き出し)をセクション全体に伸ばす */
+  .section--green { background: #2E8A86 url(../img/sub/common/bg-green-sp.jpg) center top / 100% 100% no-repeat; }
   .sub-head__title, .manual__title { margin-top: 14px; font-size: 24px; line-height: 1.5; letter-spacing: .05em; }
   .sub-head__lead { margin-top: 10px; font-size: 16px; line-height: 29px; letter-spacing: 0; }
   .section--green .sub-head__title, .section--green .manual__title { margin-top: 28px; }
@@ -1377,3 +1379,17 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 @media (prefers-reduced-motion: reduce) {
   .faq__item::details-content { transition: none; }
 }
+
+/* ==========================================================================
+   PC / SP 共通の調整(最後に置いて各ブレークポイントの指定より優先)
+   ========================================================================== */
+.breadcrumb__list { font-weight: 500; }
+.breadcrumb [aria-current="page"] { font-weight: 600; }
+.related-nav__btn { font-weight: 500; }
+.sub-text { font-weight: 500; }
+.sub-head__lead { font-size: 16px; font-weight: 500; }
+.records__no { color: #666; }
+.records__place { color: #666; }
+.donation__box-title span { border-bottom: 1px solid currentColor; }
+.social__btn { font-size: 14px; }
+.mission-way__label { align-items: center; }
