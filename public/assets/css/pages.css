@@ -462,6 +462,10 @@ a.pagination__arrow:hover { opacity: .7; }
 .records__item:nth-child(-n + 2) { border-top: 1px solid var(--c-line); }
 .records__year { font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--c-red); }
 .records__no { font-size: 12px; font-weight: 400; line-height: 1.8; color: var(--c-text-mute); }
+.records__meta { display: flex; align-items: baseline; gap: 12px; }
+.records__item { justify-content: flex-start; padding-block: 16px; }
+.records__title { margin-top: 4px; font-size: 15px; font-weight: 500; line-height: 1.7; color: var(--c-text-strong); }
+.records__place { font-size: 13px; font-weight: 400; line-height: 1.8; color: var(--c-text); }
 
 /* ---------- /contact/ ---------- */
 .tel-box { padding: 40px; border-radius: 8px; background: var(--c-cream); }
@@ -816,6 +820,27 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .apply-method__title { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-teal); }
 .apply-method__desc { margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 
+/* ---------- /mission/(デザインは SP のみ。PC は SP の構成を 2 列に広げたもの) ---------- */
+.mission-way { --mc: #6FBA2C; position: relative; padding: 100px 0 104px; background: var(--c-white); }
+.mission-way--join { --mc: #D5B329; }
+.mission-way--share { --mc: #6C9BD2; }
+.mission-way--pray { --mc: #EC6D65; }
+.mission-way--cream { background: var(--c-cream); }
+.mission-way--cream:has(> .sub-section__curve-down) { z-index: 2; }
+.mission-way__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.mission-way__label { display: flex; align-items: baseline; gap: 24px; color: var(--mc); }
+.mission-way__num { font-size: 32px; font-weight: 400; line-height: 1; }
+.mission-way__en { font-family: var(--ff-sans); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: .2em; }
+.mission-way__title { margin-top: 24px; font-size: 32px; font-weight: 700; line-height: 1.5; letter-spacing: .04em; color: var(--c-text-strong); }
+.mission-way__text { margin-top: 16px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.mission-way__photo { width: 100%; aspect-ratio: 335 / 210; object-fit: cover; border-radius: 8px; }
+.mission-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
+.mission-card { overflow: hidden; border-radius: 8px; background: var(--c-cream); }
+.mission-way--cream .mission-card { background: var(--c-white); }
+.mission-card__label { display: flex; align-items: center; gap: 10px; min-height: 45px; padding: 8px 16px; font-size: 14px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; color: var(--c-text-strong); }
+.mission-card__label::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--mc); }
+.mission-card__img { display: block; width: 100%; aspect-ratio: 335 / 194; object-fit: cover; border-top: 4px solid var(--mc); border-radius: 8px; }
+
 /* ==========================================================================
    下層: 1024〜1339px(PC 狭め)
    ========================================================================== */
@@ -1019,7 +1044,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .timeline__row:first-child { padding-top: 36px; }
 .timeline__year { width: auto; padding: 0; line-height: 1.6; }
   .timeline__text { margin-top: 4px; padding: 0; font-size: 15px; line-height: 1.9; }
-  .history-body { padding-top: 56px; padding-bottom: 8px; }
+  .history-body { padding-top: 44px; padding-bottom: 8px; }
 
   .lent-about .sub-head + .sub-text { margin-top: 16px; }
   .campaign-box { flex-direction: column; align-items: stretch; min-height: 0; }
@@ -1176,6 +1201,172 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .apply-form__btns { flex-direction: column; align-items: stretch; }
   .apply-form__btns .btn-solid, .apply-form__btns .btn-outline { width: 100%; }
   .apply-method { margin-top: 40px; }
+}
+
+/* ==========================================================================
+   下層: SP デザイン(SP / about・history・lent・aid・social・mission、375px 幅の実測)
+   ========================================================================== */
+@media (max-width: 767.98px) {
+  /* ヒーロー */
+  .breadcrumb { padding-top: 26px; }
+  .breadcrumb__list { font-size: 12px; }
+  .sub-hero { padding-bottom: calc(36px + var(--curve)); background-size: 120vw auto; background-position: 30vw 40px; }
+  .sub-hero--flat { padding-bottom: 62px; }
+  .sub-hero__label { margin-top: 54px; }
+  .sub-hero__title { margin-top: 14px; font-size: 32px; line-height: 48px; letter-spacing: .05em; }
+  .sub-hero__lead { margin-top: 13px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; }
+
+  /* 見出し・本文 */
+  .sub-section { padding: 70px 0 64px; }
+  .sub-section--roomy { padding-top: 76px; }
+  .section--green { padding: calc(var(--curve) + 72px) 0 64px; }
+  .sub-head__title, .manual__title { margin-top: 14px; font-size: 24px; line-height: 1.5; letter-spacing: .05em; }
+  .sub-head__lead { margin-top: 10px; font-size: 16px; line-height: 29px; letter-spacing: 0; }
+  .section--green .sub-head__title, .section--green .manual__title { margin-top: 28px; }
+  .section--green .sub-head__lead { margin-top: 16px; font-size: 15px; line-height: 27px; }
+  .sub-head + * { margin-top: 32px; }
+  .sub-text { font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .sub-text > p + p { margin-top: 16px; }
+  .subheading-bar { font-size: 18px; }
+
+  /* 写真帯+アーチ:4 枚横並び */
+  .photo-strip--arch-bottom .photo-strip__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; }
+  .photo-strip--arch-bottom .photo-strip__item { height: 27.8vw; aspect-ratio: auto; }
+
+  /* /about/ イントロ */
+  .about-intro { padding-top: 64px; }
+  .about-intro__logo { display: none; }
+  .about-intro .sub-head__lead { text-align: left; }
+  .about-intro__body { margin-top: 36px; row-gap: 24px; }
+
+  /* ビジョンと使命 */
+  .box-grid { gap: 24px; }
+  .white-box { padding: 32px 16px; }
+  .white-box__text { margin-top: 20px; font-size: 16px; line-height: 32px; letter-spacing: 0; }
+
+  /* 組織 */
+  .org-box { padding: 40px 20px 20px; }
+  .org-box__title { font-size: 18px; letter-spacing: 0; }
+  .org-box__desc { margin-top: 6px; font-size: 15px; line-height: 27px; }
+  .org-box__inner { margin-top: 24px; padding: 24px 16px 24px; border-left: 0; }
+  .org-box__text { font-size: 14px; line-height: 25px; letter-spacing: 0; }
+  .org-box__roles { display: grid; gap: 4px; margin-top: 16px; }
+  .org-box__role { gap: 8px; min-height: 39px; align-items: center; }
+  .org-box__role dd { font-size: 15px; letter-spacing: 0; }
+  .dioceses { flex-direction: column; align-items: stretch; gap: 24px; margin-top: 40px; }
+  .dioceses__media { width: 100%; justify-content: flex-end; }
+  .dioceses__count { width: 78px; height: 78px; margin-top: -39px; }
+  .dioceses__num { font-size: 28px; }
+  .dioceses__unit { margin-top: 4px; font-size: 13px; }
+  .dioceses__img { width: calc(100% - 54px); margin-left: 54px; border-radius: 6px; aspect-ratio: 279 / 164; object-fit: cover; }
+  .dioceses__desc { margin-top: 12px; font-size: 15px; line-height: 30px; }
+
+  /* 歩みと活動:2 列カード(写真が上) */
+  .link-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .way-card--white { flex-direction: column-reverse; justify-content: flex-end; min-height: 0; border-radius: 8px; }
+  .way-card--white .way-card__photo { flex: none; aspect-ratio: 163 / 110; }
+  .way-card--white .way-card__panel { display: block; width: auto; padding: 16px 10px 20px 12px; }
+  .way-card--white .way-card__num { font-size: 16px; }
+  .way-card--white .way-card__title { margin-top: 6px; gap: 4px; justify-content: space-between; font-size: 16px; line-height: 30px; letter-spacing: 0; white-space: nowrap; }
+  .way-card--white .way-card__title br { display: inline; }
+  .way-card--white .way-card__arrow { width: 22px; height: 22px; }
+  .way-card--white .way-card__text { grid-column: auto; margin-top: 6px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
+
+  /* 表:項目名と内容を横並び */
+  .def-table, .def-table tbody { display: table; width: 100%; }
+  .def-table tr { display: table-row; padding: 0; border: 0; }
+  .def-table tr:first-child { border: 0; }
+  .def-table th, .def-table td { display: table-cell; padding: 16px 0; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); vertical-align: top; font-size: 15px; line-height: 30px; }
+  .def-table th { width: 104px; padding-left: 16px; }
+  .def-table td { margin: 0; }
+  .def-table .u-sp { display: block; width: 0; height: 0; }
+
+  /* FAQ */
+  .faq-section { padding: 70px 0 64px; }
+  .faq__q { gap: 16px; padding: 18px 16px; font-size: 15px; line-height: 30px; }
+  .faq__mark { width: 40px; height: 40px; font-size: 20px; }
+  .faq__a { gap: 16px; margin: 0 16px; padding: 22px 0 18px; }
+  .faq__a-text { font-size: 15px; line-height: 30px; }
+
+  /* 関連ページナビ(about):先頭は全幅+ロゴ、残りは 2 列 */
+  .related-nav__title { font-size: 18px; }
+  .related-nav__grid { gap: 8px; }
+  .related-nav__grid .related-nav__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .related-nav__btn { justify-content: space-between; min-height: 60px; padding: 8px 12px; font-size: 14px; text-align: left; }
+  .related-nav__btn--lead { justify-content: space-between; min-height: 64px; padding: 8px 12px; font-size: 14px; }
+  .related-nav__logo { display: block; width: 110px; margin-right: 12px; }
+  .related-nav__btn--lead .circle-arrow { margin-left: 8px; }
+
+  /* /about/history/ */
+  .timeline__head { padding-bottom: 20px; font-size: 20px; line-height: 1.6; }
+  .timeline__period { font-size: 20px; letter-spacing: .05em; }
+  .timeline__row { display: flex; padding: 16px 0; }
+  .timeline__row:first-child { padding-top: 16px; }
+  .timeline__year { flex: none; width: 64px; padding-left: 16px; font-size: 15px; line-height: 30px; }
+  .timeline__text { margin-top: 0; padding-right: 4px; font-size: 15px; line-height: 30px; }
+  .timeline__era + .timeline__era { margin-top: 56px; }
+
+  /* /about/lent/ */
+  .lent-about__diagram { margin-top: 32px; }
+  .campaign-box { padding-bottom: 8px; }
+  .campaign-box__body { padding: 28px 20px 0; }
+  .list-box__title { font-size: 16px; line-height: 32px; letter-spacing: 0; color: var(--c-red); }
+  .media-row__img { aspect-ratio: 335 / 258; object-fit: cover; }
+  .sub-section--purpose { padding-top: 70px; }
+  .list-box__text { font-size: 15px; line-height: 25px; letter-spacing: 0; }
+  .aid-history__thumb { background: var(--c-white); }
+
+  /* フロー:縦積み、写真が上 */
+  .flow { gap: 37px; }
+  .flow__item { flex-direction: column; }
+  .flow__img { width: 100%; height: auto; min-height: 0; aspect-ratio: 335 / 180; border-radius: 7px 7px 0 0; }
+  .flow__body { padding: 16px 16px 20px; }
+  .flow__num { font-size: 18px; }
+  .flow__title { margin-top: 6px; font-size: 16px; }
+  .flow__text { font-size: 14px; line-height: 25px; }
+  .flow__item:not(:last-child)::after { bottom: -24px; width: 8px; height: 12px; margin-left: -4px; }
+
+  /* /about/aid/ */
+  .list-box { padding: 24px 20px; }
+  .list-box__item { padding: 18px 0; }
+  .aid-history__link { gap: 16px; padding: 12px 0; }
+  .aid-history__thumb { width: 96px; aspect-ratio: 96 / 64; }
+  .aid-history__title { font-size: 15px; line-height: 1.6; }
+  .aid-history__link::after { width: 22px; height: 22px; border-radius: 50%; background: var(--c-red) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 12'%3E%3Cpath d='M1.5 1l5 5-5 5' fill='none' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") center / 5px 8px no-repeat; }
+  .manual__card { flex-direction: column; align-items: stretch; gap: 12px; padding: 24px 16px 20px; }
+  .manual__card-title { font-size: 16px; line-height: 32px; }
+  .manual__card-text { margin-top: 12px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .manual__card-title { letter-spacing: 0; }
+  .manual__card .circle-arrow { align-self: flex-end; }
+
+  /* /about/social/ */
+  .records__list { margin-top: 24px; }
+  .records__head { display: block; }
+  .records__desc { margin-top: 20px; font-size: 14px; line-height: 28px; }
+  .social-records { padding-top: 70px; }
+  .records__item { display: block; min-height: 0; padding: 16px 0; }
+  .records__item:first-child { border-top: 1px solid var(--c-line); }
+  .records__year { font-size: 16px; }
+  .records__meta { gap: 16px; }
+  .records__no { font-size: 12px; }
+  .records__item { padding: 18px 0 16px; }
+  .records__title { display: block; margin-top: 12px; font-size: 15px; font-weight: 400; line-height: 30px; letter-spacing: 0; color: var(--c-text-strong); }
+  .records__place { display: block; margin-top: 2px; font-size: 14px; line-height: 25px; color: var(--c-text); }
+  .pub-list__item { align-items: flex-start; gap: 0; padding: 8px 0; font-size: 14px; line-height: 25px; }
+  .pub-list__year { width: 48px; color: var(--c-red); }
+}
+
+@media (max-width: 1023.98px) {
+  .mission-way__head { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .mission-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 767.98px) {
+  .mission-way { padding: 66px 0 72px; }
+  .mission-way__label { gap: 24px; }
+  .mission-way__num { font-size: 24px; }
+  .mission-way__title { margin-top: 22px; font-size: 26px; letter-spacing: .04em; }
+  .mission-way__text { margin-top: 8px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .mission-cards { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

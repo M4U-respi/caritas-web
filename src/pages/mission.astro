@@ -1,4 +1,97 @@
 ---
-import StaticPage from "../components/StaticPage.astro";
+/*
+ * わたしたちの想い(デザイン「SP07 mission」。PC のデザインは未支給のため、SP の構成を PC 幅に広げたレイアウト)
+ */
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import PhotoStrip from "../components/PhotoStrip.astro";
+import Donation from "../components/Donation.astro";
+import Partners from "../components/Partners.astro";
+
+const lead = "あなたの想いが、だれかにつながる。";
+const img = (name: string) => `/assets/img/sub/mission/${name}.jpg`;
+
+const strip = [
+	{ src: img("mission-strip-01"), alt: "書類に記入する女性たち", width: 569, height: 800 },
+	{ src: img("mission-strip-02"), alt: "砂漠を歩く人", width: 800, height: 500 },
+	{ src: img("mission-strip-03"), alt: "支援物資の箱を受け取る子どもたち", width: 800, height: 533 },
+	{ src: img("mission-strip-04"), alt: "ボランティアセンターの前に並ぶボランティアの人たち", width: 484, height: 413 },
+];
+
+interface Card { label: string; src: string; alt: string; w: number; h: number; pos?: string }
+interface Way { key: string; num: string; en: string; title: string; text: string; photo: { src: string; alt: string; w: number; h: number }; cards: Card[] }
+
+const ways: Way[] = [
+	{
+		key: "support", num: "01", en: "SUPPORT", title: "支える",
+		text: "募金活動を通して世界・日本とつながる。これらの活動には、クリスマス募金、四旬節愛の献金、マンスリーサポーター、一般募金などを活用させていただいています。",
+		photo: { src: img("support"), alt: "輪になって遊ぶ子どもたちとスタッフ", w: 800, h: 449 },
+		cards: [
+			{ label: "海外の紛争地における緊急・復興支援", src: img("support-conflict"), alt: "テントの前で支援物資を配るスタッフ", w: 596, h: 335 },
+			{ label: "国内外の自然災害の緊急・復興支援", src: img("support-disaster"), alt: "被災した家屋の片付けをするボランティア", w: 513, h: 389 },
+			{ label: "教育・保健医療・コミュニティ支援など", src: img("support-education"), alt: "机を囲んで話し合う参加者", w: 800, h: 309 },
+		],
+	},
+	{
+		key: "join", num: "02", en: "JOIN", title: "参加する",
+		text: "地域カリタスの活動への参加や被災地支援など、実際に様々な活動にご参加いただけます。",
+		photo: { src: img("join"), alt: "田んぼで活動する子どもたちとボランティア", w: 800, h: 535 },
+		cards: [
+			{ label: "被災地支援／地域カリタスの活動への参加", src: img("join-disaster"), alt: "板を運ぶボランティア", w: 800, h: 531 },
+			{ label: "イベント", src: img("join-event"), alt: "聖堂で開かれた集い", w: 800, h: 492 },
+			{ label: "キャンペーンなどの取り組みへの参加", src: img("join-campaign"), alt: "教室で笑顔を見せる子どもたち", w: 800, h: 420 },
+		],
+	},
+	{
+		key: "share", num: "03", en: "SHARE", title: "分かち合う",
+		text: "世界や国内の社会問題について、それに対するカリタスの活動について知ること・学ぶこと・伝えることも、世界とつながる大切な一歩です。",
+		photo: { src: img("share"), alt: "カリタスジャパンの機関誌", w: 800, h: 599 },
+		cards: [
+			{ label: "SNS", src: img("share-sns"), alt: "カリタスジャパンの Facebook ページ", w: 800, h: 460, pos: "center top" },
+			{ label: "機関誌", src: img("share-magazine"), alt: "機関誌「We are Caritas」No.25", w: 562, h: 800, pos: "center top" },
+			{ label: "イベント開催", src: img("share-event"), alt: "付箋を並べたテーブルを囲む参加者", w: 688, h: 516 },
+		],
+	},
+	{
+		key: "pray", num: "04", en: "PRAY", title: "祈る",
+		text: "カリタス（Caritas）は、「愛の業」を意味します。その愛の業は、募金やボランティアだけではなく、苦しみの中にある人々を忘れず、心を寄せ、ともに祈ることから始まります。祈りは、被災地や世界の課題に心を向け、私たちが世界とつながっていることに気づかせてくれます。カリタスジャパンでは、ともに祈ることを、愛の業の大切な実践の一つとして大切にしています。",
+		photo: { src: img("pray"), alt: "ろうそくを手にする女性たち", w: 800, h: 533 },
+		cards: [
+			{ label: "ともに祈る集い", src: img("pray-gathering"), alt: "聖堂でのミサ", w: 800, h: 600 },
+			{ label: "被災地や世界の課題に心を向ける", src: img("pray-disaster"), alt: "地震で倒壊した建物", w: 596, h: 335 },
+			{ label: "四旬節の祈り", src: img("pray-lent"), alt: "聖堂で祈る人々", w: 688, h: 516 },
+		],
+	},
+];
 ---
-<StaticPage title="わたしたちの想い" en="OUR MISSION" crumbs={[]} />
+<Layout title="わたしたちの想い" description={`世界とつながる。${lead}`}>
+	<PageHeader title="世界とつながる" current="わたしたちの想い" en="MISSION" ja="わたしたちの想い" lead={lead} flat />
+	<PhotoStrip photos={strip} gap="cream" />
+
+	{ways.map((w, i) => (
+		<section class:list={["mission-way", `mission-way--${w.key}`, i % 2 === 1 && "mission-way--cream"]} aria-labelledby={`way-${w.key}-title`}>
+			<div class="l-container">
+				<div class="mission-way__head">
+					<div class="mission-way__intro">
+						<p class="mission-way__label"><span class="mission-way__num">{w.num}</span><span class="mission-way__en" lang="en">{w.en}</span></p>
+						<h2 class="mission-way__title" id={`way-${w.key}-title`}>{w.title}</h2>
+						<p class="mission-way__text">{w.text}</p>
+					</div>
+					<img class="mission-way__photo" src={w.photo.src} alt={w.photo.alt} width={w.photo.w} height={w.photo.h} loading="lazy" decoding="async" />
+				</div>
+				<ul class="mission-cards">
+					{w.cards.map((c) => (
+						<li class="mission-card">
+							<h3 class="mission-card__label">{c.label}</h3>
+							<img class="mission-card__img" src={c.src} alt={c.alt} width={c.w} height={c.h} loading="lazy" decoding="async" style={c.pos ? `object-position: ${c.pos}` : undefined} />
+						</li>
+					))}
+				</ul>
+			</div>
+			{i === ways.length - 1 && <svg class="curve curve--down sub-section__curve-down" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q720 84 1440 0 Z" fill="currentColor" /></svg>}
+		</section>
+	))}
+
+	<Donation class="donation--after-curve" />
+	<Partners />
+</Layout>
