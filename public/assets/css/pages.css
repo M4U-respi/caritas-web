@@ -49,21 +49,27 @@ a.tag:hover { opacity: .7; }
 .gnav__sub-link:focus-visible { outline-offset: -3px; }
 
 @media (max-width: 1099.98px) {
+  /* メニューのアコーディオン(デザイン「SP / メニュー」)。開閉は .gnav__item.is-open(main.js) */
   .gnav__sub {
-    position: static; min-width: 0; padding: 0 0 12px 12px;
-    background: none; border-radius: 0; box-shadow: none;
+    display: none; position: static; width: auto; min-width: 0; margin: 0 0 0 8px; padding: 0;
+    background: none; border: 0; border-radius: 0; box-shadow: none;
     opacity: 1; visibility: visible; transform: none;
   }
   .gnav__sub, .gnav:hover .gnav__sub, .gnav:focus-within .gnav__sub { transition: none; }
   .gnav__sub::before { display: none; }
-  .gnav__sub { width: auto; border-top: 0; }
-  .gnav__sub > li + li { border-top: 0; }
-  .gnav__sub-link { display: block; min-height: 0; padding: 8px 0; font-size: 15px; color: var(--c-text); }
-  .gnav__sub-link:hover { background: none; }
-  .gnav__sub-chevron { display: none; }
+  .gnav__item.is-open > .gnav__sub { display: block; }
+  .gnav__item--has-child:hover > .gnav__sub,
+  .gnav__item--has-child:focus-within > .gnav__sub { transform: none; }
+  .gnav__item--sp-flat > .gnav__sub { display: none !important; }
+  .gnav__sub > li + li { border-top: 1px solid var(--c-line); }
+  .gnav__sub-link { min-height: 55px; padding: 0 18px 0 16px; font-size: 15px; font-weight: 400; letter-spacing: 0; color: var(--c-text-strong); white-space: normal; }
+  .gnav__sub-link:hover { background: none; color: var(--c-red); }
+  .gnav__sub-chevron { width: 7px; height: 12px; }
   .gnav__item--has-child:hover > .gnav__link,
   .gnav__item--has-child:focus-within > .gnav__link { color: var(--c-text-strong); }
-  .gnav__item--has-child > .gnav__link .gnav__caret { display: none; }
+  .gnav__item--has-child:hover > .gnav__link .gnav__caret,
+  .gnav__item--has-child:focus-within > .gnav__link .gnav__caret { transform: rotate(90deg); }
+  .gnav__item--has-child.is-open > .gnav__link .gnav__caret { transform: rotate(-90deg); }
 }
 
 /* ==========================================================================

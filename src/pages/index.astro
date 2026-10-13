@@ -4,12 +4,15 @@ import NewsSection from "../components/NewsSection.astro";
 import Donation from "../components/Donation.astro";
 import Partners from "../components/Partners.astro";
 ---
-<Layout preloadImage="/assets/img/fv-01.jpg">
+<Layout preloadImage="/assets/img/fv-01.jpg" preloadImageSp="/assets/img/fv-01-sp.jpg">
 	<!-- ==================== FV カルーセル ==================== -->
 	<section class="fv" id="fv" role="region" aria-roledescription="カルーセル" aria-label="メインビジュアル">
 	  <div class="fv__slides" id="fv-slides" aria-live="off">
 	    <div class="fv__slide fv__slide--01 is-active" role="group" aria-roledescription="スライド" aria-label="1 / 3">
-	      <img src="/assets/img/fv-01.jpg" alt="笑顔で見つめ合う少女と女性スタッフ" width="1747" height="968" loading="eager" fetchpriority="high" decoding="async">
+	      <picture>
+        <source media="(max-width: 767.98px)" srcset="/assets/img/fv-01-sp.jpg" width="1280" height="853">
+        <img src="/assets/img/fv-01.jpg" alt="笑顔で見つめ合う少女と女性スタッフ" width="1747" height="968" loading="eager" fetchpriority="high" decoding="async">
+      </picture>
 	    </div>
 	    <div class="fv__slide fv__slide--02" role="group" aria-roledescription="スライド" aria-label="2 / 3" aria-hidden="true">
 	      <img src="/assets/img/fv-02.jpg" alt="青いポロシャツの女性たち" width="2880" height="1588" loading="lazy" decoding="async">
@@ -22,7 +25,7 @@ import Partners from "../components/Partners.astro";
 
 	  <div class="fv__content">
 	    <h1 class="fv__catch"><span class="fv__catch-line"><em class="u-red">世界</em>と、</span><span class="fv__catch-line">つながる。</span></h1>
-	    <p class="fv__lead">あなたの想いが、だれかにつながる。<br class="u-pc-only">カリタスジャパンは、国内外で困難な状況にある人々に寄り添い続ける、<br class="u-pc-only">カトリック教会の公式な援助機関です。</p>
+	    <p class="fv__lead">あなたの想いが、だれかにつながる。<br>カリタスジャパンは、国内外で困難な状況に<br class="u-sp-only">ある人々に寄り添い続ける、<br>カトリック教会の公式な援助機関です。</p>
 	  </div>
 
 	  <div class="fv__pager" role="group" aria-label="スライドの選択">
@@ -60,7 +63,7 @@ import Partners from "../components/Partners.astro";
 	  <div class="value__inner">
 	    <header class="section-head section-head--center reveal">
 	      <p class="section-label section-label--white"><span lang="en">VALUE</span><span class="section-label__slash" aria-hidden="true"></span><span>価値観</span></p>
-	      <h2 class="heading-lg value__title" id="value-title">わたしたちが大切にしていること</h2>
+	      <h2 class="heading-lg value__title" id="value-title">わたしたちが大切に<br class="u-sp-only">していること</h2>
 	    </header>
 	    <ul class="value__list">
 	      <li class="value__item reveal">

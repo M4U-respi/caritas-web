@@ -1,5 +1,5 @@
 ---
-import { GNAV } from "../data/site";
+import { GNAV, SNS } from "../data/site";
 const path = Astro.url.pathname;
 const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 ---
@@ -12,16 +12,21 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 		<div class="header__menu" id="global-menu">
 			<nav class="gnav" aria-label="グローバルナビゲーション">
 				<ul class="gnav__list">
-					{GNAV.map((item) => (
-						<li class:list={["gnav__item", item.children && "gnav__item--has-child"]}>
+					{GNAV.map((item, i) => (
+						<li class:list={["gnav__item", item.children && "gnav__item--has-child", item.spFlat && "gnav__item--sp-flat"]}>
 							<a class="gnav__link" href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>
 								<span class="gnav__label">{item.label}</span>
 								{item.children && (
 									<svg class="gnav__caret" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
 								)}
 							</a>
+							{item.children && !item.spFlat && (
+								<button class="gnav__toggle" type="button" aria-expanded="false" aria-controls={`gnav-sub-${i}`}>
+									<span class="visually-hidden">{item.label}のメニュー</span>
+								</button>
+							)}
 							{item.children && (
-								<ul class="gnav__sub">
+								<ul class="gnav__sub" id={`gnav-sub-${i}`}>
 									{item.children.map((c) => (
 										<li><a class="gnav__sub-link" href={c.href}><span>{c.label}</span><svg class="gnav__sub-chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
 									))}
@@ -42,11 +47,32 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 					<span>寄付で支援する</span>
 				</a>
 			</div>
+
+			<!-- メニュー(〜1099px)下部:寄付の案内と SNS -->
+			<div class="drawer-extra">
+				<div class="drawer-cta">
+					<p class="drawer-cta__text">あなたのご支援が、<br />世界のいのちと尊厳を支えます。</p>
+					<a class="drawer-cta__btn drawer-cta__btn--solid" href="/donate/">
+						<svg width="20" height="20" aria-hidden="true"><use href="#i-heart" /></svg>
+						<span>寄付で支援する</span>
+					</a>
+					<a class="drawer-cta__btn drawer-cta__btn--outline" href="/donate/monthly/">
+						<span>マンスリーサポーターになる</span>
+						<svg width="7" height="12" aria-hidden="true"><use href="#i-chevron" /></svg>
+					</a>
+				</div>
+				<ul class="drawer-sns">
+					<li><a href={SNS.facebook} target="_blank" rel="noopener"><img src="/assets/img/sns-facebook-color.png" alt="Facebook" width="32" height="32" loading="lazy" /></a></li>
+					<li><a href={SNS.instagram} target="_blank" rel="noopener"><img src="/assets/img/sns-instagram-color.png" alt="Instagram" width="32" height="32" loading="lazy" /></a></li>
+					<li><a href={SNS.youtube} target="_blank" rel="noopener"><img src="/assets/img/sns-youtube-color.png" alt="YouTube" width="32" height="32" loading="lazy" /></a></li>
+				</ul>
+			</div>
 		</div>
 
-		<a class="btn-donate btn-donate--compact header__donate-sp" href="/donate/">
-			<svg class="btn-donate__icon" width="14" height="14" aria-hidden="true"><use href="#i-heart" /></svg>
-			<span>寄付で支援する</span>
+		<!-- 〜1099px:ヘッダー右上の言語ボタン -->
+		<a class="lang-btn lang-btn--bar" href="#" data-todo="url" lang="ja">
+			<svg width="13" height="13" aria-hidden="true"><use href="#i-globe" /></svg>
+			<span>日本語</span>
 		</a>
 		<button class="hamburger" id="menu-toggle" type="button" aria-expanded="false" aria-controls="global-menu" aria-label="メニューを開く">
 			<span class="hamburger__bars" aria-hidden="true"><span></span><span></span><span></span></span>

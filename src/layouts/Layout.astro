@@ -12,12 +12,14 @@ interface Props {
 	image?: string | null;
 	/** <head> に追加する preload 画像 */
 	preloadImage?: string;
+	/** スマホ用に別画像を先読みする場合(preloadImage は 768px 以上だけになる) */
+	preloadImageSp?: string;
 	/** CMSコンテンツページの場合に指定 */
 	content?: { collection: string; id: string; slug?: string | null };
 	bodyClass?: string;
 }
 
-const { title, description, image, preloadImage, content, bodyClass } = Astro.props;
+const { title, description, image, preloadImage, preloadImageSp, content, bodyClass } = Astro.props;
 const fullTitle = title ? `${title}｜${SITE.titleSuffix}` : SITE.defaultTitle;
 const pageDescription = description ?? SITE.description;
 
@@ -44,7 +46,8 @@ const pageCtx = createPublicPageContext({
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
-		{preloadImage && <link rel="preload" as="image" href={preloadImage} />}
+		{preloadImage && <link rel="preload" as="image" href={preloadImage} media={preloadImageSp ? "(min-width: 768px)" : undefined} />}
+		{preloadImageSp && <link rel="preload" as="image" href={preloadImageSp} media="(max-width: 767.98px)" />}
 		<link rel="stylesheet" href="/assets/css/style.css" />
 		<link rel="stylesheet" href="/assets/css/pages.css" />
 		<script is:inline>
@@ -73,6 +76,13 @@ const pageCtx = createPublicPageContext({
 		</main>
 
 		<Footer />
+
+		<!-- 画面下に固定の寄付ボタン(〜1099px) -->
+		<a class="fixed-donate" href="/donate/">
+			<svg class="fixed-donate__heart" width="20" height="20" aria-hidden="true"><use href="#i-heart" /></svg>
+			<span>寄付で支援する</span>
+			<svg class="fixed-donate__chevron" width="7" height="12" aria-hidden="true"><use href="#i-chevron" /></svg>
+		</a>
 
 		<script is:inline src="/assets/js/main.js" defer onerror="document.documentElement.classList.remove('js')"></script>
 		<EmDashBodyEnd page={pageCtx} />

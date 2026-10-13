@@ -75,8 +75,8 @@ const termLinks = (key: CollectionKey): NavLink[] =>
 		href: `${COLLECTIONS[key].base}${t.slug}/`,
 	}));
 
-/** グローバルナビ(ヘッダー) */
-export const GNAV: (NavLink & { children?: NavLink[] })[] = [
+/** グローバルナビ(ヘッダー)。spFlat: スマホのメニューでは子項目を出さない(デザインどおり) */
+export const GNAV: (NavLink & { children?: NavLink[]; spFlat?: boolean })[] = [
 	{ label: "わたしたちの想い", href: "/mission/" },
 	{
 		label: "カリタスジャパンとは",
@@ -93,6 +93,7 @@ export const GNAV: (NavLink & { children?: NavLink[] })[] = [
 		label: "活動報告",
 		href: "/report/",
 		children: [{ label: "活動報告", href: "/report/" }, ...termLinks("report")],
+		spFlat: true,
 	},
 	{
 		label: "発行物",

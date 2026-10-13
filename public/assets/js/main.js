@@ -79,6 +79,16 @@
       if (isOpen && e.target.closest('a')) setOpen(false, false);
     });
 
+    // メニュー内のアコーディオン(子項目の開閉)
+    Array.prototype.forEach.call(menu.querySelectorAll('.gnav__toggle'), function (btn) {
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.gnav__item');
+        var open = !item.classList.contains('is-open');
+        item.classList.toggle('is-open', open);
+        btn.setAttribute('aria-expanded', String(open));
+      });
+    });
+
     var onChange = function () { if (!mq.matches && isOpen) setOpen(false, false); };
     if (mq.addEventListener) mq.addEventListener('change', onChange);
     else if (mq.addListener) mq.addListener(onChange);
