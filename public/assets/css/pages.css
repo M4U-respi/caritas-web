@@ -1051,6 +1051,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .lent-about .sub-head + .sub-text { margin-top: 16px; }
   .lent-about .sub-text { padding-right: 10px; }
+  .lent-wide img { height: auto; aspect-ratio: 375 / 104; border-radius: 0; }
   .campaign-box { flex-direction: column; align-items: stretch; min-height: 0; }
   .campaign-box__body { width: auto; padding: 20px 20px 0; }
   .campaign-box__img { position: static; margin: 16px auto 20px; transform: none; }
