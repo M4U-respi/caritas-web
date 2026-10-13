@@ -1437,6 +1437,9 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .prose figcaption { margin-top: 8px; }
   .prose h2 { margin-top: 32px; padding-bottom: 12px; font-size: 18px; letter-spacing: 0; }
   .prose h2 + * { margin-top: 20px; }
+  /* SP デザインでは小見出し(h3)も h2 と同じ赤+下線 */
+  .prose h3 { margin-top: 56px; padding-bottom: 12px; border-bottom: 2px solid var(--c-text-strong); font-size: 18px; line-height: 1.6; letter-spacing: 0; color: var(--c-red); }
+  .prose h3 + * { margin-top: 20px; }
   .prose .prose__lead + h2, .prose > h2:first-child { margin-top: 32px; }
   .prose blockquote { margin: 56px 0 40px; padding: 22px 24px; border-left: 0; border-radius: 4px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; }
   .prose__table tr { padding: 14px 0 16px; }
@@ -1454,6 +1457,56 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   /* 関連ナビ(お知らせ各ページ):2 列 */
   .related-nav--news .related-nav__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+}
+
+/* ==========================================================================
+   SP デザイン:活動報告(一覧・詳細)・発行物
+   ========================================================================== */
+@media (max-width: 767.98px) {
+  .cms-archive--report, .cms-archive--publication { padding-top: 64px; }
+
+  /* カテゴリタブ:3 等分 */
+  .cms-archive--report .cat-tabs__nav, .cms-archive--publication .cat-tabs__nav { margin-inline: 0; border-bottom: 1px solid var(--c-line-gray); }
+  .cms-archive--report .cat-tabs__nav::after, .cms-archive--publication .cat-tabs__nav::after { display: none; }
+  .cms-archive--report .cat-tabs__list, .cms-archive--publication .cat-tabs__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; padding: 0; overflow: visible; }
+  .cms-archive--report .cat-tabs__link, .cms-archive--publication .cat-tabs__link { justify-content: center; height: 52px; padding: 0 4px; font-size: 15px; }
+  .cms-archive--report .cat-tabs__link[aria-current="page"], .cms-archive--publication .cat-tabs__link[aria-current="page"] { font-weight: 400; }
+  .cms-archive--report .cat-tabs__link::after, .cms-archive--publication .cat-tabs__link::after { height: 2px; }
+  .cms-archive--publication .cat-tabs { border-bottom: 0; }
+
+  /* 年で絞り込む:右寄せ */
+  .cms-archive--report .cat-tabs__aside { align-self: flex-end; margin-top: 16px; }
+  .cms-archive--report .year-filter { width: auto; gap: 12px; }
+  .cms-archive--report .year-filter__label { font-size: 12px; }
+  .cms-archive--report .year-filter__select { flex: none; width: 144px; }
+  .cms-archive--report .year-filter select { height: 40px; font-size: 14px; }
+
+  /* 記事一覧:2 列カード(写真が上・矢印は右下) */
+  .cms-archive--report .entry-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 15px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--c-line); }
+  .cms-archive--report .entry-row { margin-bottom: 24px; }
+  .cms-archive--report .entry-row__link { flex-direction: column; align-items: stretch; gap: 0; height: 100%; padding: 0 0 24px; }
+  .cms-archive--report .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
+  .cms-archive--report .entry-row__thumb img[src$="noimage.jpg"] { mix-blend-mode: multiply; }
+  .cms-archive--report .entry-row__body { flex: 1; }
+  .cms-archive--report .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
+  .cms-archive--report .entry-row__date { font-size: 12px; }
+  .cms-archive--report .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 15px; line-height: 30px; letter-spacing: 0; -webkit-line-clamp: unset; }
+  .cms-archive--report .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 14px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
+  .cms-archive--report .entry-row__arrow { align-self: flex-end; margin-top: 16px; }
+
+  /* 発行物:2 列カード(表紙が上) */
+  .cms-archive--publication .pub-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 15px; margin-top: 32px; }
+  .cms-archive--publication .pub-card, .cms-archive--publication .pub-card:nth-child(-n + 2) { border-top: 0; border-bottom: 1px solid var(--c-line); }
+  .cms-archive--publication .pub-card:nth-child(-n + 2) { border-top: 1px solid var(--c-line); }
+  .cms-archive--publication .pub-card__link { flex-direction: column-reverse; justify-content: flex-end; align-items: stretch; gap: 0; padding: 20px 0 24px; }
+  .cms-archive--publication .pub-card__cover { width: 100%; height: calc((100vw - 55px) / 2 * 1.25); aspect-ratio: auto; border: 0; border-radius: 0; background: none; }
+  .cms-archive--publication .pub-card__cover { display: flex; justify-content: center; overflow: visible; }
+  .cms-archive--publication .pub-card__cover img { width: auto; max-width: 100%; height: 100%; object-fit: contain; border: 1px solid var(--c-line); border-radius: 6px; }
+  .cms-archive--publication .pub-card__body .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
+  .cms-archive--publication .pub-card__title { margin-top: 10px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .cms-archive--publication .pub-card__excerpt { margin-top: 8px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
+  .pub-about__list { font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .pub-about__list li { padding-left: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
