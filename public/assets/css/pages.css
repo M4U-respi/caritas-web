@@ -81,6 +81,9 @@ a.tag:hover { opacity: .7; }
   --chev-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 12'%3E%3Cpath d='M1.5 1l5 5-5 5' fill='none' stroke='%23444' stroke-width='1.5'/%3E%3C/svg%3E");
 }
 
+/* スマホ用トリミング画像の <picture> は img をそのままレイアウトさせる */
+.media-row picture, .flow__item picture, .way-card__photo picture, .lent-wide picture { display: contents; }
+
 /* ---------- パンくず ---------- */
 .breadcrumb { padding: 25px 40px 0; }
 .breadcrumb__list { display: flex; flex-wrap: wrap; align-items: center; font-size: 12px; font-weight: 500; line-height: 18px; letter-spacing: .05em; color: var(--c-text-mute); }
@@ -1259,7 +1262,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .org-box__text { font-size: 14px; line-height: 25px; letter-spacing: 0; }
   .org-box__roles { display: grid; gap: 4px; margin-top: 16px; }
   .org-box__role { gap: 8px; min-height: 39px; align-items: center; }
-  .org-box__role dd { font-size: 15px; letter-spacing: 0; }
+  .org-box__role dd { font-size: 15px; letter-spacing: 0; white-space: nowrap; }
   .dioceses { flex-direction: column; align-items: stretch; gap: 24px; margin-top: 40px; }
   .dioceses__media { width: 100%; justify-content: flex-end; }
   .dioceses__count { width: 78px; height: 78px; margin-top: -39px; }
@@ -1320,7 +1323,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .list-box__title { font-size: 16px; line-height: 32px; letter-spacing: 0; color: var(--c-red); }
   .media-row__img { aspect-ratio: 335 / 258; object-fit: cover; }
   .sub-section--purpose { padding-top: 70px; }
-  .list-box__text { font-size: 15px; line-height: 25px; letter-spacing: 0; }
+  .list-box__text { font-size: 14px; line-height: 25px; letter-spacing: 0; }
   .aid-history__thumb { background: var(--c-white); }
 
   /* フロー:縦積み、写真が上 */
