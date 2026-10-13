@@ -141,11 +141,11 @@ a.tag:hover { opacity: .7; }
 /* ---------- セクション見出し ---------- */
 .sub-head--center { text-align: center; }
 .sub-head--center .section-label { justify-content: center; }
-.sub-head__lead { margin-top: 8px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.sub-head__lead { margin-top: 8px; font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
 .sub-head + * { margin-top: 48px; }
 
 /* 本文(16px / 32px) */
-.sub-text { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.sub-text { font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
 .sub-text > p + p { margin-top: 16px; }
 .sub-note { font-size: 12px; font-weight: 400; line-height: 1.8; color: var(--c-text-mute); }
 
@@ -277,7 +277,7 @@ a.tag:hover { opacity: .7; }
 .related-nav__btn {
   display: flex; align-items: center; justify-content: center; gap: 8px; height: 100%; min-height: 47px; padding: 6px 12px;
   border: 1.5px solid var(--c-line); border-radius: 6px; background: var(--c-white);
-  font-size: 14px; font-weight: 400; line-height: 1.4; letter-spacing: .03em; color: var(--c-text-strong); text-align: center;
+  font-size: 14px; font-weight: 500; line-height: 1.4; letter-spacing: .03em; color: var(--c-text-strong); text-align: center;
 }
 .related-nav__btn--lead { justify-content: flex-start; gap: 0; min-height: 102px; padding: 12px 24px; font-size: 15px; }
 .related-nav__logo { flex: none; width: 185px; height: auto; margin-right: 24px; }
@@ -461,11 +461,11 @@ a.pagination__arrow:hover { opacity: .7; }
 .records__item { display: flex; flex-direction: column; justify-content: center; min-height: 84px; padding: 12px 16px; border-bottom: 1px solid var(--c-line); }
 .records__item:nth-child(-n + 2) { border-top: 1px solid var(--c-line); }
 .records__year { font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--c-red); }
-.records__no { font-size: 12px; font-weight: 400; line-height: 1.8; color: var(--c-text-mute); }
+.records__no { font-size: 12px; font-weight: 400; line-height: 1.8; color: #666; }
 .records__meta { display: flex; align-items: baseline; gap: 12px; }
 .records__item { justify-content: flex-start; padding-block: 16px; }
 .records__title { margin-top: 4px; font-size: 15px; font-weight: 500; line-height: 1.7; color: var(--c-text-strong); }
-.records__place { font-size: 13px; font-weight: 400; line-height: 1.8; color: var(--c-text); }
+.records__place { font-size: 13px; font-weight: 400; line-height: 1.8; color: #666; }
 
 /* ---------- /contact/ ---------- */
 .tel-box { padding: 40px; border-radius: 8px; background: var(--c-cream); }
@@ -828,7 +828,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .mission-way--cream { background: var(--c-cream); }
 .mission-way--cream:has(> .sub-section__curve-down) { z-index: 2; }
 .mission-way__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
-.mission-way__label { display: flex; align-items: baseline; gap: 24px; color: var(--mc); }
+.mission-way__label { display: flex; align-items: center; gap: 24px; color: var(--mc); }
 .mission-way__num { font-size: 32px; font-weight: 400; line-height: 1; }
 .mission-way__en { font-family: var(--ff-sans); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: .2em; }
 .mission-way__title { margin-top: 24px; font-size: 32px; font-weight: 700; line-height: 1.5; letter-spacing: .04em; color: var(--c-text-strong); }
@@ -967,7 +967,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-section:has(+ .section--green) { padding-bottom: calc(64px + var(--curve)); }
   .section--green { padding: calc(var(--curve) + 56px) 0 64px; }
   .sub-head__title, .manual__title { font-size: 24px; }
-  .sub-head__lead { font-size: 15px; line-height: 1.9; }
+  .sub-head__lead { line-height: 1.9; }
   .sub-head + * { margin-top: 32px; }
   .sub-text { font-size: 15px; line-height: 1.9; }
   .media-row .sub-text { line-height: 1.9; }
@@ -1226,7 +1226,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-head__title, .manual__title { margin-top: 14px; font-size: 24px; line-height: 1.5; letter-spacing: .05em; }
   .sub-head__lead { margin-top: 10px; font-size: 16px; line-height: 29px; letter-spacing: 0; }
   .section--green .sub-head__title, .section--green .manual__title { margin-top: 28px; }
-  .section--green .sub-head__lead { margin-top: 16px; font-size: 15px; line-height: 27px; }
+  .section--green .sub-head__lead { margin-top: 16px; line-height: 27px; }
   .sub-head + * { margin-top: 32px; }
   .sub-text { font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .sub-text > p + p { margin-top: 16px; }
@@ -1358,7 +1358,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .records__no { font-size: 12px; }
   .records__item { padding: 18px 0 16px; }
   .records__title { display: block; margin-top: 12px; font-size: 15px; font-weight: 400; line-height: 30px; letter-spacing: 0; color: var(--c-text-strong); }
-  .records__place { display: block; margin-top: 2px; font-size: 14px; line-height: 25px; color: var(--c-text); }
+  .records__place { display: block; margin-top: 2px; font-size: 14px; line-height: 25px; }
   .pub-list__item { align-items: flex-start; gap: 0; padding: 8px 0; font-size: 14px; line-height: 25px; }
   .pub-list__year { width: 48px; color: var(--c-red); }
 }
@@ -1379,17 +1379,3 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 @media (prefers-reduced-motion: reduce) {
   .faq__item::details-content { transition: none; }
 }
-
-/* ==========================================================================
-   PC / SP 共通の調整(最後に置いて各ブレークポイントの指定より優先)
-   ========================================================================== */
-.breadcrumb__list { font-weight: 500; }
-.breadcrumb [aria-current="page"] { font-weight: 600; }
-.related-nav__btn { font-weight: 500; }
-.sub-text { font-weight: 500; }
-.sub-head__lead { font-size: 16px; font-weight: 500; }
-.records__no { color: #666; }
-.records__place { color: #666; }
-.donation__box-title span { border-bottom: 1px solid currentColor; }
-.social__btn { font-size: 14px; }
-.mission-way__label { align-items: center; }

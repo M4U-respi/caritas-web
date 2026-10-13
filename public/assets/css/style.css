@@ -403,7 +403,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 .social__body { flex: 1; min-width: 0; max-width: 590px; }
 .social__text { margin-top: 12px; font-size: 16px; line-height: 29px; letter-spacing: 0; }
 .social__btns { display: flex; flex-wrap: wrap; gap: 15px 16px; margin-top: 40px; max-width: 560px; }
-.social__btn { width: 250px; min-height: 40px; }
+.social__btn { width: 250px; min-height: 40px; font-size: 14px; }
 .social__btn--wide { width: 264px; }
 .social__embed { flex: none; width: 380px; }
 .social__embed-frame { height: 514px; overflow: hidden; border: 1px solid #CACACA; border-radius: 10px; background: var(--c-white); }
@@ -457,7 +457,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   border-radius: 8px; background: var(--c-teal); color: var(--c-white); text-align: center;
 }
 .donation__box-title { font-size: 24px; font-weight: 500; line-height: 1.45; letter-spacing: .03em; }
-.donation__box-title span { display: inline-block; padding: 0 4px 3px; border-bottom: 2px solid currentColor; }
+.donation__box-title span { display: inline-block; padding: 0 4px 3px; border-bottom: 1px solid currentColor; }
 .donation__box-text { margin-top: 16px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .03em; }
 .donation__btns { display: grid; gap: 15px; width: 100%; margin-top: 24px; }
 .donation__box .btn-pill:focus-visible { outline-color: var(--c-white); }
@@ -752,7 +752,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .social { padding: 67px 0 66px; background-size: 270px auto; background-position: center 40px; }
   .social__text { margin-top: 8px; font-size: 15px; line-height: 27px; letter-spacing: 0; }
   .social__btns { display: grid; gap: 12px; max-width: none; margin-top: 26px; }
-  .social__btn, .social__btn--wide { width: 100%; min-height: 47px; font-size: 15px; }
+  .social__btn, .social__btn--wide { width: 100%; min-height: 47px; }
   .social__embed { width: 100%; margin-top: 44px; }
   .social__embed-frame { height: 511px; }
 
