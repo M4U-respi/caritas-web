@@ -40,6 +40,7 @@ body {
   font-size: 16px;
   font-weight: 500;
   line-height: 1.8;
+  text-spacing-trim: space-all; /* 約物(「。など)の詰めをしない:デザインと同じ文字幅・改行位置にする */
   color: var(--c-text);
   background: var(--c-white);
   -webkit-font-smoothing: antialiased;

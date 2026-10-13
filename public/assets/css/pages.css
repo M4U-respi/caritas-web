@@ -1001,7 +1001,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .list-box__list { grid-template-columns: minmax(0, 1fr); }
   .list-box__item:nth-child(2) { padding-top: 18px; }
   .list-box__item:last-child { padding-bottom: 0; }
-  .list-box__text br { display: none; }
+  .list-box--aid .list-box__text br { display: none; }
 
   .flow { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .flow__item { flex-direction: row; align-items: stretch; }
@@ -1050,6 +1050,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .history-body { padding-top: 44px; padding-bottom: 8px; }
 
   .lent-about .sub-head + .sub-text { margin-top: 16px; }
+  .lent-about .sub-text { padding-right: 10px; }
   .campaign-box { flex-direction: column; align-items: stretch; min-height: 0; }
   .campaign-box__body { width: auto; padding: 20px 20px 0; }
   .campaign-box__img { position: static; margin: 16px auto 20px; transform: none; }
@@ -1232,6 +1233,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .section--green .sub-head__lead { margin-top: 16px; line-height: 27px; }
   .sub-head + * { margin-top: 32px; }
   .sub-text { font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .media-row .sub-text { font-size: 16px; line-height: 29px; }
   .sub-text > p + p { margin-top: 16px; }
   .subheading-bar { font-size: 18px; }
 
@@ -1276,6 +1278,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .way-card--white { flex-direction: column-reverse; justify-content: flex-end; min-height: 0; border-radius: 8px; }
   .way-card--white .way-card__photo { flex: none; aspect-ratio: 163 / 110; }
   .way-card--white .way-card__panel { display: block; width: auto; padding: 16px 10px 20px 12px; }
+  .way-card--white .way-card__text { padding-right: 14px; }
   .way-card--white .way-card__num { font-size: 16px; }
   .way-card--white .way-card__title { margin-top: 6px; gap: 4px; justify-content: space-between; font-size: 16px; line-height: 30px; letter-spacing: 0; white-space: nowrap; }
   .way-card--white .way-card__title br { display: inline; }
@@ -1288,6 +1291,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .def-table tr:first-child { border: 0; }
   .def-table th, .def-table td { display: table-cell; padding: 16px 0; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); vertical-align: top; font-size: 15px; line-height: 30px; }
   .def-table th { width: 104px; padding-left: 16px; }
+  .def-table td { padding-right: 16px; }
   .def-table td { margin: 0; }
   .def-table .u-sp { display: block; width: 0; height: 0; }
 
@@ -1312,8 +1316,9 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .timeline__period { font-size: 20px; letter-spacing: .05em; }
   .timeline__row { display: flex; padding: 16px 0; }
   .timeline__row:first-child { padding-top: 16px; }
-  .timeline__year { flex: none; width: 64px; padding-left: 16px; font-size: 15px; line-height: 30px; }
-  .timeline__text { margin-top: 0; padding-right: 4px; font-size: 15px; line-height: 30px; }
+  .timeline__year { flex: none; width: 80px; padding-left: 16px; font-size: 15px; line-height: 30px; }
+  .timeline__text { margin-top: 0; padding-right: 20px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .timeline__name { letter-spacing: .03em; }
   .timeline__era + .timeline__era { margin-top: 56px; }
 
   /* /about/lent/ */
@@ -1333,7 +1338,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .flow__body { padding: 16px 16px 20px; }
   .flow__num { font-size: 18px; }
   .flow__title { margin-top: 6px; font-size: 16px; }
-  .flow__text { font-size: 14px; line-height: 25px; }
+  .flow__text { font-size: 14px; line-height: 25px; letter-spacing: 0; }
   .flow__item:not(:last-child)::after { bottom: -24px; width: 8px; height: 12px; margin-left: -4px; }
 
   /* /about/aid/ */

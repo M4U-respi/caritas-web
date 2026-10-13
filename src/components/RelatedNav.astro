@@ -11,6 +11,8 @@ interface Props { preset: keyof typeof RELATED_NAV }
 const { preset } = Astro.props;
 const nav = RELATED_NAV[preset];
 const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+// スマホのデザインどおりの改行位置
+const spBreak = (label: string) => label.replace("四旬節「", "四旬節<br class=\"u-sp-only\" />「");
 const items = nav.items.map((i) => ({ ...i, current: i.href === path }));
 const [lead, ...rest] = items;
 const titleId = `related-${preset}-title`;
@@ -29,14 +31,14 @@ const titleId = `related-${preset}-title`;
 				</a>
 				<ul class="related-nav__list">
 					{rest.map((i) => (
-						<li><a class="related-nav__btn" href={i.href} aria-current={i.current ? "page" : undefined}><span>{i.label}</span><CircleArrow /></a></li>
+						<li><a class="related-nav__btn" href={i.href} aria-current={i.current ? "page" : undefined}><span set:html={spBreak(i.label)} /><CircleArrow /></a></li>
 					))}
 				</ul>
 			</div>
 		) : (
 			<ul class="related-nav__list">
 				{items.map((i) => (
-					<li><a class="related-nav__btn" href={i.href} aria-current={i.current ? "page" : undefined}><span>{i.label}</span><CircleArrow /></a></li>
+					<li><a class="related-nav__btn" href={i.href} aria-current={i.current ? "page" : undefined}><span set:html={spBreak(i.label)} /><CircleArrow /></a></li>
 				))}
 			</ul>
 		)}
