@@ -89,16 +89,20 @@ export const GNAV: (NavLink & { children?: NavLink[] })[] = [
 			{ label: "啓発活動", href: "/about/social/" },
 		],
 	},
-	{ label: "活動報告", href: "/report/" },
+	{
+		label: "活動報告",
+		href: "/report/",
+		children: [{ label: "活動報告", href: "/report/" }, ...termLinks("report")],
+	},
 	{
 		label: "発行物",
 		href: "/publication/",
-		children: [{ label: "発行物一覧", href: "/publication/" }, ...termLinks("publication")],
+		children: [{ label: "発行物", href: "/publication/" }, ...termLinks("publication")],
 	},
 	{
 		label: "お知らせ",
 		href: "/news/",
-		children: [{ label: "お知らせ一覧", href: "/news/" }, ...termLinks("news")],
+		children: [{ label: "お知らせ", href: "/news/" }, ...termLinks("news")],
 	},
 ];
 
@@ -139,7 +143,11 @@ export const FOOTER_NAV: { heading: string; links: NavLink[] }[] = [
 		links: [
 			{ label: "援助活動", href: "/about/aid/" },
 			{ label: "啓発活動", href: "/about/social/" },
-			{ label: "活動報告", href: "/report/" },
+			{
+		label: "活動報告",
+		href: "/report/",
+		children: [{ label: "活動報告", href: "/report/" }, ...termLinks("report")],
+	},
 			{ label: "発行物", href: "/publication/" },
 			{ label: "お知らせ", href: "/news/" },
 		],

@@ -6,13 +6,23 @@
 .tag--teal { color: var(--c-teal); }
 a.tag:hover { opacity: .7; }
 
-/* ---------- グローバルナビ:ドロップダウン(PC) ---------- */
+/* ---------- グローバルナビ:ドロップダウン(PC)— デザイン「PC / メニュー」 ---------- */
 .gnav__item { position: relative; }
 .gnav__link[aria-current="page"] { color: var(--c-red); }
+/* 開いている項目:ティール+キャレット上向き(下線は出さない) */
+.gnav__item--has-child:hover > .gnav__link,
+.gnav__item--has-child:focus-within > .gnav__link { color: var(--c-teal); }
+.gnav__item--has-child:hover > .gnav__link .gnav__label::after,
+.gnav__item--has-child:focus-within > .gnav__link .gnav__label::after { transform: scaleX(0); }
+.gnav__item--has-child:hover > .gnav__link .gnav__caret,
+.gnav__item--has-child:focus-within > .gnav__link .gnav__caret { transform: rotate(-90deg); }
+/* パネル:ヘッダー下端にぴったり付け、項目の中央に合わせる(幅216・上線ティール3px) */
 .gnav__sub {
-  position: absolute; top: calc(100% + 18px); left: 50%; z-index: 110;
-  min-width: 220px; padding: 10px 0;
-  background: var(--c-white); border-radius: 8px; box-shadow: 0 8px 28px rgba(0, 0, 0, .12);
+  position: absolute; z-index: 110;
+  top: calc(50% + var(--header-h) / 2); left: 50%;
+  width: 216px; margin: 0; padding: 0;
+  background: var(--c-white); border-top: 3px solid var(--c-teal);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .08);
   opacity: 0; visibility: hidden; transform: translate(-50%, -6px);
 }
 /* 閉じるときのフェードはナビ操作中だけ。常時付けると、画面幅が 1100px をまたいだ瞬間
@@ -20,17 +30,23 @@ a.tag:hover { opacity: .7; }
    SP 表示(常時表示)→ PC 表示(非表示)のフェードアウトが走り、ドロップダウンが一瞬すべて写る */
 .gnav:hover .gnav__sub,
 .gnav:focus-within .gnav__sub { transition: opacity var(--ease), transform var(--ease), visibility 0s linear .25s; }
-.gnav__sub::before { content: ""; position: absolute; left: 0; right: 0; top: -18px; height: 18px; }
+/* 項目とパネルのすき間でホバーが切れないようにする */
+.gnav__sub::before { content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: calc(var(--header-h) / 2); }
 .gnav__item--has-child:hover > .gnav__sub,
 .gnav__item--has-child:focus-within > .gnav__sub {
   opacity: 1; visibility: visible; transform: translate(-50%, 0);
   transition: opacity var(--ease), transform var(--ease), visibility 0s;
 }
+.gnav__sub > li + li { border-top: 1px solid var(--c-line); }
 .gnav__sub-link {
-  display: block; padding: 10px 22px;
-  font-size: 14px; line-height: 1.5; color: var(--c-text-strong); white-space: nowrap;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  min-height: 53px; padding: 0 23px 0 24px;
+  font-size: 14px; line-height: 1.4; letter-spacing: .02em; color: var(--c-text-strong); white-space: nowrap;
 }
-.gnav__sub-link:hover { background: var(--c-cream-light); color: var(--c-red); }
+.gnav__sub-chevron { flex: none; color: var(--c-red); transition: transform var(--ease); }
+.gnav__sub-link:hover { background: var(--c-cream-light); color: var(--c-teal); }
+.gnav__sub-link:hover .gnav__sub-chevron { transform: translateX(3px); }
+.gnav__sub-link:focus-visible { outline-offset: -3px; }
 
 @media (max-width: 1099.98px) {
   .gnav__sub {
@@ -40,7 +56,13 @@ a.tag:hover { opacity: .7; }
   }
   .gnav__sub, .gnav:hover .gnav__sub, .gnav:focus-within .gnav__sub { transition: none; }
   .gnav__sub::before { display: none; }
-  .gnav__sub-link { padding: 8px 0; font-size: 15px; color: var(--c-text); }
+  .gnav__sub { width: auto; border-top: 0; }
+  .gnav__sub > li + li { border-top: 0; }
+  .gnav__sub-link { display: block; min-height: 0; padding: 8px 0; font-size: 15px; color: var(--c-text); }
+  .gnav__sub-link:hover { background: none; }
+  .gnav__sub-chevron { display: none; }
+  .gnav__item--has-child:hover > .gnav__link,
+  .gnav__item--has-child:focus-within > .gnav__link { color: var(--c-text-strong); }
   .gnav__item--has-child > .gnav__link .gnav__caret { display: none; }
 }
 

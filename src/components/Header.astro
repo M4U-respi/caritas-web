@@ -23,7 +23,7 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 							{item.children && (
 								<ul class="gnav__sub">
 									{item.children.map((c) => (
-										<li><a class="gnav__sub-link" href={c.href}>{c.label}</a></li>
+										<li><a class="gnav__sub-link" href={c.href}><span>{c.label}</span><svg class="gnav__sub-chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></li>
 									))}
 								</ul>
 							)}
