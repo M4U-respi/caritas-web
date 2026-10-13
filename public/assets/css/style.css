@@ -756,9 +756,11 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .social__embed { width: 100%; margin-top: 44px; }
   .social__embed-frame { height: 511px; }
 
-  /* 写真帯(4 枚横並び) */
-  .photo-strip__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2px; }
-  .photo-strip__item { height: 104px; aspect-ratio: auto; border-radius: 0 0 4px 4px; }
+  /* 写真帯(4 枚横並び)。デザインどおり写真は幅合わせで全体を見せ、上辺カーブは PC と同じ比率(1440 で 42px)の浅いアーチ */
+  .photo-strip:not(.photo-strip--arch-bottom) .photo-strip__curve { height: calc(100vw * 42 / 1440); }
+  .photo-strip__list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; }
+  .photo-strip__item { height: auto; aspect-ratio: 432 / 479; border-radius: 0 0 3px 3px; }
+  .photo-strip__item img { height: 100%; object-position: center top; }
 
   /* DONATION */
   .donation { padding-top: 64px; }
