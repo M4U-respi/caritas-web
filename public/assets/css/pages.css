@@ -83,14 +83,14 @@ a.tag:hover { opacity: .7; }
 
 /* ---------- パンくず ---------- */
 .breadcrumb { padding: 25px 40px 0; }
-.breadcrumb__list { display: flex; flex-wrap: wrap; align-items: center; font-size: 12px; font-weight: 400; line-height: 18px; letter-spacing: .05em; color: var(--c-text-mute); }
+.breadcrumb__list { display: flex; flex-wrap: wrap; align-items: center; font-size: 12px; font-weight: 500; line-height: 18px; letter-spacing: .05em; color: var(--c-text-mute); }
 .breadcrumb__item { display: flex; align-items: center; min-width: 0; }
 .breadcrumb__item + .breadcrumb__item::before {
   content: ""; flex: none; width: 5px; height: 8px; margin: 0 12px;
   background: var(--chev-dark) center / contain no-repeat;
 }
 .breadcrumb__item a:hover { color: var(--c-red); text-decoration: underline; text-underline-offset: 3px; }
-.breadcrumb [aria-current="page"] { color: var(--c-red); }
+.breadcrumb [aria-current="page"] { font-weight: 600; color: var(--c-red); }
 
 /* ---------- 下層ヒーロー ---------- */
 .sub-hero {
@@ -1210,7 +1210,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   /* ヒーロー */
   .breadcrumb { padding-top: 26px; }
   .breadcrumb__list { font-size: 12px; }
-  .sub-hero { padding-bottom: calc(36px + var(--curve)); background-size: 120vw auto; background-position: 30vw 40px; }
+  /* 背景の地球はスマホ専用画像(デザイン「SP / 下層」から書き出し。375px 幅で全幅) */
+  .sub-hero { padding-bottom: calc(36px + var(--curve)); background-image: url(../img/sub/common/hero-globe-sp.png); background-size: 100% auto; background-position: left top; }
   .sub-hero--flat { padding-bottom: 62px; }
   .sub-hero__label { margin-top: 54px; }
   .sub-hero__title { margin-top: 14px; font-size: 32px; line-height: 48px; letter-spacing: .05em; }
@@ -1238,8 +1239,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .photo-strip--gap-green .photo-strip__list { background: var(--c-white); }
 
   /* /about/ イントロ */
-  .about-intro { padding-top: 64px; }
-  .about-intro__logo { display: none; }
+  .about-intro { padding-top: 60px; }
+  .about-intro__logo { display: block; width: 208px; margin: 0 auto 14px; }
   .about-intro .sub-head__lead { text-align: left; }
   .about-intro__body { margin-top: 36px; row-gap: 24px; }
 
