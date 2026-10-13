@@ -1,0 +1,12 @@
+---
+/*
+ * 緑セクション(TOP VALUE と同じ地図背景+上膨らみカーブ。下辺は直線)
+ *   <GreenSection labelledby="activities-title"> … </GreenSection>
+ * 直前のセクションに --curve ぶん食い込むため、直前セクションの下余白は pages.css 側で自動調整
+ */
+interface Props { id?: string; labelledby?: string; class?: string; inner?: boolean }
+const { id, labelledby, class: cls, inner = true } = Astro.props;
+---
+<section class:list={["section--green", cls]} id={id} aria-labelledby={labelledby}>
+	{inner ? <div class="section--green__inner l-container"><slot /></div> : <slot />}
+</section>

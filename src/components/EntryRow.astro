@@ -1,0 +1,42 @@
+---
+/*
+ * CMS 一覧の 1 行(サムネ+日付・タグ+タイトル+抜粋+赤丸矢印)。<ul class="entry-rows"> の中で使う
+ *   <ul class="entry-rows">
+ *     {items.map((item) => <EntryRow href={item.href} title={item.title} date={item.date} terms={item.terms}
+ *        excerpt={item.data.excerpt} image={item.data.featured_image} />)}
+ *   </ul>
+ * image: EmDash の画像フィールド(オブジェクト)または画像 URL 文字列。未設定なら noimage.jpg
+ */
+import { Image } from "emdash/ui";
+import { formatDate, isoDate } from "../data/site";
+import CircleArrow from "./CircleArrow.astro";
+
+interface Props {
+	href: string;
+	title: string;
+	date?: Date | string | null;
+	terms?: { slug: string; label: string; tag: string }[];
+	excerpt?: string | null;
+	image?: any;
+	headingLevel?: "h2" | "h3";
+}
+const { href, title, date, terms = [], excerpt, image, headingLevel: H = "h2" } = Astro.props;
+---
+<li class="entry-row">
+	<a class="entry-row__link" href={href}>
+		<span class="entry-row__thumb">
+			{image
+				? <Image image={image} alt="" />
+				: <img src="/assets/img/sub/common/noimage.jpg" alt="" width="400" height="266" loading="lazy" decoding="async" />}
+		</span>
+		<span class="entry-row__body">
+			<span class="entry-row__meta">
+				{date && <time class="entry-row__date" datetime={isoDate(date)}>{formatDate(date)}</time>}
+				{terms.map((t) => <span class={`tag tag--${t.tag}`}>{t.label}</span>)}
+			</span>
+			<H class="entry-row__title">{title}</H>
+			{excerpt && <span class="entry-row__excerpt">{excerpt}</span>}
+		</span>
+		<CircleArrow class="entry-row__arrow" />
+	</a>
+</li>

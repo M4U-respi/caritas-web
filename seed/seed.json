@@ -44,6 +44,11 @@
 					"type": "text"
 				},
 				{
+					"slug": "lead",
+					"label": "リード文(本文冒頭に太字で表示。任意)",
+					"type": "text"
+				},
+				{
 					"slug": "content",
 					"label": "本文",
 					"type": "portableText",
@@ -80,6 +85,11 @@
 				{
 					"slug": "excerpt",
 					"label": "概要(一覧・SNS共有用)",
+					"type": "text"
+				},
+				{
+					"slug": "lead",
+					"label": "リード文(本文冒頭に太字で表示。任意)",
 					"type": "text"
 				},
 				{
@@ -205,68 +215,32 @@
 	"content": {
 		"news": [
 			{
-				"id": "news-1",
-				"slug": "kumamoto-2026-appeal",
+				"id": "news-01",
+				"slug": "funds-accepting",
 				"status": "published",
 				"data": {
-					"title": "【令和8年熊本地震】緊急募金へのご協力のお願い",
+					"title": "現在 受け付け中の募金",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-news-01",
+						"src": "/assets/img/sub/news/news-2026-09-04-funds.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 267,
+						"mimeType": "image/jpeg",
+						"filename": "news-2026-09-04-funds.jpg"
+					},
+					"excerpt": "カリタスジャパンが現在受け付けている募金は以下のとおりです。募金の方法について詳しくは「募金の方法」をご覧ください。",
 					"content": [
 						{
 							"_type": "block",
+							"_key": "k037",
 							"style": "normal",
+							"markDefs": [],
 							"children": [
 								{
 									"_type": "span",
-									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
-								}
-							]
-						}
-					]
-				},
-				"taxonomies": {
-					"news_category": [
-						"emergency"
-					]
-				}
-			},
-			{
-				"id": "news-2",
-				"slug": "noto-2024-interim-report",
-				"status": "published",
-				"data": {
-					"title": "【令和6年能登半島地震】緊急募金 中間報告と現地の状況について",
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
-								}
-							]
-						}
-					]
-				},
-				"taxonomies": {
-					"news_category": [
-						"emergency"
-					]
-				}
-			},
-			{
-				"id": "news-3",
-				"slug": "lent-thanks",
-				"status": "published",
-				"data": {
-					"title": "四旬節「愛の献金」へのご協力に御礼申し上げます",
-					"content": [
-						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
+									"_key": "k038",
 									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
 								}
 							]
@@ -280,18 +254,434 @@
 				}
 			},
 			{
-				"id": "news-4",
+				"id": "news-02",
+				"slug": "nepal-debris-flow-2026",
+				"status": "published",
+				"data": {
+					"title": "【ネパール土石流】救援募金の受付を開始しました",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-news-02",
+						"src": "/assets/img/sub/news/news-2026-09-03-nepal.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "news-2026-09-03-nepal.jpg"
+					},
+					"excerpt": "カリタスジャパンは「ネパール土石流救援」募金の受付を開始しました。8月26日午前、ネパール中部を流れる川の上流で大規模な土石流が発生しました。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k039",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k040",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"emergency"
+					]
+				}
+			},
+			{
+				"id": "news-03",
+				"slug": "kumamoto-2026-appeal",
+				"status": "published",
+				"data": {
+					"title": "【令和8年熊本地震】募金受付を開始いたしました",
+					"excerpt": "このたびの令和8年熊本地震によって亡くなられた皆さまの永遠の安息をお祈り申し上げます。また、被災されたすべての方々に心よりお見舞い申し上げます。",
+					"lead": "このたびの令和8年熊本地震によって亡くなられた皆さまの永遠の安息をお祈り申し上げます。また、被災されたすべての方々に心よりお見舞い申し上げます。",
+					"content": [
+						{
+							"_type": "image",
+							"_key": "k001",
+							"asset": {
+								"_ref": "",
+								"url": "/assets/img/sub/news/news-2026-07-31-kumamoto-detail-01.jpg"
+							},
+							"alt": "",
+							"width": 792,
+							"height": 446,
+							"caption": "現地から届いた被害の状況"
+						},
+						{
+							"_type": "block",
+							"_key": "k002",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k003",
+									"text": "現地の状況"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k004",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k005",
+									"text": "カリタスジャパンは、現地の教区と連絡を取りながら状況の把握に努めています。ライフラインの復旧が進まない地域では、水や食料、生活物資の不足が続いています。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k006",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k007",
+									"text": "教区のカリタス担当者を通じて、避難所での支援ニーズの聞き取りを行っています。今後、現地の受け入れ体制が整い次第、ボランティアの派遣についてもご案内します。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k008",
+							"style": "blockquote",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k009",
+									"text": "苦しみの中にある人々を忘れず、心を寄せ、ともに祈ることから、愛の業は始まります。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k010",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k011",
+									"text": "募金の受付について"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k012",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k013",
+									"text": "いただいた募金は、緊急支援物資の配布、避難生活の支援、生活再建に向けた中長期の復興支援に使わせていただきます。"
+								}
+							]
+						},
+						{
+							"_type": "table",
+							"_key": "k014",
+							"hasHeaderRow": false,
+							"rows": [
+								{
+									"_type": "tableRow",
+									"_key": "k015",
+									"cells": [
+										{
+											"_type": "tableCell",
+											"_key": "k016",
+											"isHeader": true,
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k017",
+													"text": "募金名"
+												}
+											]
+										},
+										{
+											"_type": "tableCell",
+											"_key": "k018",
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k019",
+													"text": "令和8年熊本地震 災害緊急支援募金"
+												}
+											]
+										}
+									]
+								},
+								{
+									"_type": "tableRow",
+									"_key": "k020",
+									"cells": [
+										{
+											"_type": "tableCell",
+											"_key": "k021",
+											"isHeader": true,
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k022",
+													"text": "受付期間"
+												}
+											]
+										},
+										{
+											"_type": "tableCell",
+											"_key": "k023",
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k024",
+													"text": "2026年7月31日 〜（当面の間）"
+												}
+											]
+										}
+									]
+								},
+								{
+									"_type": "tableRow",
+									"_key": "k025",
+									"cells": [
+										{
+											"_type": "tableCell",
+											"_key": "k026",
+											"isHeader": true,
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k027",
+													"text": "加入者名"
+												}
+											]
+										},
+										{
+											"_type": "tableCell",
+											"_key": "k028",
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k029",
+													"text": "宗教法人カトリック中央協議会カリタスジャパン"
+												}
+											]
+										}
+									]
+								},
+								{
+									"_type": "tableRow",
+									"_key": "k030",
+									"cells": [
+										{
+											"_type": "tableCell",
+											"_key": "k031",
+											"isHeader": true,
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k032",
+													"text": "郵便振替"
+												}
+											]
+										},
+										{
+											"_type": "tableCell",
+											"_key": "k033",
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k034",
+													"text": "00170-5-95979（通信欄に「熊本地震」とご記入ください）"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k035",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k036",
+									"text": "※ 送金手数料はご負担ください。領収書が必要な場合は、事務局までお申し出ください。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k041",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k042",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"emergency"
+					]
+				}
+			},
+			{
+				"id": "news-04",
+				"slug": "kumamoto-2026-sympathy",
+				"status": "published",
+				"data": {
+					"title": "【令和8年熊本地震】被災された方々に心よりお見舞い申し上げます",
+					"excerpt": "2026年7月28日に発災した令和8年熊本地震で被災された方々に心よりお見舞い申し上げます。現在、現地の教区と連絡を取りながら状況の把握に努めています。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k043",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k044",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"emergency"
+					]
+				}
+			},
+			{
+				"id": "news-05",
+				"slug": "venezuela-earthquake-2026",
+				"status": "published",
+				"data": {
+					"title": "【ベネズエラ地震】救援募金の受付を開始しました",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-news-05",
+						"src": "/assets/img/sub/news/news-2026-07-10-venezuela.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "news-2026-07-10-venezuela.jpg"
+					},
+					"excerpt": "カリタスジャパンは「ベネズエラ地震救援」募金の受付を開始しました。6月24日、ベネズエラ北部で2度の大きな地震が発生しました。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k045",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k046",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"emergency"
+					]
+				}
+			},
+			{
+				"id": "news-06",
+				"slug": "noto-report-2026-05",
+				"status": "published",
+				"data": {
+					"title": "【能登半島地震】災害緊急支援募金報告 2026年5月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-news-06",
+						"src": "/assets/img/sub/news/news-2026-05-21-noto.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "news-2026-05-21-noto.jpg"
+					},
+					"excerpt": "能登地震の発災から2年半が経過しようとしています。2026年1月〜3月までの募金状況と活動についてご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k047",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k048",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"emergency"
+					]
+				}
+			},
+			{
+				"id": "news-07",
 				"slug": "debt-to-hope-report",
 				"status": "published",
 				"data": {
 					"title": "「債務を希望に変えよう」キャンペーン報告会のご案内",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-news-07",
+						"src": "/assets/img/sub/news/news-2026-04-15-debt-campaign.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "news-2026-04-15-debt-campaign.jpg"
+					},
+					"excerpt": "国際カリタスのキャンペーンの国内展開として、これまでの取り組みを振り返る報告会を開催します。",
 					"content": [
 						{
 							"_type": "block",
+							"_key": "k049",
 							"style": "normal",
+							"markDefs": [],
 							"children": [
 								{
 									"_type": "span",
+									"_key": "k050",
 									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
 								}
 							]
@@ -305,18 +695,100 @@
 				}
 			},
 			{
-				"id": "news-5",
-				"slug": "summer-holiday",
+				"id": "news-08",
+				"slug": "lent-thanks-2026",
 				"status": "published",
 				"data": {
-					"title": "夏季休業期間のお知らせ",
+					"title": "四旬節「愛の献金」へのご協力に御礼申し上げます",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-news-08",
+						"src": "/assets/img/sub/news/news-2026-03-27-lent-thanks.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "news-2026-03-27-lent-thanks.jpg"
+					},
+					"excerpt": "四旬節の期間中、全国の教会でお寄せいただいた献金に厚く御礼申し上げます。国内外のもっとも援助を必要としている人々の活動に使わせていただきます。",
 					"content": [
 						{
 							"_type": "block",
+							"_key": "k051",
 							"style": "normal",
+							"markDefs": [],
 							"children": [
 								{
 									"_type": "span",
+									"_key": "k052",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"donation"
+					]
+				}
+			},
+			{
+				"id": "news-09",
+				"slug": "lent-campaign-2026",
+				"status": "published",
+				"data": {
+					"title": "四旬節「愛の献金」キャンペーンがはじまります",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-news-09",
+						"src": "/assets/img/sub/news/news-2026-03-27-lent-thanks.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "news-2026-03-27-lent-thanks.jpg"
+					},
+					"excerpt": "教皇メッセージを収めた小冊子とポスターを、各教区を通じて全国のカトリック教会へお届けしています。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k053",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k054",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"news_category": [
+						"donation"
+					]
+				}
+			},
+			{
+				"id": "news-10",
+				"slug": "year-end-holidays-2025",
+				"status": "published",
+				"data": {
+					"title": "年末年始の休業期間のお知らせ",
+					"excerpt": "事務局の年末年始の休業期間についてお知らせいたします。期間中にいただいたお問い合わせは、休業明けより順次対応いたします。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k055",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k056",
 									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
 								}
 							]
@@ -326,6 +798,843 @@
 				"taxonomies": {
 					"news_category": [
 						"info"
+					]
+				}
+			}
+		],
+		"report": [
+			{
+				"id": "report-01",
+				"slug": "2026-08",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年8月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-report-01",
+						"src": "/assets/img/sub/report/report-2026-08.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "report-2026-08.jpg"
+					},
+					"excerpt": "会議関係はカリタスジャパン援助審査会（7月29日）。国内・海外の支援案件の審議状況をご報告します。",
+					"lead": "月間活動報告 2026年8月号ができました。この月の会議、国内外の支援案件、現地視察についてご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k057",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k058",
+									"text": "会議関係"
+								}
+							]
+						},
+						{
+							"_type": "table",
+							"_key": "k059",
+							"hasHeaderRow": false,
+							"rows": [
+								{
+									"_type": "tableRow",
+									"_key": "k060",
+									"cells": [
+										{
+											"_type": "tableCell",
+											"_key": "k061",
+											"isHeader": true,
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k062",
+													"text": "カリタスジャパン援助審査会"
+												}
+											]
+										},
+										{
+											"_type": "tableCell",
+											"_key": "k063",
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k064",
+													"text": "7月29日 開催"
+												}
+											]
+										}
+									]
+								},
+								{
+									"_type": "tableRow",
+									"_key": "k065",
+									"cells": [
+										{
+											"_type": "tableCell",
+											"_key": "k066",
+											"isHeader": true,
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k067",
+													"text": "審議案件"
+												}
+											]
+										},
+										{
+											"_type": "tableCell",
+											"_key": "k068",
+											"content": [
+												{
+													"_type": "span",
+													"_key": "k069",
+													"text": "国内3件／海外5件"
+												}
+											]
+										}
+									]
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k070",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k071",
+									"text": "国内の支援"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k072",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k073",
+									"text": "令和8年熊本地震の被災地について、現地の教区と連絡を取りながら状況の把握を続けています。避難所での支援ニーズの聞き取りをもとに、生活物資の配布を支援しました。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k074",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k075",
+									"text": "能登半島地震の復興支援は、発災から2年半が経過し、住まいの再建と地域のつながりづくりへ重点を移しています。"
+								}
+							]
+						},
+						{
+							"_type": "image",
+							"_key": "k076",
+							"asset": {
+								"_ref": "",
+								"url": "/assets/img/sub/report/report-2026-08-detail-01.jpg"
+							},
+							"alt": "",
+							"width": 1728,
+							"height": 1074,
+							"caption": "能登の象徴的な千枚田が復活しました。©カリタスジャパン"
+						},
+						{
+							"_type": "block",
+							"_key": "k077",
+							"style": "h2",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k078",
+									"text": "海外の支援"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k079",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k080",
+									"text": "ネパール土石流の救援について、国際カリタスからの緊急支援要請（EA）に応じ、現地カリタスをパートナーとした支援を開始しました。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k081",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k082",
+									"text": "ベネズエラ地震の救援は、現地の受け入れ体制が整い、住宅の応急修理が始まっています。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k083",
+							"style": "h3",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k084",
+									"text": "インド案件視察及びカリタス・インドとの協議"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k085",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k086",
+									"text": "インドの支援案件について、カリタス・インディアと協議を行いました。教育・保健医療分野での継続支援の枠組みを確認しています。"
+								}
+							]
+						},
+						{
+							"_type": "gallery",
+							"_key": "k087",
+							"columns": 2,
+							"images": [
+								{
+									"_type": "image",
+									"_key": "k088",
+									"asset": {
+										"_ref": "",
+										"url": "/assets/img/sub/report/report-2026-08-detail-02.jpg"
+									},
+									"alt": "",
+									"width": 864,
+									"height": 650,
+									"caption": "©カリタスジャパン"
+								},
+								{
+									"_type": "image",
+									"_key": "k089",
+									"asset": {
+										"_ref": "",
+										"url": "/assets/img/sub/report/report-2026-08-detail-03.jpg"
+									},
+									"alt": "",
+									"width": 864,
+									"height": 650,
+									"caption": "©カリタスジャパン"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k090",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k091",
+									"text": "※ 詳細は機関誌「We are Caritas」および年次報告でもご報告します。"
+								}
+							]
+						},
+						{
+							"_type": "block",
+							"_key": "k092",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k093",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-02",
+				"slug": "2026-07",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年7月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-report-02",
+						"src": "/assets/img/sub/report/report-2026-07.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "report-2026-07.jpg"
+					},
+					"excerpt": "会議関係はカリタスジャパン委員会（6月22日）。国内一般の支援案件についてご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k094",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k095",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-03",
+				"slug": "annual-2025",
+				"status": "published",
+				"data": {
+					"title": "2025年度 年間活動報告",
+					"excerpt": "2025年度に実施した援助活動・啓発活動の総括と、募金の受け入れ・支出の状況をまとめました。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k096",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k097",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"annual"
+					]
+				}
+			},
+			{
+				"id": "report-04",
+				"slug": "2026-06",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年6月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-report-04",
+						"src": "/assets/img/sub/report/report-2026-06.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "report-2026-06.jpg"
+					},
+					"excerpt": "会議関係はカリタスジャパン審査会（5月27日）。審議した案件と進捗をご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k098",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k099",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-05",
+				"slug": "2026-05",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年5月",
+					"excerpt": "会議関係はカリタスジャパン審査会（4月8日）。国内外の支援案件についてご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k100",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k101",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-06",
+				"slug": "2026-04",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年4月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-report-06",
+						"src": "/assets/img/sub/report/report-2026-04.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "report-2026-04.jpg"
+					},
+					"excerpt": "現地報告として、インド案件の視察およびカリタス・インディアとの協議についてご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k102",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k103",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-07",
+				"slug": "2026-03",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年3月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-report-07",
+						"src": "/assets/img/sub/report/report-2026-03.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "report-2026-03.jpg"
+					},
+					"excerpt": "会議関係はカリタスジャパン委員会（2月10日）。四旬節「愛の献金」キャンペーンの状況もあわせて。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k104",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k105",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-08",
+				"slug": "2026-02",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年2月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-report-08",
+						"src": "/assets/img/sub/report/report-2026-02.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "report-2026-02.jpg"
+					},
+					"excerpt": "現地視察としてコンゴ民主共和国を訪問しました。2025年に施設の修復・増築を行った案件の確認です。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k106",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k107",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-09",
+				"slug": "2026-01",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2026年1月",
+					"featured_image": {
+						"provider": "external",
+						"id": "seed-report-09",
+						"src": "/assets/img/sub/report/report-2026-01.jpg",
+						"alt": "",
+						"width": 400,
+						"height": 266,
+						"mimeType": "image/jpeg",
+						"filename": "report-2026-01.jpg"
+					},
+					"excerpt": "会議関係はカリタスジャパン委員会（12月3日）。国内一般の支援案件についてご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k108",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k109",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			},
+			{
+				"id": "report-10",
+				"slug": "2025-12",
+				"status": "published",
+				"data": {
+					"title": "月間活動報告 2025年12月",
+					"excerpt": "会議関係はカリタスジャパン委員会（11月19日）。国内外の支援案件についてご報告します。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k110",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k111",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"report_category": [
+						"monthly"
+					]
+				}
+			}
+		],
+		"publication": [
+			{
+				"id": "publication-01",
+				"slug": "lent-booklet-1997-2013",
+				"status": "published",
+				"data": {
+					"title": "四旬節小冊子 1997–2013",
+					"cover": {
+						"provider": "external",
+						"id": "seed-publication-01",
+						"src": "/assets/img/sub/publication/pub-lent-booklet-1997-2013.jpg",
+						"alt": "",
+						"width": 322,
+						"height": 460,
+						"mimeType": "image/jpeg",
+						"filename": "pub-lent-booklet-1997-2013.jpg"
+					},
+					"excerpt": "教皇が毎年、キリストを信じるすべての人が四旬節の精神をよく理解して回心と愛のわざに励むよう呼びかけたメッセージを収めています。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k112",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k113",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"publication_category": [
+						"booklet"
+					]
+				}
+			},
+			{
+				"id": "publication-02",
+				"slug": "we-are-caritas-31",
+				"status": "published",
+				"data": {
+					"title": "We are Caritas No.31",
+					"cover": {
+						"provider": "external",
+						"id": "seed-publication-02",
+						"src": "/assets/img/sub/publication/pub-we-are-caritas-31.jpg",
+						"alt": "",
+						"width": 322,
+						"height": 459,
+						"mimeType": "image/jpeg",
+						"filename": "pub-we-are-caritas-31.jpg"
+					},
+					"excerpt": "2025年冬号ができました。ご希望のかた（無料）は、事務局までお申し込みください。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k114",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k115",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"publication_category": [
+						"we-are-caritas"
+					]
+				}
+			},
+			{
+				"id": "publication-03",
+				"slug": "we-are-caritas-30",
+				"status": "published",
+				"data": {
+					"title": "We are Caritas No.30",
+					"cover": {
+						"provider": "external",
+						"id": "seed-publication-03",
+						"src": "/assets/img/sub/publication/pub-we-are-caritas-30.jpg",
+						"alt": "",
+						"width": 322,
+						"height": 459,
+						"mimeType": "image/jpeg",
+						"filename": "pub-we-are-caritas-30.jpg"
+					},
+					"excerpt": "2025年夏号ができました。ご希望のかた（無料）は、事務局までお申し込みください。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k116",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k117",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"publication_category": [
+						"we-are-caritas"
+					]
+				}
+			},
+			{
+				"id": "publication-04",
+				"slug": "jishi-genjitsu",
+				"status": "published",
+				"data": {
+					"title": "自死の現実を見つめて ── 教会が生きる支えになるために",
+					"cover": {
+						"provider": "external",
+						"id": "seed-publication-04",
+						"src": "/assets/img/sub/publication/pub-jishi-genjitsu.jpg",
+						"alt": "",
+						"width": 174,
+						"height": 248,
+						"mimeType": "image/jpeg",
+						"filename": "pub-jishi-genjitsu.jpg"
+					},
+					"excerpt": "啓発部会が取り組んだ「自死と孤立」のテーマから生まれた小冊子です。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k118",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k119",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"publication_category": [
+						"booklet"
+					]
+				}
+			},
+			{
+				"id": "publication-05",
+				"slug": "boryoku-gyakutai-seminar",
+				"status": "published",
+				"data": {
+					"title": "「暴力・虐待と福音」セミナー講演録",
+					"cover": {
+						"provider": "external",
+						"id": "seed-publication-05",
+						"src": "/assets/img/sub/publication/pub-boryoku-gyakutai.jpg",
+						"alt": "",
+						"width": 322,
+						"height": 463,
+						"mimeType": "image/jpeg",
+						"filename": "pub-boryoku-gyakutai.jpg"
+					},
+					"excerpt": "社会福祉活動推進部会が2006年から取り組んだテーマ「暴力・虐待」のセミナー講演録です。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k120",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k121",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"publication_category": [
+						"booklet"
+					]
+				}
+			},
+			{
+				"id": "publication-06",
+				"slug": "we-are-caritas-29",
+				"status": "published",
+				"data": {
+					"title": "We are Caritas No.29",
+					"cover": {
+						"provider": "external",
+						"id": "seed-publication-06",
+						"src": "/assets/img/sub/publication/pub-we-are-caritas-29.jpg",
+						"alt": "",
+						"width": 198,
+						"height": 282,
+						"mimeType": "image/jpeg",
+						"filename": "pub-we-are-caritas-29.jpg"
+					},
+					"excerpt": "2024年冬号ができました。ご希望のかた（無料）は、事務局までお申し込みください。",
+					"content": [
+						{
+							"_type": "block",
+							"_key": "k122",
+							"style": "normal",
+							"markDefs": [],
+							"children": [
+								{
+									"_type": "span",
+									"_key": "k123",
+									"text": "※この記事はデザインカンプ掲載の仮データです。公開前に削除または差し替えてください。"
+								}
+							]
+						}
+					]
+				},
+				"taxonomies": {
+					"publication_category": [
+						"we-are-caritas"
 					]
 				}
 			}

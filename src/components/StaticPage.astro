@@ -5,14 +5,16 @@ import PageHeader from "./PageHeader.astro";
 interface Props {
 	title: string;
 	en?: string;
+	ja?: string;
+	lead?: string;
 	crumbs?: { label: string; href?: string }[];
 	description?: string;
 }
-const { title, en, crumbs, description } = Astro.props;
+const { title, en, ja, lead, crumbs, description } = Astro.props;
 const hasBody = Astro.slots.has("default");
 ---
 <Layout title={title} description={description}>
-	<PageHeader title={title} en={en} crumbs={crumbs} />
+	<PageHeader title={title} en={en} ja={ja} lead={lead} crumbs={crumbs} />
 	<div class="page-body l-container">
 		{hasBody ? <div class="prose"><slot /></div> : (
 			<div class="page-empty">

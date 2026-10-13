@@ -1,27 +1,37 @@
 ---
-interface Crumb { label: string; href?: string }
+/*
+ * 下層ヒーロー(クリーム地+地球、パンくず込み)
+ *   <PageHeader title="援助活動" en="AID" ja="援助" lead="…" crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
+ * - H1 の一部を赤くするときは slot="title" に HTML を渡す(title はパンくず・代替に使う)
+ *     <Fragment slot="title"><em class="u-red">カリタスジャパン</em>について</Fragment>
+ * - crumbs は「ホーム」と現在地の間の階層。現在地は current(省略時 title)
+ * - flat: 下辺のカーブなし(about のように直下に写真帯+アーチが来る場合)
+ */
+import Breadcrumb, { type Crumb } from "./Breadcrumb.astro";
+
 interface Props {
 	title: string;
 	en?: string;
-	/** パンくず(TOP は自動で先頭に付く) */
+	ja?: string;
+	lead?: string;
 	crumbs?: Crumb[];
+	current?: string;
+	flat?: boolean;
 }
-const { title, en, crumbs = [] } = Astro.props;
-const list: Crumb[] = [{ label: "TOP", href: "/" }, ...crumbs, { label: title }];
+const { title, en, ja, lead, crumbs = [], current, flat = false } = Astro.props;
+const hasTitleSlot = Astro.slots.has("title");
 ---
-<div class="page-head">
-	<div class="l-container">
-		{en && <p class="section-label"><span lang="en">{en}</span></p>}
-		<h1 class="heading-xl page-head__title">{title}</h1>
+<div class:list={["sub-hero", flat && "sub-hero--flat"]}>
+	<Breadcrumb items={[...crumbs, { label: current ?? title }]} class="sub-hero__crumbs" />
+	<div class="sub-hero__body l-container">
+		{en && (
+			<p class="section-label sub-hero__label">
+				<span lang="en">{en}</span>
+				{ja && <><span class="section-label__slash" aria-hidden="true"></span><span>{ja}</span></>}
+			</p>
+		)}
+		<h1 class="sub-hero__title">{hasTitleSlot ? <slot name="title" /> : title}</h1>
+		{lead && <p class="sub-hero__lead">{lead}</p>}
 	</div>
-	<svg class="curve curve--up page-head__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor" /></svg>
+	{!flat && <svg class="curve curve--up sub-hero__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor" /></svg>}
 </div>
-<nav class="breadcrumb l-container" aria-label="パンくずリスト">
-	<ol class="breadcrumb__list">
-		{list.map((c, i) => (
-			<li class="breadcrumb__item">
-				{c.href && i < list.length - 1 ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}
-			</li>
-		))}
-	</ol>
-</nav>

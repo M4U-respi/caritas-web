@@ -1,0 +1,28 @@
+---
+/*
+ * 前後記事ナビ(記事詳細)。前の記事=1 つ古い記事、次の記事=1 つ新しい記事(ディレクター判断)
+ *   <PostNav prev={{ href, title }} next={{ href, title }} />
+ * 片方が無いときはその枠を出さない(もう片方は所定の位置に残る)
+ */
+import CircleArrow from "./CircleArrow.astro";
+
+interface Link { href: string; title: string }
+interface Props { prev?: Link | null; next?: Link | null }
+const { prev, next } = Astro.props;
+---
+{(prev || next) && (
+	<nav class="post-nav" aria-label="前後の記事">
+		{prev && (
+			<a class="post-nav__link post-nav__link--prev" href={prev.href} rel="prev">
+				<CircleArrow dir="left" />
+				<span class="post-nav__body"><span class="post-nav__label">前の記事</span><span class="post-nav__title">{prev.title}</span></span>
+			</a>
+		)}
+		{next && (
+			<a class="post-nav__link post-nav__link--next" href={next.href} rel="next">
+				<span class="post-nav__body"><span class="post-nav__label">次の記事</span><span class="post-nav__title">{next.title}</span></span>
+				<CircleArrow />
+			</a>
+		)}
+	</nav>
+)}

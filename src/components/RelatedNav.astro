@@ -1,0 +1,44 @@
+---
+/*
+ * 関連ページナビ(ページ末尾の「各ページ」リンク群)
+ *   <RelatedNav preset="about" />   … about / news / publication(src/data/site.ts の RELATED_NAV)
+ * 現在のページは自動で aria-current="page"
+ */
+import { RELATED_NAV } from "../data/site";
+import CircleArrow from "./CircleArrow.astro";
+
+interface Props { preset: keyof typeof RELATED_NAV }
+const { preset } = Astro.props;
+const nav = RELATED_NAV[preset];
+const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
+const items = nav.items.map((i) => ({ ...i, current: i.href === path }));
+const [lead, ...rest] = items;
+const titleId = `related-${preset}-title`;
+---
+<section class:list={["related-nav", `related-nav--${preset}`]} aria-labelledby={titleId}>
+	<div class="l-container">
+		<p class="section-label">
+			<span lang="en">{nav.en}</span><span class="section-label__slash" aria-hidden="true"></span><span>{nav.ja}</span>
+		</p>
+		<h2 class="related-nav__title" id={titleId}>{nav.title}</h2>
+		{preset === "about" ? (
+			<div class="related-nav__grid">
+				<a class="related-nav__btn related-nav__btn--lead" href={lead.href} aria-current={lead.current ? "page" : undefined}>
+					<img class="related-nav__logo" src="/assets/img/logo.png" alt="" width="185" height="46" loading="lazy" />
+					<span>{lead.label}</span><CircleArrow />
+				</a>
+				<ul class="related-nav__list">
+					{rest.map((i) => (
+						<li><a class="related-nav__btn" href={i.href} aria-current={i.current ? "page" : undefined}><span>{i.label}</span><CircleArrow /></a></li>
+					))}
+				</ul>
+			</div>
+		) : (
+			<ul class="related-nav__list">
+				{items.map((i) => (
+					<li><a class="related-nav__btn" href={i.href} aria-current={i.current ? "page" : undefined}><span>{i.label}</span><CircleArrow /></a></li>
+				))}
+			</ul>
+		)}
+	</div>
+</section>

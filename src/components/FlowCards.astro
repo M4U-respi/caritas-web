@@ -1,0 +1,21 @@
+---
+/*
+ * フロー(ステップ)カード 4 枚。lent「献金の届き方」/ aid「援助の流れ」
+ *   <FlowCards items={[{ title, text, img: { src, width, height } }, …]} />
+ */
+interface Item { title: string; text: string; img: { src: string; width: number; height: number; alt?: string } }
+interface Props { items: Item[] }
+const { items } = Astro.props;
+---
+<ol class="flow">
+	{items.map((item, i) => (
+		<li class="flow__item">
+			<img class="flow__img" src={item.img.src} alt={item.img.alt ?? ""} width={item.img.width} height={item.img.height} loading="lazy" decoding="async" />
+			<div class="flow__body">
+				<p class="flow__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
+				<h3 class="flow__title">{item.title}</h3>
+				<p class="flow__text">{item.text}</p>
+			</div>
+		</li>
+	))}
+</ol>

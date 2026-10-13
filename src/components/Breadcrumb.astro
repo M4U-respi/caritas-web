@@ -1,0 +1,35 @@
+---
+/*
+ * パンくず。先頭の「ホーム」は自動で付く。最後の項目が現在地(リンクなし・aria-current)。
+ * items: [{ label: "カリタスジャパンとは", href: "/about/" }, { label: "援助活動" }]
+ */
+import { SITE } from "../data/site";
+
+export interface Crumb { label: string; href?: string }
+interface Props { items: Crumb[]; class?: string }
+const { items, class: cls } = Astro.props;
+const list: Crumb[] = [{ label: "ホーム", href: "/" }, ...items];
+const last = list.length - 1;
+
+const origin = Astro.site?.origin ?? Astro.url.origin;
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "BreadcrumbList",
+	itemListElement: list.map((c, i) => ({
+		"@type": "ListItem",
+		position: i + 1,
+		name: i === 0 ? SITE.name : c.label,
+		...(c.href || i === last ? { item: new URL(c.href ?? Astro.url.pathname, origin).href } : {}),
+	})),
+};
+---
+<nav class:list={["breadcrumb", cls]} aria-label="パンくずリスト">
+	<ol class="breadcrumb__list">
+		{list.map((c, i) => (
+			<li class="breadcrumb__item">
+				{i < last && c.href ? <a href={c.href}>{c.label}</a> : <span aria-current={i === last ? "page" : undefined}>{c.label}</span>}
+			</li>
+		))}
+	</ol>
+	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+</nav>

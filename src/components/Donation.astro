@@ -1,0 +1,31 @@
+---
+/* 寄付ブロック(TOP DONATION と共通)。class で上余白などを調整する */
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+<!-- ==================== DONATION ==================== -->
+<section class:list={["donation", cls]} id="donation" aria-labelledby="donation-title">
+  <div class="donation__card reveal">
+    <header class="donation__head">
+      <p class="donation__label" lang="en">DONATION</p>
+      <h2 class="donation__title" id="donation-title">寄付のお願い</h2>
+    </header>
+    <div class="donation__body">
+      <div class="donation__text">
+        <h3 class="donation__heading">その<em class="u-red">想い</em>を、行動に。</h3>
+        <p class="donation__lead">カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。</p>
+        <p class="donation__desc">全世界のカリタスと連携し、世界各地で厳しい生活を余儀なくされている人々の自立への後押し、貧困の撲滅、人権、教育、保健衛生などの優先課題に力を注いでいます。ご支援、ご協力をお願い申し上げます。</p>
+      </div>
+      <!-- 注意: donation-illust.png は背景色 #FAF7EE 付き。カード背景色を変えないこと -->
+      <div class="donation__illust"><img src="/assets/img/donation-illust.png" alt="" width="226" height="346" loading="lazy" decoding="async"></div>
+      <div class="donation__box">
+        <h3 class="donation__box-title"><span>ご支援の方法はこちら</span></h3>
+        <p class="donation__box-text">どこでも、いくらからでも。<br>それぞれに合ったご支援方法をご案内しています。</p>
+        <ul class="donation__btns">
+          <li><a class="btn-pill" href="/donate/"><svg class="btn-pill__heart" width="16" height="16" aria-hidden="true"><use href="#i-heart"/></svg><span>寄付で支援する</span></a></li>
+          <li><a class="btn-pill" href="/donate/monthly/"><span>毎月の支援（マンスリー）</span><svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

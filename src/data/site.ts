@@ -29,11 +29,14 @@ export const COLLECTIONS = {
 		en: "NEWS",
 		base: "/news/",
 		taxonomy: "news_category",
+		/** 一覧のヒーロー(ラベル英/和・リード)と 1 ページの件数 */
+		hero: { en: "NEWS", ja: "新着情報", lead: "募金の受付や緊急支援、キャンペーン、事務局からのご連絡をお伝えします。" },
+		perPage: 10,
 		terms: [
-			{ slug: "emergency", label: "緊急支援", tag: "red" },
-			{ slug: "donation", label: "募金・献金", tag: "yellow" },
-			{ slug: "campaign", label: "啓発・キャンペーン", tag: "yellow" },
-			{ slug: "info", label: "事務局から", tag: "blue" },
+			{ slug: "emergency", label: "緊急支援", tag: "red", hero: { en: "EMERGENCY", ja: "緊急", lead: "災害や紛争に対する緊急募金の受付と、その後の支援の経過をお伝えします。" } },
+			{ slug: "donation", label: "募金・献金", tag: "yellow", hero: { en: "DONATION", ja: "募金", lead: "四旬節「愛の献金」やクリスマス募金など、募金の受付と御礼をお伝えします。" } },
+			{ slug: "campaign", label: "啓発・キャンペーン", tag: "yellow", hero: { en: "CAMPAIGN", ja: "キャンペーン", lead: "国際カリタスのキャンペーンの国内展開や、セミナー・報告会のご案内です。" } },
+			{ slug: "info", label: "事務局から", tag: "blue", hero: { en: "INFORMATION", ja: "事務局", lead: "事務局からの事務連絡や、行事のご案内です。" } },
 		],
 	},
 	report: {
@@ -41,8 +44,11 @@ export const COLLECTIONS = {
 		en: "REPORT",
 		base: "/report/",
 		taxonomy: "report_category",
+		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
+		hero: { en: "REPORTS", ja: "報告", lead: "毎月の活動と、年度ごとの総括をご報告します。募金の受け入れと支出の状況もこちらでご確認いただけます。" },
+		perPage: 10,
 		terms: [
-			{ slug: "annual", label: "年次報告", tag: "blue" },
+			{ slug: "annual", label: "年次報告", tag: "red" },
 			{ slug: "monthly", label: "活動レポート", tag: "yellow" },
 		],
 	},
@@ -51,9 +57,12 @@ export const COLLECTIONS = {
 		en: "PUBLICATION",
 		base: "/publication/",
 		taxonomy: "publication_category",
+		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
+		hero: { en: "PUBLICATIONS", ja: "刊行物", lead: "機関誌「We are Caritas」や、四旬節の小冊子、セミナーの講演録などを発行しています。いずれも無料でお送りしています。" },
+		perPage: 6,
 		terms: [
-			{ slug: "we-are-caritas", label: "We are Caritas", tag: "blue" },
-			{ slug: "booklet", label: "小冊子・資料", tag: "yellow" },
+			{ slug: "we-are-caritas", label: "We are Caritas", tag: "red" },
+			{ slug: "booklet", label: "小冊子・資料", tag: "teal" },
 		],
 	},
 } as const;
@@ -92,6 +101,27 @@ export const GNAV: (NavLink & { children?: NavLink[] })[] = [
 		children: [{ label: "お知らせ一覧", href: "/news/" }, ...termLinks("news")],
 	},
 ];
+
+/** 「カリタスジャパンとは」配下のページ(関連ページナビ・パンくず) */
+export const ABOUT_PAGES: NavLink[] = [
+	{ label: "カリタスジャパンとは", href: "/about/" },
+	{ label: "成り立ちと歴史", href: "/about/history/" },
+	{ label: "四旬節「愛の献金」", href: "/about/lent/" },
+	{ label: "援助活動", href: "/about/aid/" },
+	{ label: "啓発活動", href: "/about/social/" },
+];
+
+/** 関連ページナビ(RelatedNav)のプリセット */
+export const RELATED_NAV = {
+	about: { en: "ABOUT", ja: "カリタスジャパンとは", title: "カリタスジャパンとは各ページ", items: ABOUT_PAGES },
+	news: {
+		en: "NEWS",
+		ja: "お知らせ",
+		title: "お知らせ各ページ",
+		items: [{ label: "お知らせ", href: "/news/" }, ...termLinks("news")],
+	},
+	publication: { en: "PUBLICATIONS", ja: "刊行物", title: "全ての発行物", items: termLinks("publication") },
+} as const;
 
 /** フッターナビ */
 export const FOOTER_NAV: { heading: string; links: NavLink[] }[] = [

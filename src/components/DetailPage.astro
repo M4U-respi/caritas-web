@@ -1,53 +1,91 @@
 ---
-/* CMS 記事の詳細ページ */
+/*
+ * CMS 記事の詳細ページ(白背景+パンくず → タイトル・日付・タグ → 本文 → 前後記事 → 一覧へ戻る)
+ * entry・前後記事はページ側(src/pages/{news,report,publication}/[slug].astro)で取得して渡す(404 判定をレスポンス開始前に行うため)。
+ * 発行物は本文の前に表紙+概要+PDF ダウンロードを置く(発行物詳細のカンプは無いため一覧カードの要素から構成)。
+ */
 import { getEntryTerms } from "emdash";
-import { Image, PortableText } from "emdash/ui";
+import { Image } from "emdash/ui";
 import Layout from "../layouts/Layout.astro";
-import PageHeader from "./PageHeader.astro";
+import Breadcrumb from "./Breadcrumb.astro";
+import PostNav from "./PostNav.astro";
+import Prose from "./prose/Prose.astro";
+import Donation from "./Donation.astro";
+import RelatedNav from "./RelatedNav.astro";
+import Partners from "./Partners.astro";
 import { COLLECTIONS, formatDate, isoDate, type CollectionKey } from "../data/site";
 
-// entry はページ側(src/pages/{news,report,publication}/[slug].astro)で取得して渡す(404 判定をレスポンス開始前に行うため)
-interface Props { collection: CollectionKey; slug: string; entry: any }
-const { collection, slug, entry } = Astro.props;
+interface Link { href: string; title: string }
+interface Props {
+	collection: CollectionKey;
+	slug: string;
+	entry: any;
+	adjacent: { prev: Link | null; next: Link | null };
+}
+const { collection, slug, entry, adjacent } = Astro.props;
 const conf = COLLECTIONS[collection];
 
 const d: any = entry.data;
 const terms = ((await getEntryTerms(collection, d.id, conf.taxonomy)) ?? []) as any[];
 const date = d.publishedAt ?? d.createdAt;
-const image = d.featured_image ?? d.cover;
-const file = d.file;
-const imageEdit = d.featured_image ? entry.edit?.featured_image : entry.edit?.cover;
-const titleEdit = entry.edit?.title;
-const fileLabel = file?.filename ? `資料をダウンロード(${file.filename})` : "資料をダウンロード";
 const termTags = terms.map((t) => ({
 	slug: t.slug,
 	label: t.label,
 	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
 }));
+const isPublication = collection === "publication";
+const file = isPublication ? d.file : null;
+const fileUrl: string | undefined = file?.url ?? file?.src ?? (file?.meta?.storageKey ? `/_emdash/api/media/file/${file.meta.storageKey}` : file?.id ? `/_emdash/api/media/file/${file.id}` : undefined);
+const fileSize = typeof file?.size === "number" && file.size > 0 ? `${file.size >= 1048576 ? (file.size / 1048576).toFixed(1) + "MB" : Math.max(1, Math.round(file.size / 1024)) + "KB"}` : "";
+const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
+const ogImage = (d.featured_image ?? d.cover)?.src;
 ---
-<Layout title={d.title} description={d.excerpt} content={{ collection, id: d.id, slug }}>
-	<PageHeader title={conf.label} en={conf.en} crumbs={[]} />
-	<article class="article l-container">
-		<header class="article__head">
-			<p class="article__meta">
-				<time datetime={isoDate(date)}>{formatDate(date)}</time>
-				{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}${t.slug}/`}>{t.label}</a>)}
-			</p>
-			<h2 class="article__title" {...titleEdit}>{d.title}</h2>
-		</header>
-		{image && (
-			<figure class="article__image" {...imageEdit}>
-				<Image image={image} />
-			</figure>
-		)}
-		{d.content && <div class="prose"><PortableText value={d.content} /></div>}
-		{file?.url && (
-			<p class="article__file">
-				<a class="btn-outline btn-outline--md" href={file.url} target="_blank" rel="noopener"><span>{fileLabel}</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
-			</p>
-		)}
-		<p class="article__back">
-			<a class="btn-outline btn-outline--md" href={conf.base}><span>{conf.label}一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
-		</p>
+<Layout title={d.title} description={d.excerpt} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
+	<Breadcrumb items={[{ label: conf.label, href: conf.base }, { label: d.title }]} />
+
+	<article class="article">
+		<div class="article__inner">
+			<header class="article__head">
+				<h1 class="article__title" {...entry.edit?.title}>{d.title}</h1>
+				<p class="article__meta">
+					{date && <time class="article__date" datetime={isoDate(date)}>{formatDate(date)}</time>}
+					{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}${t.slug}/`}>{t.label}</a>)}
+				</p>
+			</header>
+
+			{isPublication && (
+				<div class="pub-detail">
+					<div class="pub-detail__cover" {...entry.edit?.cover}>
+						{d.cover
+							? <Image image={d.cover} alt={d.cover.alt || `${d.title} 表紙`} />
+							: <img src="/assets/img/sub/common/noimage.jpg" alt="" width="400" height="266" />}
+					</div>
+					<div class="pub-detail__body">
+						{d.excerpt && <p class="pub-detail__excerpt" {...entry.edit?.excerpt}>{d.excerpt}</p>}
+						{fileUrl && (
+							<p class="pub-detail__file">
+								<a class="btn-pill btn-pill--red pub-detail__btn" href={fileUrl} target="_blank" rel="noopener" download={file?.filename || undefined}>
+									<span>PDFをダウンロード{fileSize && <span class="pub-detail__size">（PDF {fileSize}）</span>}</span>
+									<svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
+								</a>
+							</p>
+						)}
+					</div>
+				</div>
+			)}
+
+			<Prose value={d.content} lead={d.lead} />
+
+			<div class="article__foot">
+				<PostNav prev={adjacent.prev} next={adjacent.next} />
+				<p class="article__back">
+					<a class="btn-outline btn-outline--sm" href={conf.base}><span>{conf.label}一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+				</p>
+			</div>
+		</div>
 	</article>
+
+	<Donation />
+	{related && <RelatedNav preset={related} />}
+	<Partners class={related ? "partners--after-nav" : undefined} />
 </Layout>

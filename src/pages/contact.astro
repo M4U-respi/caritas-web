@@ -1,4 +1,156 @@
 ---
-import StaticPage from "../components/StaticPage.astro";
+import Layout from "../layouts/Layout.astro";
+import PageHeader from "../components/PageHeader.astro";
+import SectionHead from "../components/SectionHead.astro";
+import Partners from "../components/Partners.astro";
+
+const lead = "寄付や募金のお手続き、資料のご請求、取材のお申し込みなど、お気軽にお問い合わせください。";
 ---
-<StaticPage title="お問い合わせ" en="CONTACT" crumbs={[]} />
+<Layout title="お問い合わせ" description={lead}>
+	<PageHeader title="お問い合わせ" en="CONTACT" ja="ご連絡" lead={lead} />
+
+	<!-- お電話・FAX -->
+	<section class="sub-section contact-tel" aria-labelledby="tel-title">
+		<div class="l-container">
+			<SectionHead en="PHONE / FAX" id="tel-title" lead="お急ぎの場合や、フォームの入力が難しい場合は、こちらへご連絡ください。">
+				<Fragment slot="title"><em class="u-red">お電話・FAX</em>でのお問い合わせ</Fragment>
+			</SectionHead>
+			<div class="tel-box">
+				<dl class="tel-box__grid">
+					<div class="tel-card">
+						<dt class="tel-card__label"><img src="/assets/img/sub/contact/icon-tel.png" alt="" width="18" height="20" />電話</dt>
+						<dd class="tel-card__num"><a href="tel:0356324439">03-5632-4439</a></dd>
+					</div>
+					<div class="tel-card">
+						<dt class="tel-card__label"><img src="/assets/img/sub/contact/icon-fax.png" alt="" width="26" height="26" />FAX</dt>
+						<dd class="tel-card__num">03-5632-4464</dd>
+					</div>
+					<div class="tel-card tel-card--wide">
+						<dt class="tel-card__label">所在地</dt>
+						<dd class="tel-card__addr">
+							<address>〒135-8585<span class="u-sp"></span>東京都江東区潮見2-10-10<span class="u-sp"></span>日本カトリック会館6F<br />宗教法人カトリック中央協議会 カリタスジャパン</address>
+						</dd>
+					</div>
+				</dl>
+				<!-- TODO(要確認): 受付時間の正式文言(カンプの「※ 受付時間は事務局にご確認のうえ記載してください。」は編集用メモのため非表示) -->
+			</div>
+		</div>
+		<svg class="curve curve--up contact-tel__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor" /></svg>
+	</section>
+
+	<!-- フォーム -->
+	<section class="sub-section sub-section--cream-light contact-form-section" aria-labelledby="form-title">
+		<div class="l-container">
+			<SectionHead en="CONTACT FORM" title="フォームでのお問い合わせ" id="form-title" lead="いただいた内容には、事務局より順次ご返信いたします。お急ぎの場合はお電話をご利用ください。" />
+			<div class="form-card">
+				<ol class="form-steps" aria-label="お問い合わせの手順">
+					<li class="form-steps__item" aria-current="step"><span class="form-steps__num">1</span>お問い合わせ入力</li>
+					<li class="form-steps__item"><span class="form-steps__num">2</span>内容確認</li>
+					<li class="form-steps__item"><span class="form-steps__num">3</span>送信完了</li>
+				</ol>
+				<!-- TODO(要確認): 送信先未定。確認・完了画面のカンプなし -->
+				<form class="form-body" id="contact-form" action="#" method="post" enctype="multipart/form-data" data-todo="form-endpoint" novalidate>
+					<div class="form-row">
+						<label class="form-row__label" for="cf-name">お名前<span class="form-badge form-badge--req">必須</span></label>
+						<div>
+							<input class="form-input" id="cf-name" name="name" type="text" autocomplete="name" placeholder="例: 中田 翔次" required aria-describedby="cf-name-err" />
+							<p class="form-error" id="cf-name-err" aria-live="polite"></p>
+						</div>
+					</div>
+					<div class="form-row">
+						<label class="form-row__label" for="cf-email">メールアドレス<span class="form-badge form-badge--req">必須</span></label>
+						<div>
+							<input class="form-input" id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="例: example@caritas.jp" required aria-describedby="cf-email-help cf-email-err" />
+							<p class="form-help" id="cf-email-help">ご返信先としてお使いします。</p>
+							<p class="form-error" id="cf-email-err" aria-live="polite"></p>
+						</div>
+					</div>
+					<div class="form-row">
+						<label class="form-row__label" for="cf-subject">ご用件<span class="form-badge form-badge--opt">任意</span></label>
+						<div><input class="form-input" id="cf-subject" name="subject" type="text" placeholder="例: 資料の請求について" /></div>
+					</div>
+					<div class="form-row form-row--textarea">
+						<label class="form-row__label" for="cf-message">メッセージ本文<span class="form-badge form-badge--opt">任意</span></label>
+						<div><textarea class="form-input" id="cf-message" name="message" rows="4" placeholder="お問い合わせの内容をご記入ください。"></textarea></div>
+					</div>
+					<div class="form-row">
+						<span class="form-row__label" id="cf-file-label">ファイルの添付<span class="form-badge form-badge--opt">任意</span></span>
+						<div class="form-file">
+							<input class="form-file__input" id="cf-file" name="file" type="file" aria-labelledby="cf-file-label cf-file-btn" aria-describedby="cf-file-name" />
+							<label class="form-file__btn" id="cf-file-btn" for="cf-file">ファイルを選択</label>
+							<span class="form-file__name" id="cf-file-name" aria-live="polite">5MBまでの1ファイルを添付できます。</span>
+						</div>
+					</div>
+
+					<div class="form-agree">
+						<label class="form-check">
+							<input type="checkbox" name="agree" id="cf-agree" required aria-describedby="cf-agree-err" />
+							<span><a href="/privacy-policy/" target="_blank" rel="noopener">プライバシーポリシー</a>に同意する</span>
+						</label>
+						<p class="form-error" id="cf-agree-err" aria-live="polite"></p>
+						<p class="sub-note">ご記入いただいた個人情報は、お問い合わせへの対応にのみ使用します。詳しくはプライバシーポリシーをご覧ください。</p>
+					</div>
+
+					<button class="form-submit" type="submit"><span>入力内容を確認する</span><svg width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></button>
+					<p class="form-status" id="cf-status" role="status" hidden></p>
+					<p class="sub-note">※ 迷惑行為を防ぐため、Google の reCAPTCHA を使用しています。プライバシーポリシーもあわせてご確認ください。</p>
+				</form>
+			</div>
+		</div>
+	</section>
+
+	<Partners />
+</Layout>
+
+<script>
+	/* お問い合わせフォーム: 入力チェック(必須・メール形式)のみ。送信先未定のため送信はしない */
+	const form = document.getElementById("contact-form") as HTMLFormElement | null;
+	if (form) {
+		const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
+		const status = $<HTMLParagraphElement>("cf-status");
+		const fileInput = $<HTMLInputElement>("cf-file");
+		const fileName = $<HTMLSpanElement>("cf-file-name");
+		const fileHint = fileName.textContent ?? "";
+		const MAX = 5 * 1024 * 1024;
+
+		// TODO(要確認): エラー文言
+		const checks: [string, string, (el: HTMLInputElement) => string][] = [
+			["cf-name", "cf-name-err", (el) => (el.value.trim() ? "" : "お名前を入力してください。")],
+			["cf-email", "cf-email-err", (el) => (!el.value.trim() ? "メールアドレスを入力してください。" : el.validity.typeMismatch ? "メールアドレスの形式が正しくありません。" : "")],
+			["cf-agree", "cf-agree-err", (el) => (el.checked ? "" : "プライバシーポリシーへの同意が必要です。")],
+		];
+		const validate = (id: string, errId: string, fn: (el: HTMLInputElement) => string) => {
+			const el = $<HTMLInputElement>(id);
+			const msg = fn(el);
+			$(errId).textContent = msg;
+			if (msg) el.setAttribute("aria-invalid", "true");
+			else el.removeAttribute("aria-invalid");
+			return !msg;
+		};
+		checks.forEach(([id, errId, fn]) => {
+			const el = $<HTMLInputElement>(id);
+			el.addEventListener(el.type === "checkbox" ? "change" : "blur", () => validate(id, errId, fn));
+		});
+
+		fileInput.addEventListener("change", () => {
+			const f = fileInput.files?.[0];
+			if (f && f.size > MAX) {
+				fileInput.value = "";
+				fileName.textContent = "5MBを超えるファイルは添付できません。";
+			} else fileName.textContent = f ? f.name : fileHint;
+		});
+
+		form.addEventListener("submit", (e) => {
+			e.preventDefault();
+			const results = checks.map(([id, errId, fn]) => validate(id, errId, fn));
+			const firstNg = results.indexOf(false);
+			if (firstNg >= 0) {
+				status.hidden = true;
+				$(checks[firstNg][0]).focus();
+				return;
+			}
+			status.textContent = "送信機能は準備中です。";
+			status.hidden = false;
+		});
+	}
+</script>

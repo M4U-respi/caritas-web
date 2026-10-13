@@ -1,0 +1,15 @@
+---
+/* 記事本文(Portable Text)。画像・画像並び・表・注記をデザインに合わせて表示する */
+import { PortableText } from "emdash/ui";
+import ProseBlock from "./ProseBlock.astro";
+import ProseImage from "./ProseImage.astro";
+import ProseGallery from "./ProseGallery.astro";
+import ProseTable from "./ProseTable.astro";
+
+interface Props { value: any; lead?: string | null }
+const { value, lead } = Astro.props;
+---
+<div class="prose">
+	{lead && <p class="prose__lead">{lead}</p>}
+	{value && <PortableText value={value} components={{ block: ProseBlock, type: { image: ProseImage, gallery: ProseGallery, table: ProseTable } } as any} />}
+</div>

@@ -1,0 +1,22 @@
+---
+/* 表のセル内テキスト(太字・斜体・リンクに対応) */
+import { sanitizeHref } from "emdash";
+
+interface Props { spans?: any[]; markDefs?: any[] }
+const { spans = [], markDefs = [] } = Astro.props;
+const parts = spans.map((s) => {
+	const marks: string[] = Array.isArray(s?.marks) ? s.marks : [];
+	const link = markDefs.find((d: any) => marks.includes(d?._key) && d?._type === "link");
+	return {
+		text: String(s?.text ?? ""),
+		strong: marks.includes("strong"),
+		em: marks.includes("em"),
+		href: link?.href ? sanitizeHref(String(link.href)) : null,
+		blank: !!link?.blank,
+	};
+});
+---
+{parts.map((p) => {
+	const inner = p.strong ? <strong>{p.em ? <em>{p.text}</em> : p.text}</strong> : p.em ? <em>{p.text}</em> : p.text;
+	return p.href ? <a href={p.href} target={p.blank ? "_blank" : undefined} rel={p.blank ? "noopener noreferrer" : undefined}>{inner}</a> : inner;
+})}

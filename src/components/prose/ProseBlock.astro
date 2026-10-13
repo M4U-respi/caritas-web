@@ -1,0 +1,15 @@
+---
+/*
+ * 本文の段落・見出し(EmDash 標準の Block をそのまま使い、「※」で始まる段落だけ注記スタイルにする)
+ * 管理画面では段落の先頭に「※」を書くと 12px グレーの注記になる。
+ */
+import * as ui from "emdash/ui";
+
+// emdash/ui は Block を型と値の両方で export しているため、型チェック回避のため名前空間経由で参照する
+const EmBlock = (ui as any).Block;
+
+const { node, ...rest } = Astro.props as any;
+const text = node?.style === "normal" ? (node.children ?? []).map((c: any) => c?.text ?? "").join("") : "";
+const isNote = /^\s*※/.test(text);
+---
+{isNote ? <p class="prose__note"><slot /></p> : <EmBlock node={node} {...rest}><slot /></EmBlock>}

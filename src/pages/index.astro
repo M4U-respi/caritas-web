@@ -1,6 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import NewsSection from "../components/NewsSection.astro";
+import Donation from "../components/Donation.astro";
+import Partners from "../components/Partners.astro";
 ---
 <Layout preloadImage="/assets/img/fv-01.jpg">
 	<!-- ==================== FV カルーセル ==================== -->
@@ -185,48 +187,8 @@ import NewsSection from "../components/NewsSection.astro";
 	  </ul>
 	</div>
 
-	<!-- ==================== DONATION ==================== -->
-	<section class="donation" id="donation" aria-labelledby="donation-title">
-	  <div class="donation__card reveal">
-	    <header class="donation__head">
-	      <p class="donation__label" lang="en">DONATION</p>
-	      <h2 class="donation__title" id="donation-title">寄付のお願い</h2>
-	    </header>
-	    <div class="donation__body">
-	      <div class="donation__text">
-	        <h3 class="donation__heading">その<em class="u-red">想い</em>を、行動に。</h3>
-	        <p class="donation__lead">カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。</p>
-	        <p class="donation__desc">全世界のカリタスと連携し、世界各地で厳しい生活を余儀なくされている人々の自立への後押し、貧困の撲滅、人権、教育、保健衛生などの優先課題に力を注いでいます。ご支援、ご協力をお願い申し上げます。</p>
-	      </div>
-	      <!-- 注意: donation-illust.png は背景色 #FAF7EE 付き。カード背景色を変えないこと -->
-	      <div class="donation__illust"><img src="/assets/img/donation-illust.png" alt="" width="226" height="346" loading="lazy" decoding="async"></div>
-	      <div class="donation__box">
-	        <h3 class="donation__box-title"><span>ご支援の方法はこちら</span></h3>
-	        <p class="donation__box-text">どこでも、いくらからでも。<br>それぞれに合ったご支援方法をご案内しています。</p>
-	        <ul class="donation__btns">
-	          <li><a class="btn-pill" href="/donate/"><svg class="btn-pill__heart" width="16" height="16" aria-hidden="true"><use href="#i-heart"/></svg><span>寄付で支援する</span></a></li>
-	          <li><a class="btn-pill" href="/donate/monthly/"><span>毎月の支援（マンスリー）</span><svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
-	        </ul>
-	      </div>
-	    </div>
-	  </div>
-	</section>
+	<Donation />
 
-	<!-- ==================== PARTNERS ==================== -->
-	<section class="partners" id="partners" aria-labelledby="partners-title">
-	  <div class="partners__inner l-container reveal">
-	    <div class="partners__head">
-	      <p class="section-label partners__label" lang="en">PARTNERS</p>
-	      <h2 class="heading-lg partners__title" id="partners-title">関連団体</h2>
-	    </div>
-	    <ul class="partners__list">
-	      <li><a class="partners__link" href="https://www.caritas.org/" target="_blank" rel="noopener"><img src="/assets/img/partner-caritas.png" alt="Caritas Internationalis" width="260" height="110" loading="lazy"></a></li>
-	      <li><a class="partners__link" href="https://www.cbcj.catholic.jp/" target="_blank" rel="noopener"><img src="/assets/img/partner-cbcj.png" alt="Catholic Bishops' Conference of Japan カトリック中央協議会" width="265" height="110" loading="lazy"></a></li>
-	      <li><a class="partners__link" href="https://cj-news.org/" target="_blank" rel="noopener"><img src="/assets/img/partner-catholic-japan-news.png" alt="カトリックジャパンニュース" width="258" height="100" loading="lazy"></a></li>
-	      <li><a class="partners__link" href="https://www.vatican.va/content/vatican/en.html" target="_blank" rel="noopener"><img src="/assets/img/partner-holy-see.png" alt="THE HOLY SEE" width="255" height="100" loading="lazy"></a></li>
-	    </ul>
-	  </div>
-	  <svg class="curve curve--up partners__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor"/></svg>
-	</section>
+	<Partners />
 
 </Layout>

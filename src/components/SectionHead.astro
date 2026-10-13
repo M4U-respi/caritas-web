@@ -1,0 +1,31 @@
+---
+/*
+ * セクション見出し(ラベル+H2+リード)
+ *   <SectionHead en="PURPOSE" title="援助活動の目的" id="purpose-title" />
+ *   H2 の一部を赤くするときは slot="title":
+ *   <SectionHead en="FLOW" id="flow-title" lead="…"><Fragment slot="title"><em class="u-red">援助</em>の流れ</Fragment></SectionHead>
+ * - 緑セクション内では自動で白ラベル・黄色見出し・白リードになる(.section--green 内)
+ * - center: 中央揃え / as: 見出しタグ(既定 h2)
+ */
+interface Props {
+	en: string;
+	ja?: string;
+	title?: string;
+	lead?: string;
+	id?: string;
+	center?: boolean;
+	as?: "h2" | "h3";
+	class?: string;
+}
+const { en, ja, title, lead, id, center = false, as: Tag = "h2", class: cls } = Astro.props;
+const hasTitleSlot = Astro.slots.has("title");
+const hasLeadSlot = Astro.slots.has("lead");
+---
+<header class:list={["sub-head", center && "sub-head--center", cls]}>
+	<p class="section-label">
+		<span lang="en">{en}</span>
+		{ja && <><span class="section-label__slash" aria-hidden="true"></span><span>{ja}</span></>}
+	</p>
+	<Tag class="heading-lg sub-head__title" id={id}>{hasTitleSlot ? <slot name="title" /> : title}</Tag>
+	{(lead || hasLeadSlot) && <p class="sub-head__lead">{hasLeadSlot ? <slot name="lead" /> : lead}</p>}
+</header>

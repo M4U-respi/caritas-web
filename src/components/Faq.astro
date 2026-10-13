@@ -1,0 +1,25 @@
+---
+/*
+ * FAQ アコーディオン(<details>/<summary>。キーボード操作・開閉状態はブラウザ標準)
+ *   <Faq items={[{ q: "…", a: "…", open: true }, { q: "…" }]} />
+ * 回答(a)が無い項目は表示しない(回答未支給。ページ側で HTML コメントとして残す)
+ */
+interface Item { q: string; a?: string; open?: boolean }
+interface Props { items: Item[] }
+const items = Astro.props.items.filter((i) => i.a);
+---
+<div class="faq">
+	{items.map((item) => (
+		<details class="faq__item" open={item.open}>
+			<summary class="faq__q">
+				<span class="faq__mark faq__mark--q" aria-hidden="true">Q</span>
+				<span class="faq__q-text">{item.q}</span>
+				<span class="faq__icon" aria-hidden="true"></span>
+			</summary>
+			<div class="faq__a">
+				<span class="faq__mark faq__mark--a" aria-hidden="true">A</span>
+				<p class="faq__a-text">{item.a}</p>
+			</div>
+		</details>
+	))}
+</div>

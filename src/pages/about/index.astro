@@ -1,4 +1,164 @@
 ---
-import StaticPage from "../../components/StaticPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import PhotoStrip from "../../components/PhotoStrip.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import GreenSection from "../../components/GreenSection.astro";
+import Faq from "../../components/Faq.astro";
+import Donation from "../../components/Donation.astro";
+import RelatedNav from "../../components/RelatedNav.astro";
+import Partners from "../../components/Partners.astro";
+
+const lead = "日本のカトリック教会の公式な援助機関として、国際カリタスの一員として活動しています。";
+// TODO(要確認): 下記リード文は FAQ・ビジョン・団体概要でも同文(ダミーの可能性)。カンプどおり表示
+const sharedLead = "あなたの想いが、だれかにつながる。支援には、さまざまなかたちがあります。";
+
+const strip = [
+	{ src: "/assets/img/sub/about/about-strip-01.jpg", alt: "田んぼで作業する子どもたちとボランティア", width: 705, height: 790 },
+	{ src: "/assets/img/sub/about/about-strip-02.jpg", alt: "ろうそくと花が飾られた祭壇", width: 714, height: 799 },
+	{ src: "/assets/img/sub/about/about-strip-03.jpg", alt: "聖堂での集合写真", width: 714, height: 800 },
+	{ src: "/assets/img/sub/about/about-strip-04.jpg", alt: "夕暮れの海辺", width: 714, height: 800 },
+];
+
+const cards = [
+	{ title: "成り立ちと歴史", text: "カリタスジャパンがどのように生まれ、どのような歩みを重ねてきたのかをご紹介します。", img: "about-card-history.jpg", w: 578, h: 474, href: "/about/history/" },
+	{ title: "四旬節<br>「愛の献金」", text: "四旬節の期間に全国の教会で行われる献金活動と、その使いみちについて。", img: "about-card-lent.jpg", w: 578, h: 471, href: "/about/lent/" },
+	{ title: "援助活動", text: "緊急災害への対応、復興支援、貧困の撲滅など、国内外で行う支援活動について。", img: "about-card-aid.jpg", w: 578, h: 472, href: "/about/aid/" },
+	{ title: "啓発活動", text: "キャンペーンの国内展開やニュースレターの発行を通じた、課題の共有と理解の促進。", img: "about-card-social.jpg", w: 484, h: 396, href: "/about/social/" },
+];
+
+const profile: [string, string][] = [
+	["名称", "宗教法人カトリック中央協議会 カリタスジャパン"],
+	["所在地", "〒135-8585<span class=\"u-sp\"></span>東京都江東区潮見2-10-10<span class=\"u-sp\"></span>日本カトリック会館6F"],
+	["電話", "03-5632-4439"],
+	["FAX", "03-5632-4464"],
+	["組織構成", "カリタスジャパン委員会／教区担当者会（全国15教区）"],
+	["加盟", "国際カリタス（教皇庁に本部・加盟組織160以上）"],
+];
+
+const faq = [
+	{ q: "カリタスジャパンはどのような団体ですか。", a: "日本のカトリック教会の公式な援助機関です。宗教法人カトリック中央協議会の部門として、四旬節「愛の献金」などの募金活動、国内外への援助活動、国内で弱い立場に置かれた人々のための啓発活動を行っています。", open: true },
+	/* TODO(要確認): 以下は回答未支給のため非表示(Faq は a の無い項目を出さない)
+	{ q: "国際カリタスとはどのような関係ですか。" },
+	{ q: "どのような組織で運営されていますか。" },
+	{ q: "支援先はどのように決めているのですか。" },
+	{ q: "キリスト教の信者でなくても支援を受けられますか。" },
+	*/
+];
 ---
-<StaticPage title="カリタスジャパンとは" en="ABOUT" crumbs={[]} />
+<Layout title="カリタスジャパンとは" description={lead}>
+	<PageHeader title="カリタスジャパンについて" current="カリタスジャパンとは" en="ABOUT" ja="私たちについて" lead={lead} flat>
+		<Fragment slot="title"><em class="u-red">カリタスジャパン</em>について</Fragment>
+	</PageHeader>
+	<PhotoStrip photos={strip} gap="cream" />
+
+	<!-- イントロ -->
+	<section class="sub-section about-intro" aria-labelledby="intro-title">
+		<div class="l-container">
+			<img class="about-intro__logo" src="/assets/img/sub/about/about-logo.png" alt="" width="920" height="228" loading="lazy" />
+			<SectionHead en="ABOUT" id="intro-title" lead={sharedLead} center>
+				<Fragment slot="title">カリタスジャパン<em class="u-red">とは</em></Fragment>
+			</SectionHead>
+			<div class="about-intro__body">
+				<div class="sub-text">
+					<p>カリタスジャパンは、日本のカトリック教会として、国際カリタスその他の国際機関と密接な連携を保ちながら、四旬節「愛の献金」その他の救援金などの募金活動、国内外への援助活動、また国内で弱い立場に置かれた人々が人間らしい生き方を獲得するための啓発活動を行います。</p>
+					<p>カリタスジャパンは、教皇庁に本部を有する国際カリタスの一員です。国際カリタスは1951年に教皇ピオ十二世に認可された社会活動・救援活動団体で、国連経済社会理事会の総合諮問資格を有する国際NGOです。加盟組織は160以上にのぼります。</p>
+				</div>
+				<img class="about-intro__img" src="/assets/img/sub/about/about-intro.jpg" alt="「ともに ケアの文化を」の横断幕を囲む参加者の集合写真" width="769" height="451" loading="lazy" decoding="async" />
+			</div>
+		</div>
+	</section>
+
+	<!-- ビジョンと使命 -->
+	<GreenSection labelledby="philosophy-title">
+		<SectionHead en="PHILOSOPHY" title="ビジョンと使命" id="philosophy-title" lead={sharedLead} />
+		<div class="box-grid">
+			<div class="white-box">
+				<h3 class="section-label"><span lang="en">VISION</span><span class="section-label__slash" aria-hidden="true"></span><span>ビジョン</span></h3>
+				<p class="white-box__text">すべてのいのち、特に人間の尊厳が尊重される平和な世界を目指して、わたしたちは皆、ともに歩みます。</p>
+			</div>
+			<div class="white-box">
+				<h3 class="section-label"><span lang="en">MISSION</span><span class="section-label__slash" aria-hidden="true"></span><span>使命</span></h3>
+				<p class="white-box__text">つながり、傾聴し、希望を共有することによって、すべての人のいのちが尊重される社会をつくるために「愛の奉仕」につとめます。</p>
+			</div>
+		</div>
+	</GreenSection>
+
+	<!-- 組織 -->
+	<section class="sub-section sub-section--roomy" aria-labelledby="org-title">
+		<div class="l-container">
+			<SectionHead en="ORGANIZATION" id="org-title" lead="カリタスジャパン委員会と、全国15教区の担当者からなる教区担当者会で構成されています。">
+				<Fragment slot="title">カリタスジャパンの<em class="u-red">組織</em></Fragment>
+			</SectionHead>
+			<div class="org-box">
+				<h3 class="org-box__title">カリタスジャパン委員会</h3>
+				<p class="org-box__desc">カリタスジャパンの活動の円滑な遂行を図り、その意思決定を行います。</p>
+				<div class="org-box__inner">
+					<p class="org-box__text">全世界のカリタスと連携し、各地で厳しい生活を余儀なくされている人々の自立を後押しします。緊急災害や戦災からの復興、貧困の撲滅、人権、教育、保健衛生などを優先事項として「今、もっとも必要とされている」支援を行います。</p>
+					<p class="org-box__text">国際カリタスによるキャンペーンの国内展開、ニュースレターの発行などを通して、社会の中で人権やいのちをおびやかされている人々の状況、それにかかわる問題や社会的課題に向き合い、課題の共有や理解の促進を行います。</p>
+					<dl class="org-box__roles">
+						<div class="org-box__role"><dt>責任司教</dt><dd>成井 大介 師</dd></div>
+						<div class="org-box__role"><dt>担当司教</dt><dd>森山 信三 師</dd></div>
+						<div class="org-box__role"><dt>秘書</dt><dd>シスター橋本 晶子 ／ 瀬戸 高志 師</dd></div>
+					</dl>
+				</div>
+			</div>
+			<div class="dioceses">
+				<div class="dioceses__media">
+					<p class="dioceses__count"><span class="dioceses__num">15</span><span class="dioceses__unit">教区</span></p>
+					<img class="dioceses__img" src="/assets/img/sub/about/about-dioceses.jpg" alt="教区担当者会の参加者の集合写真" width="458" height="268" loading="lazy" decoding="async" />
+				</div>
+				<div class="dioceses__body">
+					<h3 class="subheading-bar">教区担当者会</h3>
+					<p class="dioceses__desc">全国15教区のカリタス担当者からなり、自教区内でカリタスジャパンの活動の支援協力を行います。</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- 歩みと活動 -->
+	<GreenSection labelledby="activities-title">
+		<SectionHead en="ACTIVITIES" title="歩みと活動" id="activities-title" lead="カリタスジャパンの歩みと、それぞれの活動についてご紹介します。" />
+		<ul class="link-cards">
+			{cards.map((c, i) => (
+				<li>
+					<a class="way-card way-card--white" href={c.href}>
+						<div class="way-card__panel">
+							<p class="way-card__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
+							<h3 class:list={["way-card__title", c.title.includes("<br>") && "way-card__title--2line"]}><span set:html={c.title} /><span class="way-card__arrow" aria-hidden="true"><svg width="5" height="8"><use href="#i-chevron" /></svg></span></h3>
+							<p class="way-card__text">{c.text}</p>
+						</div>
+						<div class="way-card__photo"><img src={`/assets/img/sub/about/${c.img}`} alt="" width={c.w} height={c.h} loading="lazy" decoding="async" /></div>
+					</a>
+				</li>
+			))}
+		</ul>
+	</GreenSection>
+
+	<!-- 団体概要 -->
+	<section class="sub-section sub-section--roomy" aria-labelledby="profile-title">
+		<div class="l-container profile">
+			<SectionHead en="PROFILE" id="profile-title" lead={sharedLead}>
+				<Fragment slot="title"><em class="u-red">団体</em>概要</Fragment>
+			</SectionHead>
+			<table class="def-table">
+				<tbody>
+					{profile.map(([k, v]) => <tr><th scope="row">{k}</th><td set:html={v} /></tr>)}
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<!-- よくあるご質問 -->
+	<section class="sub-section sub-section--cream faq-section" aria-labelledby="faq-title">
+		<div class="l-container">
+			<SectionHead en="FAQ" title="よくあるご質問" id="faq-title" lead={sharedLead} />
+			<Faq items={faq} />
+		</div>
+		<svg class="curve curve--down sub-section__curve-down" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q720 84 1440 0 Z" fill="currentColor" /></svg>
+	</section>
+
+	<Donation class="donation--after-curve" />
+	<RelatedNav preset="about" />
+	<Partners class="partners--after-nav" />
+</Layout>

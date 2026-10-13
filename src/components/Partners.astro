@@ -1,0 +1,21 @@
+---
+/* 関連団体 PARTNERS(TOP と共通)。class で上余白などを調整する */
+interface Props { class?: string }
+const { class: cls } = Astro.props;
+---
+<!-- ==================== PARTNERS ==================== -->
+<section class:list={["partners", cls]} id="partners" aria-labelledby="partners-title">
+  <div class="partners__inner l-container reveal">
+    <div class="partners__head">
+      <p class="section-label partners__label" lang="en">PARTNERS</p>
+      <h2 class="heading-lg partners__title" id="partners-title">関連団体</h2>
+    </div>
+    <ul class="partners__list">
+      <li><a class="partners__link" href="https://www.caritas.org/" target="_blank" rel="noopener"><img src="/assets/img/partner-caritas.png" alt="Caritas Internationalis" width="260" height="110" loading="lazy"></a></li>
+      <li><a class="partners__link" href="https://www.cbcj.catholic.jp/" target="_blank" rel="noopener"><img src="/assets/img/partner-cbcj.png" alt="Catholic Bishops' Conference of Japan カトリック中央協議会" width="265" height="110" loading="lazy"></a></li>
+      <li><a class="partners__link" href="https://cj-news.org/" target="_blank" rel="noopener"><img src="/assets/img/partner-catholic-japan-news.png" alt="カトリックジャパンニュース" width="258" height="100" loading="lazy"></a></li>
+      <li><a class="partners__link" href="https://www.vatican.va/content/vatican/en.html" target="_blank" rel="noopener"><img src="/assets/img/partner-holy-see.png" alt="THE HOLY SEE" width="255" height="100" loading="lazy"></a></li>
+    </ul>
+  </div>
+  <svg class="curve curve--up partners__curve" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 42 Q720 -42 1440 42 Z" fill="currentColor"/></svg>
+</section>

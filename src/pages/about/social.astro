@@ -1,4 +1,110 @@
 ---
-import StaticPage from "../../components/StaticPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import GreenSection from "../../components/GreenSection.astro";
+import PhotoStrip from "../../components/PhotoStrip.astro";
+import Donation from "../../components/Donation.astro";
+import RelatedNav from "../../components/RelatedNav.astro";
+import Partners from "../../components/Partners.astro";
+
+const lead = "課題の共有と理解の促進を通じて、人権やいのちを脅かされている人々の状況に向き合います。";
+
+const strip = [
+	{ src: "/assets/img/sub/social/social-strip-01.jpg", alt: "講演会の会場", width: 714, height: 800 },
+	{ src: "/assets/img/sub/social/social-strip-02.jpg", alt: "パネル展示を見る参加者", width: 642, height: 720 },
+	{ src: "/assets/img/sub/social/social-strip-03.jpg", alt: "テーブルを囲むグループワーク", width: 369, height: 414 },
+	{ src: "/assets/img/sub/social/social-strip-04.jpg", alt: "付箋のメッセージが貼られたボード", width: 642, height: 720 },
+];
+
+// TODO(要確認): 各回のタイトル・会場がカンプ PDF でフォント欠落のため判読不可。年・回のみ表示(カンプの表示どおり)
+const records = [
+	{
+		title: "日韓カトリック自殺対策",
+		desc: "2013年から2019年にかけて、韓国のカトリック教会と協働で取り組みました。",
+		items: [["2017", 5], ["2016", 4], ["2015", 3], ["2014", 2], ["2013", 1]] as [string, number][],
+	},
+	{
+		title: "21世紀キリスト教社会福祉実践会議大会",
+		desc: "1998年から現在まで、他教派とともに継続して開催しています。第1回からのすべての開催記録です。",
+		items: [["2025", 12], ["2018", 11], ["2016", 10], ["2014", 9], ["2012", 8], ["2010", 7], ["2008", 6], ["2006", 5], ["2004", 4], ["2002", 3], ["2000", 2], ["1998", 1]] as [string, number][],
+	},
+];
 ---
-<StaticPage title="啓発活動" en="SOCIAL ACTION" crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
+<Layout title="啓発活動" description={lead}>
+	<PageHeader title="啓発活動" en="ADVOCACY" ja="啓発" lead={lead} crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
+
+	<!-- 啓発活動の目的 -->
+	<section class="sub-section sub-section--purpose" aria-labelledby="purpose-title">
+		<div class="l-container media-row">
+			<div>
+				<SectionHead en="PURPOSE" id="purpose-title">
+					<Fragment slot="title">啓発活動の<em class="u-red">目的</em></Fragment>
+				</SectionHead>
+				<div class="sub-text">
+					<p>国際カリタスキャンペーンの国内展開、ニュースレターの発行などを通して、現実社会の中で人権やいのちを脅かされている人々の状況、それに関わる問題や社会的課題に向き合い、課題の共有と理解の促進を行います。</p>
+				</div>
+			</div>
+			<img class="media-row__img" src="/assets/img/sub/social/social-purpose.jpg" alt="会場で講演に耳を傾ける参加者" width="661" height="392" loading="lazy" decoding="async" />
+		</div>
+	</section>
+
+	<!-- これまでの主な活動 -->
+	<GreenSection labelledby="activities-title" class="social-activities">
+		<SectionHead en="ACTIVITIES" title="これまでの主な活動" id="activities-title" lead="啓発部会における活動（2025年3月まで）です。" />
+		<div class="list-box list-box--single">
+			<ul class="list-box__list">
+				<li class="list-box__item">
+					<h3 class="list-box__title">コロナ禍と私たち ── 叫びの中からともに見いだす希望</h3>
+					<p class="list-box__text">コロナ禍における叫びに耳を傾け、現状を分かち合い、私たちに求められているものは何か、をともに考える。<br />（2021年11月3日 オンライン）</p>
+				</li>
+				<li class="list-box__item">
+					<h3 class="list-box__title">排除のない多様性社会をめざして</h3>
+					<p class="list-box__text">2017年からのテーマです。大阪・札幌・東京でセミナーを開催しました。</p>
+				</li>
+				<li class="list-box__item">
+					<h3 class="list-box__title">自死と孤立</h3>
+					<p class="list-box__text">2007年から2017年までのテーマです。さいたま・東京・横浜・大阪・広島・大分・福岡・長崎の各教区で勉強会とわかちあいを開催し、カトリック正義と平和全国集会東京大会では分科会を持ちました。</p>
+					<p class="list-box__text list-box__text--sub">2008年には「カトリック教会における自死に関する意識調査」を実施しました。</p>
+					<!-- TODO(要確認): 発行物ページへのリンクにするか(カンプはリンク表示なし) -->
+					<ul class="pub-list">
+						<li class="pub-list__item"><span class="pub-list__year">2012</span><span>続・自死の現実を見つめて ── 思いを分かち合う</span></li>
+						<li class="pub-list__item"><span class="pub-list__year">2010</span><span>自死の現実を見つめて ── 教会が生きる支えになるために</span></li>
+						<li class="pub-list__item"><span class="pub-list__year">2010</span><span>セミナー講演録「虐待・暴力と福音」</span></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</GreenSection>
+
+	<PhotoStrip photos={strip} gap="green" />
+
+	<!-- 提携活動 -->
+	<section class="sub-section social-records" aria-labelledby="records-title">
+		<div class="l-container">
+			<SectionHead en="RECORD" id="records-title">
+				<Fragment slot="title"><em class="u-red">提携</em>活動</Fragment>
+			</SectionHead>
+			{records.map((g) => (
+				<div class="records__group">
+					<div class="records__head">
+						<h3 class="subheading-bar">{g.title}</h3>
+						<p class="records__desc">{g.desc}</p>
+					</div>
+					<ul class="records__list">
+						{g.items.map(([year, no]) => (
+							<li class="records__item" data-todo="title">
+								<span class="records__year"><time datetime={year}>{year}</time></span>
+								<span class="records__no">第{no}回</span>
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<Donation />
+	<RelatedNav preset="about" />
+	<Partners class="partners--after-nav" />
+</Layout>

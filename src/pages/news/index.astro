@@ -1,4 +1,9 @@
 ---
 import ArchivePage from "../../components/ArchivePage.astro";
+import { loadArchive } from "../../lib/cms";
+
+// 一覧(?page=n)。存在しないページ番号は 404
+const data = await loadArchive("news", Astro.url, { cache: Astro.cache });
+if (!data) return Astro.rewrite("/404/");
 ---
-<ArchivePage collection="news" />
+<ArchivePage collection="news" data={data} />

@@ -1,0 +1,23 @@
+---
+/* 本文の画像 2 枚並び(隙間なし・外側の角のみ角丸)。キャプションは重複を除いて下にまとめる */
+import { proseImageSrc } from "./media";
+
+const { node } = Astro.props as any;
+const images = ((node?.images ?? []) as any[]).map((img) => ({
+	src: proseImageSrc(img),
+	alt: img?.alt ?? "",
+	width: img?.width,
+	height: img?.height,
+	caption: img?.caption as string | undefined,
+})).filter((i) => i.src);
+const captions = [...new Set(images.map((i) => i.caption).filter(Boolean))];
+const cols = Math.min(Math.max(Number(node?.columns) || 2, 1), 4);
+---
+{images.length > 0 && (
+	<figure class="prose__gallery" style={`--cols: ${cols}`}>
+		<div class="prose__gallery-grid">
+			{images.map((i) => <img src={i.src} alt={i.alt} width={i.width} height={i.height} loading="lazy" decoding="async" />)}
+		</div>
+		{captions.length > 0 && <figcaption>{captions.join(" ")}</figcaption>}
+	</figure>
+)}

@@ -1,0 +1,26 @@
+---
+/*
+ * カテゴリタブ(CMS 一覧)。「全て」+ src/data/site.ts の COLLECTIONS[collection].terms
+ *   <CategoryTabs collection="report" current={term}>
+ *     <Fragment slot="aside">…年で絞り込み など右側の要素…</Fragment>
+ *   </CategoryTabs>
+ * current: 現在のカテゴリ slug(一覧トップは undefined)
+ */
+import { COLLECTIONS, type CollectionKey } from "../data/site";
+
+interface Props { collection: CollectionKey; current?: string; class?: string }
+const { collection, current, class: cls } = Astro.props;
+const conf = COLLECTIONS[collection];
+const tabs = [{ label: "全て", href: conf.base, active: !current }, ...conf.terms.map((t) => ({ label: t.label, href: `${conf.base}${t.slug}/`, active: current === t.slug }))];
+const hasAside = Astro.slots.has("aside");
+---
+<div class:list={["cat-tabs", hasAside && "cat-tabs--has-aside", cls]}>
+	<nav class="cat-tabs__nav" aria-label={`${conf.label}のカテゴリ`}>
+		<ul class="cat-tabs__list">
+			{tabs.map((t) => (
+				<li><a class="cat-tabs__link" href={t.href} aria-current={t.active ? "page" : undefined}>{t.label}</a></li>
+			))}
+		</ul>
+	</nav>
+	{hasAside && <div class="cat-tabs__aside"><slot name="aside" /></div>}
+</div>

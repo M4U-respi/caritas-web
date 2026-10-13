@@ -1,0 +1,31 @@
+---
+/*
+ * 本文の表。1 列目が見出しセル(isHeader)の表は定義表(項目名|内容)として表示する。
+ * それ以外は通常の表(1 行目が見出し行なら thead)。
+ */
+import ProseSpans from "./ProseSpans.astro";
+
+const { node } = Astro.props as any;
+const rows = ((node?.rows ?? []) as any[]).filter((r) => Array.isArray(r?.cells));
+const headerRow = node?.hasHeaderRow && rows.length > 1 ? rows[0] : null;
+const bodyRows = headerRow ? rows.slice(1) : rows;
+const defs = (c: any) => c?.markDefs ?? node?.markDefs ?? [];
+---
+{rows.length > 0 && (
+	<div class="prose__table-wrap">
+		<table class="prose__table">
+			{headerRow && (
+				<thead><tr>{headerRow.cells.map((c: any) => <th scope="col" colspan={c.colspan} rowspan={c.rowspan}><ProseSpans spans={c.content} markDefs={defs(c)} /></th>)}</tr></thead>
+			)}
+			<tbody>
+				{bodyRows.map((r: any) => (
+					<tr>
+						{r.cells.map((c: any) => c.isHeader
+							? <th scope="row" colspan={c.colspan} rowspan={c.rowspan}><ProseSpans spans={c.content} markDefs={defs(c)} /></th>
+							: <td colspan={c.colspan} rowspan={c.rowspan}><ProseSpans spans={c.content} markDefs={defs(c)} /></td>)}
+					</tr>
+				))}
+			</tbody>
+		</table>
+	</div>
+)}

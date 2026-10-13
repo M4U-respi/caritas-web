@@ -1,0 +1,48 @@
+---
+/*
+ * ページネーション  ‹ 1 2 3 … 10 ›(現在ページを含む連続 3 件+先頭・末尾。SP は先頭・末尾を省略)
+ *   <Pagination current={page} total={totalPages} />
+ * リンクは現在の URL に ?page=n を付けたもの(他のクエリ ?year= などは維持。1 ページ目は page を外す)。
+ * 変えたいときは href={(n) => `/news/page/${n}/`} を渡す。total <= 1 なら何も出さない。
+ */
+interface Props { current: number; total: number; href?: (n: number) => string }
+const { current, total } = Astro.props;
+const href =
+	Astro.props.href ??
+	((n: number) => {
+		const u = new URL(Astro.url);
+		if (n <= 1) u.searchParams.delete("page");
+		else u.searchParams.set("page", String(n));
+		return u.pathname + u.search;
+	});
+
+// 表示するページ番号(null は省略記号)
+const pages: (number | null)[] = [];
+// 現在ページを含む連続 3 件(端では 1 2 3 / 8 9 10)+先頭・末尾
+const winStart = Math.max(1, Math.min(current - 1, total - 2));
+const near = new Set([1, total, winStart, winStart + 1, winStart + 2]);
+for (let n = 1; n <= total; n++) {
+	if (near.has(n)) pages.push(n);
+	else if (pages[pages.length - 1] !== null) pages.push(null);
+}
+const isNear = (n: number) => n >= winStart && n <= winStart + 2;
+---
+{total > 1 && (
+	<nav class="pagination" aria-label="ページ送り">
+		{current > 1
+			? <a class="pagination__arrow pagination__arrow--prev" href={href(current - 1)} rel="prev" aria-label="前のページ"><svg width="10" height="16" viewBox="0 0 8 12" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+			: <span class="pagination__arrow pagination__arrow--prev" aria-disabled="true"><svg width="10" height="16" viewBox="0 0 8 12" aria-hidden="true"><use href="#i-chevron" /></svg></span>}
+		<ol class="pagination__list">
+			{pages.map((n) => n === null
+				? <li class="pagination__ellipsis" aria-hidden="true">…</li>
+				: <li class:list={["pagination__item", !isNear(n) && "pagination__item--edge"]}>
+						{n === current
+							? <span class="pagination__num" aria-current="page"><span class="visually-hidden">ページ</span>{n}</span>
+							: <a class="pagination__num" href={href(n)}><span class="visually-hidden">ページ</span>{n}</a>}
+					</li>)}
+		</ol>
+		{current < total
+			? <a class="pagination__arrow pagination__arrow--next" href={href(current + 1)} rel="next" aria-label="次のページ"><svg width="10" height="16" viewBox="0 0 8 12" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+			: <span class="pagination__arrow pagination__arrow--next" aria-disabled="true"><svg width="10" height="16" viewBox="0 0 8 12" aria-hidden="true"><use href="#i-chevron" /></svg></span>}
+	</nav>
+)}

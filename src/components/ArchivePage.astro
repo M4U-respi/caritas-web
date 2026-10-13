@@ -1,49 +1,166 @@
 ---
-/* CMS コレクションの一覧ページ(カテゴリ絞り込み・ページ送り) */
+/*
+ * CMS コレクションの一覧ページ(一覧トップ / カテゴリ一覧 共通)
+ * データ(ページ番号・年の解釈、404 判定)はページ側で loadArchive() して data に渡す。
+ * - report: カテゴリタブ+年で絞り込み → 一覧行 → 災害対応マニュアル → 寄付 → 関連団体
+ * - publication: カテゴリタブ → 発行物カード(2 列)→ 発行物について(緑)→ 寄付 → 関連ナビ → 関連団体
+ * - news: (一覧トップのみ)緊急支援ボックス → カテゴリタブ → 一覧行 → 寄付 → 関連ナビ → 関連団体
+ */
+import { Image } from "emdash/ui";
 import Layout from "../layouts/Layout.astro";
 import PageHeader from "./PageHeader.astro";
+import CategoryTabs from "./CategoryTabs.astro";
+import EntryRow from "./EntryRow.astro";
 import EntryList from "./EntryList.astro";
-import { listEntries } from "../lib/cms";
-import { COLLECTIONS, type CollectionKey } from "../data/site";
+import Pagination from "./Pagination.astro";
+import ManualBanner from "./ManualBanner.astro";
+import GreenSection from "./GreenSection.astro";
+import SectionHead from "./SectionHead.astro";
+import Donation from "./Donation.astro";
+import RelatedNav from "./RelatedNav.astro";
+import Partners from "./Partners.astro";
+import { listEntries, type ArchiveData } from "../lib/cms";
+import { COLLECTIONS, formatDate, isoDate, type CollectionKey } from "../data/site";
 
 interface Props {
 	collection: CollectionKey;
 	term?: string;
+	data: ArchiveData;
 }
-const { collection, term } = Astro.props;
+const { collection, term, data } = Astro.props;
 const conf = COLLECTIONS[collection];
 const current = term ? conf.terms.find((t) => t.slug === term) : undefined;
-const cursor = Astro.url.searchParams.get("cursor") || undefined;
-const { items, cacheHint, nextCursor, error } = await listEntries(collection, { term, limit: 20, cursor });
+const hero = (current && "hero" in current ? current.hero : undefined) ?? conf.hero;
+const { items, page, totalPages, years, year, error } = data;
 if (error) console.error(`[${collection}] 一覧の取得に失敗`, error);
-if (Astro.cache?.enabled && cacheHint) Astro.cache.set(cacheHint);
 
-const title = current ? `${current.label}` : conf.label;
+// お知らせ一覧トップ(1 ページ目)の緊急支援ボックス:緊急支援の最新 3 件
+const showUrgent = collection === "news" && !term && page === 1;
+const urgent = showUrgent ? await listEntries("news", { term: "emergency", limit: 3 }) : null;
+if (urgent?.cacheHint && Astro.cache?.enabled) Astro.cache.set(urgent.cacheHint);
+
+const title = current ? current.label : conf.label;
+const pageTitle = [current ? `${current.label}｜${conf.label}` : conf.label, year ? `${year}年` : "", page > 1 ? `${page}ページ目` : ""].filter(Boolean).join("｜");
 const crumbs = current ? [{ label: conf.label, href: conf.base }] : [];
+const basePath = current ? `${conf.base}${current.slug}/` : conf.base;
+const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 ---
-<Layout title={current ? `${current.label}｜${conf.label}` : conf.label}>
-	<PageHeader title={title} en={conf.en} crumbs={crumbs} />
-	<div class="page-body l-container">
-		<nav class="archive-tabs" aria-label={`${conf.label}のカテゴリ`}>
-			<ul class="archive-tabs__list">
-				<li><a class="archive-tabs__link" href={conf.base} aria-current={!current ? "page" : undefined}>すべて</a></li>
-				{conf.terms.map((t) => (
-					<li><a class="archive-tabs__link" href={`${conf.base}${t.slug}/`} aria-current={current?.slug === t.slug ? "page" : undefined}>{t.label}</a></li>
-				))}
-			</ul>
-		</nav>
+<Layout title={pageTitle} description={hero.lead}>
+	<PageHeader title={title} en={hero.en} ja={hero.ja} lead={hero.lead} crumbs={crumbs} />
 
-		{items.length > 0 ? (
-			<EntryList items={items} class="archive-list" />
-		) : (
-			<p class="page-empty">{error ? "記事を読み込めませんでした。時間をおいて再度お試しください。" : "現在、掲載している記事はありません。"}</p>
-		)}
+	<section class:list={["cms-archive", `cms-archive--${collection}`, showUrgent && "cms-archive--urgent"]} aria-label={`${title}の一覧`}>
+		<div class="l-container">
+			{urgent && urgent.items.length > 0 && (
+				<section class="news-urgent news-urgent--bordered" aria-labelledby="news-urgent-title">
+					<div class="news-urgent__head">
+						<div class="news-urgent__head-main">
+							<img class="news-urgent__icon" src="/assets/img/icon-megaphone.png" alt="" width="36" height="35" />
+							<h2 class="news-urgent__badge" id="news-urgent-title">緊急支援</h2>
+						</div>
+						<p class="news-urgent__lead">いま受け付けている緊急募金と、被災地の状況です。</p>
+					</div>
+					<EntryList items={urgent.items} variant="urgent" showTags={false} />
+					<div class="news-urgent__foot">
+						<a class="btn-outline btn-outline--sm" href="/news/emergency/"><span>緊急支援の一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+					</div>
+				</section>
+			)}
 
-		{(cursor || nextCursor) && (
-			<nav class="pager" aria-label="ページ送り">
-				{cursor && <a class="btn-outline btn-outline--md" href={Astro.url.pathname}><span>最新へ戻る</span></a>}
-				{nextCursor && <a class="btn-outline btn-outline--md" href={`${Astro.url.pathname}?cursor=${encodeURIComponent(nextCursor)}`}><span>さらに見る</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>}
-			</nav>
-		)}
-	</div>
+			{collection === "report" ? (
+				<CategoryTabs collection={collection} current={current?.slug}>
+					<Fragment slot="aside">
+						<form class="year-filter" method="get" action={basePath}>
+							<label class="year-filter__label" for="year-filter">年で絞り込む</label>
+							<span class="year-filter__select">
+								<select id="year-filter" name="year" data-base={basePath}>
+									<option value="">年を選択する</option>
+									{years.map((y) => <option value={y} selected={y === year}>{y}年</option>)}
+								</select>
+							</span>
+							<button class="year-filter__submit" type="submit">絞り込む</button>
+						</form>
+					</Fragment>
+				</CategoryTabs>
+			) : (
+				<CategoryTabs collection={collection} current={current?.slug} />
+			)}
+
+			{items.length === 0 ? (
+				<p class="cms-archive__empty">{error ? "記事を読み込めませんでした。時間をおいて再度お試しください。" : year ? `${year}年の記事はありません。` : "現在、掲載している記事はありません。"}</p>
+			) : collection === "publication" ? (
+				<ul class="pub-cards">
+					{items.map((item) => (
+						<li class="pub-card">
+							<a class="pub-card__link" href={item.href}>
+								<span class="pub-card__body">
+									<span class="entry-row__meta">
+										{item.date && <time class="entry-row__date" datetime={isoDate(item.date)}>{formatDate(item.date)}</time>}
+										{item.terms.map((t) => <span class={`tag tag--${t.tag}`}>{t.label}</span>)}
+									</span>
+									<h2 class="pub-card__title">{item.title}</h2>
+									{item.data.excerpt && <span class="pub-card__excerpt">{item.data.excerpt}</span>}
+								</span>
+								<span class="pub-card__cover">
+									{item.data.cover
+										? <Image image={item.data.cover} alt="" />
+										: <img src="/assets/img/sub/common/noimage.jpg" alt="" width="400" height="266" loading="lazy" decoding="async" />}
+								</span>
+							</a>
+						</li>
+					))}
+				</ul>
+			) : (
+				<ul class="entry-rows">
+					{items.map((item) => (
+						<EntryRow href={item.href} title={item.title} date={item.date} terms={item.terms} excerpt={item.data.excerpt} image={item.data.featured_image} />
+					))}
+				</ul>
+			)}
+
+			<Pagination current={page} total={totalPages} />
+		</div>
+	</section>
+
+	{collection === "report" && <ManualBanner />}
+
+	{collection === "publication" && (
+		<GreenSection class="pub-about" labelledby="pub-about-title">
+			<SectionHead en="PUBLICATIONS" title="発行物について" id="pub-about-title" />
+			<div class="box-grid">
+				<section class="white-box pub-about__box" aria-labelledby="pub-about-order">
+					<h3 class="pub-about__title" id="pub-about-order">お申し込みについて</h3>
+					<ul class="pub-about__list">
+						<li>発行物はいずれも無料です。</li>
+						<li>ご希望の発行物名と部数、送り先を事務局までお知らせ下さい。</li>
+						<li>電話 03-5632-4439 ／ FAX 03-5632-4464</li>
+					</ul>
+				</section>
+				<section class="white-box pub-about__box" aria-labelledby="pub-about-back">
+					<h3 class="pub-about__title" id="pub-about-back">バックナンバー</h3>
+					<ul class="pub-about__list">
+						<li>「We are Caritas」は年2回（夏号・冬号）発行しています。</li>
+						<li>在庫のある号のみお送りできます。</li>
+						<li>PDFでの閲覧をご希望の場合は、<a class="pub-about__link" href="/contact/">お問い合わせ</a>下さい。</li>
+					</ul>
+				</section>
+			</div>
+		</GreenSection>
+	)}
+
+	<Donation />
+	{related && <RelatedNav preset={related} />}
+	<Partners class={related ? "partners--after-nav" : undefined} />
+	{collection === "report" && (
+		<script is:inline>
+			/* 年を選ぶと即時に絞り込む(JS 無効時は「絞り込む」ボタンで送信) */
+			document.querySelectorAll(".year-filter").forEach(function (form) {
+				form.classList.add("is-auto");
+				var select = form.querySelector("select");
+				select.addEventListener("change", function () {
+					location.href = select.value ? select.dataset.base + "?year=" + encodeURIComponent(select.value) : select.dataset.base;
+				});
+			});
+		</script>
+	)}
 </Layout>
+

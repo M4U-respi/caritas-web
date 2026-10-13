@@ -1,4 +1,106 @@
 ---
-import StaticPage from "../../components/StaticPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import GreenSection from "../../components/GreenSection.astro";
+import FlowCards from "../../components/FlowCards.astro";
+import Faq from "../../components/Faq.astro";
+import Donation from "../../components/Donation.astro";
+import RelatedNav from "../../components/RelatedNav.astro";
+import Partners from "../../components/Partners.astro";
+
+const lead = "日本カトリック司教協議会が制定した8つの「献金」の1つです。";
+
+const flow = [
+	{ title: "各教会での献金", text: "四旬節の期間中、全国のカトリック教会で献金が行われます。", img: { src: "/assets/img/sub/lent/lent-flow-01.jpg", width: 386, height: 220, alt: "カリタスジャパンの献金箱" } },
+	{ title: "各教区でとりまとめ", text: "全国15教区を通じてカリタスジャパンへ届けられます。", img: { src: "/assets/img/sub/lent/lent-flow-02.jpg", width: 482, height: 274 } },
+	{ title: "援助審査", text: "カリタスジャパン委員会で、どの活動に充てるかを審議します。", img: { src: "/assets/img/sub/lent/lent-flow-03.jpg", width: 482, height: 274 } },
+	{ title: "国内外の支援へ", text: "もっとも援助を必要としている人々の自立やいのちを守る活動に使われます。", img: { src: "/assets/img/sub/lent/lent-flow-04.jpg", width: 482, height: 274 } },
+];
+
+const faq = [
+	{ q: "四旬節「愛の献金」とは何ですか。", a: "日本カトリック司教協議会が、キリスト信者にとって教会の要請に応じる義務として制定した8つの「献金」の1つです。四旬節の期間中に全国のカトリック教会で行われます。", open: true },
+	/* TODO(要確認): 以下は回答未支給のため非表示
+	{ q: "四旬節はいつからいつまでですか。" },
+	{ q: "集まった献金はどのように使われますか。" },
+	{ q: "教会ではどのようなものが配られますか。" },
+	*/
+];
+
+const diagramAlt = "愛の献金の流れ:教会・個人・カトリック関連団体(カトリック教会 特別献金「四旬節愛の献金」)→ 四旬節趣意書・司教メッセージ・キャンペーン小冊子・ポスター・献金箱(袋)→ 海外援助(国外で困難な状況にある人々への支援)→ 国内援助(日本国内で困難な状況にある人々への支援)→ カリタスジャパンニュース・ホームページ・事業報告書";
 ---
-<StaticPage title="四旬節「愛の献金」" en="LENT" crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
+<Layout title="四旬節「愛の献金」" description={lead}>
+	<PageHeader title="四旬節「愛の献金」" en="LENT CAMPAIGN" ja="愛の献金" lead={lead} crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]}>
+		<Fragment slot="title">四旬節<em class="u-red">「愛の献金」</em></Fragment>
+	</PageHeader>
+
+	<!-- 四旬節「愛の献金」とは -->
+	<section class="sub-section" aria-labelledby="lent-about-title">
+		<div class="l-container">
+			<div class="lent-about">
+				<div>
+					<SectionHead en="ABOUT" id="lent-about-title">
+						<Fragment slot="title">四旬節<em class="u-red">「愛の献金」</em>とは</Fragment>
+					</SectionHead>
+					<div class="sub-text">
+						<p>「四旬節 愛の献金」は、日本カトリック司教協議会がキリスト信者にとって教会の要請に応じる義務として制定した8つの「献金」の1つです。</p>
+						<p>教皇は毎年、四旬節に向けてメッセージを発表し、キリストを信じるすべての人が四旬節の精神をよく理解して、回心と愛のわざに励むよう呼びかけます。この呼びかけにこたえて日本のカトリック教会は、虐げられ、差別され、見捨てられ、いのちの危機にさらされている人たちとの共感を大切にするよう一人ひとりに訴えるとともに、四旬節中の「愛の献金」を奨励しています。</p>
+						<p>この「愛の献金」は、各教区を通してカリタスジャパンに集められ、国内外のもっとも援助を必要としている人々の自立やいのちを守る活動に使われます。</p>
+					</div>
+					<p class="sub-note">＊四旬節は、復活祭46日前の水曜日（灰の水曜日）から聖木曜日のミサ前までの期間です。</p>
+				</div>
+				<img class="lent-about__diagram" src="/assets/img/sub/lent/lent-diagram.jpg" alt={diagramAlt} width="1112" height="848" loading="lazy" decoding="async" />
+			</div>
+		</div>
+	</section>
+
+	<!-- キャンペーンの展開 -->
+	<GreenSection labelledby="campaign-title">
+		<SectionHead en="CAMPAIGN" title="キャンペーンの展開" id="campaign-title">
+			<Fragment slot="lead">カリタスジャパンでは、四旬節期間中に小冊子（教皇メッセージを含む）、ポスターなどを作成して各教区を通じて配布し、<br class="u-pc-only" />全国のカトリック教会に向け「四旬節〈愛の献金〉キャンペーン」として展開しています。</Fragment>
+		</SectionHead>
+		<div class="box-grid">
+			<div class="campaign-box">
+				<div class="campaign-box__body">
+					<h3 class="list-box__title">小冊子</h3>
+					<p class="list-box__text">教皇メッセージを含む冊子を制作し、各教区を通じて配布します。</p>
+				</div>
+				<img class="campaign-box__img campaign-box__img--booklet" src="/assets/img/sub/lent/lent-booklet.png" alt="四旬節キャンペーンの小冊子" width="516" height="306" loading="lazy" decoding="async" />
+			</div>
+			<div class="campaign-box">
+				<div class="campaign-box__body">
+					<h3 class="list-box__title">ポスター</h3>
+					<p class="list-box__text">全国のカトリック教会に掲示し、四旬節の呼びかけを伝えます。</p>
+				</div>
+				<img class="campaign-box__img campaign-box__img--poster" src="/assets/img/sub/lent/lent-poster.jpg" alt="四旬節キャンペーンのポスター" width="322" height="413" loading="lazy" decoding="async" />
+			</div>
+		</div>
+	</GreenSection>
+
+	<!-- 献金の届き方 -->
+	<section class="sub-section lent-flow" aria-labelledby="flow-title">
+		<div class="l-container">
+			<SectionHead en="DONATION FLOW" id="flow-title" lead="各教区を通じてカリタスジャパンに集められ、国内外の援助活動に使われます。">
+				<Fragment slot="title">献金の<em class="u-red">届き方</em></Fragment>
+			</SectionHead>
+			<FlowCards items={flow} />
+		</div>
+	</section>
+
+	<div class="lent-wide">
+		<img src="/assets/img/sub/lent/lent-wide.jpg" alt="机に並べられた機関誌「We are Caritas」" width="2880" height="800" loading="lazy" decoding="async" />
+	</div>
+
+	<!-- よくあるご質問 -->
+	<section class="sub-section sub-section--cream faq-section" aria-labelledby="faq-title">
+		<div class="l-container">
+			<SectionHead en="FAQ" title="よくあるご質問" id="faq-title" />
+			<Faq items={faq} />
+		</div>
+		<svg class="curve curve--down sub-section__curve-down" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q720 84 1440 0 Z" fill="currentColor" /></svg>
+	</section>
+
+	<Donation class="donation--after-curve" />
+	<RelatedNav preset="about" />
+	<Partners class="partners--after-nav" />
+</Layout>

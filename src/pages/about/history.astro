@@ -1,4 +1,81 @@
 ---
-import StaticPage from "../../components/StaticPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import Donation from "../../components/Donation.astro";
+import RelatedNav from "../../components/RelatedNav.astro";
+import Partners from "../../components/Partners.astro";
+
+// TODO(要確認): リードは「1946年」からだが年表は 1966 年から(カンプどおり表示)
+const lead = "1946年のララ物資の配布から現在まで、カリタスジャパンの歩みをご紹介します。";
+
+const eras: { period: string; name: string; rows: [string, string][] }[] = [
+	{
+		period: "1966 – 1969",
+		name: "社会福祉司教委員会",
+		rows: [
+			["1966", "「日本カトリック司教協議会」が結成。「社会福祉部」は「社会福祉司教委員会」となり、四旬節「愛の運動」が始まった。"],
+			["1969", "国際カリタスの要請を受け「カリタス・ジャパン」設立準備委員会が発足。"],
+		],
+	},
+	{
+		period: "1970 – 1983",
+		name: "カリタス・ジャパン",
+		rows: [
+			["1970", "1月29日、「カリタス・ジャパン」創立。社会福祉司教委員会の実行機関となり、Caritas Internationalis のメンバーに加わった。"],
+			["1974", "司教協議会総会において「社会福祉司教委員会」が「社会司教委員会」に改称。「カリタス・ジャパン」は協議会的な自主活動を行う機関と定義された。"],
+			["1975", "横浜港に着いたベトナム難民約50人に対して、宿泊の手配等の援助を実施。"],
+			["1981", "カリタス・ジャパン事務局を四谷から飯田橋に移転。"],
+		],
+	},
+	{
+		period: "1984 – 1995",
+		name: "社会福祉委員会（別称 カリタス・ジャパン）",
+		rows: [
+			["1984", "「社会福祉委員会（別称カリタス・ジャパン）」と改称。社会司教委員会の直属組織となった。"],
+			["1992", "東京・潮見に「日本カトリック会館」が落成。カリタス・ジャパン事務局も潮見に移転。"],
+			["1994", "ルワンダ難民救援活動を開始。1995年5月まで継続した。"],
+		],
+	},
+	{
+		period: "1995 – 2003",
+		name: "社会福祉委員会・カリタスジャパン",
+		rows: [["1995", "「社会福祉委員会・カリタスジャパン」と改称。活動内容を明確化し、各々に担当司教を配置した。"]],
+	},
+	{
+		period: "2004 –",
+		name: "カリタスジャパン",
+		rows: [
+			["2004", "臨時司教総会にて「カリタスジャパン」と改称することを承認。"],
+			["2010", "部会名を変更（社会福祉活動推進部会→啓発部会、援助活動推進部会→援助部会）。国際デスクは「援助審査会」となった。"],
+			["2011", "東日本大震災への対応。仙台教区が中心となり緊急救援・復興支援活動を支援。募金は2021年まで実施し、復興支援は継続している。"],
+			["2020", "カリタスジャパン設立50年。新型コロナウイルス被害支援活動に注力した。"],
+			["2025", "4月、援助部会・啓発部会を廃止。カリタスジャパン委員会で審議を行う新体制に移行。ERST（緊急対策チーム）がカリタスジャパンERSTとなった。"],
+		],
+	},
+];
 ---
-<StaticPage title="成り立ちと歴史" en="HISTORY" crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
+<Layout title="成り立ちと歴史" description={lead}>
+	<!-- TODO(要確認): パンくずに「カリタスジャパンとは」を挟むか(カンプは挟まない) -->
+	<PageHeader title="成り立ちと歴史" en="HISTORY" ja="歩み" lead={lead} />
+
+	<div class="sub-section history-body">
+		<div class="l-container">
+			<div class="timeline">
+				{eras.map((era, i) => (
+					<section class="timeline__era" aria-labelledby={`era-${i}`}>
+						<h2 class="timeline__head" id={`era-${i}`}><span class="timeline__period">{era.period}</span><span class="timeline__name">{era.name}</span></h2>
+						<dl>
+							{era.rows.map(([y, t]) => (
+								<div class="timeline__row"><dt class="timeline__year">{y}</dt><dd class="timeline__text">{t}</dd></div>
+							))}
+						</dl>
+					</section>
+				))}
+			</div>
+		</div>
+	</div>
+
+	<Donation />
+	<RelatedNav preset="about" />
+	<Partners class="partners--after-nav" />
+</Layout>

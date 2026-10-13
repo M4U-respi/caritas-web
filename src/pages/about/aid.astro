@@ -1,4 +1,129 @@
 ---
-import StaticPage from "../../components/StaticPage.astro";
+import Layout from "../../layouts/Layout.astro";
+import PageHeader from "../../components/PageHeader.astro";
+import SectionHead from "../../components/SectionHead.astro";
+import GreenSection from "../../components/GreenSection.astro";
+import FlowCards from "../../components/FlowCards.astro";
+import ManualBanner from "../../components/ManualBanner.astro";
+import Donation from "../../components/Donation.astro";
+import RelatedNav from "../../components/RelatedNav.astro";
+import Partners from "../../components/Partners.astro";
+
+const lead = "全世界のカリタスと連携し、今もっとも必要とされている支援を行います。";
+
+const activities = [
+	{ title: "緊急支援への対応", text: "国際カリタスから全世界に出された緊急支援要請<br>（EA／Emergency Appeal）に応えます。" },
+	{ title: "国内外の災害対応", text: "国内外で起きた災害に対し、緊急救援から復興まで支援します。" },
+	{ title: "開発援助の推進", text: "各国カリタスをパートナーに、自立に向けた開発援助を進めます。" },
+	{ title: "草の根団体への支援", text: "国内の草の根レベルで活動する団体を支援します。" },
+	{ title: "視察と報告", text: "支援事業を視察し、その成果をご報告します。" },
+];
+
+const flow = [
+	{ title: "支援の要請", text: "国際カリタスの緊急支援要請（EA）や、現地の各国カリタス・国内団体からの申請を受けます。", img: { src: "/assets/img/sub/aid/aid-flow-01.jpg", width: 482, height: 273 } },
+	{ title: "審査", text: "カリタスジャパン委員会が、緊急性・必要性・実施体制を審議します。", img: { src: "/assets/img/sub/aid/aid-flow-02.jpg", width: 482, height: 274 } },
+	{ title: "支援の実施", text: "現地のカリタスや団体をパートナーとして、支援を届けます。", img: { src: "/assets/img/sub/aid/aid-flow-03.jpg", width: 482, height: 275 } },
+	{ title: "視察と報告", text: "事業を視察し、支援がどのように使われたかを報告します。", img: { src: "/assets/img/sub/aid/aid-flow-04.jpg", width: 482, height: 274 } },
+];
+
+// リンク先(各支援の報告ページ)は未支給 → data-todo。将来 news の記事/タグに紐づける想定
+const history = [
+	{
+		title: "海外での支援",
+		items: [
+			{ label: "スーダン支援", img: "aid-history-sudan.jpg" },
+			{ label: "ベネズエラ地震", img: "aid-history-venezuela.jpg" },
+			{ label: "ロヒンギャ難民", img: null },
+			{ label: "台湾地震", img: "aid-history-taiwan.jpg" },
+			{ label: "ネパール土石流", img: "aid-history-nepal.jpg" },
+			{ label: "メキシコ地震", img: "aid-history-mexico.jpg" },
+		],
+	},
+	{
+		title: "日本国内での支援",
+		items: [
+			{ label: "新型コロナ<br>緊急募金", img: "aid-history-covid.jpg" },
+			{ label: "東日本大震災", img: "aid-history-higashinihon.jpg" },
+			{ label: "能登半島地震", img: "aid-history-noto.jpg" },
+			{ label: "九州北部<br>豪雨災害", img: "aid-history-kyushu.jpg" },
+			{ label: "台風19号", img: "aid-history-typhoon19.jpg" },
+			{ label: "日向灘地震", img: "aid-history-hyuganada.jpg" },
+			{ label: "熊本地震", img: "aid-history-kumamoto.jpg" },
+			{ label: "西日本豪雨災害", img: "aid-history-nishinihon.jpg" },
+		],
+	},
+];
 ---
-<StaticPage title="援助活動" en="AID" crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
+<Layout title="援助活動" description={lead}>
+	<PageHeader title="援助活動" en="AID" ja="援助" lead={lead} crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
+
+	<!-- 援助活動の目的 -->
+	<section class="sub-section sub-section--purpose" aria-labelledby="purpose-title">
+		<div class="l-container media-row">
+			<div>
+				<SectionHead en="PURPOSE" id="purpose-title">
+					<Fragment slot="title">援助活動の<em class="u-red">目的</em></Fragment>
+				</SectionHead>
+				<div class="sub-text">
+					<p>カリタスジャパンの援助活動では、全世界のカリタスと連携し、各地で厳しい生活を余儀なくされている人々の自立を後押しします。緊急災害や戦災からの復興、貧困の撲滅、人権、教育、保健衛生などを優先事項として「今、最も必要とされている支援」を行います。</p>
+				</div>
+			</div>
+			<img class="media-row__img" src="/assets/img/sub/aid/aid-purpose.jpg" alt="土を掘り起こして作業する女性たち" width="764" height="454" loading="lazy" decoding="async" />
+		</div>
+	</section>
+
+	<!-- 活動について -->
+	<GreenSection labelledby="activities-title">
+		<SectionHead en="ACTIVITIES" title="活動について" id="activities-title" lead="次の5つを柱に、国内外で援助活動を行っています。" />
+		<div class="list-box list-box--aid">
+			<ul class="list-box__list">
+				{activities.map((a) => (
+					<li class="list-box__item">
+						<h3 class="list-box__title">{a.title}</h3>
+						<p class="list-box__text" set:html={a.text} />
+					</li>
+				))}
+			</ul>
+		</div>
+	</GreenSection>
+
+	<!-- 援助の流れ -->
+	<section class="sub-section" aria-labelledby="flow-title">
+		<div class="l-container">
+			<SectionHead en="FLOW" id="flow-title" lead="支援の要請から、実施、報告までの流れです。">
+				<Fragment slot="title"><em class="u-red">援助</em>の流れ</Fragment>
+			</SectionHead>
+			<FlowCards items={flow} />
+		</div>
+	</section>
+
+	<!-- これまでの緊急・復興支援 -->
+	<section class="sub-section sub-section--cream-light aid-history" aria-labelledby="history-title">
+		<div class="l-container">
+			<SectionHead en="HISTORY" id="history-title" lead="国内外で発生した災害や紛争に対し、緊急募金の受付と復興支援を行ってきました。各支援の経過と募金の状況は、それぞれのページでご報告しています。">
+				<Fragment slot="title">これまでの<em class="u-red">緊急・復興支援</em></Fragment>
+			</SectionHead>
+			{history.map((g) => (
+				<div class="aid-history__group">
+					<h3 class="subheading-bar">{g.title}</h3>
+					<ul class="aid-history__list">
+						{g.items.map((it) => (
+							<li class="aid-history__item">
+								<a class="aid-history__link" href="#" data-todo="url">
+									<img class="aid-history__thumb" src={it.img ? `/assets/img/sub/aid/${it.img}` : "/assets/img/sub/common/noimage.jpg"} alt="" width="264" height="176" loading="lazy" decoding="async" />
+									<span class="aid-history__title" set:html={it.label} />
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			))}
+		</div>
+	</section>
+
+	<ManualBanner />
+
+	<Donation />
+	<RelatedNav preset="about" />
+	<Partners class="partners--after-nav" />
+</Layout>
