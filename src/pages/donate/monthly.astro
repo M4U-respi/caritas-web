@@ -64,9 +64,9 @@ const faq = [
 	<!-- どなたでも、いくらからでも -->
 	<section class="sub-section monthly-overview" aria-labelledby="overview-title">
 		<div class="l-container">
-			<SectionHead en="OVERVIEW" id="overview-title">
+			<SectionHead en="OVERVIEW" id="overview-title" class="sub-head--lg">
 				<Fragment slot="title"><em class="u-red">どなた</em>でも、<em class="u-red">いくら</em>からでも</Fragment>
-				<Fragment slot="lead">個人のかたはもちろん、ご家族、仲間、学校、小教区、修道院などのグループでご登録いただくこともできます。<br class="u-pc-only" />募金額はご自由に設定いただけます。途中での変更も可能です。</Fragment>
+				<Fragment slot="lead">個人のかたはもちろん、ご家族、仲間、学校、小教区、修道院などのグループでご登録いただくこともできます。<br />募金額はご自由に設定いただけます。途中での変更も可能です。</Fragment>
 			</SectionHead>
 		</div>
 	</section>
@@ -75,7 +75,7 @@ const faq = [
 	<!-- お申し込み方法 -->
 	<section class="sub-section monthly-apply" aria-labelledby="apply-title">
 		<div class="l-container">
-			<SectionHead en="HOW TO APPLY" title="お申し込み方法" id="apply-title" lead="2つの方法からお選びいただけます。どちらも申込書のご提出が必要です。" />
+			<SectionHead en="HOW TO APPLY" title="お申し込み方法" id="apply-title" class="sub-head--lg" lead="2つの方法からお選びいただけます。どちらも申込書のご提出が必要です。" />
 
 			<div class="apply-form">
 				<!-- TODO(要確認): 申込書の PDF・表紙画像(現在はカンプの仮画像) -->
@@ -104,12 +104,12 @@ const faq = [
 	</section>
 
 	<!-- ご確認いただきたいこと -->
-	<DonateNotice rows={notice} />
+	<DonateNotice rows={notice} inline />
 
 	<!-- よくあるご質問 -->
 	<section class="sub-section sub-section--cream faq-section" aria-labelledby="faq-title">
 		<div class="l-container">
-			<SectionHead en="FAQ" title="よくあるご質問" id="faq-title" />
+			<SectionHead en="FAQ" title="よくあるご質問" id="faq-title" class="sub-head--lg" />
 			<Faq items={faq} />
 		</div>
 		<svg class="curve curve--down sub-section__curve-down" viewBox="0 0 1440 42" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0 Q720 84 1440 0 Z" fill="currentColor" /></svg>

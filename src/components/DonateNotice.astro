@@ -9,11 +9,11 @@ import SectionHead from "./SectionHead.astro";
 import { CONTACT } from "../data/donate";
 
 interface Row { th: string; td: string }
-interface Props { rows: Row[] }
-const { rows } = Astro.props;
+interface Props { rows: Row[]; /** スマホでも項目名と内容を横並び(マンスリー) */ inline?: boolean; /** 見出しを大きく(寄付するページ) */ large?: boolean }
+const { rows, inline = false, large = false } = Astro.props;
 ---
-<GreenSection labelledby="notice-title" class="donate-notice">
-	<SectionHead en="NOTICE" title="ご確認いただきたいこと" id="notice-title" />
+<GreenSection labelledby="notice-title" class={inline ? "donate-notice donate-notice--inline" : "donate-notice"}>
+	<SectionHead en="NOTICE" title="ご確認いただきたいこと" id="notice-title" class={large ? "sub-head--lg" : undefined} />
 	<div class="white-box donate-notice__box">
 		<div class="notice-card">
 			<h3 class="notice-card__title">寄付金控除について</h3>

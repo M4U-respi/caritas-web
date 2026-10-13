@@ -1095,16 +1095,21 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .tel-box { padding: 20px; }
   .tel-box__grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .tel-card { flex-wrap: wrap; min-height: 0; padding: 16px 16px 16px 20px; }
-  .tel-card__num { margin-left: 16px; font-size: 26px; }
-  .tel-card--wide { display: block; padding-block: 16px; }
-  .tel-card__addr { margin: 4px 0 0; font-size: 15px; line-height: 1.9; }
+  .tel-card { flex-wrap: nowrap; min-height: 64px; padding: 12px 16px; border-left: 0; border-radius: 8px; }
+  .tel-card__label { font-size: 15px; }
+  .tel-card__num { margin-left: 16px; font-size: 24px; letter-spacing: .03em; }
+  .tel-card--wide { display: flex; align-items: flex-start; padding-block: 18px; }
+  .tel-card--wide .tel-card__label { flex: none; width: 69px; line-height: 25px; }
+  .tel-card--wide { padding-right: 8px; }
+  .tel-card__addr { margin: 0; font-size: 14px; line-height: 25px; }
+  .tel-card__addr .u-sp { display: block; width: 0; height: 0; }
   .contact-tel { padding-bottom: calc(64px + var(--curve)); }
   .contact-form-section { padding: 56px 0 64px; }
-  .form-card { padding: 24px 16px 32px; }
+  .form-card { padding: 32px 20px; }
   .form-steps { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-  .form-steps__item { flex-direction: column; gap: 6px; font-size: 12px; text-align: center; }
-  .form-steps__num { width: 32px; height: 32px; font-size: 14px; }
+  .form-steps { padding-bottom: 0; border-bottom: 0; }
+  .form-steps__item { flex-direction: column; gap: 8px; font-size: 12px; white-space: nowrap; text-align: center; }
+  .form-steps__num { width: 40px; height: 40px; font-size: 16px; }
   .form-body { padding-top: 24px; }
   .form-row { grid-template-columns: minmax(0, 1fr); }
   .form-row + .form-row { margin-top: 24px; }
@@ -1115,8 +1120,10 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .form-submit { display: flex; width: 100%; max-width: 360px; }
 
   .policy-body { padding-top: 48px; }
-  .policy { font-size: 15px; line-height: 1.9; }
-  .policy h2 { margin-top: 48px; font-size: 21px; }
+  .policy { font-size: 15px; font-weight: 500; line-height: 30px; letter-spacing: 0; }
+  .policy h2 { margin-top: 20px; font-size: 21px; letter-spacing: .04em; }
+  .policy h2:first-child { margin-top: 0; }
+  .policy h2 + * { margin-top: 12px; }
   .policy h3 { font-size: 17px; }
   .policy li::before { top: 11px; }
 
@@ -1162,9 +1169,20 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .flow--text .flow__body { padding: 18px 20px 20px; }
   .flow--text .flow__title { margin-top: 8px; }
   .ways { grid-template-columns: minmax(0, 1fr); padding: 12px; }
-  .ways__card { padding: 16px 20px 24px 18px; }
-  .ways__title { margin-top: 12px; }
-  .ways__btn .btn-outline { min-height: 40px; font-size: 13px; }
+  .ways { gap: 8px; padding: 0; background: none; }
+  .ways__card { position: relative; padding: 14px 14px 16px; border: 1.5px solid var(--c-line-gray); border-radius: 8px; }
+  .ways__head { display: block; }
+  .ways__num { margin-top: 0; font-size: 16px; line-height: 1.6; }
+  .ways__icon { display: none; }
+  .ways__title { margin-top: 4px; padding-right: 36px; font-size: 16px; line-height: 1.6; }
+  .ways__text { margin-top: 6px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
+  /* カード全体をリンクに。ボタンは右の赤丸矢印として表示 */
+  .ways__btn { padding: 0; margin: 0; }
+  .ways__btn .btn-outline { position: absolute; inset: 0; width: auto; min-height: 0; padding: 0; border: 0; border-radius: 8px; background: none; font-size: 0; }
+  .ways__btn .btn-outline span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .ways__btn .btn-outline::before { content: ""; position: absolute; right: 13px; top: 50px; width: 22px; height: 22px; border-radius: 50%; background: var(--c-red); }
+  .ways__btn .btn-outline .btn-outline__chevron { position: absolute; right: 21px; top: 56px; color: var(--c-white); transform: none; }
+  .ways__btn .btn-outline:hover { background: none; }
   .funds { gap: 16px; }
   .funds__box { padding: 20px; }
   .funds__title { padding-bottom: 14px; }
@@ -1176,33 +1194,46 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 20px; }
   .bank__box { padding: 24px 20px; }
   .bank__grid, .bank__grid--postal { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .bank .tel-card { flex-direction: column; align-items: flex-start; justify-content: center; padding: 12px 16px 14px 18px; min-height: 0; }
-  .bank .tel-card__label { line-height: 1.6; }
-  .bank .tel-card__num { margin: 2px 0 0; }
-  .bank__value { margin: 2px 0 0; font-size: 15px; }
+  .bank .tel-card { flex-direction: row; align-items: center; padding: 12px 16px; min-height: 64px; border: 0; }
+  .bank .tel-card__label { flex: none; width: 88px; font-size: 15px; line-height: 1.6; }
+  .bank .tel-card__num { margin: 0; font-size: 22px; }
+  .bank__value { margin: 0; font-size: 15px; line-height: 30px; }
   .bank__text { padding: 16px 18px; }
   .bank__text p { font-size: 15px; line-height: 1.9; }
-  .bequest { gap: 32px; padding: 20px; }
-  .bequest__card { padding: 20px 18px; }
+  .bequest { display: flex; flex-direction: column; gap: 16px; padding: 20px 16px; }
+  .bequest__pdf { order: -1; }
+  .bequest__card { padding: 20px 16px; border: 0; }
   .dot-list { font-size: 15px; line-height: 1.9; }
   .dot-list li { padding-left: 18px; }
   .bequest__pdf { display: block; }
   .bequest__thumb { margin: 20px auto 0; }
   .bequest__btn { justify-content: center; }
-  .donate-ask__btns { flex-direction: column; }
-  .donate-ask__btn { width: 100%; max-width: 360px; min-height: 48px; }
+  .donate-ask__btns { flex-direction: column; gap: 12px; }
+  .donate-ask__btn { width: 100%; max-width: none; min-height: 48px; font-size: 15px; }
+  .donate-ask__btns li:first-child .donate-ask__btn { background: var(--c-red); color: var(--c-white); }
   .donate-notice__box, .donate-contact { padding: 20px; }
-  .notice-card { padding: 18px 18px 18px 20px; }
+  .notice-card { padding: 22px 16px 18px; border: 0; }
+  .donate-notice .def-table--wide, .donate-notice .def-table--wide tbody, .donate-notice .def-table--wide tr, .donate-notice .def-table--wide th, .donate-notice .def-table--wide td { display: block; width: auto; }
+  .donate-notice .def-table--wide tr { padding: 20px 0; border-bottom: 1px solid var(--c-line); }
+  .donate-notice .def-table--wide tr:first-child { border-top: 1px solid var(--c-line); }
+  .donate-notice .def-table--wide th, .donate-notice .def-table--wide td { padding: 0; border: 0; font-size: 15px; line-height: 30px; }
+  .donate-notice .def-table--wide td { margin-top: 12px; }
+  .donate-notice--inline .def-table--wide tr { display: flex; gap: 16px; }
+  .donate-notice--inline .def-table--wide th { flex: none; width: 96px; }
+  .donate-notice--inline .def-table--wide td { margin-top: 0; }
+  .donate-contact .tel-card { border: 0; }
+  .donate-contact__head { gap: 16px; }
   .notice-card__title { font-size: 18px; }
   .notice-card__text { font-size: 15px; line-height: 1.9; }
   .btn-solid { width: 100%; min-width: 0; }
   .amounts { padding: 24px 20px; }
-  .amounts__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .amounts__btn { height: 60px; }
+  .amounts__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .amounts__btn { height: 44px; gap: 3px; }
+  .amounts__num { font-size: 18px; }
   .monthly-overview { padding-bottom: 56px; }
   .monthly-apply { padding-top: 64px; }
-  .apply-form { flex-direction: column; align-items: stretch; gap: 24px; padding: 24px 20px; }
-  .apply-form__thumb { margin-inline: auto; width: 140px; }
+  .apply-form { flex-direction: column; align-items: stretch; gap: 24px; padding: 24px 16px; border: 0; }
+  .apply-form__thumb { margin-inline: auto; width: 161px; }
   .apply-form__btns { flex-direction: column; align-items: stretch; }
   .apply-form__btns .btn-solid, .apply-form__btns .btn-outline { width: 100%; }
   .apply-method { margin-top: 40px; }
@@ -1220,7 +1251,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-hero--flat { padding-bottom: 62px; }
   .sub-hero__label { margin-top: 54px; }
   .sub-hero__title { margin-top: 14px; font-size: 32px; line-height: 48px; letter-spacing: .05em; }
-  .sub-hero__lead { margin-top: 13px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; }
+  .sub-hero__lead { margin-top: 13px; font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; }
 
   /* 見出し・本文 */
   .sub-section { padding: 70px 0 64px; }
@@ -1231,6 +1262,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-head__title, .manual__title { margin-top: 14px; font-size: 24px; line-height: 1.5; letter-spacing: .05em; }
   .sub-head__lead { margin-top: 10px; font-size: 16px; line-height: 29px; letter-spacing: 0; }
   .section--green .sub-head__title, .section--green .manual__title { margin-top: 28px; }
+  .sub-head--lg .sub-head__title { font-size: 32px; line-height: 1.55; } /* 寄付ページの一部見出し(デザイン 32px) */
   .section--green .sub-head__lead { margin-top: 16px; line-height: 27px; }
   .sub-head + * { margin-top: 32px; }
   .sub-text { font-size: 15px; line-height: 30px; letter-spacing: 0; }
