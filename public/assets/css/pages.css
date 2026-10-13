@@ -1385,6 +1385,77 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .mission-cards { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 24px; }
 }
 
+/* ==========================================================================
+   SP デザイン:お知らせ(news 一覧・カテゴリ・記事詳細)
+   ========================================================================== */
+@media (max-width: 767.98px) {
+  .cms-archive--news { padding-top: 48px; }
+
+  /* 緊急支援ボックス:日付を左、タイトルを右 */
+  .cms-archive--news .news-urgent--bordered { margin-bottom: 64px; border-radius: 8px; }
+  .cms-archive--news .news-urgent__head { min-height: 74px; padding: 10px 16px; }
+  .cms-archive--news .news-urgent__lead { margin-left: 16px; font-size: 15px; font-weight: 400; line-height: 27px; letter-spacing: 0; }
+  .cms-archive--news .news-urgent__badge { flex: none; width: 82px; height: 32px; }
+  .cms-archive--news .news-list--urgent .news-list__link { grid-template-columns: 85px minmax(0, 1fr) auto; column-gap: 0; padding: 12px 16px 13px; }
+  .cms-archive--news .news-list--urgent .news-list__meta { grid-column: 1; grid-row: 1; align-self: start; padding-top: 1px; }
+  .cms-archive--news .news-list--urgent .news-list__date { font-size: 14px; line-height: 25px; color: var(--c-text-mute); }
+  .cms-archive--news .news-list--urgent .news-list__title { grid-column: 2; grid-row: 1; font-size: 15px; font-weight: 500; line-height: 27px; letter-spacing: 0; }
+  .cms-archive--news .news-list--urgent .news-list__chevron { grid-column: 3; grid-row: 1; margin-left: 16px; }
+  .cms-archive--news .news-urgent__foot { padding: 14px 16px 16px; }
+  .cms-archive--news .news-urgent__foot .btn-outline { width: 182px; min-height: 48px; font-size: 15px; }
+
+  /* カテゴリタブ:3 + 2 の 2 段 */
+  .cms-archive--news .cat-tabs__nav { margin-inline: 0; }
+  .cms-archive--news .cat-tabs__nav::after { display: none; }
+  .cms-archive--news .cat-tabs__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 0; padding: 0; overflow: visible; }
+  .cms-archive--news .cat-tabs__list > li { grid-column: span 2; border-bottom: 1px solid var(--c-line-gray); }
+  .cms-archive--news .cat-tabs__list > li:nth-child(n + 4) { grid-column: span 3; }
+  .cms-archive--news .cat-tabs__link { justify-content: center; height: 60px; padding: 0 4px; font-size: 15px; }
+  .cms-archive--news .cat-tabs { border-bottom: 0; }
+  .cms-archive--news .cat-tabs__link[aria-current="page"] { font-weight: 400; }
+  .cms-archive--news .cat-tabs__link::after { height: 2px; }
+
+  /* 記事一覧:2 列カード(写真が上) */
+  .cms-archive--news .entry-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 15px; margin-top: 52px; border-top: 0; }
+  .cms-archive--news .entry-row__link { flex-direction: column; align-items: stretch; gap: 0; height: 100%; padding: 0 0 24px; }
+  .cms-archive--news .entry-row { margin-bottom: 20px; }
+  .cms-archive--news .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
+  .cms-archive--news .entry-row__thumb img[src$="noimage.jpg"] { mix-blend-mode: multiply; } /* 白地をクリームに(デザインどおり) */
+  .cms-archive--news .entry-row__meta { margin-top: 16px; gap: 8px 10px; }
+  .cms-archive--news .entry-row__date { font-size: 12px; }
+  .cms-archive--news .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 15px; line-height: 30px; letter-spacing: 0; -webkit-line-clamp: unset; }
+  .cms-archive--news .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 14px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
+  .cms-archive--news .entry-row__arrow { display: none; }
+
+  /* 記事詳細 */
+  .article { padding-top: 46px; }
+  .article__title { font-size: 28px; line-height: 42px; letter-spacing: .04em; word-break: normal; }
+  .article__meta { margin-top: 18px; }
+  .prose { margin-top: 32px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .prose p { margin-top: 16px; }
+  .prose__figure, .prose__gallery { margin-top: 24px; }
+  .prose figcaption { margin-top: 8px; }
+  .prose h2 { margin-top: 32px; padding-bottom: 12px; font-size: 18px; letter-spacing: 0; }
+  .prose h2 + * { margin-top: 20px; }
+  .prose .prose__lead + h2, .prose > h2:first-child { margin-top: 32px; }
+  .prose blockquote { margin: 56px 0 40px; padding: 22px 24px; border-left: 0; border-radius: 4px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; }
+  .prose__table tr { padding: 14px 0 16px; }
+  .prose__table th, .prose__table td { font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .prose__table td { margin-top: 4px; }
+  .prose .prose__note { margin-top: 16px; }
+  .article__foot { margin-top: 96px; }
+  .post-nav { gap: 16px; }
+  .post-nav__link { gap: 16px; min-height: 124px; padding: 24px 16px; text-align: left; border-color: var(--c-line-gray); border-radius: 8px; }
+  .post-nav__link--next { padding-left: 24px; }
+  .post-nav__label { font-size: 12px; }
+  .post-nav__title { margin-top: 8px; font-size: 15px; line-height: 27px; letter-spacing: 0; }
+  .article__back { margin-top: 40px; }
+  .article__back .btn-outline { width: 184px; max-width: none; min-height: 50px; font-size: 15px; }
+
+  /* 関連ナビ(お知らせ各ページ):2 列 */
+  .related-nav--news .related-nav__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .faq__item::details-content { transition: none; }
 }

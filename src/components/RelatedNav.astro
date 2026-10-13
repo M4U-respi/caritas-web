@@ -12,7 +12,7 @@ const { preset } = Astro.props;
 const nav = RELATED_NAV[preset];
 const path = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 // スマホのデザインどおりの改行位置
-const spBreak = (label: string) => label.replace("四旬節「", "四旬節<br class=\"u-sp-only\" />「");
+const spBreak = (label: string) => label.replace("四旬節「", "四旬節<br class=\"u-sp-only\" />「").replace("啓発・キャンペーン", "啓発・<br class=\"u-sp-only\" />キャンペーン");
 const items = nav.items.map((i) => ({ ...i, current: i.href === path }));
 const [lead, ...rest] = items;
 const titleId = `related-${preset}-title`;
