@@ -93,7 +93,6 @@ export const GNAV: (NavLink & { children?: NavLink[]; spFlat?: boolean })[] = [
 		label: "活動報告",
 		href: "/report/",
 		children: [{ label: "活動報告", href: "/report/" }, ...termLinks("report")],
-		spFlat: true,
 	},
 	{
 		label: "発行物",

@@ -97,6 +97,30 @@
   /* ------------------------------------------------------------------
      FV カルーセル(フェード / 自動再生 約6秒)
      ------------------------------------------------------------------ */
+  /* ------------------------------------------------------------------
+     画面下の固定寄付ボタン(〜1099px):先頭のビジュアルが見えなくなったら下からスライドで出現
+     TOP:.fv / 下層:.sub-hero(直後に写真帯があればそこまで) / それ以外:記事見出し
+     ------------------------------------------------------------------ */
+  (function initFixedDonate() {
+    var btn = document.querySelector('.fixed-donate');
+    if (!btn) return;
+    var target = document.querySelector('.fv');
+    if (!target) {
+      var hero = document.querySelector('.sub-hero');
+      if (hero) {
+        var next = hero.nextElementSibling;
+        target = next && next.classList.contains('photo-strip') ? next : hero;
+      }
+    }
+    if (!target) target = document.querySelector('.article__head');
+    if (!target || !('IntersectionObserver' in window)) { btn.classList.add('is-shown'); return; }
+    new IntersectionObserver(function (entries) {
+      var e = entries[0];
+      // 対象が画面より上に抜けたら表示(戻ったら隠す)
+      btn.classList.toggle('is-shown', !e.isIntersecting && e.boundingClientRect.top < 0);
+    }).observe(target);
+  })();
+
   (function initCarousel() {
     var root = document.getElementById('fv');
     if (!root) return;

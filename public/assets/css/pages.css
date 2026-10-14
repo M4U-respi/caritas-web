@@ -1434,7 +1434,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--news .news-list--urgent .news-list__title { grid-column: 2; grid-row: 1; font-size: 15px; font-weight: 500; line-height: 27px; letter-spacing: 0; }
   .cms-archive--news .news-list--urgent .news-list__chevron { grid-column: 3; grid-row: 1; margin-left: 16px; }
   .cms-archive--news .news-urgent__foot { padding: 14px 16px 16px; }
-  .cms-archive--news .news-urgent__foot .btn-outline { width: 182px; min-height: 48px; font-size: 15px; }
+  .cms-archive--news .news-urgent__foot .btn-outline { width: 100%; max-width: 300px; min-height: 48px; font-size: 15px; }
 
   /* カテゴリタブ:3 + 2 の 2 段 */
   .cms-archive--news .cat-tabs__nav { margin-inline: 0; }

@@ -388,8 +388,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 .news-list--urgent .news-list__date { font-size: 14px; }
 .news-list--urgent .news-list__title { margin-left: 22px; font-size: 16px; letter-spacing: .01em; }
 .news-list--urgent .news-list__chevron { margin-left: 24px; }
-.news-list__link:hover { background: rgba(255, 255, 255, .5); color: var(--c-red); }
-.news-list--urgent .news-list__link:hover { background: #FFF8F8; }
+.news-list__link:hover { color: var(--c-red); }
 .news-list__link:hover .news-list__chevron { transform: translateX(4px); }
 .news-list__link:focus-visible { outline-offset: -2px; }
 
@@ -511,7 +510,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   margin-top: 78px; padding-top: 23px; border-top: 1px solid var(--c-line-footer);
   font-size: 14px; line-height: 1.6; letter-spacing: 0; color: #F0F0F0;
 }
-.footer__sub { display: flex; flex-wrap: wrap; gap: 4px 23px; font-size: 12px; }
+.footer__sub { display: flex; flex-wrap: wrap; gap: 4px 23px; font-size: 14px; }
 .footer__copy small { font-size: 12px; }
 
 /* ==========================================================================
@@ -588,13 +587,18 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 
   /* 画面下に固定の寄付ボタン */
   body { padding-bottom: calc(48px + env(safe-area-inset-bottom, 0px)); }
+  /* 表示は main.js が .is-shown を付与(TOP:FV、下層:ヒーロー+写真帯が見えなくなったら)。下からスライドで出現 */
   .fixed-donate {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 90;
+    transform: translateY(100%); visibility: hidden;
+    transition: transform .35s ease, visibility 0s linear .35s, background-color var(--ease);
     display: flex; align-items: center; justify-content: center; gap: 12px;
     min-height: calc(48px + env(safe-area-inset-bottom, 0px)); padding: 0 16px env(safe-area-inset-bottom, 0px);
     background: var(--c-red); color: var(--c-white);
     font-size: 16px; font-weight: 700; line-height: 1; letter-spacing: .05em;
   }
+  .fixed-donate.is-shown { transform: none; visibility: visible; transition: transform .35s ease, visibility 0s, background-color var(--ease); }
+  html:not(.js) .fixed-donate { transform: none; visibility: visible; }
   .fixed-donate:hover { background: var(--c-red-dark); }
   .fixed-donate svg { flex: none; }
   .fixed-donate__chevron { margin-left: 24px; }
@@ -683,14 +687,17 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .fv { height: 562px; }
   .fv__shade {
     background:
-      linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, .45) 100%),
-      linear-gradient(90deg, rgba(0, 0, 0, .25) 0%, rgba(0, 0, 0, .08) 50%, rgba(0, 0, 0, 0) 75%);
+      linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .25) 100%);
   }
-  .fv__slide--01 img { object-position: 46% 50%; }
-  .fv__slide--02 img { object-position: 52% 20%; }
-  .fv__slide--03 img { object-position: 56% 20%; }
+  /* スマホ用画像(デザイン SP / TOP の切り出し位置) */
+  .fv__slide--01 img { object-position: 50% 50%; }
+  .fv__slide--02 img { object-position: 59% 0%; }
+  .fv__slide--03 img { object-position: 70% 50%; }
   .fv__catch { left: 20px; top: auto; bottom: 200px; font-size: 50px; line-height: 1.35; letter-spacing: .05em; }
   .fv__lead { left: 20px; right: 16px; top: auto; bottom: 56px; font-size: 16px; line-height: 32px; letter-spacing: 0; }
+  /* 写真の上でも読めるよう、文字の後ろにぼかした影(デザインの文字背面ぼかし) */
+  .fv__catch { text-shadow: 0 0 18px rgba(0, 0, 0, .35), 0 2px 8px rgba(0, 0, 0, .25); }
+  .fv__lead { text-shadow: 0 0 10px rgba(0, 0, 0, .55), 0 0 22px rgba(0, 0, 0, .35); }
   .fv__pager { flex-direction: column; top: auto; right: 0; bottom: 20px; }
   .fv__pager-btn { width: 36px; height: 32px; font-size: 14px; }
 
@@ -699,15 +706,17 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .mission__inner { padding: 64px 0 calc(63px + var(--curve)); }
   .mission__text { margin-top: 32px; font-size: 15px; line-height: 33px; letter-spacing: 0; }
   .mission__text p + p { margin-top: 16px; }
-  .mission__btn { width: 216px; min-height: 48px; margin-top: 40px; font-size: 15px; }
+  .mission__btn { display: flex; width: 100%; max-width: 300px; min-height: 48px; margin: 40px auto 0; font-size: 15px; }
   .mission__media { width: 100%; height: auto; aspect-ratio: 335 / 344; margin: 44px 0 0; }
   .mission__photo--main { top: 0; right: 0; width: 90.45%; max-width: none; }
   .mission__photo--sub { left: 0; right: auto; bottom: 0; width: 37.3%; max-width: none; }
 
   /* VALUE(2 列) */
-  .value__inner { padding: 68px 0 60px; }
+  /* 背景:デザイン SP の筆跡テクスチャ(下層の緑セクションと共通) */
+  .value { background: var(--c-green) url(../img/sub/common/bg-green-sp.jpg) center top / 100% 100% no-repeat; }
+  .value__inner { padding: 68px 0 68px; }
   .value__title { margin-top: 24px; font-size: 24px; line-height: 42px; letter-spacing: .05em; }
-  .value__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 25px; margin-top: 32px; }
+  .value__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 25px; margin-top: 32px; }
   .value__item { flex-direction: column; align-items: center; }
   .value__icon { width: 72px; height: 72px; }
   .value__icon::after { left: 53.9px; top: 6.7px; width: 7.75px; height: 2.03px; box-shadow: 6.07px 4.39px 0 #539D99; }
@@ -725,6 +734,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .way-card__num { font-size: 18px; }
   .way-card__title { margin-top: 10px; gap: 10px; justify-content: flex-start; font-size: 20px; line-height: 30px; letter-spacing: .05em; }
   .way-card__arrow { width: 22px; height: 22px; }
+  .way-card__arrow svg { width: 8px; height: 12px; stroke-width: 1.2; } /* デザインのヌキ矢印(6×12px) */
   .way-card__text { margin-top: 8px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
   .way-card__photo { flex: 0 0 128px; aspect-ratio: auto; }
 
@@ -739,7 +749,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .news-urgent__badge { width: 82px; height: 32px; margin-left: 0; font-size: 14px; }
   .news-urgent__lead { margin: 0 0 0 10px; font-size: 14px; font-weight: 600; line-height: 25px; letter-spacing: 0; }
   .news-urgent__foot { padding: 14px 16px; }
-  .news-urgent__foot .btn-outline { width: 172px; min-height: 50px; padding: 4px 12px; font-size: 14px; white-space: nowrap; }
+  .news-urgent__foot .btn-outline { width: 100%; max-width: 300px; min-height: 50px; padding: 4px 12px; font-size: 14px; white-space: nowrap; }
   .news-list__link { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 4px; padding: 12px 16px 14px; }
   .news-list--urgent .news-list__link { padding: 11px 16px 12px; }
   .news-list__meta { grid-column: 1; gap: 16px; }
@@ -750,7 +760,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .tag { font-size: 12px; }
 
   /* SOCIAL */
-  .social { padding: 67px 0 66px; background-size: 270px auto; background-position: center 40px; }
+  .social { padding: 67px 0 66px; background-size: 300px auto; background-position: calc(50% + 6px) 44px; }
   .social__text { margin-top: 8px; font-size: 15px; line-height: 27px; letter-spacing: 0; }
   .social__btns { display: grid; gap: 12px; max-width: none; margin-top: 26px; }
   .social__btn, .social__btn--wide { width: 100%; min-height: 47px; }
@@ -805,7 +815,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .footer__sns { gap: 8px; margin: 0 -4px 0 0; }
   .footer__sns img { width: 40px; height: 40px; }
   .footer__bottom { display: block; margin-top: 46px; padding-top: 21px; font-size: 14px; }
-  .footer__sub { gap: 0 16px; }
+  .footer__sub { flex-wrap: nowrap; gap: 0 16px; font-size: 13px; letter-spacing: 0; white-space: nowrap; }
   .footer__sub a { display: inline-block; line-height: 29px; }
   .footer__copy { margin-top: -4px; line-height: 22px; }
 }
