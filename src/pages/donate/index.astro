@@ -55,7 +55,7 @@ const faq = [
 <Layout title="寄付する" description={description}>
 	<PageHeader title="寄付する" en="DONATION" ja="寄付" flat>
 		<Fragment slot="title"><em class="u-red">寄付</em>する</Fragment>
-		<Fragment slot="lead">カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。<br class="u-pc-only" />いただいた募金は、国内外でもっとも援助を必要としている人々のもとへ届けられます。</Fragment>
+		<Fragment slot="lead">カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。<br />いただいた募金は、国内外でもっとも援助を必要としている人々のもとへ届けられます。</Fragment>
 	</PageHeader>
 	<PhotoStrip photos={strip} gap="cream" />
 
@@ -88,7 +88,7 @@ const faq = [
 
 	<!-- 受付中の募金 -->
 	<GreenSection id="funds" labelledby="funds-title" class="donate-funds">
-		<SectionHead en="FUNDS" title="受付中の募金" id="funds-title">
+		<SectionHead en="FUNDS" title="受付中の募金" id="funds-title" class="sub-head--lead-sm">
 			<Fragment slot="lead">どの活動にあてるかをお選びいただけます。ご意向の記入がない場合は、最優先の援助にあてさせていただきます。番号は、<br class="u-pc-only" />ゆうちょダイレクトの通信欄またはメッセージ欄にご入力ください。</Fragment>
 		</SectionHead>
 		<div class="funds">
@@ -203,7 +203,7 @@ const faq = [
 	<DonateNotice rows={notice} large />
 
 	<!-- よくあるご質問 -->
-	<section class="sub-section sub-section--cream faq-section" aria-labelledby="faq-title">
+	<section class="sub-section sub-section--cream faq-section faq-section--lg" aria-labelledby="faq-title">
 		<div class="l-container">
 			<SectionHead en="FAQ" title="よくあるご質問" id="faq-title" class="sub-head--lg" />
 			<Faq items={faq} />

@@ -83,6 +83,7 @@ a.tag:hover { opacity: .7; }
 
 /* スマホ用トリミング画像の <picture> は img をそのままレイアウトさせる */
 .media-row picture, .flow__item picture, .way-card__photo picture, .lent-wide picture { display: contents; }
+picture > source { display: none; }
 
 /* ---------- パンくず ---------- */
 .breadcrumb { padding: 25px 40px 0; }
@@ -108,7 +109,7 @@ a.tag:hover { opacity: .7; }
   font-size: clamp(32px, 3.34vw, 48px); font-weight: 700; line-height: 1.4; letter-spacing: .08em;
   color: var(--c-text-strong);
 }
-.sub-hero__lead { margin-top: 15px; max-width: 900px; font-size: 18px; font-weight: 700; line-height: 36px; letter-spacing: .04em; color: var(--c-text); }
+.sub-hero__lead { margin-top: 15px; max-width: 900px; font-size: 18px; font-weight: 700; line-height: 36px; letter-spacing: 0; color: var(--c-text); }
 .sub-hero__curve { color: var(--c-white); }
 /* 改行位置を指定したリード(寄付ページ)は幅を制限しない */
 .sub-hero__lead:has(br) { max-width: none; }
@@ -144,11 +145,11 @@ a.tag:hover { opacity: .7; }
 /* ---------- セクション見出し ---------- */
 .sub-head--center { text-align: center; }
 .sub-head--center .section-label { justify-content: center; }
-.sub-head__lead { margin-top: 8px; font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.sub-head__lead { margin-top: 8px; font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .sub-head + * { margin-top: 48px; }
 
 /* 本文(16px / 32px) */
-.sub-text { font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.sub-text { font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .sub-text > p + p { margin-top: 16px; }
 .sub-note { font-size: 12px; font-weight: 400; line-height: 1.8; color: var(--c-text-mute); }
 
@@ -193,7 +194,7 @@ a.tag:hover { opacity: .7; }
 .way-card--white .way-card__title { margin-top: 10px; gap: 8px; font-size: 24px; line-height: 40px; letter-spacing: 0; color: var(--c-text-strong); }
 .way-card--white .way-card__title--2line { justify-content: space-between; }
 .way-card--white .way-card__arrow { background: var(--c-red); color: var(--c-white); }
-.way-card--white .way-card__text { margin-top: 10px; letter-spacing: .03em; color: var(--c-text); }
+.way-card--white .way-card__text { margin-top: 10px; letter-spacing: 0; color: var(--c-text); }
 
 /* ---------- 白ボックス(緑の上) ---------- */
 .box-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -209,7 +210,7 @@ a.tag:hover { opacity: .7; }
 .list-box__item:last-child { border-bottom: 0; padding-bottom: 0; }
 .list-box--single .list-box__item:last-child { padding-bottom: 0; }
 .list-box__title { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-teal); }
-.list-box__text { margin-top: 10px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; }
+.list-box__text { margin-top: 10px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; }
 
 /* ---------- フロー(ステップ)カード ---------- */
 .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px; counter-reset: none; }
@@ -224,7 +225,7 @@ a.tag:hover { opacity: .7; }
 .flow__body { padding: 18px 16px 20px; }
 .flow__num { font-size: 20px; font-weight: 500; line-height: 1; color: var(--c-red); }
 .flow__title { margin-top: 10px; font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-text-strong); }
-.flow__text { margin-top: 6px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.flow__text { margin-top: 6px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 /* 文字だけのカード(寄付ページ) */
 .flow--text .flow__body { padding: 28px 24px 26px; }
 .flow--text .flow__title { margin-top: 16px; letter-spacing: 0; }
@@ -237,7 +238,7 @@ a.tag:hover { opacity: .7; }
 .def-table { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 1.6; }
 .def-table th, .def-table td { padding: 20px 0; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: middle; }
 .def-table th { width: 168px; font-weight: 700; color: var(--c-text-strong); }
-.def-table td { font-weight: 400; color: var(--c-text); }
+.def-table td { font-weight: 400; letter-spacing: 0; color: var(--c-text); }
 .u-sp { display: inline-block; width: 1em; }
 
 /* ---------- FAQ ---------- */
@@ -266,7 +267,7 @@ a.tag:hover { opacity: .7; }
 .faq__icon::after { transform: rotate(90deg); }
 .faq__item[open] .faq__icon::after { transform: rotate(0); }
 .faq__a { display: flex; gap: 16px; margin: 0 32px; padding: 24px 0 32px; border-top: 1px solid var(--c-line); }
-.faq__a-text { flex: 1; min-width: 0; padding-top: 4px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.faq__a-text { flex: 1; min-width: 0; padding-top: 4px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 
 /* ---------- 関連ページナビ ---------- */
 .related-nav { padding: 120px 0 0; background: var(--c-white); }
@@ -306,7 +307,7 @@ a.tag:hover { opacity: .7; }
 }
 .manual__card-body { flex: 1; min-width: 0; }
 .manual__card-title { display: block; font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-teal); }
-.manual__card-text { display: block; margin-top: 14px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; }
+.manual__card-text { display: block; margin-top: 14px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; }
 .manual__card:hover { box-shadow: 0 8px 24px rgba(0, 0, 0, .15); }
 .manual__card:hover .circle-arrow { transform: translateX(4px); }
 .manual__card:focus-visible { outline-color: var(--c-white); }
@@ -318,9 +319,10 @@ a.tag:hover { opacity: .7; }
 .cat-tabs--has-aside { border-bottom: 0; }
 .cat-tabs--has-aside .cat-tabs__nav { border-bottom: 1px solid var(--c-line-gray); }
 .cat-tabs__list { display: flex; gap: 20px; }
+.cms-archive--news .cat-tabs__list { gap: 0; }
 .cat-tabs__link {
   position: relative; display: flex; align-items: center; height: 52px; padding: 0 16px;
-  font-size: 16px; font-weight: 400; line-height: 1; letter-spacing: .03em; color: var(--c-text); white-space: nowrap;
+  font-size: 16px; font-weight: 400; line-height: 1; letter-spacing: 0; color: var(--c-text); white-space: nowrap;
 }
 .cat-tabs__link::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--c-red); transform: scaleX(0); transition: transform var(--ease); }
 .cat-tabs__link:hover { color: var(--c-red); }
@@ -340,7 +342,7 @@ a.tag:hover { opacity: .7; }
 .entry-row__title { margin-top: 10px; font-size: 16px; font-weight: 700; line-height: 1.6; letter-spacing: .03em; transition: color var(--ease); }
 .entry-row__excerpt {
   display: -webkit-box; margin-top: 12px; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
-  font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text);
+  font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text);
 }
 .entry-row__link:hover .entry-row__title { color: var(--c-red); }
 .entry-row__link:hover .circle-arrow { transform: translateX(4px); }
@@ -389,7 +391,7 @@ a.pagination__arrow:hover { opacity: .7; }
 .org-box__title { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: .04em; color: var(--c-red); }
 .org-box__desc { margin-top: 8px; font-size: 16px; font-weight: 400; line-height: 1.8; color: var(--c-text); }
 .org-box__inner { margin-top: 24px; padding: 28px 24px 24px; border-left: 3px solid var(--c-red); border-radius: 8px; background: var(--c-white); }
-.org-box__text { font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .03em; color: var(--c-text); }
+.org-box__text { font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 .org-box__text + .org-box__text { margin-top: 8px; }
 .org-box__roles { display: flex; flex-wrap: wrap; gap: 8px 32px; margin-top: 24px; }
 .org-box__role { display: flex; align-items: baseline; gap: 6px; }
@@ -420,8 +422,8 @@ a.pagination__arrow:hover { opacity: .7; }
 .timeline__name { letter-spacing: .06em; }
 .timeline__row { display: flex; padding: 16px 0 17px; border-bottom: 1px solid var(--c-line); }
 .timeline__row:first-child { padding-top: 36px; }
-.timeline__year { flex: none; width: 108px; padding-left: 16px; font-size: 16px; font-weight: 700; line-height: 32px; color: var(--c-text-strong); }
-.timeline__text { flex: 1; min-width: 0; padding-right: 24px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.timeline__year { flex: none; width: 124px; padding-left: 16px; font-size: 16px; font-weight: 700; line-height: 32px; color: var(--c-text-strong); }
+.timeline__text { flex: 1; min-width: 0; padding-right: 40px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .history-body { padding-top: 58px; padding-bottom: 20px; } /* + 寄付ブロックの上余白 120px = 140px */
 
 /* ---------- /about/lent/ ---------- */
@@ -537,7 +539,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
 /* ---------- ポリシー本文(/site-policy/ /privacy-policy/) ---------- */
 .policy-body { padding: 76px 0 0; }
-.policy { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.policy { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .policy h2 { margin-top: 72px; font-size: 26px; font-weight: 700; line-height: 1.5; letter-spacing: .04em; color: var(--c-text-strong); }
 .policy h2:first-child { margin-top: 0; }
 .policy h2 + * { margin-top: 20px; }
@@ -603,7 +605,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .pub-card__link { display: flex; align-items: center; gap: 20px; min-height: 280px; height: 100%; padding: 24px 16px; color: var(--c-text-strong); }
 .pub-card__body { flex: 1; min-width: 0; display: block; }
 .pub-card__title { margin-top: 16px; font-size: 16px; font-weight: 700; line-height: 2; letter-spacing: .03em; transition: color var(--ease); }
-.pub-card__excerpt { display: block; margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.pub-card__excerpt { display: block; margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 .pub-card__cover { flex: none; width: 163px; aspect-ratio: 163 / 230; overflow: hidden; border: 1px solid var(--c-line); border-radius: 6px; background: var(--c-cream-light); }
 .pub-card__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
 .pub-card__link:hover .pub-card__title { color: var(--c-red); }
@@ -614,7 +616,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .pub-about .box-grid { margin-top: 48px; }
 .pub-about__box { padding: 40px 32px 32px; }
 .pub-about__title { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-teal); }
-.pub-about__list { margin-top: 18px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.pub-about__list { margin-top: 18px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .pub-about__list li { position: relative; padding-left: 24px; }
 .pub-about__list li::before { content: "・"; position: absolute; left: 0; top: 0; }
 .pub-about__link { color: var(--c-text-strong); text-decoration: underline; text-decoration-color: var(--c-text); text-underline-offset: 6px; text-decoration-thickness: 1px; }
@@ -635,13 +637,13 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .pub-detail__cover { flex: none; width: 220px; aspect-ratio: 163 / 230; overflow: hidden; border: 1px solid var(--c-line); border-radius: 6px; background: var(--c-white); }
 .pub-detail__cover img { width: 100%; height: 100%; object-fit: cover; }
 .pub-detail__body { flex: 1; min-width: 0; }
-.pub-detail__excerpt { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.pub-detail__excerpt { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .pub-detail__file { margin-top: 24px; }
 .pub-detail__btn { width: auto; min-width: 280px; padding-inline: 32px; }
 .pub-detail__size { font-size: 12px; font-weight: 400; }
 
 /* 本文(Portable Text) */
-.prose { margin-top: 56px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.prose { margin-top: 56px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .prose > :first-child { margin-top: 0; }
 .prose p { margin-top: 16px; }
 .prose .prose__lead { font-weight: 700; color: var(--c-text-strong); }
@@ -710,10 +712,10 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 /* 表(項目名を広く) */
 .def-table--wide th { width: 264px; padding-right: 24px; line-height: 32px; }
 .def-table--wide th, .def-table--wide td { padding-block: 21px; vertical-align: top; }
-.def-table--wide td { line-height: 32px; letter-spacing: .02em; }
+.def-table--wide td { line-height: 32px; letter-spacing: 0; }
 
 /* 中黒の箇条書き */
-.dot-list { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.dot-list { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .dot-list li { position: relative; padding-left: 24px; }
 .dot-list li::before { content: "・"; position: absolute; left: 0; top: 0; }
 
@@ -722,7 +724,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
 /* ---------- 寄付の方法 ---------- */
 .ways { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 24px; border-radius: 8px; background: var(--c-cream); }
-.ways__card { display: flex; flex-direction: column; padding: 17px 24px 32px 16px; border-radius: 8px; background: var(--c-white); }
+.ways__card { display: flex; flex-direction: column; padding: 17px 16px 32px 16px; border-radius: 8px; background: var(--c-white); }
 .ways__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .ways__num { margin-top: 8px; font-size: 20px; font-weight: 500; line-height: 1; color: var(--c-red); }
 .ways__icon { flex: none; width: 34px; height: 34px; color: var(--c-teal); }
@@ -746,7 +748,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .donate-bank { padding-bottom: 12px; scroll-margin-top: var(--header-h); }
 .bank { display: grid; gap: 24px; }
 .bank__box { padding: 38px 40px 40px; border-radius: 8px; background: var(--c-cream); }
-.bank__desc { margin-top: 18px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.bank__desc { margin-top: 18px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 .bank__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 18px; }
 .bank__grid--postal { grid-template-columns: minmax(0, 400px) minmax(0, 1fr); }
 .bank__box > .subheading-bar + .bank__text { margin-top: 24px; }
@@ -755,7 +757,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .bank__card--wide { grid-column: 1 / -1; }
 .bank__value { margin-left: 24px; font-size: 16px; font-weight: 400; line-height: 1.8; color: var(--c-text-strong); }
 .bank__text { display: block; min-height: 0; padding: 22px 32px; }
-.bank__text p { font-size: 16px; font-weight: 400; line-height: 29px; letter-spacing: .02em; color: var(--c-text); }
+.bank__text p { font-size: 16px; font-weight: 400; line-height: 29px; letter-spacing: 0; color: var(--c-text); }
 .bank__note { margin-top: 16px; }
 
 /* ---------- 遺贈 ---------- */
@@ -770,7 +772,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .bequest__btn { display: flex; justify-content: center; margin-top: 24px; }
 .bequest__btn .btn-outline { gap: 10px; }
 .bequest__btn .btn-outline svg { flex: none; }
-.bequest__text { margin-top: 24px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.bequest__text { margin-top: 24px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 .bequest__steps { margin-top: 40px; }
 .donate-ask { margin-top: 44px; }
 .donate-ask__btns { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
@@ -783,7 +785,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .donate-notice__box { padding: 32px 40px; }
 .notice-card { padding: 25px 32px 24px; border-color: #F2D2C9; border-left-color: var(--c-red); border-radius: 8px; background: var(--c-cream); }
 .notice-card__title { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-red); }
-.notice-card__text { margin-top: 8px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.notice-card__text { margin-top: 8px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .notice-card + .def-table { margin-top: 24px; }
 .donate-contact { margin-top: 24px; padding: 32px 40px; }
 .donate-contact__head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
@@ -800,7 +802,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .amounts__note { margin-top: 28px; }
 .external-note { margin-top: 32px; }
 .external-note__title { font-size: 16px; font-weight: 700; line-height: 1.6; color: var(--c-text-strong); }
-.external-note__text { margin-top: 4px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.external-note__text { margin-top: 4px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 
 /* ---------- マンスリーサポーター ---------- */
 .monthly-overview { padding-bottom: 80px; }
@@ -809,7 +811,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .apply-form { display: flex; align-items: center; gap: 56px; padding: 40px 56px; border-radius: 8px; background: var(--c-cream); }
 .apply-form__thumb { flex: none; }
 .apply-form__body { flex: 1; min-width: 0; }
-.apply-form__text { margin-top: 18px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: .02em; color: var(--c-text); }
+.apply-form__text { margin-top: 18px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 .apply-form__btns { display: flex; flex-wrap: wrap; align-items: center; gap: 16px; margin-top: 26px; }
 .apply-method { display: grid; grid-template-columns: minmax(0, 296px) minmax(0, 1fr); column-gap: 13px; margin-top: 48px; }
 .apply-method__head { padding-top: 2px; }
@@ -828,7 +830,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .mission-way__num { font-size: 32px; font-weight: 400; line-height: 1; }
 .mission-way__en { font-family: var(--ff-sans); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: .2em; }
 .mission-way__title { margin-top: 24px; font-size: 32px; font-weight: 700; line-height: 1.5; letter-spacing: .04em; color: var(--c-text-strong); }
-.mission-way__text { margin-top: 16px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: .02em; color: var(--c-text); }
+.mission-way__text { margin-top: 16px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .mission-way__photo { width: 100%; aspect-ratio: 335 / 210; object-fit: cover; border-radius: 8px; }
 .mission-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
 .mission-card { overflow: hidden; border-radius: 8px; background: var(--c-cream); }
@@ -897,7 +899,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .aid-history__item:nth-child(3) { border-top: 0; }
   .timeline__period { width: 150px; }
   .timeline__row:first-child { padding-top: 36px; }
-.timeline__year { width: 80px; padding-left: 8px; }
+  .timeline__year { width: 80px; padding-left: 8px; }
 
   .related-nav { padding-top: 88px; }
   .related-nav__grid { grid-template-columns: minmax(0, 1fr); gap: 8px; }
@@ -1024,7 +1026,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .history-body { padding-top: 44px; padding-bottom: 8px; }
 
   .lent-about .sub-head + .sub-text { margin-top: 16px; }
-  .lent-about .sub-text { padding-right: 10px; }
   .lent-wide img { height: auto; aspect-ratio: 375 / 104; border-radius: 0; }
   .campaign-box__img { position: static; margin: 16px auto 20px; transform: none; }
   .campaign-box__img--booklet { width: min(258px, 80%); }
@@ -1090,7 +1091,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .policy h2 { margin-top: 20px; font-size: 21px; letter-spacing: .04em; }
   .policy h2:first-child { margin-top: 0; }
   .policy h2 + * { margin-top: 12px; }
-  .policy h3 { font-size: 17px; }
+  .policy h3 { font-size: 16.5px; letter-spacing: 0; }
   .policy li::before { top: 11px; }
 
   .page-body { padding: 40px 0 80px; }
@@ -1132,7 +1133,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .flow--text .flow__body { padding: 18px 20px 20px; }
   .flow--text .flow__title { margin-top: 8px; }
   .ways { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 0; background: none; }
-  .ways__card { position: relative; padding: 14px 14px 16px; border: 1.5px solid var(--c-line-gray); border-radius: 8px; }
+  .ways__card { position: relative; padding: 14px 12px 16px 14px; border: 1.5px solid var(--c-line-gray); border-radius: 8px; }
   .ways__head { display: block; }
   .ways__num { margin-top: 0; font-size: 16px; line-height: 1.6; }
   .ways__icon { display: none; }
@@ -1149,12 +1150,12 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .funds__box { padding: 20px; }
   .funds__title { padding-bottom: 14px; }
   .funds__table, .funds__table tbody { display: block; }
-  .funds__table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--c-line); }
+  .funds__table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--c-line); }
   .funds__table th, .funds__table td { height: auto; padding: 0 !important; border: 0; }
   .funds__name { width: auto; font-size: 15px; }
-  .funds__desc { grid-column: 1; grid-row: 2; margin-top: 4px; font-size: 13px; }
+  .funds__desc { grid-column: 1; grid-row: 2; margin-top: 16px; font-size: 14px; line-height: 25px; }
   .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 20px; }
-  .bank__box { padding: 24px 20px; }
+  .bank__box { padding: 24px 16px; }
   .bank__grid, .bank__grid--postal { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .bank .tel-card { flex-direction: row; align-items: center; padding: 12px 16px; min-height: 64px; border: 0; }
   .bank .tel-card__label { flex: none; width: 88px; font-size: 15px; line-height: 1.6; }
@@ -1167,6 +1168,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .dot-list { font-size: 15px; line-height: 1.9; }
   .dot-list li { padding-left: 18px; }
   .bequest__pdf { order: -1; display: block; }
+  .bequest__pdf .bequest__pdf-title { font-size: 17px; letter-spacing: 0; }
   .bequest__thumb { margin: 20px auto 0; }
   .bequest__btn { justify-content: center; }
   .donate-ask__btns { flex-direction: column; gap: 12px; }
@@ -1211,7 +1213,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-hero { padding-bottom: calc(36px + var(--curve)); background-image: url(../img/sub/common/hero-globe-sp.png); background-size: 100% auto; background-position: left top; }
   .sub-hero--flat { padding-bottom: 62px; }
   .sub-hero__label { margin-top: 54px; }
-  .sub-hero__title { margin-top: 14px; font-size: 32px; line-height: 48px; letter-spacing: .05em; }
+  .sub-hero__title { margin-top: 14px; font-size: 32px; line-height: 48px; letter-spacing: .03em; }
   .sub-hero__lead { margin-top: 13px; font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; }
 
   /* 見出し・本文 */
@@ -1224,6 +1226,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .section--green .sub-head__title, .section--green .manual__title { margin-top: 28px; }
   .sub-head--lg .sub-head__title { font-size: 32px; line-height: 1.55; } /* 寄付ページの一部見出し(デザイン 32px) */
   .section--green .sub-head__lead { margin-top: 16px; line-height: 27px; }
+  .sub-head--lead-sm .sub-head__lead { font-size: 15px; line-height: 27px; }
   .sub-head + * { margin-top: 32px; }
   .sub-text { font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .media-row .sub-text { font-size: 16px; line-height: 29px; }
@@ -1287,10 +1290,14 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   /* FAQ */
   .faq-section { padding: 70px 0 64px; }
-  .faq__q { gap: 16px; padding: 18px 16px; font-size: 15px; line-height: 30px; }
+  .faq__q { gap: 16px; padding: 18px 16px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .faq__mark { width: 40px; height: 40px; font-size: 20px; }
+  .faq__q-text { max-width: 200px; } /* デザインの文字枠(15px で 13 字 / 16px で 12 字) */
   .faq__a { gap: 16px; margin: 0 16px; padding: 22px 0 18px; }
   .faq__a-text { font-size: 15px; line-height: 30px; }
+  /* 寄付ページの FAQ は 16px(デザイン SP 寄付する / カード / マンスリー) */
+  .faq-section--lg .faq__q { font-size: 16px; line-height: 32px; }
+  .faq-section--lg .faq__a-text { font-size: 16px; line-height: 32px; }
 
   /* 関連ページナビ(about):先頭は全幅+ロゴ、残りは 2 列 */
   .related-nav__title { font-size: 18px; }
@@ -1434,7 +1441,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .post-nav__link { min-height: 124px; padding: 24px 16px; text-align: left; border-color: var(--c-line-gray); border-radius: 8px; }
   .post-nav__link--next { padding-left: 24px; }
   .post-nav__label { font-size: 12px; }
-  .post-nav__title { margin-top: 8px; font-size: 15px; line-height: 27px; letter-spacing: 0; }
+  .post-nav__title { margin-top: 8px; font-size: 14px; line-height: 27px; letter-spacing: 0; }
   .article__back { margin-top: 40px; }
   .article__back .btn-outline { width: 184px; max-width: none; min-height: 50px; font-size: 15px; }
 

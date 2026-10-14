@@ -6,7 +6,9 @@ import Partners from "../components/Partners.astro";
 const lead = "皆様の個人情報の取り扱いについて定めています。";
 ---
 <Layout title="プライバシーポリシー" description={lead}>
-	<PageHeader title="プライバシーポリシー" en="PRIVACY POLICY" ja="個人情報" lead={lead} />
+	<PageHeader title="プライバシーポリシー" en="PRIVACY POLICY" ja="個人情報" lead={lead}>
+		<Fragment slot="title">プライバシー<br class="u-sp-only" />ポリシー</Fragment>
+	</PageHeader>
 
 	<div class="policy-body">
 		<div class="l-container policy">

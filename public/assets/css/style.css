@@ -449,7 +449,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 }
 .donation__text { padding-top: 36px; }
 .donation__heading { font-size: clamp(21px, 1.857vw, 26px); font-weight: 600; line-height: 1.4; letter-spacing: .03em; color: var(--c-text-strong); }
-.donation__lead { margin-top: 32px; font-size: 16px; font-weight: 700; line-height: 29px; letter-spacing: .02em; color: var(--c-red); }
+.donation__lead { margin-top: 32px; margin-right: -4px; font-size: 16px; font-weight: 700; line-height: 29px; letter-spacing: 0; color: var(--c-red); } /* デザインの文字枠(22字=352px)に合わせる */
 .donation__desc { margin-top: 24px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; }
 .donation__illust img { width: 100%; max-width: 226px; margin-inline: auto; }
 .donation__box {
@@ -595,12 +595,13 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
     display: flex; align-items: center; justify-content: center; gap: 12px;
     min-height: calc(48px + env(safe-area-inset-bottom, 0px)); padding: 0 16px env(safe-area-inset-bottom, 0px);
     background: var(--c-red); color: var(--c-white);
-    font-size: 16px; font-weight: 700; line-height: 1; letter-spacing: .05em;
+    font-size: 14px; font-weight: 700; line-height: 1; letter-spacing: 0;
   }
   .fixed-donate.is-shown { transform: none; visibility: visible; transition: transform .35s ease, visibility 0s, background-color var(--ease); }
   html:not(.js) .fixed-donate { transform: none; visibility: visible; }
   .fixed-donate:hover { background: var(--c-red-dark); }
   .fixed-donate svg { flex: none; }
+  .fixed-donate__heart { width: 14px; height: 14px; margin-right: 6px; }
   .fixed-donate__chevron { margin-left: 24px; }
   .fixed-donate:focus-visible { outline-color: var(--c-white); outline-offset: -4px; }
   body.is-menu-open .fixed-donate { display: none; }
@@ -777,7 +778,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .donation__body { display: flex; flex-direction: column; align-items: stretch; gap: 0; margin-top: 32px; padding: 0; }
   .donation__text { display: block; padding: 0; }
   .donation__heading { font-size: 20px; line-height: 30px; letter-spacing: .02em; }
-  .donation__lead { margin-top: 26px; font-size: 15px; line-height: 27px; }
+  .donation__lead { margin-top: 26px; margin-right: 0; font-size: 15px; line-height: 27px; }
   .donation__desc { margin-top: 24px; }
   .donation__illust { display: none; }
   .donation__box { width: 100%; height: auto; min-height: 0; margin: 24px 0 0; padding: 32px 20px; }

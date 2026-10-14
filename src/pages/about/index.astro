@@ -24,7 +24,7 @@ const cards = [
 	{ title: "成り立ちと歴史", text: "カリタスジャパンがどのように生まれ、どのような歩みを重ねてきたのかをご紹介します。", img: "about-card-history.jpg", w: 578, h: 474, href: "/about/history/" },
 	{ title: "四旬節<br>「愛の献金」", text: "四旬節の期間に全国の教会で行われる献金活動と、その使いみちについて。", img: "about-card-lent.jpg", sp: "about-card-lent-sp.jpg", w: 578, h: 471, href: "/about/lent/" },
 	{ title: "援助活動", text: "緊急災害への対応、復興支援、貧困の撲滅など、国内外で行う支援活動について。", img: "about-card-aid.jpg", sp: "about-card-aid-sp.jpg", w: 578, h: 472, href: "/about/aid/" },
-	{ title: "啓発活動", text: "キャンペーンの国内展開やニュースレターの発行を通じた、課題の共有と理解の促進。", img: "about-card-social.jpg", sp: "about-card-social-sp.jpg", w: 484, h: 396, href: "/about/social/" },
+	{ title: "啓発活動", text: "キャンペーンの国内展開や<br class=\"u-pc-only\" />ニュースレターの発行を通じた、課題の共有と理解の促進。", img: "about-card-social.jpg", sp: "about-card-social-sp.jpg", w: 484, h: 396, href: "/about/social/" },
 ];
 
 const profile: [string, string][] = [
@@ -71,7 +71,7 @@ const faq = [
 
 	<!-- ビジョンと使命 -->
 	<GreenSection labelledby="philosophy-title">
-		<SectionHead en="PHILOSOPHY" title="ビジョンと使命" id="philosophy-title" lead={sharedLead} />
+		<SectionHead en="PHILOSOPHY" title="ビジョンと使命" id="philosophy-title" lead={sharedLead} class="sub-head--lead-sm" />
 		<div class="box-grid">
 			<div class="white-box">
 				<h3 class="section-label"><span lang="en">VISION</span><span class="section-label__slash" aria-hidden="true"></span><span>ビジョン</span></h3>
@@ -118,7 +118,7 @@ const faq = [
 
 	<!-- 歩みと活動 -->
 	<GreenSection labelledby="activities-title">
-		<SectionHead en="ACTIVITIES" title="歩みと活動" id="activities-title" lead="カリタスジャパンの歩みと、それぞれの活動についてご紹介します。" />
+		<SectionHead en="ACTIVITIES" title="歩みと活動" id="activities-title" class="sub-head--lead-sm" lead="カリタスジャパンの歩みと、それぞれの活動についてご紹介します。" />
 		<ul class="link-cards">
 			{cards.map((c, i) => (
 				<li>
@@ -126,7 +126,7 @@ const faq = [
 						<div class="way-card__panel">
 							<p class="way-card__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
 							<h3 class:list={["way-card__title", c.title.includes("<br>") && "way-card__title--2line"]}><span set:html={c.title} /><span class="way-card__arrow" aria-hidden="true"><svg width="5" height="8"><use href="#i-chevron" /></svg></span></h3>
-							<p class="way-card__text">{c.text}</p>
+							<p class="way-card__text" set:html={c.text} />
 						</div>
 						<div class="way-card__photo"><picture>{c.sp && <source media="(max-width: 767.98px)" srcset={`/assets/img/sub/about/${c.sp}`} width="490" height="330" />}<img src={`/assets/img/sub/about/${c.img}`} alt="" width={c.w} height={c.h} loading="lazy" decoding="async" /></picture></div>
 					</a>
