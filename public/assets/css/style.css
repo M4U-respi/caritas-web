@@ -757,7 +757,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .tag { font-size: 12px; }
 
   /* SOCIAL */
-  .social { padding: 67px 0 66px; background-size: 300px auto; background-position: calc(50% + 6px) 44px; }
+  .social { padding: 67px 0 66px; background-size: 356px auto; background-position: center 33px; } /* デザイン SP:紋章の見た目幅 約 338px(左右 20px 内) */
   .social__text { margin-top: 8px; font-size: 15px; line-height: 27px; }
   .social__btns { display: grid; gap: 12px; max-width: none; margin-top: 26px; }
   .social__btn, .social__btn--wide { width: 100%; min-height: 47px; }
