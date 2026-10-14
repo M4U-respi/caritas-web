@@ -273,7 +273,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
    ========================================================================== */
 .mission {
   position: relative; overflow: hidden;
-  background: var(--c-cream) url(../img/bg-mission-globe.png) center bottom / 100% auto no-repeat;
+  background: var(--c-cream) url(../img/bg-mission-globe.png?v=3) center bottom / 100% auto no-repeat;
 }
 .mission__inner { position: relative; min-height: 802px; padding: 100px 0 calc(120px + var(--curve)); }
 .mission__body { position: relative; z-index: 1; width: 55.1%; }
