@@ -138,6 +138,13 @@ picture > source { display: none; }
   /* デザイン PC:緑セクションはリードが見出しから少し離れ、本文までが詰まる */
   .section--green .sub-head__lead { margin-top: 18px; line-height: 29px; }
   .section--green .sub-head + * { margin-top: 38px; }
+  /* 地図背景:デザインはセクションごとに縦の伸縮・位置が異なるため個別に合わせる(横は 100%) */
+  .green-bg--philosophy { background-size: 100% 620px; background-position: center 0; }
+  .green-bg--activities { background-size: 100% 920px; background-position: center -21px; }
+  .green-bg--campaign { background-size: 100% 668px; background-position: center -3px; }
+  .green-bg--aid { background-size: 100% 792px; background-position: center -12px; }
+  .social-activities { background-size: 100% 1004px; background-position: center -28px; }
+  .section--green.manual { background-size: 100% 396px; background-position: center 16px; }
 }
 .section--green + .sub-section { padding-top: 85px; }
 .section--green + .sub-section--roomy { padding-top: 109px; }
