@@ -24,10 +24,10 @@ const records: { title: string; desc: string; items: [string, number, string, st
 		desc: "2013年から2019年にかけて、韓国のカトリック教会と協働で取り組みました。",
 		items: [
 			["2017", 5, "シンポジウム「自死遺族支援 ── 悲しみの中で希望を見つける」", "明洞大聖堂コストセンター（ソウル）"],
-			["2016", 4, "秋田県メンタルヘルスサポーター大会参加／自死問題に関わる宗教者のつどい", "秋田大学・秋田教会"],
-			["2015", 3, "シンポジウム「韓日両国の自死意識調査ならびに戦略の模索」", "弘益大学（ソウル）"],
+			["2016", 4, "秋田県メンタルヘルスサポーター大会参加／自死問<br class=\"u-pc-only\" />題に関わる宗教者のつどい", "秋田大学・秋田教会"],
+			["2015", 3, "シンポジウム「韓日両国の自死意識調査ならびに戦<br class=\"u-pc-only\" />略の模索」", "弘益大学（ソウル）"],
 			["2014", 2, "シンポジウム「宗教者と自死問題」", "上智大学（東京）"],
-			["2013", 1, "シンポジウム「日韓両国カトリック教会における自死問題」", "韓国カトリック大学（ソウル）"],
+			["2013", 1, "シンポジウム「日韓両国カトリック教会における自<br class=\"u-pc-only\" />死問題」", "韓国カトリック大学（ソウル）"],
 		],
 	},
 	{
@@ -96,7 +96,7 @@ const records: { title: string; desc: string; items: [string, number, string, st
 		</div>
 	</GreenSection>
 
-	<PhotoStrip photos={strip} gap="green" />
+	<PhotoStrip photos={strip} gap="white" />
 
 	<!-- 提携活動 -->
 	<section class="sub-section social-records" aria-labelledby="records-title">
@@ -114,7 +114,7 @@ const records: { title: string; desc: string; items: [string, number, string, st
 						{g.items.map(([year, no, title, place]) => (
 							<li class="records__item">
 								<p class="records__meta"><span class="records__year"><time datetime={year}>{year}</time></span><span class="records__no">第{no}回</span></p>
-								<p class="records__title">{title}</p>
+								<p class="records__title" set:html={title} />
 								<p class="records__place">{place}</p>
 							</li>
 						))}

@@ -126,7 +126,7 @@ picture > source { display: none; }
   --green-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
   margin-top: calc(var(--curve) * -1); padding: calc(var(--curve) + 86px) 0 104px;
-  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% auto no-repeat;
+  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* デザイン:地図をセクションの高さいっぱいに伸縮 */
   color: var(--c-white);
   -webkit-mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
           mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
@@ -180,7 +180,6 @@ picture > source { display: none; }
 /* ---------- 写真帯+アーチ(下辺カーブ) ---------- */
 .photo-strip--arch-bottom { background: none; }
 .photo-strip--arch-bottom .photo-strip__list { background: var(--c-cream); }
-.photo-strip--gap-green .photo-strip__list { background: var(--c-green); }
 .photo-strip--arch-bottom .photo-strip__item { height: clamp(220px, 27.8vw, 400px); border-radius: 0; }
 .photo-strip--arch-bottom .photo-strip__item img,
 .photo-strip--arch-bottom .photo-strip__item img { height: 100%; margin: 0; object-position: center top; }
@@ -222,8 +221,8 @@ picture > source { display: none; }
   background: var(--chev-dark) center / contain no-repeat;
 }
 .flow__img { width: 100%; aspect-ratio: 243 / 138; object-fit: cover; border-radius: 7px 7px 0 0; }
-.flow__body { padding: 18px 16px 20px; }
-.flow__num { font-size: 20px; font-weight: 500; line-height: 1; color: var(--c-red); }
+.flow__body { padding: 18px 16px 14px; }
+.flow__num { font-size: 20px; font-weight: 700; line-height: 1; color: var(--c-red); }
 .flow__title { margin-top: 10px; font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-text-strong); }
 .flow__text { margin-top: 6px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 /* 文字だけのカード(寄付ページ) */
@@ -420,7 +419,7 @@ a.pagination__arrow:hover { opacity: .7; }
 .timeline { width: min(1000px, 100%); margin-inline: auto; }
 .timeline__era + .timeline__era { margin-top: 96px; }
 .timeline__head { display: flex; flex-wrap: wrap; align-items: baseline; padding-bottom: 28px; border-bottom: 2px solid var(--c-text-strong); font-size: 24px; font-weight: 700; line-height: 1.5; color: var(--c-text-strong); }
-.timeline__period { flex: none; width: 172px; letter-spacing: .05em; color: var(--c-red); }
+.timeline__period { flex: none; width: 172px; font-size: 20px; letter-spacing: .05em; color: var(--c-red); }
 .timeline__name { letter-spacing: .06em; }
 .timeline__row { display: flex; padding: 16px 0 17px; border-bottom: 1px solid var(--c-line); }
 .timeline__row:first-child { padding-top: 36px; }
@@ -464,14 +463,15 @@ a.pagination__arrow:hover { opacity: .7; }
 .records__group + .records__group { margin-top: 64px; }
 .records__head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
 .records__desc { font-size: 14px; font-weight: 400; line-height: 1.8; color: var(--c-text); }
-.records__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; margin-top: 28px; }
-.records__item { display: flex; flex-direction: column; min-height: 84px; padding: 12px 16px; border-bottom: 1px solid var(--c-line); justify-content: flex-start; padding-block: 16px; }
+/* デザイン:2 列。各行は左に年・回、右に題目と会場 */
+.records__list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; margin-top: 22px; }
+.records__item { display: grid; grid-template-columns: 108px minmax(0, 1fr); grid-template-rows: auto 1fr; align-content: start; padding: 17px 20px 13px 16px; border-bottom: 1px solid var(--c-line); }
 .records__item:nth-child(-n + 2) { border-top: 1px solid var(--c-line); }
-.records__year { font-size: 16px; font-weight: 700; line-height: 1.5; color: var(--c-red); }
-.records__no { font-size: 12px; font-weight: 400; line-height: 1.8; color: #666; }
-.records__meta { display: flex; align-items: baseline; gap: 12px; }
-.records__title { margin-top: 4px; font-size: 15px; font-weight: 500; line-height: 1.7; color: var(--c-text-strong); }
-.records__place { font-size: 13px; font-weight: 400; line-height: 1.8; color: #666; }
+.records__meta { display: flex; flex-direction: column; align-items: flex-start; grid-row: 1 / span 2; }
+.records__year { font-size: 18px; font-weight: 700; line-height: 32px; color: var(--c-red); }
+.records__no { font-size: 13px; font-weight: 400; line-height: 20px; color: #666; }
+.records__title { font-size: 15px; font-weight: 500; line-height: 32px; letter-spacing: .04em; color: var(--c-text-strong); }
+.records__place { font-size: 14px; font-weight: 400; line-height: 28px; color: #666; }
 
 /* ---------- /contact/ ---------- */
 .tel-box { padding: 40px; border-radius: 8px; background: var(--c-cream); }
@@ -1022,7 +1022,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .timeline__era + .timeline__era { margin-top: 64px; }
   .timeline__head { display: block; padding-bottom: 14px; font-size: 20px; }
-  .timeline__period { display: block; width: auto; font-size: 20px; }
+  .timeline__period { display: block; width: auto; font-size: 18px; }
   .timeline__row { display: block; padding: 14px 0; }
   .timeline__row:first-child { padding-top: 36px; }
   .timeline__text { margin-top: 4px; padding: 0; font-size: 15px; line-height: 1.9; }
@@ -1031,7 +1031,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .lent-about .sub-head + .sub-text { margin-top: 16px; }
   .lent-wide img { height: auto; aspect-ratio: 375 / 104; border-radius: 0; }
   .campaign-box__img { position: static; margin: 16px auto 20px; transform: none; }
-  .campaign-box__img--booklet { width: min(258px, 80%); }
+  .campaign-box__img--booklet { width: min(300px, 100%); } /* デザイン SP:冊子の見た目幅 約 264px */
   .campaign-box__img--poster { width: 140px; }
   .lent-wide + .sub-section { padding-top: 64px; }
 
@@ -1042,6 +1042,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .records__group + .records__group { margin-top: 48px; }
   .records__list { grid-template-columns: minmax(0, 1fr); margin-top: 20px; }
+  .records__title br { display: none; } /* 2 列用の改行 */
   .records__item:nth-child(2) { border-top: 0; }
   .pub-list__item { align-items: flex-start; padding: 8px 0; }
 
@@ -1242,7 +1243,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   /* デザインどおり:下辺アーチは PC と同比率(1440 で 42px)の浅いカーブ、写真は中央でトリミング */
   .photo-strip--arch-bottom .photo-strip__curve { height: calc(100vw * 42 / 1440); }
   .photo-strip--arch-bottom .photo-strip__item img { object-position: center center; }
-  .photo-strip--gap-green .photo-strip__list { background: var(--c-white); }
 
   /* /about/ イントロ */
   .about-intro { padding-top: 60px; }
@@ -1280,6 +1280,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .way-card--white .way-card__title { margin-top: 6px; gap: 4px; justify-content: space-between; font-size: 16px; line-height: 30px; letter-spacing: 0; white-space: nowrap; }
   .way-card--white .way-card__title br { display: inline; }
   .way-card--white .way-card__arrow { width: 22px; height: 22px; }
+  .way-card--white .way-card__arrow svg { width: 5.5px; height: 8px; margin-left: 1px; } /* デザイン SP のヌキ矢印(約 3.5×7px) */
   .way-card--white .way-card__text { grid-column: auto; margin-top: 6px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
 
   /* 表:項目名と内容を横並び */
@@ -1357,9 +1358,9 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .records__desc { margin-top: 20px; font-size: 14px; line-height: 28px; }
   .social-records { padding-top: 70px; }
   .records__item:first-child { border-top: 1px solid var(--c-line); }
-  .records__year { font-size: 16px; }
-  .records__meta { gap: 16px; }
-  .records__no { font-size: 12px; }
+  .records__year { font-size: 16px; line-height: 1.5; }
+  .records__meta { flex-direction: row; align-items: baseline; gap: 16px; }
+  .records__no { font-size: 12px; line-height: 1.8; }
   .records__item { display: block; min-height: 0; padding: 18px 0 16px; }
   .records__title { display: block; margin-top: 12px; font-size: 15px; font-weight: 400; line-height: 30px; letter-spacing: 0; color: var(--c-text-strong); }
   .records__place { display: block; margin-top: 2px; font-size: 14px; line-height: 25px; }
