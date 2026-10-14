@@ -126,7 +126,7 @@ picture > source { display: none; }
   --green-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
   margin-top: calc(var(--curve) * -1); padding: calc(var(--curve) + 86px) 0 104px;
-  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* デザイン:地図をセクションの高さいっぱいに伸縮 */
+  background: var(--c-green) url(../img/sub/common/bg-green-map.png) center top / 100% 100% no-repeat; /* デザイン:地図をセクションの高さいっぱいに伸縮 */
   color: var(--c-white);
   -webkit-mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
           mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
@@ -139,12 +139,12 @@ picture > source { display: none; }
   .section--green .sub-head__lead { margin-top: 18px; line-height: 29px; }
   .section--green .sub-head + * { margin-top: 38px; }
   /* 地図背景:デザインはセクションごとに縦の伸縮・位置が異なるため個別に合わせる(横は 100%) */
-  .green-bg--philosophy { background-size: 100% 620px; background-position: center 0; }
-  .green-bg--activities { background-size: 100% 920px; background-position: center -21px; }
-  .green-bg--campaign { background-size: 100% 668px; background-position: center -3px; }
-  .green-bg--aid { background-size: 100% 792px; background-position: center -12px; }
-  .social-activities { background-size: 100% 1004px; background-position: center -28px; }
-  .section--green.manual { background-size: 100% 396px; background-position: center 16px; }
+  .green-bg--philosophy { background-size: 100% 603px; background-position: center 11px; }
+  .green-bg--activities { background-size: 100% 897px; background-position: center -6px; }
+  .green-bg--campaign { background-size: 100% 653px; background-position: center 7px; }
+  .green-bg--aid { background-size: 100% 774px; background-position: center 0; }
+  .social-activities { background-size: 100% 978px; background-position: center -11px; }
+  .section--green.manual { background-size: 100% 390px; background-position: center 20px; }
 }
 .section--green + .sub-section { padding-top: 85px; }
 .section--green + .sub-section--roomy { padding-top: 109px; }
