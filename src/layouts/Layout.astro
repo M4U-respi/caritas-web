@@ -48,8 +48,8 @@ const pageCtx = createPublicPageContext({
 		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
 		{preloadImage && <link rel="preload" as="image" href={preloadImage} media={preloadImageSp ? "(min-width: 768px)" : undefined} />}
 		{preloadImageSp && <link rel="preload" as="image" href={preloadImageSp} media="(max-width: 767.98px)" />}
-		<link rel="stylesheet" href="/assets/css/style.css" />
-		<link rel="stylesheet" href="/assets/css/pages.css" />
+		<link rel="stylesheet" href={`/assets/css/style.css?v=${__ASSET_VER__}`} />
+		<link rel="stylesheet" href={`/assets/css/pages.css?v=${__ASSET_VER__}`} />
 		<script is:inline>
 			/* JS 有効時のみ .js を付与。main.js が読めない場合は外してコンテンツを必ず表示する */
 			(function (d) { d.classList.add("js"); setTimeout(function () { if (!window.__caritasReady) d.classList.remove("js"); }, 4000); })(document.documentElement);
@@ -84,7 +84,7 @@ const pageCtx = createPublicPageContext({
 			<svg class="fixed-donate__chevron" width="7" height="12" aria-hidden="true"><use href="#i-chevron" /></svg>
 		</a>
 
-		<script is:inline src="/assets/js/main.js" defer onerror="document.documentElement.classList.remove('js')"></script>
+		<script is:inline src={`/assets/js/main.js?v=${__ASSET_VER__}`} defer onerror="document.documentElement.classList.remove('js')"></script>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>
 </html>

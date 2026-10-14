@@ -20,4 +20,6 @@ export default defineConfig({
 		}),
 	],
 	devToolbar: { enabled: false },
+	// CSS・JS のキャッシュ対策:ビルドごとに変わるバージョン(Layout で ?v= に付与)
+	vite: { define: { __ASSET_VER__: JSON.stringify(Date.now().toString(36)) } },
 });
