@@ -126,7 +126,7 @@ picture > source { display: none; }
   --green-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
   margin-top: calc(var(--curve) * -1); padding: calc(var(--curve) + 86px) 0 104px;
-  background: var(--c-green) url(../img/sub/common/bg-green-map.png) center top / 100% 100% no-repeat; /* デザイン:地図をセクションの高さいっぱいに伸縮 */
+  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* デザイン:地図をセクションの高さいっぱいに伸縮 */
   color: var(--c-white);
   -webkit-mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
           mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
