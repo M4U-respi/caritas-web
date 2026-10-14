@@ -293,6 +293,8 @@ picture > source { display: none; }
 /* 関連団体の上余白(関連ナビ / 本文の直後) */
 .partners--after-nav { padding-top: 120px; }
 .partners--after-text { padding-top: 80px; }
+/* 寄付ブロックの直後(デザイン「07 mission」:寄付カード下端〜関連団体 約133px、関連団体〜フッター 約175px) */
+@media (min-width: 1024px) { .partners--after-donation { padding-top: 117px; padding-bottom: calc(94px + var(--curve)); } }
 
 /* 寄付ブロックの上余白(直前が下膨らみカーブ) */
 .donation--after-curve { padding-top: calc(120px + var(--curve)); }
@@ -818,26 +820,27 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .apply-method__title { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-teal); }
 .apply-method__desc { margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 
-/* ---------- /mission/(デザインは SP のみ。PC は SP の構成を 2 列に広げたもの) ---------- */
-.mission-way { --mc: #6FBA2C; position: relative; padding: 100px 0 104px; background: var(--c-white); }
+/* ---------- /mission/(デザイン「07 mission」/ SP「SP07 mission」) ---------- */
+.mission-way { --mc: #6FBA2C; position: relative; padding: 104px 0; background: var(--c-white); }
 .mission-way--join { --mc: #D5B329; }
 .mission-way--share { --mc: #6C9BD2; }
-.mission-way--pray { --mc: #EC6D65; }
+.mission-way--pray { --mc: #EC6D65; padding-bottom: 96px; }
 .mission-way--cream { background: var(--c-cream); }
 .mission-way--cream:has(> .sub-section__curve-down) { z-index: 2; }
-.mission-way__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.mission-way__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 60px; align-items: center; }
 .mission-way__label { display: flex; align-items: center; gap: 24px; color: var(--mc); }
-.mission-way__num { font-size: 32px; font-weight: 400; line-height: 1; }
+.mission-way__num { font-size: 28px; font-weight: 400; line-height: 1; }
 .mission-way__en { font-family: var(--ff-sans); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: .2em; }
-.mission-way__title { margin-top: 24px; font-size: 32px; font-weight: 700; line-height: 1.5; letter-spacing: .04em; color: var(--c-text-strong); }
-.mission-way__text { margin-top: 16px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
-.mission-way__photo { width: 100%; aspect-ratio: 335 / 210; object-fit: cover; border-radius: 8px; }
-.mission-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 48px; }
+.mission-way__title { margin-top: 24px; font-size: 36px; font-weight: 700; line-height: 1.5; letter-spacing: .04em; color: var(--c-text-strong); }
+.mission-way__text { margin-top: 20px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
+.mission-way__photo { width: 100%; aspect-ratio: 480 / 300; object-fit: cover; border-radius: 8px; }
+.mission-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 32px; }
 .mission-card { overflow: hidden; border-radius: 8px; background: var(--c-cream); }
 .mission-way--cream .mission-card { background: var(--c-white); }
-.mission-card__label { display: flex; align-items: center; gap: 10px; min-height: 45px; padding: 8px 16px; font-size: 14px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; color: var(--c-text-strong); }
+.mission-card__label { display: flex; align-items: center; gap: 8px; min-height: 63px; padding: 8px 20px; font-size: 15px; font-weight: 700; line-height: 1.5; letter-spacing: 0; color: var(--c-text-strong); }
 .mission-card__label::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--mc); }
-.mission-card__img { display: block; width: 100%; aspect-ratio: 335 / 194; object-fit: cover; border-top: 4px solid var(--mc); border-radius: 8px; }
+.mission-card__img { display: block; width: 100%; aspect-ratio: 344 / 200; object-fit: cover; border-top: 4px solid var(--mc); border-radius: 8px; }
+.mission-way--support .mission-card__img { border-top: 0; } /* デザイン:「支える」の写真だけ上の色線なし */
 
 /* ==========================================================================
    下層: 1024〜1339px(PC 狭め)
@@ -1373,7 +1376,10 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .mission-way__num { font-size: 24px; }
   .mission-way__title { margin-top: 22px; font-size: 26px; letter-spacing: .04em; }
   .mission-way__text { margin-top: 8px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .mission-way__photo { aspect-ratio: 335 / 210; }
   .mission-cards { grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 24px; }
+  .mission-card__label { gap: 10px; min-height: 45px; padding: 8px 16px; font-size: 14px; }
+  .mission-card__img { aspect-ratio: 335 / 194; }
 }
 
 /* ==========================================================================
