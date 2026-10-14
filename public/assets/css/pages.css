@@ -134,6 +134,11 @@ picture > source { display: none; }
 .section--green .section-label { color: var(--c-white); }
 .section--green .heading-lg { color: var(--c-yellow); }
 .section--green .sub-head__lead { color: var(--c-white); }
+@media (min-width: 1024px) {
+  /* デザイン PC:緑セクションはリードが見出しから少し離れ、本文までが詰まる */
+  .section--green .sub-head__lead { margin-top: 18px; line-height: 29px; }
+  .section--green .sub-head + * { margin-top: 38px; }
+}
 .section--green + .sub-section { padding-top: 85px; }
 .section--green + .sub-section--roomy { padding-top: 109px; }
 .section--green .white-box .section-label { color: var(--c-teal); }
@@ -189,11 +194,11 @@ picture > source { display: none; }
 .link-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px 8px; }
 .way-card--white { --way-c: var(--c-white); color: var(--c-text); }
 .way-card--white .way-card__panel { padding: 24px 16px 24px 24px; }
-.way-card--white .way-card__num { font-size: 20px; color: var(--c-red); }
-.way-card--white .way-card__title { margin-top: 10px; gap: 8px; font-size: 24px; line-height: 40px; letter-spacing: 0; color: var(--c-text-strong); }
+.way-card--white .way-card__num { font-size: 20px; font-weight: 700; color: var(--c-red); }
+.way-card--white .way-card__title { margin-top: 8px; gap: 8px; font-size: 24px; line-height: 40px; letter-spacing: 0; color: var(--c-text-strong); }
 .way-card--white .way-card__title--2line { justify-content: space-between; }
 .way-card--white .way-card__arrow { background: var(--c-red); color: var(--c-white); }
-.way-card--white .way-card__text { margin-top: 10px; letter-spacing: 0; color: var(--c-text); }
+.way-card--white .way-card__text { margin-top: 8px; letter-spacing: 0; color: var(--c-text); }
 
 /* ---------- 白ボックス(緑の上) ---------- */
 .box-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
