@@ -12,7 +12,7 @@ const lead = "あなたの想いが、だれかにつながる。";
 const img = (name: string) => `/assets/img/sub/mission/${name}.jpg`;
 
 const strip = [
-	{ src: img("mission-strip-01"), alt: "書類に記入する女性たち", width: 569, height: 800 },
+	{ src: img("mission-strip-01"), alt: "書類に記入する女性たち", width: 569, height: 800, pos: "50% 54%" },
 	{ src: img("mission-strip-02"), alt: "砂漠を歩く人", width: 800, height: 500, pos: "12% 50%" },
 	{ src: img("mission-strip-03"), alt: "支援物資の箱を受け取る子どもたち", width: 800, height: 533, pos: "13% 50%" },
 	{ src: img("mission-strip-04"), alt: "ボランティアセンターの前に並ぶボランティアの人たち", width: 484, height: 413 },
@@ -48,7 +48,7 @@ const ways: Way[] = [
 		photo: { src: img("share"), alt: "カリタスジャパンの機関誌", w: 800, h: 599 },
 		cards: [
 			{ label: "SNS", src: img("share-sns-sp"), alt: "カリタスジャパンの Facebook ページ", w: 1005, h: 569 },
-			{ label: "機関誌", src: img("share-magazine"), alt: "機関誌「We are Caritas」No.25", w: 562, h: 800, pos: "center top" },
+			{ label: "機関誌", src: img("share-magazine"), alt: "機関誌「We are Caritas」No.25", w: 1340, h: 760 },
 			{ label: "イベント開催", src: img("share-event"), alt: "付箋を並べたテーブルを囲む参加者", w: 688, h: 516 },
 		],
 	},
@@ -65,7 +65,9 @@ const ways: Way[] = [
 ];
 ---
 <Layout title="わたしたちの想い" description={`世界とつながる。${lead}`}>
-	<PageHeader title="世界とつながる" current="わたしたちの想い" en="MISSION" ja="わたしたちの想い" lead={lead} flat />
+	<PageHeader title="世界とつながる" current="わたしたちの想い" en="MISSION" ja="わたしたちの想い" lead={lead} flat>
+		<Fragment slot="title"><em class="u-red">世界</em>とつながる</Fragment>
+	</PageHeader>
 	<PhotoStrip photos={strip} gap="cream" />
 
 	{ways.map((w, i) => (
