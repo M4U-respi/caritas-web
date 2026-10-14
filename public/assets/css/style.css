@@ -691,11 +691,11 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   }
   /* スマホ用画像(デザイン SP / TOP の切り出し位置) */
   .fv__slide--01 img { object-position: 50% 50%; }
-  .fv__slide--02 img { object-position: 59% 0%; }
-  .fv__slide--03 img { object-position: 70% 50%; }
-  /* 写真の上でも読めるよう、文字の後ろにぼかした影(デザインの文字背面ぼかし) */
-  .fv__catch { left: 20px; top: auto; bottom: 200px; font-size: 50px; line-height: 1.35; letter-spacing: .05em; text-shadow: 0 0 18px rgba(0, 0, 0, .35), 0 2px 8px rgba(0, 0, 0, .25); }
-  .fv__lead { left: 20px; right: 16px; top: auto; bottom: 56px; font-size: 16px; line-height: 32px; letter-spacing: 0; text-shadow: 0 0 10px rgba(0, 0, 0, .55), 0 0 22px rgba(0, 0, 0, .35); }
+  .fv__slide--02 img { object-position: 48% 50%; }
+  .fv__slide--03 img { object-position: 49% 50%; }
+  .fv__catch { left: 20px; top: auto; bottom: 200px; font-size: 50px; line-height: 1.35; letter-spacing: .05em; }
+  .fv__catch .u-red { text-shadow: 0 0 12px rgba(255, 255, 255, .55), 0 0 4px rgba(255, 255, 255, .45); } /* 赤文字だけ薄い白グローで写真から浮かせる */
+  .fv__lead { left: 20px; right: 16px; top: auto; bottom: 56px; font-size: 16px; line-height: 32px; letter-spacing: 0; }
   .fv__pager { top: auto; right: 0; bottom: 20px; }
   .fv__pager-btn { width: 36px; height: 32px; font-size: 14px; }
 
