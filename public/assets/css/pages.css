@@ -117,10 +117,9 @@ picture > source { display: none; }
   font-size: clamp(32px, 3.34vw, 48px); font-weight: 700; line-height: 1.4; letter-spacing: .08em;
   color: var(--c-text-strong);
 }
-.sub-hero__lead { margin-top: 15px; max-width: 900px; font-size: 18px; font-weight: 700; line-height: 36px; letter-spacing: 0; color: var(--c-text); }
+.sub-hero__lead { margin-top: 15px; font-size: 18px; font-weight: 700; line-height: 36px; letter-spacing: 0; color: var(--c-text); }
 .sub-hero__curve { color: var(--c-white); }
 /* 改行位置を指定したリード(寄付ページ)は幅を制限しない */
-.sub-hero__lead:has(br) { max-width: none; }
 .sub-hero__title, .sub-head__title, .timeline__head, .policy h2 { word-break: auto-phrase; }
 
 /* ---------- セクション(白 / クリーム / 緑) ---------- */
