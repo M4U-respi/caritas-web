@@ -357,6 +357,7 @@ picture > source { display: none; }
 .entry-row__link { display: flex; align-items: center; gap: 32px; padding: 32px 0; color: var(--c-text-strong); }
 .entry-row__thumb { flex: none; width: 200px; aspect-ratio: 3 / 2; overflow: hidden; border-radius: 8px; background: var(--c-cream-light); }
 .entry-row__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.entry-row__thumb img[src$="noimage.jpg"] { mix-blend-mode: multiply; } /* 白地を背景色(#FBF8F1)に(デザインどおり) */
 .entry-row__body { flex: 1; min-width: 0; display: block; }
 .entry-row__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
 .entry-row__date { font-size: 12px; font-weight: 400; line-height: 1.5; color: var(--c-text); }
@@ -706,7 +707,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .prose__table th, .prose__table td { padding: 24px 0; border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: middle; }
 .prose__table th { width: 168px; padding-right: 36px; font-weight: 700; color: var(--c-text-strong); white-space: nowrap; }
 .prose__table thead th { width: auto; }
-.prose__table td { font-weight: 400; color: var(--c-text); }
+.prose__table td { font-weight: 500; color: var(--c-text); }
 .prose__table-wrap + h2 { margin-top: 64px; }
 
 /* ==========================================================================
@@ -1138,7 +1139,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .prose h3 { margin-top: 56px; font-size: 18px; }
   .prose blockquote { margin: 48px 0 40px; padding: 20px 18px; }
   .prose .prose__note { margin-top: 40px; }
-  .prose__gallery-grid { grid-template-columns: minmax(0, 1fr); }
+  .prose__gallery-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   .prose__table, .prose__table tbody, .prose__table tr, .prose__table th, .prose__table td { display: block; width: auto; }
   .prose__table thead { display: none; }
   .prose__table tr { padding: 16px 0; border-bottom: 1px solid var(--c-line); }
@@ -1423,7 +1424,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--news .entry-row__link { flex-direction: column; align-items: stretch; gap: 0; height: 100%; padding: 0 0 24px; }
   .cms-archive--news .entry-row { margin-bottom: 20px; }
   .cms-archive--news .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
-  .cms-archive--news .entry-row__thumb img[src$="noimage.jpg"] { mix-blend-mode: multiply; } /* 白地をクリームに(デザインどおり) */
   .cms-archive--news .entry-row__meta { margin-top: 16px; gap: 8px 10px; }
   .cms-archive--news .entry-row__date { font-size: 12px; }
   .cms-archive--news .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 15px; line-height: 30px; letter-spacing: 0; -webkit-line-clamp: unset; }
@@ -1484,7 +1484,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--report .entry-row { margin-bottom: 24px; }
   .cms-archive--report .entry-row__link { flex-direction: column; align-items: stretch; gap: 0; height: 100%; padding: 0 0 24px; }
   .cms-archive--report .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
-  .cms-archive--report .entry-row__thumb img[src$="noimage.jpg"] { mix-blend-mode: multiply; }
   .cms-archive--report .entry-row__body { flex: 1; }
   .cms-archive--report .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
   .cms-archive--report .entry-row__date { font-size: 12px; }
