@@ -12,7 +12,7 @@ interface Row { th: string; td: string }
 interface Props { rows: Row[]; /** スマホでも項目名と内容を横並び(マンスリー) */ inline?: boolean; /** 見出しを大きく(寄付するページ) */ large?: boolean }
 const { rows, inline = false, large = false } = Astro.props;
 ---
-<GreenSection labelledby="notice-title" class={inline ? "donate-notice donate-notice--inline" : "donate-notice"}>
+<GreenSection labelledby="notice-title" class:list={["donate-notice", inline && "donate-notice--inline", large && "donate-notice--large"]}>
 	<SectionHead en="NOTICE" title="ご確認いただきたいこと" id="notice-title" class={large ? "sub-head--lg" : undefined} />
 	<div class="white-box donate-notice__box">
 		<div class="notice-card">
