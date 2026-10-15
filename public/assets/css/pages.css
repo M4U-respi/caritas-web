@@ -1135,8 +1135,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .prose h3 { margin-top: 56px; font-size: 18px; }
   .prose blockquote { margin: 48px 0 40px; padding: 20px 18px; }
   .prose .prose__note { margin-top: 40px; }
-  .prose__gallery-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; overflow: visible; border-radius: 0; }
-  .prose__gallery-grid img { border-radius: 8px; } /* SP は画像ごとに角丸 */
+  .prose__gallery-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; } /* 角丸は外側の四隅のみ(枠で処理) */
   .prose__table, .prose__table tbody, .prose__table tr, .prose__table th, .prose__table td { display: block; width: auto; }
   .prose__table thead { display: none; }
   .prose__table tr { padding: 16px 0; border-bottom: 1px solid var(--c-line); }
