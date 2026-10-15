@@ -686,7 +686,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .prose ol { list-style: decimal; }
 .prose li + li { margin-top: 4px; }
 .prose blockquote {
-  margin: 80px 0 56px; padding: 28px 24px; border-left: 3px solid var(--c-red); border-radius: 4px;
+  margin: 80px 0 56px; padding: 28px 24px; border-radius: 4px;
   background: var(--c-cream); font-weight: 700; color: var(--c-text);
 }
 .prose blockquote + * { margin-top: 0; }
@@ -1439,7 +1439,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .prose h2 + * { margin-top: 20px; }
   /* SP デザインでは小見出し(h3)も h2 と同じ赤+下線 */
   .prose h3 { margin-top: 56px; padding-bottom: 12px; border-bottom: 2px solid var(--c-text-strong); font-size: 18px; letter-spacing: 0; color: var(--c-red); }
-  .prose blockquote { margin: 56px 0 40px; padding: 22px 24px; border-left: 0; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; }
+  .prose blockquote { margin: 56px 0 40px; padding: 22px 24px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; }
   .prose__table tr { padding: 14px 0 16px; }
   .prose__table th, .prose__table td { font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .prose__table td { margin-top: 4px; }
