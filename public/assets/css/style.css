@@ -557,10 +557,10 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .gnav { margin: 0; }
   .gnav__list { display: block; border-top: 1px solid var(--c-line); }
   .gnav__item { position: relative; border-bottom: 1px solid var(--c-line); }
-  .gnav__link { justify-content: space-between; min-height: 62px; padding: 0 16px 0 4px; font-size: 15px; font-weight: 700; letter-spacing: 0; color: var(--c-text-strong); }
+  .gnav__link { justify-content: space-between; min-height: 62px; padding: 0 16px 0 4px; font-size: 15px; letter-spacing: 0; color: var(--c-text-strong); }
   .gnav__label { padding: 0; }
   .gnav__label::after { display: none; }
-  .gnav__caret { width: 9px; height: 14px; color: var(--c-red); transform: rotate(90deg); transition: transform var(--ease); }
+  .gnav__caret { width: 9px; height: 14px; color: var(--c-red); transition: transform var(--ease); }
   .gnav__toggle { display: block; position: absolute; top: 0; left: 0; right: 0; height: 62px; cursor: pointer; }
   .gnav__toggle:focus-visible { outline-offset: -3px; }
   .gnav__item.is-open { border-bottom: 0; }
@@ -641,7 +641,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .social__inner { display: block; }
   .social__body { max-width: none; }
   .social__btns { max-width: none; }
-  .social__embed { width: 380px; max-width: 100%; margin: 48px auto 0; }
+  .social__embed { max-width: 100%; margin: 48px auto 0; }
   .social__embed-frame { height: 480px; }
 
   .photo-strip__item { height: 260px; }
@@ -659,7 +659,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 
   .footer__inner { padding: 64px 0 48px; }
   .footer__main { display: block; }
-  .footer__nav { margin-top: 48px; padding-top: 0; gap: 40px; justify-content: space-between; }
+  .footer__nav { margin-top: 48px; gap: 40px; justify-content: space-between; }
   .footer__col:nth-child(n) { width: auto; }
   .footer__bottom { margin-top: 48px; }
 }
@@ -679,7 +679,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 
   /* 緊急バナー */
   .alert-bar__link { min-height: 64px; padding: 10px 20px; }
-  .alert-bar__badge { width: 45px; height: 24px; border-width: 1.5px; border-radius: 4px; }
+  .alert-bar__badge { width: 45px; border-width: 1.5px; border-radius: 4px; }
   .alert-bar__text { flex: 1; margin-left: 11px; font-size: 12px; line-height: 22px; letter-spacing: .02em; }
   .alert-bar__chevron { margin-left: 12px; }
 
@@ -690,7 +690,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
       linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(0, 0, 0, .25) 100%);
   }
   /* スマホ用画像(デザイン SP / TOP の切り出し位置) */
-  .fv__slide--01 img { object-position: 50% 50%; }
   .fv__slide--02 img { object-position: 48% 50%; }
   .fv__slide--03 img { object-position: 49% 50%; }
   .fv__catch { left: 20px; top: auto; bottom: 200px; font-size: 50px; line-height: 1.35; letter-spacing: .05em; }
@@ -703,10 +702,9 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .mission { background-image: none; }
   .mission__inner { padding: 64px 0 calc(63px + var(--curve)); }
   .mission__text { margin-top: 32px; font-size: 15px; line-height: 33px; }
-  .mission__text p + p { margin-top: 16px; }
   .mission__btn { display: flex; width: 100%; max-width: 300px; min-height: 48px; margin: 40px auto 0; font-size: 15px; }
   .mission__media { width: 100%; height: auto; aspect-ratio: 335 / 344; margin: 44px 0 0; }
-  .mission__photo--main { right: 0; width: 90.45%; max-width: none; }
+  .mission__photo--main { width: 90.45%; max-width: none; }
   .mission__photo--sub { right: auto; width: 37.3%; max-width: none; }
 
   /* VALUE(2 列) */
@@ -727,7 +725,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .way__lead { margin-top: 12px; font-size: 15px; line-height: 27px; }
   .way__list { gap: 8px; margin-top: 32px; }
   .way-card { flex-direction: row; min-height: 212px; border-radius: 8px; }
-  .way-card__panel { display: flex; flex: 1; width: auto; min-width: 0; justify-content: flex-start; padding: 24px 19px 24px 20px; }
+  .way-card__panel { flex: 1; width: auto; min-width: 0; justify-content: flex-start; padding: 24px 19px 24px 20px; }
   .way-card__num { font-size: 18px; }
   .way-card__title { margin-top: 10px; gap: 10px; justify-content: flex-start; font-size: 20px; line-height: 30px; letter-spacing: .05em; }
   .way-card__arrow { width: 22px; height: 22px; }
@@ -741,7 +739,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .news__more { top: 38px; margin: 0; }
   .news__more .btn-outline { width: 158px; min-height: 46px; gap: 12px; padding: 4px 12px; font-size: 14px; }
   .news-urgent { margin-top: 34px; border-radius: 8px; }
-  .news-urgent__head { display: flex; min-height: 70px; padding: 10px 16px; }
+  .news-urgent__head { min-height: 70px; padding: 10px 16px; }
   .news-urgent__icon { display: none; }
   .news-urgent__badge { height: 32px; margin-left: 0; }
   .news-urgent__lead { margin: 0 0 0 10px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
@@ -750,11 +748,9 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .news-list__link { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; row-gap: 4px; padding: 12px 16px 14px; }
   .news-list--urgent .news-list__link { padding: 11px 16px 12px; }
   .news-list__meta { grid-column: 1; }
-  .news-list__title { grid-column: 1; margin-left: 0; font-size: 14px; line-height: 25px; letter-spacing: .02em; }
+  .news-list__title { grid-column: 1; margin-left: 0; line-height: 25px; letter-spacing: .02em; }
   .news-list--urgent .news-list__title { margin-left: 0; font-size: 15px; line-height: 27px; letter-spacing: .02em; }
-  .news-list--urgent .news-list__date { font-size: 14px; }
   .news-list__chevron, .news-list--urgent .news-list__chevron { grid-column: 2; grid-row: 1 / span 2; align-self: center; margin-left: 0; }
-  .tag { font-size: 12px; }
 
   /* SOCIAL */
   .social { padding: 67px 0 66px; background-size: 356px auto; background-position: center 33px; } /* デザイン SP:紋章の見た目幅 約 338px(左右 20px 内) */
@@ -779,12 +775,11 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .donation__text { display: block; padding: 0; }
   .donation__heading { font-size: 20px; line-height: 30px; letter-spacing: .02em; }
   .donation__lead { margin-top: 26px; margin-right: 0; font-size: 15px; line-height: 27px; }
-  .donation__desc { margin-top: 24px; }
   .donation__illust { display: none; }
   .donation__box { width: 100%; height: auto; min-height: 0; margin: 24px 0 0; padding: 32px 20px; }
   .donation__box-title { font-size: 20px; }
-  .donation__box-text { margin-top: 16px; letter-spacing: 0; }
-  .donation__btns { gap: 16px; max-width: none; margin-top: 24px; }
+  .donation__box-text { letter-spacing: 0; }
+  .donation__btns { gap: 16px; max-width: none; }
   .btn-pill { width: 100%; min-height: 48px; font-size: 15px; }
 
   /* PARTNERS */
@@ -800,13 +795,12 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .footer__nav { display: block; margin: 0; padding: 0; }
   .footer__col + .footer__col { margin-top: 24px; }
   .footer__heading { font-size: 15px; }
-  .footer__links { margin-top: 18px; }
-  .footer__links a { line-height: 33px; white-space: normal; }
+  .footer__links a { white-space: normal; }
   .footer__info { margin-top: 36px; }
   .footer__logo { margin-left: 0; }
   .footer__logo img { width: 220px; height: auto; }
   .footer__org { margin-top: 24px; }
-  .footer__contact { display: flex; justify-content: space-between; gap: 16px; margin-top: 14px; }
+  .footer__contact { justify-content: space-between; gap: 16px; margin-top: 14px; }
   .footer__tel { width: auto; }
   .footer__sns { gap: 8px; margin: 0 -4px 0 0; }
   .footer__sns img { width: 40px; height: 40px; }
