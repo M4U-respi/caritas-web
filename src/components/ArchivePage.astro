@@ -91,7 +91,7 @@ const related = collection === "news" ? "news" : collection === "publication" ? 
 				<ul class="pub-cards">
 					{items.map((item) => (
 						<li class="pub-card">
-							<a class="pub-card__link" href={item.href}>
+							<div class="pub-card__inner">
 								<span class="pub-card__body">
 									<span class="entry-row__meta">
 										{item.date && <time class="entry-row__date" datetime={isoDate(item.date)}>{formatDate(item.date)}</time>}
@@ -105,7 +105,7 @@ const related = collection === "news" ? "news" : collection === "publication" ? 
 										? <Image image={item.data.cover} alt="" />
 										: <img src="/assets/img/sub/common/noimage.jpg" alt="" width="400" height="266" loading="lazy" decoding="async" />}
 								</span>
-							</a>
+							</div>
 						</li>
 					))}
 				</ul>

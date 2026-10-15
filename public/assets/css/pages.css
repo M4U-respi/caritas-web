@@ -625,15 +625,12 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .pub-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; margin-top: 40px; }
 .pub-card { border-bottom: 1px solid var(--c-line-gray); }
 .pub-card:nth-child(-n + 2) { border-top: 1px solid var(--c-line-gray); }
-.pub-card__link { display: flex; align-items: center; gap: 20px; min-height: 280px; height: 100%; padding: 24px 16px; color: var(--c-text-strong); }
+.pub-card__inner { display: flex; align-items: center; gap: 20px; min-height: 280px; height: 100%; padding: 24px 16px; color: var(--c-text-strong); }
 .pub-card__body { flex: 1; min-width: 0; display: block; }
-.pub-card__title { margin-top: 16px; font-size: 16px; font-weight: 700; line-height: 2; letter-spacing: .03em; transition: color var(--ease); }
+.pub-card__title { margin-top: 16px; font-size: 16px; font-weight: 700; line-height: 2; letter-spacing: .03em; }
 .pub-card__excerpt { display: block; margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 .pub-card__cover { flex: none; width: 163px; aspect-ratio: 163 / 230; overflow: hidden; border: 1px solid var(--c-line); border-radius: 6px; background: var(--c-cream-light); }
-.pub-card__cover img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
-.pub-card__link:hover .pub-card__title { color: var(--c-red); }
-.pub-card__link:hover .pub-card__cover img { transform: scale(1.04); }
-.pub-card__link:focus-visible { outline-offset: -2px; }
+.pub-card__cover img { width: 100%; height: 100%; object-fit: cover; }
 
 /* 発行物について(緑) */
 .pub-about .box-grid { margin-top: 48px; }
@@ -1120,7 +1117,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .year-filter { width: 100%; }
   .year-filter__select { flex: 1; width: auto; }
   .pub-card:nth-child(2) { border-top: 0; }
-  .pub-card__link { gap: 16px; min-height: 0; padding: 20px 0; }
+  .pub-card__inner { gap: 16px; min-height: 0; padding: 20px 0; }
   .pub-card__title { margin-top: 8px; font-size: 15px; line-height: 1.7; }
   .pub-card__excerpt { margin-top: 8px; font-size: 13px; line-height: 1.8; }
   .pub-card__cover { width: 96px; }
@@ -1495,7 +1492,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--publication .pub-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 15px; margin-top: 32px; }
   .cms-archive--publication .pub-card, .cms-archive--publication .pub-card:nth-child(-n + 2) { border-top: 0; border-bottom: 1px solid var(--c-line); }
   .cms-archive--publication .pub-card:nth-child(-n + 2) { border-top: 1px solid var(--c-line); }
-  .cms-archive--publication .pub-card__link { flex-direction: column-reverse; justify-content: flex-end; align-items: stretch; gap: 0; padding: 20px 0 24px; }
+  .cms-archive--publication .pub-card__inner { flex-direction: column-reverse; justify-content: flex-end; align-items: stretch; gap: 0; padding: 20px 0 24px; }
   .cms-archive--publication .pub-card__cover { width: 100%; height: calc((100vw - 55px) / 2 * 1.25); aspect-ratio: auto; border: 0; border-radius: 0; background: none; display: flex; justify-content: center; overflow: visible; }
   .cms-archive--publication .pub-card__cover img { width: auto; max-width: 100%; height: 100%; object-fit: contain; border: 1px solid var(--c-line); border-radius: 6px; }
   .cms-archive--publication .pub-card__body .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
