@@ -472,6 +472,7 @@ a.pagination__arrow:hover { opacity: .7; }
 .pub-list { margin-top: 18px; }
 .pub-list__item { display: flex; align-items: center; min-height: 38px; border-bottom: 1px solid var(--c-line); font-size: 14px; font-weight: 400; line-height: 1.5; }
 .pub-list__year { flex: none; width: 48px; font-weight: 700; color: var(--c-teal); }
+.social-activities .list-box__title, .social-activities .pub-list__year { color: var(--c-red); }
 .records__group + .records__group { margin-top: 64px; }
 .records__head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
 .records__desc { font-size: 14px; font-weight: 400; line-height: 1.8; color: var(--c-text); }
