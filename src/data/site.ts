@@ -35,7 +35,7 @@ export const COLLECTIONS = {
 		terms: [
 			{ slug: "emergency", label: "緊急支援", tag: "red", hero: { en: "EMERGENCY", ja: "緊急", lead: "災害や紛争に対する緊急募金の受付と、その後の支援の経過をお伝えします。" } },
 			{ slug: "donation", label: "募金・献金", tag: "yellow", hero: { en: "DONATION", ja: "募金", lead: "四旬節「愛の献金」やクリスマス募金など、募金の受付と御礼をお伝えします。" } },
-			{ slug: "campaign", label: "啓発・キャンペーン", tag: "yellow", hero: { en: "CAMPAIGN", ja: "キャンペーン", lead: "国際カリタスのキャンペーンの国内展開や、セミナー・報告会のご案内です。" } },
+			{ slug: "campaign", label: "啓発・キャンペーン", tag: "green", hero: { en: "CAMPAIGN", ja: "キャンペーン", lead: "国際カリタスのキャンペーンの国内展開や、セミナー・報告会のご案内です。" } },
 			{ slug: "info", label: "事務局から", tag: "blue", hero: { en: "INFORMATION", ja: "事務局", lead: "事務局からの事務連絡や、行事のご案内です。" } },
 		],
 	},

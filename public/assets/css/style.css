@@ -143,6 +143,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 }
 .tag--yellow { color: #C9A227; }
 .tag--blue { color: #6C9AD5; }
+.tag--green { color: #6FBA2C; }
 
 /* ---------- スクロール出現 ---------- */
 .js .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
