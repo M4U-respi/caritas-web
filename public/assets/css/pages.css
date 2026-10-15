@@ -171,6 +171,9 @@ picture > source { display: none; }
 .sub-text { font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .sub-text > p + p { margin-top: 16px; }
 .sub-note { font-size: 12px; font-weight: 400; line-height: 1.8; color: var(--c-text-mute); }
+/* 「※」で始まる注釈:2 行目以降を ※ 1 文字分下げる */
+.note-hang, .prose .prose__note { padding-left: 1em; text-indent: -1em; }
+.bank__note.bank__note--cont { margin-top: 0; }
 
 /* 左縦棒の小見出し */
 .subheading-bar {
