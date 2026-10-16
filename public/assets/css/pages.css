@@ -814,7 +814,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .bequest__pdf-title { font-size: 18px; white-space: nowrap; }
 .bequest__thumb { margin: 24px auto 0; }
 .bequest__btn { display: flex; justify-content: center; margin-top: 24px; }
-.bequest__btn .btn-outline { gap: 10px; }
+.bequest__btn .btn-outline { gap: 10px; font-weight: 700; }
 .bequest__btn .btn-outline svg { flex: none; }
 .bequest__text { margin-top: 24px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 .bequest__steps-title { margin-top: 40px; }
