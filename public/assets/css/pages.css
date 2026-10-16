@@ -1202,6 +1202,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .bequest__pdf .bequest__pdf-title { font-size: 17px; letter-spacing: 0; }
   .bequest__thumb { margin: 20px auto 0; }
   .bequest__btn { justify-content: center; }
+  .bequest__btn .btn-outline { width: 186px; min-height: 48px; font-size: 14px; }
   .donate-ask__btns { flex-direction: column; gap: 12px; margin-top: 16px; }
   .donate-ask__btn { width: 100%; max-width: none; min-height: 48px; font-size: 15px; }
   .donate-notice__box, .donate-contact { padding: 20px; }
