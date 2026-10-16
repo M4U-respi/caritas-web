@@ -1179,7 +1179,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .funds__box { padding: 20px; }
   .funds__title { padding-bottom: 14px; }
   .funds__table, .funds__table tbody { display: block; }
-  .funds__table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 16px; padding: 20px 0; border-bottom: 1px solid var(--c-line); }
+  .funds__table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--c-line); }
   .funds__table th, .funds__table td { height: auto; padding: 0 !important; border: 0; }
   .funds__name { width: auto; font-size: 15px; }
   .funds__desc { grid-column: 1; grid-row: 2; margin-top: 16px; line-height: 25px; }
