@@ -1312,7 +1312,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .faq-section { padding: 70px 0 64px; }
   .faq__q { gap: 16px; padding: 18px 16px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .faq__mark { width: 40px; height: 40px; font-size: 20px; }
-  .faq__q-text { max-width: 200px; } /* デザインの文字枠(15px で 13 字 / 16px で 12 字) */
   .faq__a { gap: 16px; margin: 0 16px; padding: 22px 0 18px; }
   .faq__a-text { font-size: 15px; line-height: 30px; }
   /* 寄付ページの FAQ は 16px(デザイン SP 寄付する / カード / マンスリー) */
