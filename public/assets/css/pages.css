@@ -1223,7 +1223,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .donate-contact .tel-card__num { font-size: 20px; font-weight: 700; }
   .notice-card__title { font-size: 18px; }
   .notice-card__text { font-size: 15px; line-height: 1.9; }
-  .btn-solid { width: 100%; min-width: 0; }
+  .btn-solid { width: 100%; min-width: 0; font-size: 15px; }
   .amounts { padding: 24px 20px; }
   .amounts__list { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .amounts__btn { height: 44px; gap: 3px; }
