@@ -43,7 +43,7 @@ const title = current ? current.label : conf.label;
 const pageTitle = [current ? `${current.label}｜${conf.label}` : conf.label, year ? `${year}年` : "", page > 1 ? `${page}ページ目` : ""].filter(Boolean).join("｜");
 const crumbs = current ? [{ label: conf.label, href: conf.base }] : [];
 const basePath = current ? `${conf.base}${current.slug}/` : conf.base;
-const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
+const related = collection === "news" || collection === "report" || collection === "publication" ? collection : null;
 ---
 <Layout title={pageTitle} description={hero.lead}>
 	<PageHeader title={title} en={hero.en} ja={hero.ja} lead={hero.lead} crumbs={crumbs} />

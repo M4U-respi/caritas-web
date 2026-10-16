@@ -124,6 +124,7 @@ export const RELATED_NAV = {
 		title: "お知らせ各ページ",
 		items: [{ label: "お知らせ", href: "/news/" }, ...termLinks("news")],
 	},
+	report: { en: "REPORTS", ja: "活動報告", title: "全ての活動報告", items: termLinks("report") },
 	publication: { en: "PUBLICATIONS", ja: "刊行物", title: "全ての発行物", items: termLinks("publication") },
 	donate: {
 		en: "PAGE LINKS",
