@@ -215,7 +215,7 @@ picture > source { display: none; }
 /* ---------- 写真帯+アーチ(下辺カーブ) ---------- */
 .photo-strip--arch-bottom { background: none; }
 .photo-strip--arch-bottom .photo-strip__list { background: var(--c-cream); }
-.photo-strip--arch-bottom .photo-strip__item { height: clamp(220px, 27.8vw, 400px); border-radius: 0; }
+.photo-strip--arch-bottom .photo-strip__item { height: clamp(220px, 27.8vw, 400px); border-radius: 4px 4px 0 0; }
 .photo-strip--arch-bottom .photo-strip__item img,
 .photo-strip--arch-bottom .photo-strip__item img { height: 100%; margin: 0; object-position: center top; }
 .photo-strip--arch-bottom .photo-strip__curve { top: auto; bottom: -1px; color: var(--c-white); }
