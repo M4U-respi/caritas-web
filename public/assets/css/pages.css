@@ -759,7 +759,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .def-table--wide td { line-height: 32px; letter-spacing: 0; }
 
 /* 中黒の箇条書き */
-.dot-list { font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
+.dot-list { font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .dot-list li { position: relative; padding-left: 24px; }
 .dot-list li::before { content: "・"; position: absolute; left: 0; top: 0; }
 
