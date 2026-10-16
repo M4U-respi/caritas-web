@@ -1116,7 +1116,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .policy-body { padding-top: 48px; }
   .policy { font-size: 15px; font-weight: 500; line-height: 30px; }
-  .policy h2 { margin-top: 20px; font-size: 21px; }
+  .policy h2 { margin-top: 20px; font-size: 20px; }
   .policy h2 + * { margin-top: 12px; }
   .policy h3 { font-size: 16.5px; letter-spacing: 0; }
   .policy li::before { top: 13px; }
