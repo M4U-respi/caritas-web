@@ -1210,7 +1210,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .notice-card { padding: 22px 16px 18px; }
   .donate-notice .def-table--wide, .donate-notice .def-table--wide tbody, .donate-notice .def-table--wide tr, .donate-notice .def-table--wide th, .donate-notice .def-table--wide td { display: block; width: auto; }
   .donate-notice .def-table--wide tr { padding: 20px 0; border-bottom: 1px solid var(--c-line); }
-  .donate-notice .def-table--wide tr:first-child { border-top: 1px solid var(--c-line); }
+  .donate-notice .def-table--wide tr:first-child { border-block: 1px solid var(--c-line); }
   .donate-notice .def-table--wide th, .donate-notice .def-table--wide td { padding: 0; border: 0; font-size: 15px; line-height: 30px; }
   .donate-notice .def-table--wide td { margin-top: 12px; }
   .donate-notice--inline .def-table--wide tr { display: flex; gap: 16px; }
