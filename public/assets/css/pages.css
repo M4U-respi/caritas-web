@@ -515,7 +515,8 @@ a.pagination__arrow:hover { opacity: .7; }
 .tel-card { display: flex; align-items: center; min-height: 96px; padding: 16px 24px 16px 32px; border-radius: 6px; background: var(--c-white); }
 .tel-card--wide { grid-column: 1 / -1; align-items: flex-start; min-height: 112px; padding-block: 24px; }
 .tel-card__label { flex: none; display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; line-height: 32px; color: var(--c-teal); }
-.tel-card__label img { flex: none; }
+.tel-card__label img { flex: none; width: auto; height: 32px; position: relative; top: 1px; } /* 電話:受話器の形で上寄りに見えるため 1px 下げる */
+.tel-card__label img[src$="icon-fax.png"] { height: 36px; top: 0; }
 .tel-card__num { margin-left: 24px; font-size: 32px; font-weight: 700; line-height: 1.3; letter-spacing: .05em; color: var(--c-text-strong); white-space: nowrap; }
 .tel-card__addr { margin-left: 24px; font-size: 16px; font-weight: 400; line-height: 32px; color: var(--c-text); }
 .tel-card--wide .tel-card__label { width: 72px; }
@@ -822,8 +823,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .donate-contact { margin-top: 24px; padding: 32px 40px; }
 .donate-contact__head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
 .donate-contact .tel-box__grid { margin-top: 24px; }
-.donate-contact .tel-card__label img { width: auto; height: 32px; position: relative; top: 1px; } /* 電話:受話器の形で上寄りに見えるため 1px 下げる */
-.donate-contact .tel-card__label img[src$="icon-fax.png"] { height: 36px; top: 0; }
 .tel-card--cream { border-radius: 8px; background: var(--c-cream); }
 
 /* ---------- クレジットカード ---------- */
@@ -1094,6 +1093,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .tel-box__grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .tel-card { flex-wrap: nowrap; min-height: 64px; padding: 12px 16px; border-radius: 8px; }
   .tel-card__label { font-size: 15px; }
+  .tel-card__label:has(img) { display: grid; grid-template-columns: 36px auto; width: 80px; } /* アイコン中央・ラベル/番号の左端を揃える */
+  .tel-card__label img { justify-self: center; }
   .tel-card__num { margin-left: 16px; font-size: 24px; letter-spacing: .03em; }
   .tel-card--wide .tel-card__label { flex: none; width: 69px; line-height: 25px; }
   .tel-card--wide { display: flex; padding-block: 18px; padding-right: 8px; }
@@ -1207,8 +1208,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .donate-notice--inline .def-table--wide td { margin-top: 0; }
   .donate-contact__head { gap: 16px; }
   .donate-contact .tel-card { min-height: 78px; }
-  .donate-contact .tel-card__label { display: grid; grid-template-columns: 36px auto; width: 80px; }
-  .donate-contact .tel-card__label img { justify-self: center; }
   .donate-contact .tel-card__num { font-size: 20px; }
   .notice-card__title { font-size: 18px; }
   .notice-card__text { font-size: 15px; line-height: 1.9; }
