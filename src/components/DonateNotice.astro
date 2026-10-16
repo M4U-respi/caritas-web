@@ -22,7 +22,7 @@ const { rows, inline = false, large = false } = Astro.props;
 		<table class="def-table def-table--wide">
 			<tbody>
 				{rows.map((r) => (
-					<tr><th scope="row">{r.th}</th><td set:html={r.td} /></tr>
+					<tr><th scope="row" set:html={r.th} /><td set:html={r.td} /></tr>
 				))}
 			</tbody>
 		</table>
