@@ -133,7 +133,7 @@ picture > source { display: none; }
   --green-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
   margin-top: calc(var(--curve) * -1); padding: calc(var(--curve) + 86px) 0 104px;
-  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* デザイン:地図をセクションの高さいっぱいに伸縮 */
+  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* 地図を横幅 100%・セクションの高さいっぱいに伸縮(PC/SP 共通。上辺のアールは mask で切り抜き) */
   color: var(--c-white);
   -webkit-mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
           mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
@@ -145,18 +145,6 @@ picture > source { display: none; }
   /* デザイン PC:緑セクションはリードが見出しから少し離れ、本文までが詰まる */
   .section--green .sub-head__lead { margin-top: 18px; line-height: 29px; }
   .section--green .sub-head + * { margin-top: 38px; }
-  /* 地図背景:デザインはセクションごとに縦の伸縮・位置が異なるため個別に合わせる(横は 100%・高さと位置はデザイン実測) */
-  .green-bg--philosophy { background-size: 100% 614px; background-position: center -6px; }
-  .green-bg--activities { background-size: 100% 910px; background-position: center -25px; }
-  .green-bg--campaign { background-size: 100% 662px; background-position: center -9px; }
-  .green-bg--aid { background-size: 100% 784px; background-position: center -17px; }
-  .social-activities { background-size: 100% 991px; background-position: center -31px; }
-  .section--green.manual { background-size: 100% 391px; background-position: center 9px; }
-  .section--green.pub-about { background-size: 100% 607px; background-position: center -5px; }
-  .section--green.donate-funds { background-size: 100% 1711px; background-position: center -79px; }
-  .donate-notice--large { background-size: 100% 1341px; background-position: center -54px; }
-  .donate-notice:not(.donate-notice--large):not(.donate-notice--inline) { background-size: 100% 1274px; background-position: center -50px; }
-  .donate-notice--inline { background-size: 100% 1075px; background-position: center -37px; }
 }
 .section--green + .sub-section { padding-top: 85px; }
 .section--green + .sub-section--roomy { padding-top: 109px; }
@@ -920,7 +908,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-section--purpose { padding-top: 88px; }
   .sub-section--purpose:has(+ .section--green) { padding-bottom: calc(88px + var(--curve)); }
   .sub-section:has(+ .section--green) { padding-bottom: calc(88px + var(--curve)); }
-  .section--green { padding: calc(var(--curve) + 72px) 0 88px; background-size: cover; }
+  .section--green { padding: calc(var(--curve) + 72px) 0 88px; }
   .sub-head__title, .manual__title { font-size: 28px; }
 
   .photo-strip--arch-bottom .photo-strip__item { height: 260px; }
@@ -1254,8 +1242,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   /* 見出し・本文 */
   .sub-section { padding: 70px 0 64px; }
   .sub-section--roomy { padding-top: 76px; }
-  /* 背景:SP デザインの筆跡テクスチャ(sp02 から書き出し)をセクション全体に伸ばす */
-  .section--green { padding: calc(var(--curve) + 72px) 0 64px; background: #2E8A86 url(../img/sub/common/bg-green-sp.jpg) center top / 100% 100% no-repeat; }
+  .section--green { padding: calc(var(--curve) + 72px) 0 64px; }
   .sub-head__title, .manual__title { margin-top: 14px; font-size: 24px; line-height: 1.5; letter-spacing: .05em; }
   .sub-head__lead { margin-top: 10px; line-height: 29px; }
   .section--green .sub-head__title, .section--green .manual__title { margin-top: 28px; }
