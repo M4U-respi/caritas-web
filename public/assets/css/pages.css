@@ -288,7 +288,7 @@ picture > source { display: none; }
 .faq__q::-webkit-details-marker { display: none; }
 .faq__q:focus-visible { outline-offset: -2px; }
 .faq__item[open] .faq__q { padding-bottom: 24px; }
-.faq__q-text { flex: 1; min-width: 0; }
+.faq__q-text { flex: 1; min-width: 0; text-wrap: pretty; } /* 最終行が「か。」だけにならないよう調整 */
 .faq__q:hover .faq__q-text { color: var(--c-red); }
 .faq__mark {
   flex: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%;
@@ -1310,7 +1310,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   /* FAQ */
   .faq-section { padding: 70px 0 64px; }
-  .faq__q { gap: 16px; padding: 18px 16px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
+  .faq__q { gap: 10px; padding: 18px 16px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .faq__mark { width: 40px; height: 40px; font-size: 20px; }
   .faq__a { gap: 16px; margin: 0 16px; padding: 22px 0 18px; }
   .faq__a-text { font-size: 15px; line-height: 30px; }
