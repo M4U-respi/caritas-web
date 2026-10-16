@@ -822,8 +822,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .donate-contact { margin-top: 24px; padding: 32px 40px; }
 .donate-contact__head { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
 .donate-contact .tel-box__grid { margin-top: 24px; }
-.donate-contact .tel-card__label img { width: auto; height: 28px; }
-.donate-contact .tel-card__label img[src$="icon-fax.png"] { height: 36px; }
+.donate-contact .tel-card__label img { width: auto; height: 32px; position: relative; top: 1px; } /* 電話:受話器の形で上寄りに見えるため 1px 下げる */
+.donate-contact .tel-card__label img[src$="icon-fax.png"] { height: 36px; top: 0; }
 .tel-card--cream { border-radius: 8px; background: var(--c-cream); }
 
 /* ---------- クレジットカード ---------- */
