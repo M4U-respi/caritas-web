@@ -285,7 +285,7 @@ picture > source { display: none; }
 .def-table { width: 100%; border-collapse: collapse; font-size: 16px; line-height: 1.6; }
 .def-table th, .def-table td { padding: 20px 0; border-top: 1px solid var(--c-line); border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: middle; }
 .def-table th { width: 168px; font-weight: 700; color: var(--c-text-strong); }
-.def-table td { font-weight: 400; letter-spacing: 0; color: var(--c-text); }
+.def-table td { font-weight: 500; letter-spacing: 0; color: var(--c-text); }
 .u-sp { display: inline-block; width: 1em; }
 
 /* ---------- FAQ ---------- */
