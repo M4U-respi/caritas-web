@@ -588,7 +588,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .policy ul { margin-top: 10px; }
 .policy li { position: relative; padding-left: 15px; line-height: 1.6; }
 .policy li + li { margin-top: 8px; }
-.policy li::before { content: ""; position: absolute; left: 5px; top: 10px; width: 3px; height: 3px; border-radius: 50%; background: var(--c-text-strong); }
+.policy li::before { content: ""; position: absolute; left: 5px; top: 11px; width: 3px; height: 3px; border-radius: 50%; background: var(--c-text-strong); }
 .policy-link { display: inline-flex; align-items: center; gap: 10px; color: var(--c-text-strong); }
 .policy-link::after { content: ""; flex: none; width: 5px; height: 8px; background: var(--chev-dark) center / contain no-repeat; transition: transform var(--ease); }
 .policy-link:hover { color: var(--c-red); }
@@ -1119,6 +1119,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .policy h2 { margin-top: 20px; font-size: 20px; }
   .policy h2 + * { margin-top: 12px; }
   .policy h3 { font-size: 16.5px; letter-spacing: 0; }
+  .policy li::before { top: 10px; }
 
   .page-body { padding: 40px 0 80px; }
   .cms-archive { padding: 56px 0 80px; }
