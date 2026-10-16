@@ -296,7 +296,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   --value-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
   margin-top: calc(var(--curve) * -1); padding-top: var(--curve);
-  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% auto no-repeat;
+  background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* 地図を横幅 100%・セクションの高さいっぱいに伸縮(PC/SP 共通) */
   color: var(--c-white);
   -webkit-mask: var(--value-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
           mask: var(--value-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
@@ -625,7 +625,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .mission__photo--main { width: 420px; max-width: 89.74%; }
   .mission__photo--sub { width: 170px; max-width: 36.32%; }
 
-  .value { background-size: cover; background-position: center top; }
   .value__inner { padding: 80px 0; }
   .value__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px 40px; }
   .value__body { max-width: 300px; margin-inline: auto; }
@@ -709,8 +708,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .mission__photo--sub { right: auto; width: 37.3%; max-width: none; }
 
   /* VALUE(2 列) */
-  /* 背景:デザイン SP の筆跡テクスチャ(下層の緑セクションと共通) */
-  .value { background: var(--c-green) url(../img/sub/common/bg-green-sp.jpg) center top / 100% 100% no-repeat; }
   .value__inner { padding: 68px 0 68px; }
   .value__title { margin-top: 24px; font-size: 24px; line-height: 42px; letter-spacing: .05em; }
   .value__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 25px; margin-top: 32px; }
