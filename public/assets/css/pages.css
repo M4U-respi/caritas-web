@@ -1220,6 +1220,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .donate-notice--inline .def-table--wide td { margin-top: 0; }
   .donate-contact__head { gap: 16px; }
   .donate-contact .tel-card { min-height: 78px; }
+  .donate-contact .tel-card__label { display: grid; grid-template-columns: 36px auto; width: 80px; }
+  .donate-contact .tel-card__label img { justify-self: center; }
   .donate-contact .tel-card__num { font-size: 20px; }
   .notice-card__title { font-size: 18px; }
   .notice-card__text { font-size: 15px; line-height: 1.9; }
