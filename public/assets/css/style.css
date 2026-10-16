@@ -123,7 +123,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 }
 .btn-donate__icon { flex: none; }
 .btn-donate:hover { background: var(--c-red-dark); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 0, 0, .18); }
-.btn-donate--compact { gap: 6px; height: 36px; padding: 0 12px; font-size: 13px; letter-spacing: .02em; border-radius: 6px; }
 
 .btn-pill {
   display: flex; align-items: center; justify-content: center; gap: 12px;
@@ -606,6 +605,18 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .fixed-donate__chevron { margin-left: 24px; }
   .fixed-donate:focus-visible { outline-color: var(--c-white); outline-offset: -4px; }
   body.is-menu-open .fixed-donate { display: none; }
+
+  /* ---------- QA: JS 無効 / main.js 読み込み失敗時(html に .js が無い)— ドロワーを開けないためナビを常時表示 ---------- */
+  html:not(.js) .header { position: static; }
+  html:not(.js) .header__inner { flex-wrap: wrap; height: auto; min-height: var(--header-h); }
+  html:not(.js) .hamburger { display: none; }
+  html:not(.js) .gnav__toggle { display: none; }
+  html:not(.js) .gnav__sub { display: block; }
+  html:not(.js) .header__logo { margin-block: 12px; }
+  html:not(.js) .header__menu {
+    position: static; flex: 0 0 100%; visibility: visible; transform: none; overflow: visible;
+    padding-left: 0; padding-right: 16px;
+  }
 }
 
 /* ==========================================================================
@@ -710,7 +721,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   /* VALUE(2 列) */
   .value__inner { padding: 68px 0 68px; }
   .value__title { margin-top: 24px; font-size: 24px; line-height: 42px; letter-spacing: .05em; }
-  .value__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 25px; margin-top: 32px; }
+  .value__list { gap: 36px 25px; margin-top: 32px; }
   .value__icon { width: 72px; height: 72px; }
   .value__icon::after { left: 53.9px; top: 6.7px; width: 7.75px; height: 2.03px; box-shadow: 6.07px 4.39px 0 #539D99; }
   .value__body { max-width: none; margin: 0; }
@@ -753,7 +764,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   /* SOCIAL */
   .social { padding: 67px 0 66px; background-size: 356px auto; background-position: center 33px; } /* デザイン SP:紋章の見た目幅 約 338px(左右 20px 内) */
   .social__text { margin-top: 8px; font-size: 15px; line-height: 27px; }
-  .social__btns { display: grid; gap: 12px; max-width: none; margin-top: 26px; }
+  .social__btns { display: grid; gap: 12px; margin-top: 26px; }
   .social__btn, .social__btn--wide { width: 100%; min-height: 47px; }
   .social__embed { width: 100%; margin-top: 44px; }
   .social__embed-frame { height: 511px; }
@@ -762,7 +773,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .photo-strip:not(.photo-strip--arch-bottom) .photo-strip__curve { height: calc(100vw * 42 / 1440); }
   .photo-strip__list { gap: 1px; }
   .photo-strip__item { height: auto; aspect-ratio: 432 / 479; border-radius: 0 0 3px 3px; }
-  .photo-strip__item img { height: 100%; object-position: center top; }
+  .photo-strip__item img { object-position: center top; }
 
   /* DONATION */
   .donation { padding-top: 64px; }
@@ -774,7 +785,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .donation__heading { font-size: 20px; line-height: 30px; letter-spacing: .02em; }
   .donation__lead { margin-top: 26px; margin-right: 0; font-size: 15px; line-height: 27px; }
   .donation__illust { display: none; }
-  .donation__box { width: 100%; height: auto; min-height: 0; margin: 24px 0 0; padding: 32px 20px; }
+  .donation__box { width: 100%; height: auto; margin: 24px 0 0; padding: 32px 20px; }
   .donation__box-title { font-size: 20px; }
   .donation__box-text { letter-spacing: 0; }
   .donation__btns { gap: 16px; max-width: none; }
@@ -785,7 +796,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .partners__head { text-align: left; }
   .partners__label { justify-content: flex-start; }
   .partners__title { margin-top: 10px; font-size: 24px; }
-  .partners__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; margin-top: 32px; }
+  .partners__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
 
   /* FOOTER(ナビ → ロゴ・所在地の順) */
   .footer__inner { padding: 64px 0 24px; }
@@ -815,22 +826,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .lang-btn--bar { width: 76px; font-size: 12px; }
   .fv__catch { font-size: 42px; }
   .fv__lead { font-size: 14px; }
-}
-
-/* ==========================================================================
-   QA: JS 無効 / main.js 読み込み失敗時(html に .js が無い)— ドロワーを開けないためナビを常時表示
-   ========================================================================== */
-@media (max-width: 1099.98px) {
-  html:not(.js) .header { position: static; }
-  html:not(.js) .header__inner { flex-wrap: wrap; height: auto; min-height: var(--header-h); }
-  html:not(.js) .hamburger { display: none; }
-  html:not(.js) .gnav__toggle { display: none; }
-  html:not(.js) .gnav__sub { display: block; }
-  html:not(.js) .header__logo { margin-block: 12px; }
-  html:not(.js) .header__menu {
-    position: static; flex: 0 0 100%; visibility: visible; transform: none; overflow: visible;
-    padding-left: 0; padding-right: 16px;
-  }
 }
 
 /* ==========================================================================
