@@ -21,10 +21,10 @@ const strip = [
 ];
 
 const ways = [
-	{ title: "クレジットカード", text: "一回かぎりの寄付に向いています。オンラインで完結し、その場で手続きが終わります。", btn: "くわしく見る", href: "/donate/card/", icon: "card" },
-	{ title: "郵便局・銀行から", text: "郵便振替、ゆうちょダイレクト、他の銀行からのお振込です。ゆうちょダイレクトならオンラインで完結します。", btn: "送金先を見る", href: "#bank", icon: "bank" },
-	{ title: "マンスリーサポーター", text: "毎月続けてご支援いただく方法です。お申し込みには申込書のご提出が必要です。", btn: "くわしく見る", href: "/donate/monthly/", icon: "calendar" },
-	{ title: "遺贈によるご寄付", text: "遺産の一部を寄付するかたちでのご支援です。まずは事務局へご相談ください。", btn: "くわしく見る", href: "#bequest", icon: "bequest" },
+	{ title: "クレジットカード", text: "一回かぎりの寄付に向いています。オンラインで完結し、その場で手続きが終わります。", href: "/donate/card/" },
+	{ title: "郵便局・銀行から", text: "郵便振替、ゆうちょダイレクト、他の銀行からのお振込です。ゆうちょダイレクトならオンラインで完結します。", href: "#bank" },
+	{ title: "マンスリーサポーター", text: "毎月続けてご支援いただく方法です。お申し込みには申込書のご提出が必要です。", href: "/donate/monthly/" },
+	{ title: "遺贈によるご寄付", text: "遺産の一部を寄付するかたちでのご支援です。まずは事務局へご相談ください。", href: "#bequest" },
 ];
 
 const bequestSteps = [
@@ -50,7 +50,7 @@ const faq = [
 	{ q: "他の銀行から振り込む場合、事前の連絡は必要ですか。", a: "必要です。他行からのお振込は振込情報が限定的にしか伝わらないため、お振込（予定）日、金額、募金のご意向、お名前、ご住所、電話番号またはメールアドレスを事前にお知らせください。" },
 ];
 ---
-<Layout title="寄付する" description={description}>
+<Layout title="寄付する" bodyClass="page-donate" description={description}>
 	<PageHeader title="寄付する" en="DONATION" ja="寄付" flat>
 		<Fragment slot="title"><em class="u-red">寄付</em>する</Fragment>
 		<Fragment slot="lead">カリタスジャパンは、人種、民族、性差、宗教や政治の壁を越えて「今もっとも必要とされている支援」を行っています。<br />いただいた募金は、国内外でもっとも援助を必要としている人々のもとへ届けられます。</Fragment>
@@ -65,19 +65,12 @@ const faq = [
 			</SectionHead>
 			<ol class="ways">
 				{ways.map((w, i) => (
-					<li class="ways__card">
-						<div class="ways__head">
+					<li>
+						<a class="ways__card" href={w.href}>
 							<p class="ways__num" aria-hidden="true">{String(i + 1).padStart(2, "0")}</p>
-							<svg class="ways__icon" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								{w.icon === "card" && <><rect x="1.5" y="7" width="33" height="22" rx="3" /><path d="M1.5 14.5h33M8 22h6" /></>}
-								{w.icon === "bank" && <><path d="M4 11 18 3.5 32 11H4ZM9 15.5v12M15 15.5v12M21 15.5v12M27 15.5v12M3 33h30" /></>}
-								{w.icon === "calendar" && <><rect x="3" y="5.5" width="30" height="28" rx="3" /><path d="M3 12.5h30M10.5 2.5v6M25.5 2.5v6M12.5 23l4 4 7.5-7.5" /></>}
-								{w.icon === "bequest" && <><path d="M7 2.5h15.5l7.5 7.5v20.5a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3v-25a3 3 0 0 1 3-3Z" /><path d="M22 2.5V10h8" /><path d="M17 28.2l-4.6-4.4a3 3 0 0 1 4.6-3.8 3 3 0 0 1 4.6 3.8Z" /></>}
-							</svg>
-						</div>
-						<h3 class="ways__title">{w.title}</h3>
-						<p class="ways__text">{w.text}</p>
-						<p class="ways__btn"><a class="btn-outline btn-outline--sm" href={w.href}><span>{w.btn}</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a></p>
+							<h3 class="ways__title"><span>{w.title}</span><span class="circle-arrow" aria-hidden="true"><svg width="6" height="10"><use href="#i-chevron" /></svg></span></h3>
+							<p class="ways__text">{w.text}</p>
+						</a>
 					</li>
 				))}
 			</ol>
@@ -146,7 +139,8 @@ const faq = [
 						<div class="tel-card"><dt class="tel-card__label">預金種目</dt><dd class="bank__value">当座</dd></div>
 						<div class="tel-card bank__card--row bank__card--wide"><dt class="tel-card__label">加入者名</dt><dd class="bank__value">宗教法人カトリック中央協議会 カリタスジャパン</dd></div>
 					</dl>
-					<p class="sub-note note-hang bank__note">※ お振込（予定）日／金額／募金のご意向／お名前／ご住所／電話番号またはメールアドレスを、事前にお知らせください。<br />電話 {CONTACT.tel} ／ FAX {CONTACT.fax}</p>
+					<p class="sub-note note-hang bank__note">※ お振込（予定）日／金額／募金のご意向／お名前／ご住所／電話番号またはメールアドレスを、事前にお知らせください。</p>
+					<p class="sub-note bank__note bank__note--cont">電話 {CONTACT.tel} ／ FAX {CONTACT.fax}</p>
 				</div>
 			</div>
 		</div>
@@ -159,6 +153,13 @@ const faq = [
 				<Fragment slot="title"><em class="u-red">遺贈</em>によるご寄付</Fragment>
 			</SectionHead>
 			<div class="bequest">
+				<div class="bequest__pdf">
+					<h3 class="subheading-bar bequest__pdf-title">遺贈によるご寄付のご案内（PDF）</h3>
+					<!-- TODO(要確認): チラシの PDF・表紙画像(現在はカンプの仮画像) -->
+					<img class="flyer-thumb bequest__thumb" src="/assets/img/sub/donate/flyer-bequest.jpg" alt="遺贈によるご寄付のご案内(表紙)" width="322" height="411" loading="lazy" decoding="async" />
+					<p class="bequest__btn"><a class="btn-outline btn-outline--sm" href="#" data-todo="url" download><span>PDFダウンロード</span><svg width="12" height="12" aria-hidden="true"><use href="#i-download" /></svg></a></p>
+					<p class="bequest__text">遺贈の考え方、寄付の方法、お手続きの流れをまとめたチラシです。ご家族やご相談先と一緒にご覧いただけます。</p>
+				</div>
 				<div class="bequest__cards">
 					<div class="tel-card bequest__card">
 						<h3 class="bequest__title">遺言によるご寄付</h3>
@@ -177,15 +178,9 @@ const faq = [
 						</ul>
 					</div>
 				</div>
-				<div class="bequest__pdf">
-					<h3 class="subheading-bar bequest__pdf-title">遺贈によるご寄付のご案内（PDF）</h3>
-					<!-- TODO(要確認): チラシの PDF・表紙画像(現在はカンプの仮画像) -->
-					<img class="flyer-thumb bequest__thumb" src="/assets/img/sub/donate/flyer-bequest.jpg" alt="遺贈によるご寄付のご案内(表紙)" width="322" height="411" loading="lazy" decoding="async" />
-					<p class="bequest__btn"><a class="btn-outline btn-outline--sm" href="#" data-todo="url" download><span>PDFダウンロード</span><svg width="12" height="12" aria-hidden="true"><use href="#i-download" /></svg></a></p>
-					<p class="bequest__text">遺贈の考え方、寄付の方法、お手続きの流れをまとめたチラシです。ご家族やご相談先と一緒にご覧いただけます。</p>
-				</div>
 			</div>
 
+			<h3 class="subheading-bar bequest__steps-title">お手続きまでの流れ</h3>
 			<FlowCards items={bequestSteps} class="flow--compact bequest__steps" />
 
 			<div class="donate-ask">

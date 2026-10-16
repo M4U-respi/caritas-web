@@ -171,6 +171,27 @@ picture > source { display: none; }
 .sub-head--center .section-label { justify-content: center; }
 .sub-head__lead { margin-top: 8px; font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .sub-head + * { margin-top: 48px; }
+@media (min-width: 1024px) {
+  /* 寄付・お問い合わせ(2026/10 改訂デザイン):見出しまわりとセクション余白をデザイン実測に合わせる */
+  .page-donate .sub-head__title, .page-contact .sub-head__title { margin-top: 11px; }
+  .page-donate .donate-funds .sub-head__title,
+  .page-donate .donate-notice:not(.donate-notice--large) .sub-head__title { margin-top: 27px; }
+  .page-donate .donate-notice .sub-head + * { margin-top: 44px; }
+  .page-donate .donate-bank .sub-head + * { margin-top: 56px; }
+  .page-donate .donate-notice--large .sub-head + * { margin-top: 52px; }
+  .page-donate .donate-ways { padding-top: 84px; padding-bottom: 153px; }
+  .page-donate .donate-card { padding-top: 121px; padding-bottom: calc(98px + var(--curve)); }
+  .page-donate .donate-bank { padding-bottom: 4px; }
+  .page-donate .donate-bequest { padding-bottom: calc(103px + var(--curve)); }
+  .page-donate .monthly-overview { padding-top: 85px; }
+  .page-donate .faq-section { padding-bottom: 85px; }
+  .page-donate-monthly .faq-section { padding-top: 117px; padding-bottom: 125px; }
+  .page-contact .contact-tel { padding-bottom: calc(162px + var(--curve)); }
+  .page-donate .partners, .page-contact .partners { padding-bottom: calc(40px + var(--curve)); }
+  .page-contact .partners { padding-top: 90px; }
+  .page-donate .partners--after-nav { padding-top: 80px; }
+  .page-donate .related-nav__btn[aria-current="page"] { border-color: var(--c-line-gray); color: inherit; }
+}
 
 /* 本文(16px / 32px) */
 .sub-text { font-size: 16px; font-weight: 500; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
@@ -256,7 +277,7 @@ picture > source { display: none; }
 .flow--text .flow__body { padding: 28px 24px 26px; }
 .flow--text .flow__title { margin-top: 16px; letter-spacing: 0; }
 .flow--text .flow__text { letter-spacing: 0; }
-.flow--compact .flow__body { padding: 12px 16px 16px; }
+.flow--compact .flow__body { padding: 10px 16px 8px; }
 .flow--compact .flow__title { margin-top: 10px; }
 .flow__mark { margin-left: 2px; }
 
@@ -504,7 +525,7 @@ a.pagination__arrow:hover { opacity: .7; }
 /* ---------- /contact/ ---------- */
 .tel-box { padding: 40px; border-radius: 8px; background: var(--c-cream); }
 .tel-box__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.tel-card { display: flex; align-items: center; min-height: 96px; padding: 16px 24px 16px 32px; border-left: 3px solid var(--c-red); border-radius: 6px; background: var(--c-white); }
+.tel-card { display: flex; align-items: center; min-height: 96px; padding: 16px 24px 16px 32px; border-radius: 6px; background: var(--c-white); }
 .tel-card--wide { grid-column: 1 / -1; align-items: flex-start; min-height: 112px; padding-block: 24px; }
 .tel-card__label { flex: none; display: flex; align-items: center; gap: 8px; font-size: 16px; font-weight: 700; line-height: 32px; color: var(--c-teal); }
 .tel-card__label img { flex: none; }
@@ -717,10 +738,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 /* ==========================================================================
    寄付する(/donate/ /donate/card/ /donate/monthly/)
    ========================================================================== */
-/* 共通:赤い左線のカード(細いピンクの外枠つき) */
-.ways__card, .bank .tel-card, .bequest__card, .donate-contact .tel-card, .notice-card, .apply-form {
-  border: 1px solid #F9DFE1; border-left: 3px solid var(--c-red);
-}
 .subheading-bar--red::before { background: var(--c-red); }
 
 /* 赤ボタン(塗り) */
@@ -738,7 +755,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
 /* 表(項目名を広く) */
 .def-table--wide th { width: 264px; padding-right: 24px; line-height: 32px; }
-.def-table--wide th, .def-table--wide td { padding-block: 21px; vertical-align: top; }
+.def-table--wide th, .def-table--wide td { padding-block: 20px; vertical-align: top; }
 .def-table--wide td { line-height: 32px; letter-spacing: 0; }
 
 /* 中黒の箇条書き */
@@ -750,15 +767,14 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .flyer-thumb { display: block; width: 161px; height: auto; box-shadow: 0 2px 8px rgba(0, 0, 0, .08); }
 
 /* ---------- 寄付の方法 ---------- */
-.ways { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; padding: 24px; border-radius: 8px; background: var(--c-cream); }
-.ways__card { display: flex; flex-direction: column; padding: 17px 16px 32px 16px; border-radius: 8px; background: var(--c-white); }
-.ways__head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.ways__num { margin-top: 8px; font-size: 20px; font-weight: 500; line-height: 1; color: var(--c-red); }
-.ways__icon { flex: none; width: 34px; height: 34px; color: var(--c-teal); }
-.ways__title { margin-top: 28px; font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: 0; color: var(--c-text-strong); }
-.ways__text { margin-top: 16px; font-size: 14px; font-weight: 400; line-height: 25px; color: var(--c-text); }
-.ways__btn { margin-top: auto; padding-top: 24px; }
-.ways__btn .btn-outline { width: 100%; }
+/* 寄付の方法:2×2 のリンクカード(番号・見出し+赤丸矢印・説明) */
+.ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 8px; }
+.ways__card { display: block; height: 100%; padding: 18px 30px 31px 25px; border: 1.5px solid var(--c-line-gray); border-radius: 8px; background: var(--c-white); color: var(--c-text-strong); }
+.ways__num { font-size: 20px; font-weight: 700; line-height: 1.6; color: var(--c-red); }
+.ways__title { display: flex; align-items: center; gap: 8px; margin-top: 5px; font-size: 24px; font-weight: 700; line-height: 1.6; letter-spacing: 0; transition: color var(--ease); }
+.ways__text { margin-top: 2px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
+.ways__card:hover .ways__title { color: var(--c-red); }
+.ways__card:hover .circle-arrow { transform: translateX(4px); }
 
 /* ---------- 受付中の募金 ---------- */
 .funds { display: grid; gap: 24px; scroll-margin-top: calc(var(--header-h) + 24px); }
@@ -789,28 +805,30 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
 /* ---------- 遺贈 ---------- */
 .donate-bequest { scroll-margin-top: var(--header-h); }
-.bequest { display: grid; grid-template-columns: minmax(0, 598fr) minmax(0, 354fr); gap: 48px; padding: 40px; border-radius: 8px; background: var(--c-cream); }
+.bequest { display: grid; grid-template-columns: 336px minmax(0, 1fr); gap: 50px; padding: 40px 56px 40px 40px; border-radius: 8px; background: var(--c-cream); }
 .bequest__cards { display: grid; gap: 16px; align-content: start; }
 .bequest__card { display: block; min-height: 0; padding: 26px 32px 28px; border-radius: 8px; }
 .bequest__title { font-size: 16px; font-weight: 700; line-height: 1.6; letter-spacing: .02em; color: var(--c-teal); }
 .bequest__title + .dot-list { margin-top: 20px; }
 .bequest__pdf { padding-top: 4px; }
+.bequest__pdf-title { font-size: 18px; white-space: nowrap; }
 .bequest__thumb { margin: 24px auto 0; }
 .bequest__btn { display: flex; justify-content: center; margin-top: 24px; }
 .bequest__btn .btn-outline { gap: 10px; }
 .bequest__btn .btn-outline svg { flex: none; }
 .bequest__text { margin-top: 24px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
-.bequest__steps { margin-top: 40px; }
+.bequest__steps-title { margin-top: 40px; }
+.bequest__steps { margin-top: 26px; }
 .donate-ask { margin-top: 44px; }
-.donate-ask__btns { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 16px; }
+.donate-ask__btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
 .donate-ask__btn { width: 250px; min-height: 40px; gap: 12px; }
 .donate-ask__btn span { flex: none; }
 .donate-ask__tel { flex: none; margin-right: 4px; }
-.donate-ask__btn:has(.donate-ask__tel) { font-size: 16px; }
+.donate-ask__btns li:first-child .donate-ask__btn { background: var(--c-red); color: var(--c-white); } /* フォームは塗りボタン */
 
 /* ---------- ご確認いただきたいこと(緑) ---------- */
 .donate-notice__box { padding: 32px 40px; }
-.notice-card { padding: 25px 32px 24px; border-color: #F2D2C9; border-left-color: var(--c-red); border-radius: 8px; background: var(--c-cream); }
+.notice-card { padding: 25px 32px 24px; border-radius: 8px; background: var(--c-cream); }
 .notice-card__title { font-size: 20px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-red); }
 .notice-card__text { margin-top: 8px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .notice-card + .def-table { margin-top: 24px; }
@@ -832,7 +850,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .external-note__text { margin-top: 4px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 
 /* ---------- マンスリーサポーター ---------- */
-.monthly-overview { padding-bottom: 80px; }
+.monthly-overview { padding-bottom: 74px; }
 .photo-strip--gap-white .photo-strip__list { background: var(--c-white); }
 .monthly-apply { padding-top: 90px; }
 .apply-form { display: flex; align-items: center; gap: 56px; padding: 40px 56px; border-radius: 8px; background: var(--c-cream); }
@@ -879,9 +897,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .related-nav__logo { width: 150px; margin-right: 16px; }
   .related-nav--news .related-nav__list { gap: 16px; }
   .tel-card__num { font-size: 28px; }
-  .ways { gap: 12px; padding: 16px; }
-  .ways__card { padding-inline: 14px 16px; }
-  .ways__title { font-size: 18px; }
+  .ways__title { font-size: 20px; }
   .amounts__list { gap: 8px; }
   .amounts__num { font-size: 18px; }
   .funds__name { width: 200px; }
@@ -952,7 +968,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .policy-body { padding-top: 64px; }
 
   .flow--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
-  .ways { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .def-table--wide th { width: 200px; }
   .funds__box { padding: 28px 32px; }
   .funds__name { width: auto; white-space: normal; }
@@ -1088,7 +1103,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .tel-box { padding: 20px; }
   .tel-box__grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .tel-card { flex-wrap: nowrap; min-height: 64px; padding: 12px 16px; border-left: 0; border-radius: 8px; }
+  .tel-card { flex-wrap: nowrap; min-height: 64px; padding: 12px 16px; border-radius: 8px; }
   .tel-card__label { font-size: 15px; }
   .tel-card__num { margin-left: 16px; font-size: 24px; letter-spacing: .03em; }
   .tel-card--wide .tel-card__label { flex: none; width: 69px; line-height: 25px; }
@@ -1154,20 +1169,12 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .flow--cols-3 { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .flow--text .flow__body { padding: 18px 20px 20px; }
   .flow--text .flow__title { margin-top: 8px; }
-  .ways { grid-template-columns: minmax(0, 1fr); gap: 8px; padding: 0; background: none; }
-  .ways__card { position: relative; padding: 14px 12px 16px 14px; border: 1.5px solid var(--c-line-gray); }
-  .ways__head { display: block; }
-  .ways__num { margin-top: 0; font-size: 16px; line-height: 1.6; }
-  .ways__icon { display: none; }
-  .ways__title { margin-top: 4px; padding-right: 36px; font-size: 16px; line-height: 1.6; }
-  .ways__text { margin-top: 6px; letter-spacing: 0; }
-  /* カード全体をリンクに。ボタンは右の赤丸矢印として表示 */
-  .ways__btn { padding: 0; margin: 0; }
-  .ways__btn .btn-outline { position: absolute; inset: 0; width: auto; min-height: 0; padding: 0; border: 0; border-radius: 8px; background: none; font-size: 0; }
-  .ways__btn .btn-outline span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-  .ways__btn .btn-outline::before { content: ""; position: absolute; right: 13px; top: 50px; width: 22px; height: 22px; border-radius: 50%; background: var(--c-red); }
-  .ways__btn .btn-outline .btn-outline__chevron { position: absolute; right: 21px; top: 56px; color: var(--c-white); transform: none; }
-  .ways__btn .btn-outline:hover { background: none; }
+  .ways { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .ways__card { position: relative; padding: 14px 48px 16px 14px; }
+  .ways__num { font-size: 16px; }
+  .ways__title { margin-top: 4px; font-size: 16px; }
+  .ways__title .circle-arrow { position: absolute; right: 13px; top: 50px; width: 22px; height: 22px; }
+  .ways__text { margin-top: 6px; }
   .funds { gap: 16px; }
   .funds__box { padding: 20px; }
   .funds__title { padding-bottom: 14px; }
@@ -1179,25 +1186,26 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 20px; }
   .bank__box { padding: 24px 16px; }
   .bank__grid, .bank__grid--postal { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .bank .tel-card { flex-direction: row; align-items: center; padding: 12px 16px; min-height: 64px; border: 0; }
+  .bank .tel-card { flex-direction: row; align-items: center; padding: 12px 16px; min-height: 64px; }
   .bank .tel-card__label { flex: none; width: 88px; font-size: 15px; line-height: 1.6; }
   .bank .tel-card__num { margin: 0; font-size: 22px; }
   .bank__value { margin: 0; font-size: 15px; line-height: 30px; }
   .bank__text { padding: 16px 18px; }
   .bank__text p { font-size: 15px; line-height: 1.9; }
   .bequest { display: flex; flex-direction: column; gap: 16px; padding: 20px 16px; }
-  .bequest__card { padding: 20px 16px; border: 0; }
+  .bequest__steps-title { display: none; }
+  .bequest__steps { margin-top: 40px; }
+  .bequest__card { padding: 20px 16px; }
   .dot-list { font-size: 15px; line-height: 1.9; }
   .dot-list li { padding-left: 18px; }
-  .bequest__pdf { order: -1; display: block; }
+  .bequest__pdf { display: block; }
   .bequest__pdf .bequest__pdf-title { font-size: 17px; letter-spacing: 0; }
   .bequest__thumb { margin: 20px auto 0; }
   .bequest__btn { justify-content: center; }
-  .donate-ask__btns { flex-direction: column; gap: 12px; }
+  .donate-ask__btns { flex-direction: column; gap: 12px; margin-top: 16px; }
   .donate-ask__btn { width: 100%; max-width: none; min-height: 48px; font-size: 15px; }
-  .donate-ask__btns li:first-child .donate-ask__btn { background: var(--c-red); color: var(--c-white); }
   .donate-notice__box, .donate-contact { padding: 20px; }
-  .notice-card { padding: 22px 16px 18px; border: 0; }
+  .notice-card { padding: 22px 16px 18px; }
   .donate-notice .def-table--wide, .donate-notice .def-table--wide tbody, .donate-notice .def-table--wide tr, .donate-notice .def-table--wide th, .donate-notice .def-table--wide td { display: block; width: auto; }
   .donate-notice .def-table--wide tr { padding: 20px 0; border-bottom: 1px solid var(--c-line); }
   .donate-notice .def-table--wide tr:first-child { border-top: 1px solid var(--c-line); }
@@ -1206,7 +1214,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .donate-notice--inline .def-table--wide tr { display: flex; gap: 16px; }
   .donate-notice--inline .def-table--wide th { flex: none; width: 96px; }
   .donate-notice--inline .def-table--wide td { margin-top: 0; }
-  .donate-contact .tel-card { border: 0; }
   .donate-contact__head { gap: 16px; }
   .notice-card__title { font-size: 18px; }
   .notice-card__text { font-size: 15px; line-height: 1.9; }
@@ -1217,7 +1224,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .amounts__num { font-size: 18px; }
   .monthly-overview { padding-bottom: 56px; }
   .monthly-apply { padding-top: 64px; }
-  .apply-form { flex-direction: column; align-items: stretch; gap: 24px; padding: 24px 16px; border: 0; }
+  .apply-form { flex-direction: column; align-items: stretch; gap: 24px; padding: 24px 16px; }
   .apply-form__thumb { margin-inline: auto; width: 161px; }
   .apply-form__btns { flex-direction: column; align-items: stretch; }
   .apply-form__btns .btn-solid, .apply-form__btns .btn-outline { width: 100%; }
