@@ -1183,7 +1183,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .funds__table th, .funds__table td { height: auto; padding: 0 !important; border: 0; }
   .funds__name { width: auto; font-size: 15px; }
   .funds__desc { grid-column: 1; grid-row: 2; margin-top: 16px; line-height: 25px; }
-  .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 20px; }
+  .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 18px; }
   .bank__box { padding: 24px 16px; }
   .bank__grid, .bank__grid--postal { grid-template-columns: minmax(0, 1fr); gap: 12px; }
   .bank .tel-card { flex-direction: row; align-items: center; padding: 12px 16px; min-height: 64px; }
