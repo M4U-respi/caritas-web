@@ -190,7 +190,6 @@ picture > source { display: none; }
   .page-donate .partners, .page-contact .partners { padding-bottom: calc(40px + var(--curve)); }
   .page-contact .partners { padding-top: 90px; }
   .page-donate .partners--after-nav { padding-top: 80px; }
-  .page-donate .related-nav__btn[aria-current="page"] { border-color: var(--c-line-gray); color: inherit; }
 }
 
 /* 本文(16px / 32px) */
