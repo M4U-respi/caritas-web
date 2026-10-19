@@ -64,7 +64,7 @@ const pageCtx = createPublicPageContext({
 					var target = document.getElementById(id);
 					history.replaceState(history.state, "", url + hash);
 					if (!target) return;
-					window.scrollTo(0, 0);
+					window.scrollTo({ top: 0, behavior: "instant" });
 					setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 300);
 				});
 			})();
