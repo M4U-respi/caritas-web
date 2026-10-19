@@ -47,8 +47,12 @@ export const FUNDS: { title: string; items: Fund[] }[] = [
 	},
 ];
 
-/** クレジットカード寄付の金額(リンク先は決済サービス。URL 未支給) */
+/** クレジットカード決済(アナザーレーン payment.alij.ne.jp)。現行サイトと同じく金額ごとのリンクで決済ページへ移動する */
+const CARD_PAYMENT_URL = "https://payment.alij.ne.jp/service/credit";
+const CARD_PAYMENT_SITE = { siteId: "20288901", sitePass: "8901pahw" };
+
+/** クレジットカード寄付の金額と決済ページの URL */
 export const CARD_AMOUNTS: { amount: number; href: string }[] = [1000, 2000, 3000, 5000, 10000, 30000, 50000].map((amount) => ({
 	amount,
-	href: "#", // TODO(要確認): 決済サービス(payment.alij.ne.jp)の各金額ページの URL
+	href: `${CARD_PAYMENT_URL}?${new URLSearchParams({ ...CARD_PAYMENT_SITE, amount: String(amount) })}`,
 }));

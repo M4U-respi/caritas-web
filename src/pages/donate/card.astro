@@ -49,10 +49,9 @@ const faq = [
 
 			<div class="amounts" id="amount">
 				<h3 class="subheading-bar">金額を選ぶ</h3>
-				<!-- TODO(要確認): 各金額の決済ページ URL(src/data/donate.ts の CARD_AMOUNTS) -->
 				<ul class="amounts__list">
 					{CARD_AMOUNTS.map((a) => (
-						<li><a class="amounts__btn" href={a.href} data-todo={a.href === "#" ? "url" : undefined} rel="noopener"><span class="amounts__num">{a.amount.toLocaleString("ja-JP")}</span><span class="amounts__unit">円</span></a></li>
+						<li><a class="amounts__btn" href={a.href}><span class="amounts__num">{a.amount.toLocaleString("ja-JP")}</span><span class="amounts__unit">円</span></a></li>
 					))}
 				</ul>
 				<p class="sub-note note-hang amounts__note">※ 現在の決済サービスでは、上記の金額からお選びいただく形になります。</p>
