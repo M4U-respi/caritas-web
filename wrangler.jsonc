@@ -5,9 +5,11 @@
 	"compatibility_date": "2026-02-24",
 	"compatibility_flags": ["nodejs_compat"],
 	// エラーログを Cloudflare ダッシュボード(Observability)で確認できるようにする
-	// 開発サイトの合言葉(正式公開時はこの vars ごと削除するとゲートが外れる)
+	// SITE_PASSWORD:開発サイトの合言葉(正式公開時に削除するとゲートが外れる)
 	"vars": {
 		"SITE_PASSWORD": "caritas",
+		// お問い合わせフォームの受信アドレス(複数はカンマ区切り)。API キーはシークレット RESEND_API_KEY に設定
+		"CONTACT_TO": "ueno@respiration-inc.com",
 	},
 	"observability": {
 		"enabled": true,

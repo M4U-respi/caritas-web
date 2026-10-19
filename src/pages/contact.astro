@@ -49,11 +49,13 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 					<li class="form-steps__item"><span class="form-steps__num">3</span>送信完了</li>
 				</ol>
 				<!-- TODO(要確認): 送信先未定。確認・完了画面のカンプなし -->
-				<form class="form-body" id="contact-form" action="#" method="post" enctype="multipart/form-data" data-todo="form-endpoint" novalidate>
+				<form class="form-body" id="contact-form" action="/api/contact" method="post" enctype="multipart/form-data" novalidate>
+					<!-- 迷惑送信対策(人には見えない欄。入力があれば破棄) -->
+					<p class="visually-hidden" aria-hidden="true"><label>空欄のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></p>
 					<div class="form-row">
 						<label class="form-row__label" for="cf-name">お名前<span class="form-badge form-badge--req">必須</span></label>
 						<div>
-							<input class="form-input" id="cf-name" name="name" type="text" autocomplete="name" placeholder="例: 中田 翔次" required aria-describedby="cf-name-err" />
+							<input class="form-input" id="cf-name" name="name" type="text" autocomplete="name" placeholder="例: 鈴木 一郎" required aria-describedby="cf-name-err" />
 							<p class="form-error" id="cf-name-err" aria-live="polite"></p>
 						</div>
 					</div>
@@ -95,6 +97,22 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 					<p class="form-status" id="cf-status" role="status" hidden></p>
 					<p class="sub-note note-hang">※ 迷惑行為を防ぐため、Google の reCAPTCHA を使用しています。プライバシーポリシーもあわせてご確認ください。</p>
 				</form>
+
+				<!-- 2. 内容確認 -->
+				<div class="form-body form-confirm" id="cf-confirm" hidden>
+					<dl id="cf-confirm-list"></dl>
+					<div class="form-actions">
+						<button class="form-back" type="button" id="cf-back">入力内容を修正する</button>
+						<button class="form-submit" type="button" id="cf-send"><span>この内容で送信する</span><svg width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></button>
+					</div>
+					<p class="form-status" id="cf-send-status" role="status" hidden></p>
+				</div>
+
+				<!-- 3. 送信完了 -->
+				<div class="form-body form-done" id="cf-done" tabindex="-1" hidden>
+					<p class="form-done__title">お問い合わせを送信しました。</p>
+					<p class="sub-text">内容を確認のうえ、事務局より順次ご返信いたします。</p>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -103,7 +121,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 </Layout>
 
 <script>
-	/* お問い合わせフォーム: 入力チェック(必須・メール形式)のみ。送信先未定のため送信はしない */
+	/* お問い合わせフォーム:入力チェック → 内容確認 → 送信(/api/contact)→ 完了 */
 	const form = document.getElementById("contact-form") as HTMLFormElement | null;
 	if (form) {
 		const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
@@ -111,7 +129,19 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 		const fileInput = $<HTMLInputElement>("cf-file");
 		const fileName = $<HTMLSpanElement>("cf-file-name");
 		const fileHint = fileName.textContent ?? "";
+		const confirmBox = $<HTMLDivElement>("cf-confirm");
+		const confirmList = $<HTMLDListElement>("cf-confirm-list");
+		const sendBtn = $<HTMLButtonElement>("cf-send");
+		const sendStatus = $<HTMLParagraphElement>("cf-send-status");
+		const done = $<HTMLDivElement>("cf-done");
+		const steps = [...document.querySelectorAll<HTMLLIElement>(".form-steps__item")];
 		const MAX = 5 * 1024 * 1024;
+
+		const setStep = (n: number) => steps.forEach((li, i) => (i === n ? li.setAttribute("aria-current", "step") : li.removeAttribute("aria-current")));
+		const show = (el: HTMLElement) => {
+			[form, confirmBox, done].forEach((x) => (x.hidden = x !== el));
+			el.closest(".form-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+		};
 
 		// TODO(要確認): エラー文言
 		const checks: [string, string, (el: HTMLInputElement) => string][] = [
@@ -140,6 +170,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 			} else fileName.textContent = f ? f.name : fileHint;
 		});
 
+		// 1 → 2:入力チェックを通ったら確認画面へ
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
 			const results = checks.map(([id, errId, fn]) => validate(id, errId, fn));
@@ -149,8 +180,59 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 				$(checks[firstNg][0]).focus();
 				return;
 			}
-			status.textContent = "送信機能は準備中です。";
-			status.hidden = false;
+			const val = (id: string) => $<HTMLInputElement>(id).value.trim();
+			const rows: [string, string][] = [
+				["お名前", val("cf-name")],
+				["メールアドレス", val("cf-email")],
+				["ご用件", val("cf-subject") || "(未記入)"],
+				["メッセージ本文", val("cf-message") || "(未記入)"],
+				["ファイルの添付", fileInput.files?.[0]?.name ?? "なし"],
+			];
+			confirmList.replaceChildren(
+				...rows.map(([label, value]) => {
+					const row = document.createElement("div");
+					row.className = "form-row";
+					const dt = document.createElement("dt");
+					dt.className = "form-row__label";
+					dt.textContent = label;
+					const dd = document.createElement("dd");
+					dd.className = "form-confirm__value";
+					dd.textContent = value;
+					row.appendChild(dt);
+					row.appendChild(dd);
+					return row;
+				}),
+			);
+			sendStatus.hidden = true;
+			setStep(1);
+			show(confirmBox);
+		});
+
+		// 2 → 1:修正
+		$("cf-back").addEventListener("click", () => {
+			setStep(0);
+			show(form);
+		});
+
+		// 2 → 3:送信
+		sendBtn.addEventListener("click", async () => {
+			sendBtn.disabled = true;
+			sendStatus.hidden = true;
+			try {
+				const res = await fetch(form.action, { method: "POST", body: new FormData(form) });
+				const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
+				if (!res.ok || !data.ok) throw new Error(data.error || String(res.status));
+				form.reset();
+				fileName.textContent = fileHint;
+				setStep(2);
+				show(done);
+				done.focus({ preventScroll: true });
+			} catch {
+				sendStatus.textContent = "送信できませんでした。時間をおいて再度お試しいただくか、お電話・FAX でお問い合わせください。";
+				sendStatus.hidden = false;
+			} finally {
+				sendBtn.disabled = false;
+			}
 		});
 	}
 </script>
