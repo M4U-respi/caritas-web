@@ -8,7 +8,7 @@
 	// SITE_PASSWORD:開発サイトの合言葉(正式公開時に削除するとゲートが外れる)
 	"vars": {
 		"SITE_PASSWORD": "caritas",
-		// お問い合わせフォーム:受信アドレス(複数はカンマ区切り)。メール通知は send_email バインディング CONTACT_MAIL と CONTACT_FROM の設定後に有効
+		// お問い合わせフォーム:通知先アドレス(複数はカンマ区切り)。送信には send_email バインディング CONTACT_MAIL と CONTACT_FROM(Cloudflare DNS のドメインのアドレス)が必要
 		"CONTACT_TO": "ueno@respiration-inc.com",
 		// Cloudflare Turnstile のサイトキー(公開値)。シークレットキーは Worker のシークレット TURNSTILE_SECRET_KEY
 		"TURNSTILE_SITE_KEY": "0x4AAAAAAFbFNepGqqS-iqd7",

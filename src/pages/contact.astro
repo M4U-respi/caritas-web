@@ -53,7 +53,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 					<li class="form-steps__item"><span class="form-steps__num">3</span>送信完了</li>
 				</ol>
 				<!-- TODO(要確認): 送信先未定。確認・完了画面のカンプなし -->
-				<form class="form-body" id="contact-form" action="/api/contact" method="post" enctype="multipart/form-data" novalidate>
+				<form class="form-body" id="contact-form" action="/api/contact" method="post" novalidate>
 					<!-- 迷惑送信対策(人には見えない欄。入力があれば破棄) -->
 					<p class="visually-hidden" aria-hidden="true"><label>空欄のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></p>
 					<div class="form-row">
@@ -78,14 +78,6 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 					<div class="form-row form-row--textarea">
 						<label class="form-row__label" for="cf-message">メッセージ本文<span class="form-badge form-badge--opt">任意</span></label>
 						<div><textarea class="form-input" id="cf-message" name="message" rows="4" placeholder="お問い合わせの内容をご記入ください。"></textarea></div>
-					</div>
-					<div class="form-row">
-						<span class="form-row__label" id="cf-file-label">ファイルの添付<span class="form-badge form-badge--opt">任意</span></span>
-						<div class="form-file">
-							<input class="form-file__input" id="cf-file" name="file" type="file" aria-labelledby="cf-file-label cf-file-btn" aria-describedby="cf-file-name" />
-							<label class="form-file__btn" id="cf-file-btn" for="cf-file">ファイルを選択</label>
-							<span class="form-file__name" id="cf-file-name" aria-live="polite">5MBまでの1ファイルを添付できます。</span>
-						</div>
 					</div>
 
 					<div class="form-agree">
@@ -132,16 +124,12 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 	if (form) {
 		const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
 		const status = $<HTMLParagraphElement>("cf-status");
-		const fileInput = $<HTMLInputElement>("cf-file");
-		const fileName = $<HTMLSpanElement>("cf-file-name");
-		const fileHint = fileName.textContent ?? "";
 		const confirmBox = $<HTMLDivElement>("cf-confirm");
 		const confirmList = $<HTMLDListElement>("cf-confirm-list");
 		const sendBtn = $<HTMLButtonElement>("cf-send");
 		const sendStatus = $<HTMLParagraphElement>("cf-send-status");
 		const done = $<HTMLDivElement>("cf-done");
 		const steps = [...document.querySelectorAll<HTMLLIElement>(".form-steps__item")];
-		const MAX = 5 * 1024 * 1024;
 
 		const setStep = (n: number) => steps.forEach((li, i) => (i === n ? li.setAttribute("aria-current", "step") : li.removeAttribute("aria-current")));
 		const show = (el: HTMLElement) => {
@@ -168,14 +156,6 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 			el.addEventListener(el.type === "checkbox" ? "change" : "blur", () => validate(id, errId, fn));
 		});
 
-		fileInput.addEventListener("change", () => {
-			const f = fileInput.files?.[0];
-			if (f && f.size > MAX) {
-				fileInput.value = "";
-				fileName.textContent = "5MBを超えるファイルは添付できません。";
-			} else fileName.textContent = f ? f.name : fileHint;
-		});
-
 		// 1 → 2:入力チェックを通ったら確認画面へ
 		form.addEventListener("submit", (e) => {
 			e.preventDefault();
@@ -192,7 +172,6 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 				["メールアドレス", val("cf-email")],
 				["ご用件", val("cf-subject") || "(未記入)"],
 				["メッセージ本文", val("cf-message") || "(未記入)"],
-				["ファイルの添付", fileInput.files?.[0]?.name ?? "なし"],
 			];
 			confirmList.replaceChildren(
 				...rows.map(([label, value]) => {
@@ -230,7 +209,6 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 				if (!res.ok || !data.ok) throw new Error(data.error || String(res.status));
 				form.reset();
 				(window as { turnstile?: { reset(): void } }).turnstile?.reset();
-				fileName.textContent = fileHint;
 				setStep(2);
 				show(done);
 				done.focus({ preventScroll: true });
