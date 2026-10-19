@@ -52,7 +52,7 @@ export const POST: APIRoute = async ({ request }) => {
 	const email = str(form.get("email"), 254);
 	const subject = str(form.get("subject"), 200);
 	const message = str(form.get("message"), 10000);
-	if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !form.get("agree")) return json({ ok: false, error: "invalid" }, 400);
+	if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || !message || !form.get("agree")) return json({ ok: false, error: "invalid" }, 400);
 
 	const text = [
 		"ウェブサイトのお問い合わせフォームから送信がありました。",
@@ -62,7 +62,7 @@ export const POST: APIRoute = async ({ request }) => {
 		`ご用件：${subject || "(未記入)"}`,
 		"",
 		"■ メッセージ本文",
-		message || "(未記入)",
+		message,
 		"",
 		"――",
 		`受付日時：${new Date().toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" })}`,

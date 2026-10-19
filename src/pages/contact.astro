@@ -76,8 +76,11 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 						<div><input class="form-input" id="cf-subject" name="subject" type="text" placeholder="例: 資料の請求について" /></div>
 					</div>
 					<div class="form-row form-row--textarea">
-						<label class="form-row__label" for="cf-message">メッセージ本文<span class="form-badge form-badge--opt">任意</span></label>
-						<div><textarea class="form-input" id="cf-message" name="message" rows="4" placeholder="お問い合わせの内容をご記入ください。"></textarea></div>
+						<label class="form-row__label" for="cf-message">メッセージ本文<span class="form-badge form-badge--req">必須</span></label>
+						<div>
+							<textarea class="form-input" id="cf-message" name="message" rows="4" placeholder="お問い合わせの内容をご記入ください。" required aria-describedby="cf-message-err"></textarea>
+							<p class="form-error" id="cf-message-err" aria-live="polite"></p>
+						</div>
 					</div>
 
 					<div class="form-agree">
@@ -141,6 +144,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 		const checks: [string, string, (el: HTMLInputElement) => string][] = [
 			["cf-name", "cf-name-err", (el) => (el.value.trim() ? "" : "お名前を入力してください。")],
 			["cf-email", "cf-email-err", (el) => (!el.value.trim() ? "メールアドレスを入力してください。" : el.validity.typeMismatch ? "メールアドレスの形式が正しくありません。" : "")],
+			["cf-message", "cf-message-err", (el) => (el.value.trim() ? "" : "メッセージ本文を入力してください。")],
 			["cf-agree", "cf-agree-err", (el) => (el.checked ? "" : "プライバシーポリシーへの同意が必要です。")],
 		];
 		const validate = (id: string, errId: string, fn: (el: HTMLInputElement) => string) => {
@@ -171,7 +175,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 				["お名前", val("cf-name")],
 				["メールアドレス", val("cf-email")],
 				["ご用件", val("cf-subject") || "(未記入)"],
-				["メッセージ本文", val("cf-message") || "(未記入)"],
+				["メッセージ本文", val("cf-message")],
 			];
 			confirmList.replaceChildren(
 				...rows.map(([label, value]) => {
