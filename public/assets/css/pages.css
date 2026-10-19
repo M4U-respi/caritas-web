@@ -521,7 +521,7 @@ a.pagination__arrow:hover { opacity: .7; }
 .tel-card--wide .tel-card__label { width: 72px; }
 .contact-tel { padding-top: 86px; padding-bottom: calc(104px + var(--curve)); }
 .contact-tel__curve { color: var(--c-cream-light); }
-.contact-form-section { padding-top: 90px; padding-bottom: 104px; }
+.contact-form-section { padding-top: 90px; padding-bottom: 104px; scroll-margin-top: var(--header-h); }
 
 .form-card { display: grid; grid-template-columns: 208px minmax(0, 1fr); padding: 56px; border-radius: 8px; background: var(--c-white); scroll-margin-top: calc(var(--header-h) + 16px); }
 .form-steps { display: grid; align-content: start; gap: 24px; padding-right: 24px; border-right: 1px solid var(--c-line); }
