@@ -850,7 +850,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .apply-method__desc { margin-top: 12px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; color: var(--c-text); }
 
 /* ---------- /mission/(デザイン「07 mission」/ SP「SP07 mission」) ---------- */
-.mission-way { --mc: #6FBA2C; position: relative; padding: 104px 0; background: var(--c-white); }
+.mission-way { --mc: #6FBA2C; position: relative; padding: 104px 0; background: var(--c-white); scroll-margin-top: var(--header-h); }
 .mission-way--join { --mc: #D5B329; }
 .mission-way--share { --mc: #6C9BD2; }
 .mission-way--pray { --mc: #EC6D65; padding-bottom: 96px; }

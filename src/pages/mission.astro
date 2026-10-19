@@ -71,7 +71,7 @@ const ways: Way[] = [
 	<PhotoStrip photos={strip} gap="cream" />
 
 	{ways.map((w, i) => (
-		<section class:list={["mission-way", `mission-way--${w.key}`, i % 2 === 1 && "mission-way--cream"]} aria-labelledby={`way-${w.key}-title`}>
+		<section class:list={["mission-way", `mission-way--${w.key}`, i % 2 === 1 && "mission-way--cream"]} id={w.key} aria-labelledby={`way-${w.key}-title`}>
 			<div class="l-container">
 				<div class="mission-way__head">
 					<div class="mission-way__intro">
