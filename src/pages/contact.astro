@@ -3,6 +3,10 @@ import Layout from "../layouts/Layout.astro";
 import PageHeader from "../components/PageHeader.astro";
 import SectionHead from "../components/SectionHead.astro";
 import Partners from "../components/Partners.astro";
+import { env } from "cloudflare:workers";
+
+/** Cloudflare Turnstile のサイトキー(wrangler.jsonc の vars) */
+const turnstileSiteKey = (env as { TURNSTILE_SITE_KEY?: string }).TURNSTILE_SITE_KEY;
 
 const lead = "寄付や募金のお手続き、資料のご請求、取材のお申し込みなど、お気軽にお問い合わせください。";
 ---
@@ -93,9 +97,10 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 						<p class="sub-note">ご記入いただいた個人情報は、お問い合わせへの対応にのみ使用します。詳しくはプライバシーポリシーをご覧ください。</p>
 					</div>
 
+					{turnstileSiteKey && <div class="form-turnstile cf-turnstile" data-sitekey={turnstileSiteKey} data-language="ja" data-theme="light"></div>}
 					<button class="form-submit" type="submit"><span>入力内容を確認する</span><svg width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></button>
 					<p class="form-status" id="cf-status" role="status" hidden></p>
-					<p class="sub-note note-hang">※ 迷惑行為を防ぐため、Google の reCAPTCHA を使用しています。プライバシーポリシーもあわせてご確認ください。</p>
+					<p class="sub-note note-hang">※ 迷惑行為を防ぐため、Cloudflare Turnstile を使用しています。プライバシーポリシーもあわせてご確認ください。</p>
 				</form>
 
 				<!-- 2. 内容確認 -->
@@ -118,6 +123,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 	</section>
 
 	<Partners />
+	{turnstileSiteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
 </Layout>
 
 <script>
@@ -223,12 +229,14 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 				const data = (await res.json().catch(() => ({}))) as { ok?: boolean; error?: string };
 				if (!res.ok || !data.ok) throw new Error(data.error || String(res.status));
 				form.reset();
+				(window as { turnstile?: { reset(): void } }).turnstile?.reset();
 				fileName.textContent = fileHint;
 				setStep(2);
 				show(done);
 				done.focus({ preventScroll: true });
-			} catch {
-				sendStatus.textContent = "送信できませんでした。時間をおいて再度お試しいただくか、お電話・FAX でお問い合わせください。";
+			} catch (err) {
+				(window as { turnstile?: { reset(): void } }).turnstile?.reset();
+				sendStatus.textContent = String(err).includes("turnstile") ? "認証の有効期限が切れたため送信できませんでした。お手数ですが「入力内容を修正する」から認証をやり直してください。" : "送信できませんでした。時間をおいて再度お試しいただくか、お電話・FAX でお問い合わせください。";
 				sendStatus.hidden = false;
 			} finally {
 				sendBtn.disabled = false;
