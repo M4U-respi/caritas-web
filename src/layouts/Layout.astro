@@ -53,6 +53,21 @@ const pageCtx = createPublicPageContext({
 		<script is:inline>
 			/* JS 有効時のみ .js を付与。main.js が読めない場合は外してコンテンツを必ず表示する */
 			(function (d) { d.classList.add("js"); setTimeout(function () { if (!window.__caritasReady) d.classList.remove("js"); }, 4000); })(document.documentElement);
+			/* 他ページからのアンカーリンク:ブラウザの即ジャンプを止め、ページ先頭からアンカーまでスムーススクロール(戻る/進む・再読み込み・動きを減らす設定では通常どおり) */
+			(function () {
+				var hash = location.hash, nav = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+				if (!hash || hash.length < 2 || (nav && nav.type !== "navigate") || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+				var url = location.pathname + location.search;
+				history.replaceState(history.state, "", url);
+				window.addEventListener("load", function () {
+					var id; try { id = decodeURIComponent(hash.slice(1)); } catch (e) { id = hash.slice(1); }
+					var target = document.getElementById(id);
+					history.replaceState(history.state, "", url + hash);
+					if (!target) return;
+					window.scrollTo(0, 0);
+					setTimeout(function () { target.scrollIntoView({ behavior: "smooth", block: "start" }); }, 300);
+				});
+			})();
 		</script>
 		<EmDashHead page={pageCtx} />
 	</head>
