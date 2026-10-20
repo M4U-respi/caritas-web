@@ -37,9 +37,18 @@ export const POST: APIRoute = async ({ url, request }) => {
 		if (head) { out.push({ url: u, status: "exists", size: head.size }); continue; }
 		const res = await fetch(u, { headers: { "User-Agent": "caritas-web-migration" } });
 		if (!res.ok) { out.push({ url: u, status: `http:${res.status}` }); continue; }
-		const body = await res.arrayBuffer();
-		await e.MEDIA.put(key, body, { httpMetadata: { contentType: res.headers.get("content-type") ?? "application/octet-stream" } });
-		out.push({ url: u, status: "saved", size: body.byteLength });
+		const httpMetadata = { contentType: res.headers.get("content-type") ?? "application/octet-stream" };
+		const len = Number(res.headers.get("content-length"));
+		if (len > 0 && res.body) {
+			// 大きいファイル(動画・大容量 PDF)もメモリに載せずに転送
+			const { readable, writable } = new FixedLengthStream(len);
+			const [, saved] = await Promise.all([res.body.pipeTo(writable), e.MEDIA.put(key, readable, { httpMetadata })]);
+			out.push({ url: u, status: "saved", size: saved?.size });
+		} else {
+			const body = await res.arrayBuffer();
+			await e.MEDIA.put(key, body, { httpMetadata });
+			out.push({ url: u, status: "saved", size: body.byteLength });
+		}
 	}
 	return Response.json(out);
 };
