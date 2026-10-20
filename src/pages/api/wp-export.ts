@@ -31,6 +31,24 @@ const decode = (s: string) =>
 const cdata = (s: string) => `<![CDATA[${s.replace(/]]>/g, "]]]]><![CDATA[>")}]]>`;
 const toFull = (url: string) => url.replace(/-\d+x\d+(?=\.[a-z0-9]+$)/i, "");
 
+/** 旧サイト内リンク → 新サイトのパス(対応先が無いものは旧 URL のまま) */
+const PAGE_MAP: Record<string, string> = {
+	"/donate/": "/donate/",
+	"/contact/": "/contact/",
+	"/supporter/": "/donate/monthly/",
+	"/site_policy/": "/site-policy/",
+	"/category/publication/": "/publication/",
+	"/category/news/secretariat/lent/": "/about/lent/",
+};
+const rewriteLinks = (html: string, postPath: Map<number, string>) =>
+	html.replace(/href="https?:\/\/(?:www\.)?caritas\.jp(\/[^"]*)?"/g, (m, path = "/") => {
+		if (/^\/wp-content\//.test(path)) return m;
+		const [, hash = ""] = path.match(/(#[^"]*)$/) ?? [];
+		const post = path.match(/^\/\d{4}\/\d{2}\/\d{2}\/(\d+)\/?/) ?? path.match(/[?&]p=(\d+)/);
+		const to = post ? postPath.get(Number(post[1])) : PAGE_MAP[path.replace(/[?#].*$/, "")];
+		return to ? `href="${to}${hash}"` : m;
+	});
+
 /** 本文の整形:サイズ違いの画像を原寸に、画像を包む同一画像リンクを外す、空段落・余計な属性を削除 */
 function cleanHtml(html: string) {
 	return html
@@ -67,6 +85,14 @@ export const GET: APIRoute = async ({ url }) => {
 	const ancestors = (id: number) => { const out = [id]; let p = parent.get(id); while (p) { out.push(p); p = parent.get(p); } return out; };
 	const under = (ids: number[], root: number) => ids.some((id) => ancestors(id).includes(root));
 
+	// 記事 ID → 新サイトのパス(本文中の記事リンクの書き換え用。お知らせ・活動報告の両方)
+	const postPath = new Map<number, string>();
+	for (let page = 1, total = 1; page <= total; page++) {
+		const r = await wp<{ id: number; categories: number[] }[]>(`/posts?categories=${cats.filter((c) => ancestors(c.id).some((a) => a === 2 || a === 8)).map((c) => c.id).join(",")}&per_page=100&page=${page}&status=publish&_fields=id,categories`);
+		for (const p of r.data) postPath.set(p.id, under(p.categories, 8) ? `/report/${p.id}/` : `/news/${p.id}/`);
+		total = r.totalPages;
+	}
+
 	// 記事(お知らせ配下 + 活動報告配下を取得し、活動報告に属するものは活動報告側へ)
 	const root = target === "report" ? 8 : 2;
 	const posts: Post[] = [];
@@ -99,7 +125,7 @@ export const GET: APIRoute = async ({ url }) => {
 	let nextId = 9_000_000;
 	const attach = (u: string) => { if (!attachments.has(u)) attachments.set(u, nextId++); return attachments.get(u)!; };
 	const rows = items.map((p) => {
-		const html = cleanHtml(p.content.rendered);
+		const html = rewriteLinks(cleanHtml(p.content.rendered), postPath);
 		for (const u of html.match(UPLOADS) ?? []) if (FILE_EXT.test(u)) attach(u);
 		const firstImg = html.match(/<img src="([^"]+)"/)?.[1];
 		const featuredUrl = media.get(p.featured_media) ?? (firstImg && UPLOADS.test(firstImg) ? firstImg : undefined);
