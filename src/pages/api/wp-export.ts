@@ -43,6 +43,13 @@ function cleanHtml(html: string) {
 		.replace(/\s(?:data-[\w-]+|class|id|dir|aria-[\w-]+|style)="[^"]*"/g, "")
 		.replace(/<p>(?:\s|&nbsp;|<br\s*\/?>|<strong>\s*<\/strong>)*<\/p>/g, "")
 		.replace(/<\/?div>/g, "")
+		// 旧サイトは <pre> を見出し風ラベルに使っている(取り込むと直後の見出し・段落を巻き込むため変換)
+		// 1 行の短いものは h2、それ以外は段落に
+		.replace(/<pre>([\s\S]*?)<\/pre>/g, (_m, inner: string) => {
+			const text = inner.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+			if (!text) return "";
+			return text.length <= 40 && !/<a\s/.test(inner) ? `<h2>${text}</h2>` : `<p>${inner.trim().replace(/\n/g, "<br />")}</p>`;
+		})
 		.replace(/<(\/?)h1>/g, "<$1h2>")
 		.replace(/<(\/?)h[4-6]>/g, "<$1h3>")
 		.replace(/[ 　]{4,}/g, "　")
