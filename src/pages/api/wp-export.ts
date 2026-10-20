@@ -101,7 +101,17 @@ export const GET: APIRoute = async ({ url }) => {
 		posts.push(...r.data);
 		total = r.totalPages;
 	}
-	const items = posts.filter((p) => (target === "report" ? under(p.categories, 8) : !under(p.categories, 8)));
+	// 年で絞り込み(from/to)し、古い順に size 件ずつ分割して part 番目を出力(管理画面から少しずつ取り込む用)
+	const from = Number(url.searchParams.get("from")) || 0;
+	const to = Number(url.searchParams.get("to")) || 9999;
+	const size = Number(url.searchParams.get("size")) || 0;
+	const part = Number(url.searchParams.get("part")) || 1;
+	const all = posts
+		.filter((p) => (target === "report" ? under(p.categories, 8) : !under(p.categories, 8)))
+		.filter((p) => { const y = Number(p.date.slice(0, 4)); return y >= from && y <= to; })
+		.sort((a, b) => a.date.localeCompare(b.date));
+	const parts = size ? Math.max(1, Math.ceil(all.length / size)) : 1;
+	const items = size ? all.slice((part - 1) * size, part * size) : all;
 
 	// 分類の割り当て(1 記事 1 カテゴリ。優先:緊急支援 > 募金・献金 > 啓発・キャンペーン > 事務局から)
 	const term = (p: Post): [string, string] => {
@@ -173,5 +183,15 @@ ${xmlAttachments.join("\n")}
 ${xmlItems.join("\n")}
 </channel>
 </rss>`;
-	return new Response(xml, { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "no-store", "X-Post-Count": String(items.length), "X-Attachment-Count": String(attachments.size) } });
+	const filename = `caritas-${target}${from || to !== 9999 ? `-${from || "all"}-${to === 9999 ? "now" : to}` : ""}${size ? `-part${part}of${parts}` : ""}.xml`;
+	return new Response(xml, {
+		headers: {
+			"Content-Type": "application/xml; charset=utf-8",
+			"Cache-Control": "no-store",
+			"X-Post-Count": String(items.length),
+			"X-Attachment-Count": String(attachments.size),
+			"X-Part-Count": String(parts),
+			...(url.searchParams.get("download") ? { "Content-Disposition": `attachment; filename="${filename}"` } : {}),
+		},
+	});
 };
