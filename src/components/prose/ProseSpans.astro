@@ -1,6 +1,7 @@
 ---
 /* 表のセル内テキスト(太字・斜体・リンクに対応) */
 import { sanitizeHref } from "emdash";
+import { linkTarget } from "./link";
 
 interface Props { spans?: any[]; markDefs?: any[] }
 const { spans = [], markDefs = [] } = Astro.props;
@@ -18,5 +19,5 @@ const parts = spans.map((s) => {
 ---
 {parts.map((p) => {
 	const inner = p.strong ? <strong>{p.em ? <em>{p.text}</em> : p.text}</strong> : p.em ? <em>{p.text}</em> : p.text;
-	return p.href ? <a href={p.href} target={p.blank ? "_blank" : undefined} rel={p.blank ? "noopener noreferrer" : undefined}>{inner}</a> : inner;
+	return p.href ? <a href={p.href} {...linkTarget(p.href, p.blank)}>{inner}</a> : inner;
 })}

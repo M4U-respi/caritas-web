@@ -2,7 +2,7 @@ node_modules
 dist
 .astro
 .emdash/migrations.json
-uploads
+/uploads
 data.db
 .wrangler
 

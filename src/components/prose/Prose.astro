@@ -5,11 +5,12 @@ import ProseBlock from "./ProseBlock.astro";
 import ProseImage from "./ProseImage.astro";
 import ProseGallery from "./ProseGallery.astro";
 import ProseTable from "./ProseTable.astro";
+import ProseLink from "./ProseLink.astro";
 
 interface Props { value: any; lead?: string | null }
 const { value, lead } = Astro.props;
 ---
 <div class="prose">
 	{lead && <p class="prose__lead">{lead}</p>}
-	{value && <PortableText value={value} components={{ block: ProseBlock, type: { image: ProseImage, gallery: ProseGallery, table: ProseTable } } as any} />}
+	{value && <PortableText value={value} components={{ block: ProseBlock, type: { image: ProseImage, gallery: ProseGallery, table: ProseTable }, mark: { link: ProseLink } } as any} />}
 </div>

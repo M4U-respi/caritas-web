@@ -1,0 +1,10 @@
+---
+/* 本文のリンク(書類は別タブ、サイト内は同じタブ。link.ts 参照) */
+import { sanitizeHref } from "emdash";
+import { linkTarget } from "./link";
+
+const { node } = Astro.props as { node?: { markDef?: { href?: string; blank?: boolean } } };
+const href = sanitizeHref(String(node?.markDef?.href ?? ""));
+const { target, rel } = linkTarget(href, node?.markDef?.blank);
+---
+<a href={href} target={target} rel={rel}><slot /></a>

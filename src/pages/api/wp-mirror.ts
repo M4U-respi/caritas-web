@@ -2,6 +2,8 @@
  * 【一時的】旧サイトの wp-content/uploads のファイルを R2 にコピーする(記事移行用)
  *   GET  /api/wp-mirror?key=…           … 記事(お知らせ・活動報告)が参照している旧サイトのファイル URL 一覧
  *   POST /api/wp-mirror?key=…  {urls}   … 最大 10 件を取得して R2(legacy/wp-content/uploads/…)に保存
+ *   GET  /api/wp-mirror?key=…&table=news|report       … その記事種別が参照している /wp-content/uploads/… の一覧
+ *   POST /api/wp-mirror?key=…&table=news|report {paths} … legacy/wp-content/uploads/… を uploads/{news|report}/… にコピー(最大 10 件)
  * - key はシークレット WP_EXPORT_KEY と一致したときだけ応答
  * - 移行が終わったらこのファイルを削除する
  */
@@ -15,8 +17,18 @@ const e = env as { WP_EXPORT_KEY?: string; MEDIA: R2Bucket; DB: D1Database };
 const allowed = (url: URL) => !!e.WP_EXPORT_KEY && url.searchParams.get("key") === e.WP_EXPORT_KEY;
 const toKey = (u: string) => `legacy/wp-content/uploads/${decodeURIComponent(u.slice(PREFIX.length))}`;
 
+const LOCAL = "/wp-content/uploads/";
+const tableOf = (url: URL) => ({ news: "ec_news", report: "ec_report" })[url.searchParams.get("table") ?? ""];
+
 export const GET: APIRoute = async ({ url }) => {
 	if (!allowed(url)) return new Response("Not found", { status: 404 });
+	const table = tableOf(url);
+	if (table) {
+		const { results } = await e.DB.prepare(`SELECT DISTINCT u FROM (
+			SELECT t.value AS u FROM ${table} n, json_tree(n.content) t WHERE n.deleted_at IS NULL AND t.type = 'text' AND t.value LIKE '${LOCAL}%'
+			UNION SELECT json_extract(featured_image, '$.src') FROM ${table} WHERE deleted_at IS NULL AND featured_image LIKE '%${LOCAL}%') ORDER BY u`).all<{ u: string }>();
+		return Response.json(results.map((r) => r.u.trim().slice(LOCAL.length)));
+	}
 	const sql = (table: string) => `
 		SELECT t.value AS u FROM ${table} n, json_tree(n.content) t
 		WHERE n.deleted_at IS NULL AND t.type = 'text' AND t.value LIKE '${PREFIX}%'
@@ -28,6 +40,23 @@ export const GET: APIRoute = async ({ url }) => {
 
 export const POST: APIRoute = async ({ url, request }) => {
 	if (!allowed(url)) return new Response("Not found", { status: 404 });
+	const kind = url.searchParams.get("table");
+	if (kind === "news" || kind === "report") {
+		const { paths } = (await request.json()) as { paths: string[] };
+		const done: { path: string; status: string; size?: number }[] = [];
+		for (const p of (paths ?? []).slice(0, 10)) {
+			const rel = decodeURIComponent(p);
+			if (rel.includes("..")) { done.push({ path: p, status: "skip" }); continue; }
+			const to = `uploads/${kind}/${rel}`;
+			const head = await e.MEDIA.head(to);
+			if (head) { done.push({ path: p, status: "exists", size: head.size }); continue; }
+			const src = await e.MEDIA.get(`legacy/wp-content/uploads/${rel}`);
+			if (!src) { done.push({ path: p, status: "missing" }); continue; }
+			const saved = await e.MEDIA.put(to, src.body, { httpMetadata: src.httpMetadata });
+			done.push({ path: p, status: "copied", size: saved?.size });
+		}
+		return Response.json(done);
+	}
 	const { urls } = (await request.json()) as { urls: string[] };
 	const out: { url: string; status: string; size?: number }[] = [];
 	for (const u of (urls ?? []).slice(0, 10)) {
