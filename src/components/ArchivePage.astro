@@ -38,7 +38,7 @@ const { items, page, totalPages, years, year, error } = data;
 if (error) console.error(`[${collection}] 一覧の取得に失敗`, error);
 
 // お知らせ一覧トップ(1 ページ目)の緊急支援ボックス:緊急支援の最新 3 件
-const showUrgent = collection === "news" && !term && page === 1;
+const showUrgent = collection === "news" && !term && !aid && page === 1;
 const urgent = showUrgent ? await listEntries("news", { term: "emergency", limit: 3 }) : null;
 if (urgent?.cacheHint && Astro.cache?.enabled) Astro.cache.set(urgent.cacheHint);
 
