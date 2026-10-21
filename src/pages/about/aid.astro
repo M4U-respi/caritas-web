@@ -26,30 +26,30 @@ const flow = [
 	{ title: "視察と報告", text: "事業を視察し、支援がどのように使われたかを報告します。", img: { src: "/assets/img/sub/aid/aid-flow-04.jpg", width: 482, height: 274, sp: { src: "/assets/img/sub/aid/aid-flow-04-sp.jpg", width: 996, height: 538 } } },
 ];
 
-// リンク先(各支援の報告ページ)は未支給 → data-todo。将来 news の記事/タグに紐づける想定
+// リンク先:各支援のお知らせ記事(旧サイトから移行した記事)
 const history = [
 	{
 		title: "海外での支援",
 		items: [
-			{ label: "スーダン支援", img: "aid-history-sudan.jpg" },
-			{ label: "ベネズエラ地震", img: "aid-history-venezuela.jpg" },
-			{ label: "ロヒンギャ難民", img: null },
-			{ label: "台湾地震", img: "aid-history-taiwan.jpg" },
-			{ label: "ネパール土石流", img: "aid-history-nepal.jpg" },
-			{ label: "メキシコ地震", img: "aid-history-mexico.jpg" },
+			{ label: "スーダン支援", href: "/news/1916/", img: "aid-history-sudan.jpg" },
+			{ label: "ベネズエラ地震", href: "/news/9680/", img: "aid-history-venezuela.jpg" },
+			{ label: "ロヒンギャ難民", href: "/news/1795/", img: null },
+			{ label: "台湾地震", href: "/news/2099/", img: "aid-history-taiwan.jpg" },
+			{ label: "ネパール土石流", href: "/news/9787/", img: "aid-history-nepal.jpg" },
+			{ label: "メキシコ地震", href: "/news/1508/", img: "aid-history-mexico.jpg" },
 		],
 	},
 	{
 		title: "日本国内での支援",
 		items: [
-			{ label: "新型コロナ<br>緊急募金", img: "aid-history-covid.jpg" },
-			{ label: "東日本大震災", img: "aid-history-higashinihon.jpg" },
-			{ label: "能登半島地震", img: "aid-history-noto.jpg" },
-			{ label: "九州北部<br>豪雨災害", img: "aid-history-kyushu.jpg" },
-			{ label: "台風19号", img: "aid-history-typhoon19.jpg" },
-			{ label: "日向灘地震", img: "aid-history-hyuganada.jpg" },
-			{ label: "熊本地震", img: "aid-history-kumamoto.jpg" },
-			{ label: "西日本豪雨災害", img: "aid-history-nishinihon.jpg" },
+			{ label: "新型コロナ<br>緊急募金", href: "/news/3630/", img: "aid-history-covid.jpg" },
+			{ label: "東日本大震災", href: "/news/16/", img: "aid-history-higashinihon.jpg" },
+			{ label: "能登半島地震", href: "/news/6668/", img: "aid-history-noto.jpg" },
+			{ label: "九州北部<br>豪雨災害", href: "/news/815/", img: "aid-history-kyushu.jpg" },
+			{ label: "台風19号", href: "/news/3101/", img: "aid-history-typhoon19.jpg" },
+			{ label: "日向灘地震", href: "/news/7245/", img: "aid-history-hyuganada.jpg" },
+			{ label: "熊本地震", href: "/news/546/", img: "aid-history-kumamoto.jpg" },
+			{ label: "西日本豪雨災害", href: "/news/2424/", img: "aid-history-nishinihon.jpg" },
 		],
 	},
 ];
@@ -109,7 +109,7 @@ const history = [
 					<ul class="aid-history__list">
 						{g.items.map((it) => (
 							<li class="aid-history__item">
-								<a class="aid-history__link" href="#" data-todo="url">
+								<a class="aid-history__link" href={it.href}>
 									<img class="aid-history__thumb" src={it.img ? `/assets/img/sub/aid/${it.img}` : "/assets/img/sub/common/noimage.jpg"} alt="" width="264" height="176" loading="lazy" decoding="async" />
 									<span class="aid-history__title" set:html={it.label} />
 								</a>
