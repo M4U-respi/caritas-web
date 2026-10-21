@@ -11,7 +11,7 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ params, request }) => {
 	const path = params.path;
-	if (!path || !/^(news|report)\//.test(path) || path.includes("..")) return new Response("Not found", { status: 404 });
+	if (!path || !/^(news|report)\//.test(path) || path.split("/").includes("..")) return new Response("Not found", { status: 404 });
 	const bucket = (env as { MEDIA: R2Bucket }).MEDIA;
 	const obj = await bucket.get(`uploads/${path}`, { onlyIf: request.headers });
 	if (!obj) return new Response("Not found", { status: 404 });

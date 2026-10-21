@@ -46,7 +46,7 @@ export const POST: APIRoute = async ({ url, request }) => {
 		const done: { path: string; status: string; size?: number }[] = [];
 		for (const p of (paths ?? []).slice(0, 10)) {
 			const rel = decodeURIComponent(p);
-			if (rel.includes("..")) { done.push({ path: p, status: "skip" }); continue; }
+			if (rel.split("/").includes("..")) { done.push({ path: p, status: "skip" }); continue; }
 			const to = `uploads/${kind}/${rel}`;
 			const head = await e.MEDIA.head(to);
 			if (head) { done.push({ path: p, status: "exists", size: head.size }); continue; }

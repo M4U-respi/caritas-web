@@ -12,7 +12,7 @@ export const prerender = false;
 
 export const GET: APIRoute = async ({ params, request }) => {
 	const path = params.path;
-	if (!path || !path.startsWith("uploads/") || path.includes("..")) return new Response("Not found", { status: 404 });
+	if (!path || !path.startsWith("uploads/") || path.split("/").includes("..")) return new Response("Not found", { status: 404 });
 	const bucket = (env as { MEDIA: R2Bucket }).MEDIA;
 	const obj = await bucket.get(`legacy/wp-content/${path}`, { onlyIf: request.headers });
 	if (!obj) return new Response("Not found", { status: 404 });
