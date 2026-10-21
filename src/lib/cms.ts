@@ -16,6 +16,8 @@ export interface ListItem {
 
 export interface ListOptions {
 	term?: string | string[];
+	/** term を絞り込む分類(省略時はコレクションのカテゴリ分類) */
+	taxonomy?: string;
 	limit?: number;
 	cursor?: string;
 	/** ページ番号方式の一覧用(cursor とは併用不可) */
@@ -55,7 +57,7 @@ function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): L
 export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	const conf = COLLECTIONS[key];
 	const where: Record<string, any> = {};
-	if (opts.term) where[conf.taxonomy] = opts.term;
+	if (opts.term) where[opts.taxonomy ?? conf.taxonomy] = opts.term;
 	if (opts.year) where.published_at = yearRange(opts.year);
 	const res = await getEmDashCollection(key, {
 		orderBy: { published_at: "desc" },
@@ -76,7 +78,7 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
  * EmDash のクエリ API には件数取得が無いため、公開日の列だけを直接読む
  * (公開中 = status 'published' かつ削除されていない。EmDash の公開判定と同じ条件)。
  */
-export async function getPublishedDates(key: CollectionKey, term?: string): Promise<{ dates: string[]; error?: unknown }> {
+export async function getPublishedDates(key: CollectionKey, term?: string, taxonomy?: string): Promise<{ dates: string[]; error?: unknown }> {
 	const conf = COLLECTIONS[key];
 	try {
 		const db: any = await getDb();
@@ -96,7 +98,7 @@ export async function getPublishedDates(key: CollectionKey, term?: string): Prom
 					.where(
 						"ct.taxonomy_id",
 						"in",
-						db.selectFrom("taxonomies").select("translation_group").where("name", "=", conf.taxonomy).where("slug", "=", term),
+						db.selectFrom("taxonomies").select("translation_group").where("name", "=", taxonomy ?? conf.taxonomy).where("slug", "=", term),
 					),
 			);
 		}
@@ -125,7 +127,7 @@ export interface ArchiveData {
 export async function loadArchive(
 	key: CollectionKey,
 	url: URL,
-	opts: { term?: string; cache?: { enabled?: boolean; set(hint: any): void } } = {},
+	opts: { term?: string; taxonomy?: string; cache?: { enabled?: boolean; set(hint: any): void } } = {},
 ): Promise<ArchiveData | null> {
 	const perPage = COLLECTIONS[key].perPage;
 	const pageParam = url.searchParams.get("page");
@@ -135,13 +137,13 @@ export async function loadArchive(
 	const page = pageParam ? Number(pageParam) : 1;
 	const year = yearParam ? Number(yearParam) : undefined;
 
-	const { dates, error: datesError } = await getPublishedDates(key, opts.term);
+	const { dates, error: datesError } = await getPublishedDates(key, opts.term, opts.taxonomy);
 	const years = [...new Set(dates.map(jstYear))].sort((a, b) => b - a);
 	const total = year ? dates.filter((d) => jstYear(d) === year).length : dates.length;
 	const totalPages = Math.max(1, Math.ceil(total / perPage));
 	if (page > totalPages && !datesError) return null;
 
-	const res = await listEntries(key, { term: opts.term, year, limit: perPage, offset: (page - 1) * perPage });
+	const res = await listEntries(key, { term: opts.term, taxonomy: opts.taxonomy, year, limit: perPage, offset: (page - 1) * perPage });
 	if (opts.cache?.enabled && res.cacheHint) opts.cache.set(res.cacheHint);
 	return { items: res.items, page, totalPages, total, years, year, error: res.error ?? datesError };
 }
@@ -159,4 +161,16 @@ export async function getAdjacentEntries(key: CollectionKey, entry: any) {
 	const pick = (r: any) => (r.entries ?? [])[0];
 	const link = (e: any) => (e ? { href: `${conf.base}${e.id}/`, title: e.data.title as string } : null);
 	return { prev: link(pick(older)), next: link(pick(newer)) };
+}
+
+/** 分類の項目(スラッグ・名前)を取得。見つからなければ null */
+export async function getTerm(taxonomy: string, slug: string): Promise<{ slug: string; label: string } | null> {
+	try {
+		const db: any = await getDb();
+		const row = await db.selectFrom("taxonomies").select(["slug", "label"]).where("name", "=", taxonomy).where("slug", "=", slug).executeTakeFirst();
+		return row ?? null;
+	} catch (error) {
+		console.error(`[cms] ${taxonomy} の取得に失敗`, error);
+		return null;
+	}
 }

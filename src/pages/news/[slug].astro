@@ -1,24 +1,28 @@
 ---
 /*
  * /news/{slug}/ … slug がカテゴリ(src/data/site.ts の COLLECTIONS.news.terms)ならカテゴリ一覧、
- * それ以外は記事詳細。記事のスラッグにカテゴリと同じ文字列は使わないこと(カテゴリ一覧が優先される)。
+ * 「支援・災害」(NEWS_AID、管理画面で追加)の項目なら災害・紛争ごとの一覧、それ以外は記事詳細。
+ * 記事のスラッグにカテゴリ・支援・災害と同じ文字列は使わないこと(一覧が優先される)。
  * 404 の判定はレスポンス開始前に行う必要があるため、データ取得はここ(ページ)で行う。
  */
 import { getEmDashEntry } from "emdash";
 import ArchivePage from "../../components/ArchivePage.astro";
 import DetailPage from "../../components/DetailPage.astro";
-import { COLLECTIONS } from "../../data/site";
-import { getAdjacentEntries, loadArchive } from "../../lib/cms";
+import { COLLECTIONS, NEWS_AID } from "../../data/site";
+import { getAdjacentEntries, getTerm, loadArchive } from "../../lib/cms";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.rewrite("/404/");
 const isTerm = COLLECTIONS.news.terms.some((t) => t.slug === slug);
 
 let archive = null;
+let aid: { slug: string; label: string } | null = null;
 let entry: any = null;
 let adjacent = null;
-if (isTerm) {
-	archive = await loadArchive("news", Astro.url, { term: slug, cache: Astro.cache });
+if (!isTerm && !/^\d+$/.test(slug)) aid = await getTerm(NEWS_AID.taxonomy, slug.toLowerCase());
+if (aid && aid.slug !== slug) return Astro.redirect(`/news/${aid.slug}/${Astro.url.search}`, 301);
+if (isTerm || aid) {
+	archive = await loadArchive("news", Astro.url, aid ? { term: aid.slug, taxonomy: NEWS_AID.taxonomy, cache: Astro.cache } : { term: slug, cache: Astro.cache });
 	if (!archive) return Astro.rewrite("/404/");
 } else {
 	const res = await getEmDashEntry("news", slug);
@@ -29,4 +33,4 @@ if (isTerm) {
 	adjacent = await getAdjacentEntries("news", entry);
 }
 ---
-{archive ? <ArchivePage collection="news" term={slug} data={archive} /> : <DetailPage collection="news" slug={slug} entry={entry} adjacent={adjacent!} />}
+{archive ? <ArchivePage collection="news" term={aid ? undefined : slug} aid={aid ?? undefined} data={archive} /> : <DetailPage collection="news" slug={slug} entry={entry} adjacent={adjacent!} />}

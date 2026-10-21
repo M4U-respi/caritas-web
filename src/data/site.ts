@@ -69,6 +69,17 @@ export const COLLECTIONS = {
 
 export type CollectionKey = keyof typeof COLLECTIONS;
 
+/**
+ * お知らせの「支援・災害」分類(災害・紛争ごとのページ /news/{slug}/)
+ * - 中カテゴリ(news_category)とは独立した分類。項目は管理画面の「支援・災害」で追加・編集する
+ * - スラッグは小文字(URL の大文字は小文字へリダイレクト)。中カテゴリのスラッグと重複させないこと
+ */
+export const NEWS_AID = {
+	taxonomy: "news_aid",
+	// TODO(要確認): 災害・紛争ページのヒーロー文言(カンプなし)
+	hero: (label: string) => ({ en: "SUPPORT", ja: "支援", lead: `${label}に関するお知らせと、支援の経過をお伝えします。` }),
+} as const;
+
 const termLinks = (key: CollectionKey): NavLink[] =>
 	COLLECTIONS[key].terms.map((t) => ({
 		label: t.label,

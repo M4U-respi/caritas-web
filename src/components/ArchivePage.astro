@@ -5,6 +5,7 @@
  * - report: カテゴリタブ+年で絞り込み → 一覧行 → 災害対応マニュアル → 寄付 → 関連団体
  * - publication: カテゴリタブ → 発行物カード(2 列)→ 発行物について(緑)→ 寄付 → 関連ナビ → 関連団体
  * - news: (一覧トップのみ)緊急支援ボックス → カテゴリタブ → 一覧行 → 寄付 → 関連ナビ → 関連団体
+ *   (支援・災害ごとの一覧 aid はカテゴリタブなし)
  */
 import { Image } from "emdash/ui";
 import Layout from "../layouts/Layout.astro";
@@ -20,17 +21,19 @@ import Donation from "./Donation.astro";
 import RelatedNav from "./RelatedNav.astro";
 import Partners from "./Partners.astro";
 import { listEntries, type ArchiveData } from "../lib/cms";
-import { COLLECTIONS, formatDate, isoDate, type CollectionKey } from "../data/site";
+import { COLLECTIONS, NEWS_AID, formatDate, isoDate, type CollectionKey } from "../data/site";
 
 interface Props {
 	collection: CollectionKey;
 	term?: string;
+	/** 支援・災害ごとの一覧(お知らせのみ) */
+	aid?: { slug: string; label: string };
 	data: ArchiveData;
 }
-const { collection, term, data } = Astro.props;
+const { collection, term, aid, data } = Astro.props;
 const conf = COLLECTIONS[collection];
-const current = term ? conf.terms.find((t) => t.slug === term) : undefined;
-const hero = (current && "hero" in current ? current.hero : undefined) ?? conf.hero;
+const current = aid ?? (term ? conf.terms.find((t) => t.slug === term) : undefined);
+const hero = aid ? NEWS_AID.hero(aid.label) : (current && "hero" in current ? current.hero : undefined) ?? conf.hero;
 const { items, page, totalPages, years, year, error } = data;
 if (error) console.error(`[${collection}] 一覧の取得に失敗`, error);
 
@@ -81,7 +84,7 @@ const related = collection === "news" || collection === "report" || collection =
 						</form>
 					</Fragment>
 				</CategoryTabs>
-			) : (
+			) : aid ? null : (
 				<CategoryTabs collection={collection} current={current?.slug} />
 			)}
 
