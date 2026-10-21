@@ -1,14 +1,14 @@
 /**
  * リンクの開き方(全コンテンツ共通のルール)
- * - 書類(PDF・Word・Excel など)… 別タブ
- * - サイト内リンク(ページからページ)… 同じタブ
+ * - 書類(PDF・Word・Excel・動画など)… 別タブ
  * - 外部サイト … 別タブ
- * - メール・電話(mailto: / tel:)… そのまま
+ * - サイト内リンク(ページからページ)… 同じタブ
  */
 const DOC = /\.(pdf|docx?|xlsx?|pptx?|zip|mp4)(?:[?#].*)?$/i;
 
-export function linkTarget(href: string, _blank?: boolean): { target?: string; rel?: string } {
+export function linkTarget(href: string): { target?: string; rel?: string } {
 	if (DOC.test(href)) return { target: "_blank", rel: "noopener" };
-	if (/^(https?:)?\/\//i.test(href)) return { target: "_blank", rel: "noopener noreferrer" };
-	return {};
+	if (href.startsWith("#") || (href.startsWith("/") && !href.startsWith("//"))) return {};
+	if (/^(mailto|tel):/i.test(href)) return {};
+	return { target: "_blank", rel: "noopener noreferrer" };
 }

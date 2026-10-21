@@ -19,5 +19,5 @@ const parts = spans.map((s) => {
 ---
 {parts.map((p) => {
 	const inner = p.strong ? <strong>{p.em ? <em>{p.text}</em> : p.text}</strong> : p.em ? <em>{p.text}</em> : p.text;
-	return p.href ? <a href={p.href} {...linkTarget(p.href, p.blank)}>{inner}</a> : inner;
+	return p.href ? <a href={p.href} {...linkTarget(p.href)}>{inner}</a> : inner;
 })}
