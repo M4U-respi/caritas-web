@@ -598,6 +598,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .policy-pdf { display: inline-block; padding: 0 4px; color: var(--c-red); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .policy-pdf:hover { text-decoration: none; }
 .policy-date { margin-top: 48px; text-align: right; }
+.policy-contact { margin-top: 16px; padding: 20px 28px; border: 1px solid var(--c-line-cream); border-radius: 8px; background: var(--c-cream-light); }
+.policy-contact__name { font-weight: 700; color: var(--c-text-strong); }
 
 /* 404 ページ本文 */
 .page-body { padding: 56px 0 120px; }
@@ -1069,6 +1071,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .policy h2 { margin-top: 20px; font-size: 20px; }
   .policy h2 + * { margin-top: 12px; }
   .policy h3 { font-size: 16.5px; letter-spacing: 0; }
+  .policy-contact { padding: 16px 20px; }
 
   .page-body { padding: 40px 0 80px; }
   .cms-archive { padding: 56px 0 80px; }
