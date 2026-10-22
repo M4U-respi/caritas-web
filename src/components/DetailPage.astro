@@ -2,10 +2,9 @@
 /*
  * CMS 記事の詳細ページ(白背景+パンくず → タイトル・日付・タグ → 本文 → 前後記事 → 一覧へ戻る)
  * entry・前後記事はページ側(src/pages/{news,report,publication}/[slug].astro)で取得して渡す(404 判定をレスポンス開始前に行うため)。
- * 発行物は本文の前に表紙+概要+PDF ダウンロードを置く(発行物詳細のカンプは無いため一覧カードの要素から構成)。
+ * 発行物もお知らせと同じ構成(PDF などのダウンロードは本文内のリンクから)。
  */
 import { getEntryTerms } from "emdash";
-import { Image } from "emdash/ui";
 import Layout from "../layouts/Layout.astro";
 import Breadcrumb from "./Breadcrumb.astro";
 import PostNav from "./PostNav.astro";
@@ -33,10 +32,6 @@ const termTags = terms.map((t) => ({
 	label: t.label,
 	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
 }));
-const isPublication = collection === "publication";
-const file = isPublication ? d.file : null;
-const fileUrl: string | undefined = file?.url ?? file?.src ?? (file?.meta?.storageKey ? `/_emdash/api/media/file/${file.meta.storageKey}` : file?.id ? `/_emdash/api/media/file/${file.id}` : undefined);
-const fileSize = typeof file?.size === "number" && file.size > 0 ? `${file.size >= 1048576 ? (file.size / 1048576).toFixed(1) + "MB" : Math.max(1, Math.round(file.size / 1024)) + "KB"}` : "";
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 const ogImage = (d.featured_image ?? d.cover)?.src;
 ---
@@ -52,27 +47,6 @@ const ogImage = (d.featured_image ?? d.cover)?.src;
 					{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}${t.slug}/`}>{t.label}</a>)}
 				</p>
 			</header>
-
-			{isPublication && (
-				<div class="pub-detail">
-					<div class="pub-detail__cover" {...entry.edit?.cover}>
-						{d.cover
-							? <Image image={d.cover} alt={d.cover.alt || `${d.title} 表紙`} />
-							: <img src="/assets/img/sub/common/noimage.jpg" alt="" width="400" height="266" />}
-					</div>
-					<div class="pub-detail__body">
-						{d.excerpt && <p class="pub-detail__excerpt" {...entry.edit?.excerpt}>{d.excerpt}</p>}
-						{fileUrl && (
-							<p class="pub-detail__file">
-								<a class="btn-pill btn-pill--red pub-detail__btn" href={fileUrl} target="_blank" rel="noopener">
-									<span>PDFをダウンロード{fileSize && <span class="pub-detail__size">（PDF {fileSize}）</span>}</span>
-									<svg class="btn-pill__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
-								</a>
-							</p>
-						)}
-					</div>
-				</div>
-			)}
 
 			<Prose value={d.content} lead={d.lead} />
 
