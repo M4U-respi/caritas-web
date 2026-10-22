@@ -701,6 +701,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .prose a { color: var(--c-red); text-decoration: underline; text-underline-offset: 3px; }
 .prose a:hover { text-decoration: none; }
 .prose strong { font-weight: 700; color: var(--c-text-strong); }
+.prose sup, .prose sub { font-size: .7em; line-height: 0; }
 .prose ul, .prose ol { margin-top: 16px; padding-left: 1.5em; }
 .prose ul { list-style: disc; }
 .prose ol { list-style: decimal; }
