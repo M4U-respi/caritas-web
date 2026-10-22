@@ -598,7 +598,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .policy-pdf { display: inline-block; padding: 0 4px; color: var(--c-red); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .policy-pdf:hover { text-decoration: none; }
 .policy-date { margin-top: 48px; text-align: right; }
-.policy-contact { margin-top: 16px; padding: 20px 28px; border: 1px solid var(--c-line-cream); border-radius: 8px; background: var(--c-cream-light); }
+.policy-contact { margin-top: 16px; padding: 20px 28px; border-radius: 8px; background: #FDFBF7; }
 .policy-contact__name { font-weight: 700; color: var(--c-text-strong); }
 
 /* 404 ページ本文 */
