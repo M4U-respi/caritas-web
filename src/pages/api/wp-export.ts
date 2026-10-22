@@ -77,7 +77,8 @@ function cleanHtml(html: string) {
 export const GET: APIRoute = async ({ url }) => {
 	const key = (env as { WP_EXPORT_KEY?: string }).WP_EXPORT_KEY;
 	if (!key || url.searchParams.get("key") !== key) return new Response("Not found", { status: 404 });
-	const target = url.searchParams.get("target") === "report" ? "report" : "news";
+	const t = url.searchParams.get("target");
+	const target = t === "report" || t === "publication" ? t : "news";
 
 	// カテゴリ:親子関係から「お知らせ(2)」「活動報告(8)」配下を判定
 	const { data: cats } = await wp<{ id: number; slug: string; parent: number }[]>("/categories?per_page=100&_fields=id,slug,parent");
@@ -94,7 +95,7 @@ export const GET: APIRoute = async ({ url }) => {
 	}
 
 	// 記事(お知らせ配下 + 活動報告配下を取得し、活動報告に属するものは活動報告側へ)
-	const root = target === "report" ? 8 : 2;
+	const root = target === "report" ? 8 : target === "publication" ? 4 : 2;
 	const posts: Post[] = [];
 	for (let page = 1, total = 1; page <= total; page++) {
 		const r = await wp<Post[]>(`/posts?categories=${cats.filter((c) => ancestors(c.id).includes(root)).map((c) => c.id).join(",")}&per_page=100&page=${page}&status=publish&_fields=id,date,date_gmt,status,title,content,excerpt,categories,featured_media`);
@@ -107,7 +108,7 @@ export const GET: APIRoute = async ({ url }) => {
 	const size = Number(url.searchParams.get("size")) || 0;
 	const part = Number(url.searchParams.get("part")) || 1;
 	const all = posts
-		.filter((p) => (target === "report" ? under(p.categories, 8) : !under(p.categories, 8)))
+		.filter((p) => (target === "publication" ? true : target === "report" ? under(p.categories, 8) : !under(p.categories, 8)))
 		.filter((p) => { const y = Number(p.date.slice(0, 4)); return y >= from && y <= to; })
 		.sort((a, b) => a.date.localeCompare(b.date));
 	const parts = size ? Math.max(1, Math.ceil(all.length / size)) : 1;
@@ -116,6 +117,8 @@ export const GET: APIRoute = async ({ url }) => {
 	// 分類の割り当て(1 記事 1 カテゴリ。優先:緊急支援 > 募金・献金 > 啓発・キャンペーン > 事務局から)
 	const term = (p: Post): [string, string] => {
 		if (target === "report") return under(p.categories, 9) ? ["annual", "年次報告"] : ["monthly", "活動レポート"];
+		// 発行物:We are Caritas(3)/それ以外(小冊子 51・その他の発行物 18)は小冊子・資料
+		if (target === "publication") return under(p.categories, 3) ? ["we-are-caritas", "We are Caritas"] : ["booklet", "小冊子・資料"];
 		if (under(p.categories, 13)) return ["emergency", "緊急支援"];
 		if (under(p.categories, 20) || under(p.categories, 21)) return ["donation", "募金・献金"];
 		if (under(p.categories, 26) || under(p.categories, 7)) return ["campaign", "啓発・キャンペーン"];

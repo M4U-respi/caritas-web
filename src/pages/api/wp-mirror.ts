@@ -18,16 +18,19 @@ const allowed = (url: URL) => !!e.WP_EXPORT_KEY && url.searchParams.get("key") =
 const toKey = (u: string) => `legacy/wp-content/uploads/${decodeURIComponent(u.slice(PREFIX.length))}`;
 
 const LOCAL = "/wp-content/uploads/";
-const tableOf = (url: URL) => ({ news: "ec_news", report: "ec_report" })[url.searchParams.get("table") ?? ""];
+const tableOf = (url: URL) => ({ news: "ec_news", report: "ec_report", publication: "ec_publication" })[url.searchParams.get("table") ?? ""];
 
 export const GET: APIRoute = async ({ url }) => {
 	if (!allowed(url)) return new Response("Not found", { status: 404 });
 	const table = tableOf(url);
 	if (table) {
+		// &source=1 … 旧サイトの URL(https://www.caritas.jp/wp-content/uploads/…)のまま残っているものを一覧
+		const base = url.searchParams.get("source") ? PREFIX : LOCAL;
+		const img = table === "ec_publication" ? "cover" : "featured_image";
 		const { results } = await e.DB.prepare(`SELECT DISTINCT u FROM (
-			SELECT t.value AS u FROM ${table} n, json_tree(n.content) t WHERE n.deleted_at IS NULL AND t.type = 'text' AND t.value LIKE '${LOCAL}%'
-			UNION SELECT json_extract(featured_image, '$.src') FROM ${table} WHERE deleted_at IS NULL AND featured_image LIKE '%${LOCAL}%') ORDER BY u`).all<{ u: string }>();
-		return Response.json(results.map((r) => r.u.trim().slice(LOCAL.length)));
+			SELECT t.value AS u FROM ${table} n, json_tree(n.content) t WHERE n.deleted_at IS NULL AND t.type = 'text' AND t.value LIKE '${base}%'
+			UNION SELECT json_extract(${img}, '$.src') FROM ${table} WHERE deleted_at IS NULL AND ${img} LIKE '%${base}%') ORDER BY u`).all<{ u: string }>();
+		return Response.json(results.map((r) => r.u.trim()).filter((u) => u.startsWith(base)).map((u) => (base === LOCAL ? u.slice(LOCAL.length) : u)));
 	}
 	const sql = (table: string) => `
 		SELECT t.value AS u FROM ${table} n, json_tree(n.content) t
@@ -41,7 +44,7 @@ export const GET: APIRoute = async ({ url }) => {
 export const POST: APIRoute = async ({ url, request }) => {
 	if (!allowed(url)) return new Response("Not found", { status: 404 });
 	const kind = url.searchParams.get("table");
-	if (kind === "news" || kind === "report") {
+	if (kind === "news" || kind === "report" || kind === "publication") {
 		const { paths } = (await request.json()) as { paths: string[] };
 		const done: { path: string; status: string; size?: number }[] = [];
 		for (const p of (paths ?? []).slice(0, 10)) {
