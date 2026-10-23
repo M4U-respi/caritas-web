@@ -235,6 +235,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   font-size: calc(95 * var(--u)); font-weight: 700; line-height: 1.242; letter-spacing: .08em;
   text-shadow: 0 2px 16px rgba(0, 0, 0, .25);
 }
+.fv__catch .u-red { text-shadow: 0 0 calc(24 * var(--u)) rgba(255, 255, 255, .6), 0 0 calc(8 * var(--u)) rgba(255, 255, 255, .5); } /* 赤文字だけ白グローで写真から浮かせる(SP は下で調整) */
 .fv__catch-line { display: block; white-space: nowrap; }
 .fv__lead {
   position: absolute; left: calc(90 * var(--u)); top: calc(477 * var(--u));
