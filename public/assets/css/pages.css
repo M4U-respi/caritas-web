@@ -1409,7 +1409,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--publication .pub-card { border-bottom: 1px solid var(--c-line); }
   .cms-archive--publication .pub-card:nth-child(-n + 2) { border-top: 1px solid var(--c-line); }
   .cms-archive--publication .pub-card__inner { flex-direction: column-reverse; justify-content: flex-end; align-items: stretch; gap: 0; padding: 20px 0 24px; }
-  .cms-archive--publication .pub-card__cover { width: 100%; height: calc((100vw - 55px) / 2 * 1.25); aspect-ratio: auto; }
+  .cms-archive--publication .pub-card__cover { width: 100%; } /* 縦横比は PC と同じ 163:230(冊子の表紙と同じ比率) */
   .cms-archive--publication .pub-card__body .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
   .cms-archive--publication .pub-card__title { margin-top: 10px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .cms-archive--publication .pub-card__excerpt { margin-top: 8px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
