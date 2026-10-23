@@ -104,8 +104,8 @@ const related = collection === "news" || collection === "report" || collection =
 									{item.data.excerpt && <span class="pub-card__excerpt">{item.data.excerpt}</span>}
 								</span>
 								<span class="pub-card__cover">
-									{item.data.cover
-										? <Image image={item.data.cover} alt="" />
+									{(item.data.cover ?? item.data.featured_image)
+										? <Image image={item.data.cover ?? item.data.featured_image} alt="" />
 										: <img src="/assets/img/sub/common/noimage.jpg" alt="" width="400" height="266" loading="lazy" decoding="async" />}
 								</span>
 							</a>

@@ -28,10 +28,16 @@ const d: any = entry.data;
 const terms = ((await getEntryTerms(collection, d.id, conf.taxonomy)) ?? []) as any[];
 const date = d.publishedAt ?? d.createdAt;
 const termTags = terms.map((t) => ({
-	slug: t.slug,
+	href: `${conf.base}${t.slug}/`,
 	label: t.label,
 	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
 }));
+// お知らせのうち発行物(We are Caritas など)は、発行物の分類タグも表示する
+if (collection === "news") {
+	const pub = COLLECTIONS.publication;
+	const pubTerms = ((await getEntryTerms("news", d.id, pub.taxonomy)) ?? []) as any[];
+	for (const t of pubTerms) termTags.push({ href: `${pub.base}${t.slug}/`, label: t.label, tag: pub.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" });
+}
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 const ogImage = (d.featured_image ?? d.cover)?.src;
 ---
@@ -44,7 +50,7 @@ const ogImage = (d.featured_image ?? d.cover)?.src;
 				<h1 class="article__title" {...entry.edit?.title}>{d.title}</h1>
 				<p class="article__meta">
 					{date && <time class="article__date" datetime={isoDate(date)}>{formatDate(date)}</time>}
-					{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}${t.slug}/`}>{t.label}</a>)}
+					{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={t.href}>{t.label}</a>)}
 				</p>
 			</header>
 

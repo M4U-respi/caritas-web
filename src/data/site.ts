@@ -56,7 +56,12 @@ export const COLLECTIONS = {
 		label: "発行物",
 		en: "PUBLICATION",
 		base: "/publication/",
-		taxonomy: "publication_category",
+		/**
+		 * 発行物はお知らせ(news)の記事のうち「発行物」分類(news_publication)が付いたものを集めて表示する。
+		 * 記事の詳細は /news/{id}/(/publication/{id}/ はリダイレクト)。管理画面ではお知らせの「発行物」欄で設定。
+		 */
+		source: "news",
+		taxonomy: "news_publication",
 		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
 		hero: { en: "PUBLICATIONS", ja: "刊行物", lead: "機関誌「We are Caritas」や、四旬節の小冊子、セミナーの講演録などを発行しています。いずれも無料でお送りしています。" },
 		perPage: 6,

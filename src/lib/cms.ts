@@ -37,12 +37,19 @@ export function jstYear(d: Date | string): number {
 	return new Date(t + 9 * 3600 * 1000).getUTCFullYear();
 }
 
+/** 記事データの取得元コレクション(発行物はお知らせの記事を使う)と、絞り込みなしのときの分類項目 */
+function sourceOf(key: CollectionKey): { collection: CollectionKey; allTerms?: string[] } {
+	const conf: any = COLLECTIONS[key];
+	return conf.source ? { collection: conf.source, allTerms: conf.terms.map((t: any) => t.slug) } : { collection: key };
+}
+
 function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): ListItem {
 	const conf = COLLECTIONS[key];
+	const base = COLLECTIONS[sourceOf(key).collection].base;
 	return {
 		slug: e.id,
 		title: e.data.title,
-		href: `${conf.base}${e.id}/`,
+		href: `${base}${e.id}/`,
 		date: e.data.publishedAt ?? e.data.createdAt ?? null,
 		data: e.data,
 		terms: ((termsByEntry.get(e.data.id) ?? []) as any[]).map((t) => ({
@@ -56,10 +63,12 @@ function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): L
 /** コレクションの記事一覧をカテゴリ付きで取得(新しい順) */
 export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	const conf = COLLECTIONS[key];
+	const src = sourceOf(key);
 	const where: Record<string, any> = {};
-	if (opts.term) where[opts.taxonomy ?? conf.taxonomy] = opts.term;
+	const term = opts.term ?? src.allTerms;
+	if (term) where[opts.taxonomy ?? conf.taxonomy] = term;
 	if (opts.year) where.published_at = yearRange(opts.year);
-	const res = await getEmDashCollection(key, {
+	const res = await getEmDashCollection(src.collection, {
 		orderBy: { published_at: "desc" },
 		limit: opts.limit ?? 20,
 		...(opts.cursor ? { cursor: opts.cursor } : opts.offset ? { offset: opts.offset } : {}),
@@ -67,7 +76,7 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	} as any);
 	const entries = res.entries ?? [];
 	const termsByEntry = entries.length
-		? await getTermsForEntries(key, entries.map((e: any) => e.data.id), conf.taxonomy)
+		? await getTermsForEntries(src.collection, entries.map((e: any) => e.data.id), conf.taxonomy)
 		: new Map();
 	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>));
 	return { items, error: res.error, cacheHint: res.cacheHint, nextCursor: res.nextCursor, hasMore: res.hasMore };
@@ -80,25 +89,27 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
  */
 export async function getPublishedDates(key: CollectionKey, term?: string, taxonomy?: string): Promise<{ dates: string[]; error?: unknown }> {
 	const conf = COLLECTIONS[key];
+	const src = sourceOf(key);
+	const terms = term ? [term] : src.allTerms;
 	try {
 		const db: any = await getDb();
 		let q = db
-			.selectFrom(`ec_${key} as e`)
+			.selectFrom(`ec_${src.collection} as e`)
 			.select("e.published_at")
 			.where("e.deleted_at", "is", null)
 			.where("e.status", "=", "published");
-		if (term) {
+		if (terms) {
 			q = q.where(
 				"e.translation_group",
 				"in",
 				db
 					.selectFrom("content_taxonomies as ct")
 					.select("ct.entry_id")
-					.where("ct.collection", "=", key)
+					.where("ct.collection", "=", src.collection)
 					.where(
 						"ct.taxonomy_id",
 						"in",
-						db.selectFrom("taxonomies").select("translation_group").where("name", "=", taxonomy ?? conf.taxonomy).where("slug", "=", term),
+						db.selectFrom("taxonomies").select("translation_group").where("name", "=", taxonomy ?? conf.taxonomy).where("slug", "in", terms),
 					),
 			);
 		}
