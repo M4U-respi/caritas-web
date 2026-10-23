@@ -3,6 +3,7 @@
  * CMS 記事の詳細ページ(白背景+パンくず → タイトル・日付・タグ → 本文 → 前後記事 → 一覧へ戻る)
  * entry・前後記事はページ側(src/pages/{news,report,publication}/[slug].astro)で取得して渡す(404 判定をレスポンス開始前に行うため)。
  * 発行物もお知らせと同じ構成(PDF などのダウンロードは本文内のリンクから)。
+ * 発行物(collection="publication")の記事データはお知らせ(news)のもの。タグは発行物の分類を表示する。
  */
 import { getEntryTerms } from "emdash";
 import Layout from "../layouts/Layout.astro";
@@ -25,23 +26,18 @@ const { collection, slug, entry, adjacent } = Astro.props;
 const conf = COLLECTIONS[collection];
 
 const d: any = entry.data;
-const terms = ((await getEntryTerms(collection, d.id, conf.taxonomy)) ?? []) as any[];
+const dataCollection = ((conf as any).source ?? collection) as CollectionKey;
+const terms = ((await getEntryTerms(dataCollection, d.id, conf.taxonomy)) ?? []) as any[];
 const date = d.publishedAt ?? d.createdAt;
 const termTags = terms.map((t) => ({
 	href: `${conf.base}${t.slug}/`,
 	label: t.label,
 	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
 }));
-// お知らせのうち発行物(We are Caritas など)は、発行物の分類タグも表示する
-if (collection === "news") {
-	const pub = COLLECTIONS.publication;
-	const pubTerms = ((await getEntryTerms("news", d.id, pub.taxonomy)) ?? []) as any[];
-	for (const t of pubTerms) termTags.push({ href: `${pub.base}${t.slug}/`, label: t.label, tag: pub.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" });
-}
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 const ogImage = (d.featured_image ?? d.cover)?.src;
 ---
-<Layout title={d.title} description={d.excerpt} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
+<Layout title={d.title} description={d.excerpt} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection: dataCollection, id: d.id, slug }}>
 	<Breadcrumb items={[{ label: conf.label, href: conf.base }, { label: d.title }]} />
 
 	<article class="article">

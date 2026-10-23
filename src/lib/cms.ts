@@ -43,13 +43,33 @@ function sourceOf(key: CollectionKey): { collection: CollectionKey; allTerms?: s
 	return conf.source ? { collection: conf.source, allTerms: conf.terms.map((t: any) => t.slug) } : { collection: key };
 }
 
-function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): ListItem {
+/**
+ * お知らせの記事のうち「発行物」分類が付いたものの id(entry.data.id)の集合。
+ * 発行物の記事は /publication/{記事番号}/ が正式な URL のため、リンク先の判定に使う。
+ */
+export async function getPublicationIds(entryIds: string[]): Promise<Set<string>> {
+	if (!entryIds.length) return new Set();
+	try {
+		const map = (await getTermsForEntries("news", entryIds, COLLECTIONS.publication.taxonomy)) as Map<string, any[]>;
+		return new Set(entryIds.filter((id) => (map.get(id) ?? []).length > 0));
+	} catch (error) {
+		console.error("[cms] 発行物分類の取得に失敗", error);
+		return new Set();
+	}
+}
+
+/** 記事の URL。お知らせのうち発行物は /publication/{記事番号}/ */
+export function entryHref(collection: CollectionKey, slug: string, isPublication = false): string {
+	const base = collection === "news" && isPublication ? COLLECTIONS.publication.base : COLLECTIONS[collection].base;
+	return `${base}${slug}/`;
+}
+
+function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>, pubIds: Set<string>): ListItem {
 	const conf = COLLECTIONS[key];
-	const base = COLLECTIONS[sourceOf(key).collection].base;
 	return {
 		slug: e.id,
 		title: e.data.title,
-		href: `${base}${e.id}/`,
+		href: entryHref(sourceOf(key).collection, e.id, key === "publication" || pubIds.has(e.data.id)),
 		date: e.data.publishedAt ?? e.data.createdAt ?? null,
 		data: e.data,
 		terms: ((termsByEntry.get(e.data.id) ?? []) as any[]).map((t) => ({
@@ -78,7 +98,8 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	const termsByEntry = entries.length
 		? await getTermsForEntries(src.collection, entries.map((e: any) => e.data.id), conf.taxonomy)
 		: new Map();
-	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>));
+	const pubIds = src.collection === "news" && key !== "publication" ? await getPublicationIds(entries.map((e: any) => e.data.id)) : new Set<string>();
+	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>, pubIds));
 	return { items, error: res.error, cacheHint: res.cacheHint, nextCursor: res.nextCursor, hasMore: res.hasMore };
 }
 
@@ -159,19 +180,27 @@ export async function loadArchive(
 	return { items: res.items, page, totalPages, total, years, year, error: res.error ?? datesError };
 }
 
-/** 記事詳細の前後記事(前=1 つ古い記事、次=1 つ新しい記事) */
+/**
+ * 記事詳細の前後記事(前=1 つ古い記事、次=1 つ新しい記事)。
+ * key が publication のときは、お知らせのうち発行物分類の付いた記事の中で前後を探す。
+ */
 export async function getAdjacentEntries(key: CollectionKey, entry: any) {
-	const conf = COLLECTIONS[key];
+	const src = sourceOf(key);
 	const at: Date | null = entry.data.publishedAt ?? null;
 	if (!at) return { prev: null, next: null };
 	const iso = new Date(at).toISOString();
+	const scope = src.allTerms ? { [COLLECTIONS[key].taxonomy]: src.allTerms } : {};
 	const [older, newer] = await Promise.all([
-		getEmDashCollection(key, { orderBy: { published_at: "desc" }, limit: 1, where: { published_at: { lt: iso } } } as any),
-		getEmDashCollection(key, { orderBy: { published_at: "asc" }, limit: 1, where: { published_at: { gt: iso } } } as any),
+		getEmDashCollection(src.collection, { orderBy: { published_at: "desc" }, limit: 1, where: { ...scope, published_at: { lt: iso } } } as any),
+		getEmDashCollection(src.collection, { orderBy: { published_at: "asc" }, limit: 1, where: { ...scope, published_at: { gt: iso } } } as any),
 	]);
 	const pick = (r: any) => (r.entries ?? [])[0];
-	const link = (e: any) => (e ? { href: `${conf.base}${e.id}/`, title: e.data.title as string } : null);
-	return { prev: link(pick(older)), next: link(pick(newer)) };
+	const found = [pick(older), pick(newer)];
+	const pubIds =
+		key === "publication" ? null : src.collection === "news" ? await getPublicationIds(found.filter(Boolean).map((e: any) => e.data.id)) : new Set<string>();
+	const link = (e: any) =>
+		e ? { href: entryHref(src.collection, e.id, pubIds ? pubIds.has(e.data.id) : true), title: e.data.title as string } : null;
+	return { prev: link(found[0]), next: link(found[1]) };
 }
 
 /** 分類の項目(スラッグ・名前)を取得。見つからなければ null */

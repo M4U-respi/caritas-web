@@ -1,21 +1,34 @@
 ---
 /*
- * /publication/{slug}/ … slug がカテゴリ(src/data/site.ts の COLLECTIONS.publication.terms)ならカテゴリ一覧。
- * それ以外(記事番号)は、発行物の記事がお知らせにあるため /news/{slug}/ へ恒久リダイレクト。
+ * /publication/{slug}/ … slug がカテゴリ(src/data/site.ts の COLLECTIONS.publication.terms)ならカテゴリ一覧、
+ * それ以外は記事詳細。発行物の記事データはお知らせ(news)のうち「発行物」分類が付いたもの。
+ * 分類が付いていないお知らせの記事番号なら /news/{slug}/ へ恒久リダイレクト。
  * 404 の判定はレスポンス開始前に行う必要があるため、データ取得はここ(ページ)で行う。
  */
+import { getEmDashEntry } from "emdash";
 import ArchivePage from "../../components/ArchivePage.astro";
+import DetailPage from "../../components/DetailPage.astro";
 import { COLLECTIONS } from "../../data/site";
-import { loadArchive } from "../../lib/cms";
+import { getAdjacentEntries, getPublicationIds, loadArchive } from "../../lib/cms";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.rewrite("/404/");
 const isTerm = COLLECTIONS.publication.terms.some((t) => t.slug === slug);
-if (!isTerm) {
-	if (/^\d+$/.test(slug)) return Astro.redirect(`/news/${slug}/`, 301);
-	return Astro.rewrite("/404/");
+
+let archive = null;
+let entry: any = null;
+let adjacent = null;
+if (isTerm) {
+	archive = await loadArchive("publication", Astro.url, { term: slug, cache: Astro.cache });
+	if (!archive) return Astro.rewrite("/404/");
+} else {
+	const res = await getEmDashEntry("news", slug);
+	if (res.error) console.error("[publication] 記事の取得に失敗", res.error);
+	if (!res.entry) return Astro.rewrite("/404/");
+	if (!(await getPublicationIds([res.entry.data.id])).size) return Astro.redirect(`/news/${slug}/`, 301);
+	if (Astro.cache?.enabled && res.cacheHint) Astro.cache.set(res.cacheHint);
+	entry = res.entry;
+	adjacent = await getAdjacentEntries("publication", entry);
 }
-const archive = await loadArchive("publication", Astro.url, { term: slug, cache: Astro.cache });
-if (!archive) return Astro.rewrite("/404/");
 ---
-<ArchivePage collection="publication" term={slug} data={archive} />
+{archive ? <ArchivePage collection="publication" term={slug} data={archive} /> : <DetailPage collection="publication" slug={slug} entry={entry} adjacent={adjacent!} />}
