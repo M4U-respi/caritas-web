@@ -38,7 +38,7 @@ const ogImage = (d.featured_image ?? d.cover)?.src;
 <Layout title={d.title} description={d.excerpt} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
 	<Breadcrumb items={[{ label: conf.label, href: conf.base }, { label: d.title }]} />
 
-	<article class="article">
+	<article class={`article article--${collection}`}>
 		<div class="article__inner">
 			<header class="article__head">
 				<h1 class="article__title" {...entry.edit?.title}>{d.title}</h1>
