@@ -43,33 +43,38 @@ function sourceOf(key: CollectionKey): { collection: CollectionKey; allTerms?: s
 	return conf.source ? { collection: conf.source, allTerms: conf.terms.map((t: any) => t.slug) } : { collection: key };
 }
 
+/** お知らせ(news)の記事を集めて表示するコレクション(活動報告・発行物)。site.ts で source: "news" のもの */
+export const DERIVED_KEYS = (Object.keys(COLLECTIONS) as CollectionKey[]).filter((k) => (COLLECTIONS[k] as any).source === "news");
+
 /**
- * お知らせの記事のうち「発行物」分類が付いたものの id(entry.data.id)の集合。
- * 発行物の記事は /publication/{記事番号}/ が正式な URL のため、リンク先の判定に使う。
+ * お知らせの記事ごとの表示先コレクション(活動報告・発行物の分類が付いた記事のみ。entry.data.id → key)。
+ * 分類が付いた記事は /report/{記事番号}/ ・ /publication/{記事番号}/ が正式な URL のため、リンク先の判定に使う。
  */
-export async function getPublicationIds(entryIds: string[]): Promise<Set<string>> {
-	if (!entryIds.length) return new Set();
+export async function getDerivedKeys(entryIds: string[]): Promise<Map<string, CollectionKey>> {
+	const out = new Map<string, CollectionKey>();
+	if (!entryIds.length) return out;
 	try {
-		const map = (await getTermsForEntries("news", entryIds, COLLECTIONS.publication.taxonomy)) as Map<string, any[]>;
-		return new Set(entryIds.filter((id) => (map.get(id) ?? []).length > 0));
+		for (const key of DERIVED_KEYS) {
+			const map = (await getTermsForEntries("news", entryIds, COLLECTIONS[key].taxonomy)) as Map<string, any[]>;
+			for (const id of entryIds) if (!out.has(id) && (map.get(id) ?? []).length) out.set(id, key);
+		}
 	} catch (error) {
-		console.error("[cms] 発行物分類の取得に失敗", error);
-		return new Set();
+		console.error("[cms] 活動報告・発行物分類の取得に失敗", error);
 	}
+	return out;
 }
 
-/** 記事の URL。お知らせのうち発行物は /publication/{記事番号}/ */
-export function entryHref(collection: CollectionKey, slug: string, isPublication = false): string {
-	const base = collection === "news" && isPublication ? COLLECTIONS.publication.base : COLLECTIONS[collection].base;
-	return `${base}${slug}/`;
+/** 記事の URL。key は表示先コレクション(お知らせのうち活動報告・発行物はそのコレクション) */
+export function entryHref(key: CollectionKey, slug: string): string {
+	return `${COLLECTIONS[key].base}${slug}/`;
 }
 
-function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>, pubIds: Set<string>): ListItem {
+function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>, derived: Map<string, CollectionKey>): ListItem {
 	const conf = COLLECTIONS[key];
 	return {
 		slug: e.id,
 		title: e.data.title,
-		href: entryHref(sourceOf(key).collection, e.id, key === "publication" || pubIds.has(e.data.id)),
+		href: entryHref(derived.get(e.data.id) ?? key, e.id),
 		date: e.data.publishedAt ?? e.data.createdAt ?? null,
 		data: e.data,
 		terms: ((termsByEntry.get(e.data.id) ?? []) as any[]).map((t) => ({
@@ -98,8 +103,8 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	const termsByEntry = entries.length
 		? await getTermsForEntries(src.collection, entries.map((e: any) => e.data.id), conf.taxonomy)
 		: new Map();
-	const pubIds = src.collection === "news" && key !== "publication" ? await getPublicationIds(entries.map((e: any) => e.data.id)) : new Set<string>();
-	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>, pubIds));
+	const derived = key === "news" ? await getDerivedKeys(entries.map((e: any) => e.data.id)) : new Map<string, CollectionKey>();
+	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>, derived));
 	return { items, error: res.error, cacheHint: res.cacheHint, nextCursor: res.nextCursor, hasMore: res.hasMore };
 }
 
@@ -182,7 +187,7 @@ export async function loadArchive(
 
 /**
  * 記事詳細の前後記事(前=1 つ古い記事、次=1 つ新しい記事)。
- * key が publication のときは、お知らせのうち発行物分類の付いた記事の中で前後を探す。
+ * key が活動報告・発行物のときは、お知らせのうちその分類の付いた記事の中で前後を探す。
  */
 export async function getAdjacentEntries(key: CollectionKey, entry: any) {
 	const src = sourceOf(key);
@@ -196,10 +201,8 @@ export async function getAdjacentEntries(key: CollectionKey, entry: any) {
 	]);
 	const pick = (r: any) => (r.entries ?? [])[0];
 	const found = [pick(older), pick(newer)];
-	const pubIds =
-		key === "publication" ? null : src.collection === "news" ? await getPublicationIds(found.filter(Boolean).map((e: any) => e.data.id)) : new Set<string>();
-	const link = (e: any) =>
-		e ? { href: entryHref(src.collection, e.id, pubIds ? pubIds.has(e.data.id) : true), title: e.data.title as string } : null;
+	const derived = key === "news" ? await getDerivedKeys(found.filter(Boolean).map((e: any) => e.data.id)) : new Map<string, CollectionKey>();
+	const link = (e: any) => (e ? { href: entryHref(derived.get(e.data.id) ?? key, e.id), title: e.data.title as string } : null);
 	return { prev: link(found[0]), next: link(found[1]) };
 }
 

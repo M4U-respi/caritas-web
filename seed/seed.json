@@ -241,6 +241,25 @@
 			]
 		},
 		{
+			"name": "news_report",
+			"label": "活動報告",
+			"labelSingular": "活動報告",
+			"hierarchical": false,
+			"collections": [
+				"news"
+			],
+			"terms": [
+				{
+					"slug": "monthly",
+					"label": "活動レポート"
+				},
+				{
+					"slug": "annual",
+					"label": "年次報告"
+				}
+			]
+		},
+		{
 			"name": "news_publication",
 			"label": "発行物",
 			"labelSingular": "発行物",

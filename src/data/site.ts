@@ -43,7 +43,12 @@ export const COLLECTIONS = {
 		label: "活動報告",
 		en: "REPORT",
 		base: "/report/",
-		taxonomy: "report_category",
+		/**
+		 * 活動報告はお知らせ(news)の記事のうち「活動報告」分類(news_report)が付いたものを集めて表示する。
+		 * 記事の詳細は /report/{id}/(/news/{id}/ はリダイレクト)。管理画面ではお知らせの「活動報告」欄で設定。
+		 */
+		source: "news",
+		taxonomy: "news_report",
 		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
 		hero: { en: "REPORTS", ja: "報告", lead: "毎月の活動と、年度ごとの総括をご報告します。募金の受け入れと支出の状況もこちらでご確認いただけます。" },
 		perPage: 10,
@@ -58,7 +63,7 @@ export const COLLECTIONS = {
 		base: "/publication/",
 		/**
 		 * 発行物はお知らせ(news)の記事のうち「発行物」分類(news_publication)が付いたものを集めて表示する。
-		 * 記事の詳細は /news/{id}/(/publication/{id}/ はリダイレクト)。管理画面ではお知らせの「発行物」欄で設定。
+		 * 記事の詳細は /publication/{id}/(/news/{id}/ はリダイレクト)。管理画面ではお知らせの「発行物」欄で設定。
 		 */
 		source: "news",
 		taxonomy: "news_publication",

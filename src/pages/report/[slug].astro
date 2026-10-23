@@ -1,15 +1,17 @@
 ---
 /*
  * /report/{slug}/ … slug がカテゴリ(src/data/site.ts の COLLECTIONS.report.terms)ならカテゴリ一覧、
- * それ以外は記事詳細。記事のスラッグにカテゴリと同じ文字列は使わないこと(カテゴリ一覧が優先される)。
+ * それ以外は記事詳細。活動報告の記事データはお知らせ(news)のうち「活動報告」分類が付いたもの。
+ * 分類が付いていないお知らせの記事番号なら /news/{slug}/ へ恒久リダイレクト。
  * 404 の判定はレスポンス開始前に行う必要があるため、データ取得はここ(ページ)で行う。
  */
 import { getEmDashEntry } from "emdash";
 import ArchivePage from "../../components/ArchivePage.astro";
 import DetailPage from "../../components/DetailPage.astro";
 import { COLLECTIONS } from "../../data/site";
-import { getAdjacentEntries, loadArchive } from "../../lib/cms";
+import { getAdjacentEntries, getDerivedKeys, loadArchive } from "../../lib/cms";
 
+const KEY = "report";
 const { slug } = Astro.params;
 if (!slug) return Astro.rewrite("/404/");
 const isTerm = COLLECTIONS.report.terms.some((t) => t.slug === slug);
@@ -21,9 +23,10 @@ if (isTerm) {
 	archive = await loadArchive("report", Astro.url, { term: slug, cache: Astro.cache });
 	if (!archive) return Astro.rewrite("/404/");
 } else {
-	const res = await getEmDashEntry("report", slug);
+	const res = await getEmDashEntry("news", slug);
 	if (res.error) console.error("[report] 記事の取得に失敗", res.error);
 	if (!res.entry) return Astro.rewrite("/404/");
+	if ((await getDerivedKeys([res.entry.data.id])).get(res.entry.data.id) !== KEY) return Astro.redirect(`/news/${slug}/`, 301);
 	if (Astro.cache?.enabled && res.cacheHint) Astro.cache.set(res.cacheHint);
 	entry = res.entry;
 	adjacent = await getAdjacentEntries("report", entry);
