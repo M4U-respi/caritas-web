@@ -227,7 +227,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 /* 左グラデーション(必須: 可読性確保+素材の文字消し跡を隠す) */
 .fv__shade {
   z-index: 2; pointer-events: none;
-  background: linear-gradient(90deg, rgba(0, 0, 0, .28) 0%, rgba(0, 0, 0, .12) 35%, rgba(0, 0, 0, 0) 60%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, .14) 0%, rgba(0, 0, 0, .06) 35%, rgba(0, 0, 0, 0) 60%);
 }
 .fv__content { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .fv__catch {
