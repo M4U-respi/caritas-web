@@ -2,15 +2,14 @@
 /*
  * /news/{slug}/ … slug がカテゴリ(src/data/site.ts の COLLECTIONS.news.terms)ならカテゴリ一覧、
  * 「支援・災害」(NEWS_AID、管理画面で追加)の項目なら災害・紛争ごとの一覧、それ以外は記事詳細。
- * 「活動報告」「発行物」分類が付いた記事は /report/{slug}/ ・ /publication/{slug}/ が正式な URL のため、そちらへ恒久リダイレクト。
  * 記事のスラッグにカテゴリ・支援・災害と同じ文字列は使わないこと(一覧が優先される)。
  * 404 の判定はレスポンス開始前に行う必要があるため、データ取得はここ(ページ)で行う。
  */
 import { getEmDashEntry } from "emdash";
 import ArchivePage from "../../components/ArchivePage.astro";
 import DetailPage from "../../components/DetailPage.astro";
-import { COLLECTIONS, NEWS_AID } from "../../data/site";
-import { getAdjacentEntries, getDerivedKeys, getTerm, loadArchive } from "../../lib/cms";
+import { COLLECTIONS, NEWS_AID, NEWS_MERGE } from "../../data/site";
+import { getAdjacentEntries, getTerm, loadArchive } from "../../lib/cms";
 
 const { slug } = Astro.params;
 if (!slug) return Astro.rewrite("/404/");
@@ -28,9 +27,13 @@ if (isTerm || aid) {
 } else {
 	const res = await getEmDashEntry("news", slug);
 	if (res.error) console.error("[news] 記事の取得に失敗", res.error);
-	if (!res.entry) return Astro.rewrite("/404/");
-	const derived = (await getDerivedKeys([res.entry.data.id])).get(res.entry.data.id);
-	if (derived) return Astro.redirect(`${COLLECTIONS[derived].base}${slug}/`, 301);
+	if (!res.entry) {
+		// 発行物・活動報告に移した記事(旧 /news/{id}/)はそちらへ恒久リダイレクト
+		for (const c of NEWS_MERGE.collections) {
+			if (/^\d+$/.test(slug) && (await getEmDashEntry(c, slug)).entry) return Astro.redirect(`${COLLECTIONS[c].base}${slug}/`, 301);
+		}
+		return Astro.rewrite("/404/");
+	}
 	if (Astro.cache?.enabled && res.cacheHint) Astro.cache.set(res.cacheHint);
 	entry = res.entry;
 	adjacent = await getAdjacentEntries("news", entry);

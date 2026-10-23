@@ -3,7 +3,7 @@
  */
 import { getEmDashCollection, getTermsForEntries } from "emdash";
 import { getDb } from "emdash/runtime";
-import { COLLECTIONS, type CollectionKey } from "../data/site";
+import { COLLECTIONS, NEWS_MERGE, type CollectionKey } from "../data/site";
 
 export interface ListItem {
 	slug: string;
@@ -37,44 +37,12 @@ export function jstYear(d: Date | string): number {
 	return new Date(t + 9 * 3600 * 1000).getUTCFullYear();
 }
 
-/** 記事データの取得元コレクション(発行物はお知らせの記事を使う)と、絞り込みなしのときの分類項目 */
-function sourceOf(key: CollectionKey): { collection: CollectionKey; allTerms?: string[] } {
-	const conf: any = COLLECTIONS[key];
-	return conf.source ? { collection: conf.source, allTerms: conf.terms.map((t: any) => t.slug) } : { collection: key };
-}
-
-/** お知らせ(news)の記事を集めて表示するコレクション(活動報告・発行物)。site.ts で source: "news" のもの */
-export const DERIVED_KEYS = (Object.keys(COLLECTIONS) as CollectionKey[]).filter((k) => (COLLECTIONS[k] as any).source === "news");
-
-/**
- * お知らせの記事ごとの表示先コレクション(活動報告・発行物の分類が付いた記事のみ。entry.data.id → key)。
- * 分類が付いた記事は /report/{記事番号}/ ・ /publication/{記事番号}/ が正式な URL のため、リンク先の判定に使う。
- */
-export async function getDerivedKeys(entryIds: string[]): Promise<Map<string, CollectionKey>> {
-	const out = new Map<string, CollectionKey>();
-	if (!entryIds.length) return out;
-	try {
-		for (const key of DERIVED_KEYS) {
-			const map = (await getTermsForEntries("news", entryIds, COLLECTIONS[key].taxonomy)) as Map<string, any[]>;
-			for (const id of entryIds) if (!out.has(id) && (map.get(id) ?? []).length) out.set(id, key);
-		}
-	} catch (error) {
-		console.error("[cms] 活動報告・発行物分類の取得に失敗", error);
-	}
-	return out;
-}
-
-/** 記事の URL。key は表示先コレクション(お知らせのうち活動報告・発行物はそのコレクション) */
-export function entryHref(key: CollectionKey, slug: string): string {
-	return `${COLLECTIONS[key].base}${slug}/`;
-}
-
-function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>, derived: Map<string, CollectionKey>): ListItem {
+function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): ListItem {
 	const conf = COLLECTIONS[key];
 	return {
 		slug: e.id,
 		title: e.data.title,
-		href: entryHref(derived.get(e.data.id) ?? key, e.id),
+		href: `${conf.base}${e.id}/`,
 		date: e.data.publishedAt ?? e.data.createdAt ?? null,
 		data: e.data,
 		terms: ((termsByEntry.get(e.data.id) ?? []) as any[]).map((t) => ({
@@ -88,12 +56,10 @@ function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>, de
 /** コレクションの記事一覧をカテゴリ付きで取得(新しい順) */
 export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	const conf = COLLECTIONS[key];
-	const src = sourceOf(key);
 	const where: Record<string, any> = {};
-	const term = opts.term ?? src.allTerms;
-	if (term) where[opts.taxonomy ?? conf.taxonomy] = term;
+	if (opts.term) where[opts.taxonomy ?? conf.taxonomy] = opts.term;
 	if (opts.year) where.published_at = yearRange(opts.year);
-	const res = await getEmDashCollection(src.collection, {
+	const res = await getEmDashCollection(key, {
 		orderBy: { published_at: "desc" },
 		limit: opts.limit ?? 20,
 		...(opts.cursor ? { cursor: opts.cursor } : opts.offset ? { offset: opts.offset } : {}),
@@ -101,10 +67,9 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	} as any);
 	const entries = res.entries ?? [];
 	const termsByEntry = entries.length
-		? await getTermsForEntries(src.collection, entries.map((e: any) => e.data.id), conf.taxonomy)
+		? await getTermsForEntries(key, entries.map((e: any) => e.data.id), conf.taxonomy)
 		: new Map();
-	const derived = key === "news" ? await getDerivedKeys(entries.map((e: any) => e.data.id)) : new Map<string, CollectionKey>();
-	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>, derived));
+	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>));
 	return { items, error: res.error, cacheHint: res.cacheHint, nextCursor: res.nextCursor, hasMore: res.hasMore };
 }
 
@@ -115,27 +80,25 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
  */
 export async function getPublishedDates(key: CollectionKey, term?: string, taxonomy?: string): Promise<{ dates: string[]; error?: unknown }> {
 	const conf = COLLECTIONS[key];
-	const src = sourceOf(key);
-	const terms = term ? [term] : src.allTerms;
 	try {
 		const db: any = await getDb();
 		let q = db
-			.selectFrom(`ec_${src.collection} as e`)
+			.selectFrom(`ec_${key} as e`)
 			.select("e.published_at")
 			.where("e.deleted_at", "is", null)
 			.where("e.status", "=", "published");
-		if (terms) {
+		if (term) {
 			q = q.where(
 				"e.translation_group",
 				"in",
 				db
 					.selectFrom("content_taxonomies as ct")
 					.select("ct.entry_id")
-					.where("ct.collection", "=", src.collection)
+					.where("ct.collection", "=", key)
 					.where(
 						"ct.taxonomy_id",
 						"in",
-						db.selectFrom("taxonomies").select("translation_group").where("name", "=", taxonomy ?? conf.taxonomy).where("slug", "in", terms),
+						db.selectFrom("taxonomies").select("translation_group").where("name", "=", taxonomy ?? conf.taxonomy).where("slug", "=", term),
 					),
 			);
 		}
@@ -173,6 +136,7 @@ export async function loadArchive(
 	if (yearParam !== null && yearParam !== "" && !/^\d{4}$/.test(yearParam)) return null;
 	const page = pageParam ? Number(pageParam) : 1;
 	const year = yearParam ? Number(yearParam) : undefined;
+	if (isMergedNews(key, opts)) return loadMergedNews(url, opts.term, page, year);
 
 	const { dates, error: datesError } = await getPublishedDates(key, opts.term, opts.taxonomy);
 	const years = [...new Set(dates.map(jstYear))].sort((a, b) => b - a);
@@ -185,25 +149,91 @@ export async function loadArchive(
 	return { items: res.items, page, totalPages, total, years, year, error: res.error ?? datesError };
 }
 
+/** 公開中の記事の一覧行(スラッグ・タイトル・公開日。新しい順)。term を指定するとその分類の記事のみ */
+async function publishedRows(collection: CollectionKey, terms?: string[], taxonomy?: string) {
+	const db: any = await getDb();
+	let q = db
+		.selectFrom(`ec_${collection} as e`)
+		.select(["e.id", "e.slug", "e.title", "e.published_at"])
+		.where("e.deleted_at", "is", null)
+		.where("e.status", "=", "published")
+		.where("e.published_at", "is not", null);
+	if (terms) {
+		q = q.where(
+			"e.translation_group",
+			"in",
+			db
+				.selectFrom("content_taxonomies as ct")
+				.select("ct.entry_id")
+				.where("ct.collection", "=", collection)
+				.where(
+					"ct.taxonomy_id",
+					"in",
+					db.selectFrom("taxonomies").select("translation_group").where("name", "=", taxonomy ?? COLLECTIONS[collection].taxonomy).where("slug", "in", terms),
+				),
+		);
+	}
+	const rows: { id: string; slug: string; title: string; published_at: string }[] = await q.orderBy("e.published_at", "desc").execute();
+	return rows.map((r) => ({ ...r, collection }));
+}
+
+/** お知らせの一覧に活動報告・発行物を混ぜるか(「全て」と NEWS_MERGE.term のカテゴリ) */
+export function isMergedNews(key: CollectionKey, opts: { term?: string; taxonomy?: string }) {
+	return key === "news" && !opts.taxonomy && (!opts.term || opts.term === NEWS_MERGE.term);
+}
+
 /**
- * 記事詳細の前後記事(前=1 つ古い記事、次=1 つ新しい記事)。
- * key が活動報告・発行物のときは、お知らせのうちその分類の付いた記事の中で前後を探す。
+ * お知らせ+活動報告+発行物を日付順に混ぜた一覧ページのデータ(src/data/site.ts の NEWS_MERGE)。
+ * 件数が少ない(数百件)ため、3 つの一覧行(スラッグ・タイトル・公開日)を読んで並べ替え、表示するページ分だけタグを取得する。
  */
+async function loadMergedNews(url: URL, term: string | undefined, page: number, year: number | undefined): Promise<ArchiveData | null> {
+	const conf = COLLECTIONS.news;
+	const perPage = conf.perPage;
+	let rows: Awaited<ReturnType<typeof publishedRows>> = [];
+	let error: unknown;
+	try {
+		const lists = await Promise.all([
+			publishedRows("news", term ? [term] : undefined),
+			...NEWS_MERGE.collections.map((c) => publishedRows(c)),
+		]);
+		rows = lists.flat().sort((a, b) => (a.published_at < b.published_at ? 1 : a.published_at > b.published_at ? -1 : 0));
+	} catch (e) {
+		error = e;
+		console.error("[cms] お知らせ一覧(活動報告・発行物を含む)の取得に失敗", e);
+	}
+	const years = [...new Set(rows.map((r) => jstYear(r.published_at)))].sort((a, b) => b - a);
+	const filtered = year ? rows.filter((r) => jstYear(r.published_at) === year) : rows;
+	const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+	if (page > totalPages && !error) return null;
+	const slice = filtered.slice((page - 1) * perPage, page * perPage);
+
+	const newsIds = slice.filter((r) => r.collection === "news").map((r) => r.id);
+	const termsByEntry = (newsIds.length ? await getTermsForEntries("news", newsIds, conf.taxonomy) : new Map()) as Map<string, any[]>;
+	const mergeTerm = conf.terms.find((t) => t.slug === NEWS_MERGE.term)!;
+	const items: ListItem[] = slice.map((r) => {
+		const date = new Date(r.published_at);
+		const terms =
+			r.collection === "news"
+				? (termsByEntry.get(r.id) ?? []).map((t: any) => ({ slug: t.slug, label: t.label, tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" }))
+				: [{ slug: mergeTerm.slug, label: mergeTerm.label, tag: mergeTerm.tag }];
+		return { slug: r.slug, title: r.title, href: `${COLLECTIONS[r.collection].base}${r.slug}/`, date, terms, data: { title: r.title, publishedAt: date } };
+	});
+	return { items, page, totalPages, total: filtered.length, years, year, error };
+}
+
+/** 記事詳細の前後記事(前=1 つ古い記事、次=1 つ新しい記事) */
 export async function getAdjacentEntries(key: CollectionKey, entry: any) {
-	const src = sourceOf(key);
+	const conf = COLLECTIONS[key];
 	const at: Date | null = entry.data.publishedAt ?? null;
 	if (!at) return { prev: null, next: null };
 	const iso = new Date(at).toISOString();
-	const scope = src.allTerms ? { [COLLECTIONS[key].taxonomy]: src.allTerms } : {};
 	const [older, newer] = await Promise.all([
-		getEmDashCollection(src.collection, { orderBy: { published_at: "desc" }, limit: 1, where: { ...scope, published_at: { lt: iso } } } as any),
-		getEmDashCollection(src.collection, { orderBy: { published_at: "asc" }, limit: 1, where: { ...scope, published_at: { gt: iso } } } as any),
+		getEmDashCollection(key, { orderBy: { published_at: "desc" }, limit: 1, where: { published_at: { lt: iso } } } as any),
+		getEmDashCollection(key, { orderBy: { published_at: "asc" }, limit: 1, where: { published_at: { gt: iso } } } as any),
 	]);
 	const pick = (r: any) => (r.entries ?? [])[0];
-	const found = [pick(older), pick(newer)];
-	const derived = key === "news" ? await getDerivedKeys(found.filter(Boolean).map((e: any) => e.data.id)) : new Map<string, CollectionKey>();
-	const link = (e: any) => (e ? { href: entryHref(derived.get(e.data.id) ?? key, e.id), title: e.data.title as string } : null);
-	return { prev: link(found[0]), next: link(found[1]) };
+	const link = (e: any) => (e ? { href: `${conf.base}${e.id}/`, title: e.data.title as string } : null);
+	return { prev: link(pick(older)), next: link(pick(newer)) };
 }
 
 /** 分類の項目(スラッグ・名前)を取得。見つからなければ null */

@@ -3,7 +3,6 @@
  * CMS 記事の詳細ページ(白背景+パンくず → タイトル・日付・タグ → 本文 → 前後記事 → 一覧へ戻る)
  * entry・前後記事はページ側(src/pages/{news,report,publication}/[slug].astro)で取得して渡す(404 判定をレスポンス開始前に行うため)。
  * 発行物もお知らせと同じ構成(PDF などのダウンロードは本文内のリンクから)。
- * 発行物(collection="publication")の記事データはお知らせ(news)のもの。タグは発行物の分類を表示する。
  */
 import { getEntryTerms } from "emdash";
 import Layout from "../layouts/Layout.astro";
@@ -26,18 +25,17 @@ const { collection, slug, entry, adjacent } = Astro.props;
 const conf = COLLECTIONS[collection];
 
 const d: any = entry.data;
-const dataCollection = ((conf as any).source ?? collection) as CollectionKey;
-const terms = ((await getEntryTerms(dataCollection, d.id, conf.taxonomy)) ?? []) as any[];
+const terms = ((await getEntryTerms(collection, d.id, conf.taxonomy)) ?? []) as any[];
 const date = d.publishedAt ?? d.createdAt;
 const termTags = terms.map((t) => ({
-	href: `${conf.base}${t.slug}/`,
+	slug: t.slug,
 	label: t.label,
 	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
 }));
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 const ogImage = (d.featured_image ?? d.cover)?.src;
 ---
-<Layout title={d.title} description={d.excerpt} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection: dataCollection, id: d.id, slug }}>
+<Layout title={d.title} description={d.excerpt} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
 	<Breadcrumb items={[{ label: conf.label, href: conf.base }, { label: d.title }]} />
 
 	<article class="article">
@@ -46,7 +44,7 @@ const ogImage = (d.featured_image ?? d.cover)?.src;
 				<h1 class="article__title" {...entry.edit?.title}>{d.title}</h1>
 				<p class="article__meta">
 					{date && <time class="article__date" datetime={isoDate(date)}>{formatDate(date)}</time>}
-					{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={t.href}>{t.label}</a>)}
+					{termTags.map((t) => <a class={`tag tag--${t.tag}`} href={`${conf.base}${t.slug}/`}>{t.label}</a>)}
 				</p>
 			</header>
 

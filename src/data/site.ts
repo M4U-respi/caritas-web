@@ -43,12 +43,7 @@ export const COLLECTIONS = {
 		label: "活動報告",
 		en: "REPORT",
 		base: "/report/",
-		/**
-		 * 活動報告はお知らせ(news)の記事のうち「活動報告」分類(news_report)が付いたものを集めて表示する。
-		 * 記事の詳細は /report/{id}/(/news/{id}/ はリダイレクト)。管理画面ではお知らせの「活動報告」欄で設定。
-		 */
-		source: "news",
-		taxonomy: "news_report",
+		taxonomy: "report_category",
 		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
 		hero: { en: "REPORTS", ja: "報告", lead: "毎月の活動と、年度ごとの総括をご報告します。募金の受け入れと支出の状況もこちらでご確認いただけます。" },
 		perPage: 10,
@@ -61,12 +56,7 @@ export const COLLECTIONS = {
 		label: "発行物",
 		en: "PUBLICATION",
 		base: "/publication/",
-		/**
-		 * 発行物はお知らせ(news)の記事のうち「発行物」分類(news_publication)が付いたものを集めて表示する。
-		 * 記事の詳細は /publication/{id}/(/news/{id}/ はリダイレクト)。管理画面ではお知らせの「発行物」欄で設定。
-		 */
-		source: "news",
-		taxonomy: "news_publication",
+		taxonomy: "publication_category",
 		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
 		hero: { en: "PUBLICATIONS", ja: "刊行物", lead: "機関誌「We are Caritas」や、四旬節の小冊子、セミナーの講演録などを発行しています。いずれも無料でお送りしています。" },
 		perPage: 6,
@@ -84,6 +74,13 @@ export type CollectionKey = keyof typeof COLLECTIONS;
  * - 中カテゴリ(news_category)とは独立した分類。項目は管理画面の「支援・災害」で追加・編集する
  * - スラッグは小文字(URL の大文字は小文字へリダイレクト)。中カテゴリのスラッグと重複させないこと
  */
+/**
+ * お知らせの一覧(「全て」と下記カテゴリ)に、活動報告・発行物の記事も日付順に混ぜて表示する。
+ * 記事の登録は管理画面のそれぞれ(活動報告・発行物)で行い、お知らせには登録しない。
+ * 混ぜた記事のリンク先は各コレクションの URL(/report/{id}/ ・ /publication/{id}/)、タグはこのカテゴリのもの。
+ */
+export const NEWS_MERGE = { term: "info", collections: ["report", "publication"] } as const;
+
 export const NEWS_AID = {
 	taxonomy: "news_aid",
 	// TODO(要確認): 災害・紛争ページのヒーロー文言(カンプなし)
