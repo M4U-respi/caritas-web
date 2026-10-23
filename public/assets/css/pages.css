@@ -713,8 +713,9 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .prose__gallery-grid { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); overflow: hidden; border-radius: 8px; }
 .prose__gallery-grid img { width: 100%; height: 100%; aspect-ratio: 432 / 325; object-fit: cover; }
 .prose__figure + h2, .prose__gallery + h2 { margin-top: 32px; }
-/* 発行物の詳細:本文の画像(表紙を含む)は最大 480px で中央に置く */
+/* 発行物の詳細:本文の画像(表紙を含む)は最大 480px で中央に置く(キャプションも中央) */
 .article--publication .prose__figure, .article--publication .prose__gallery { max-width: 480px; margin-inline: auto; }
+.article--publication .prose figcaption { text-align: center; }
 .prose__table-wrap { margin-top: 24px; }
 .prose__table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--c-line); font-size: 16px; line-height: 1.6; }
 .prose h2 + .prose__table-wrap { margin-top: 0; }
