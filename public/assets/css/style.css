@@ -476,6 +476,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 }
 .partners__link { display: flex; align-items: center; justify-content: center; }
 .partners__link img { width: 100%; height: auto; }
+.partners__link--wide img { flex: none; width: 120%; max-width: none; } /* 横長のロゴ(カトリック中央協議会)は列幅より少し大きく、はみ出しは列の間の余白に収める */
 .partners__link:hover { opacity: .7; }
 .partners__curve { color: var(--c-footer); }
 
@@ -798,6 +799,8 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .partners__label { justify-content: flex-start; }
   .partners__title { margin-top: 10px; font-size: 24px; }
   .partners__list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 24px; }
+  .partners__link--wide { justify-content: flex-end; } /* SP は右列のため左側(列の間)へはみ出させる */
+  .partners__link--wide img { width: 110%; }
 
   /* FOOTER(ナビ → ロゴ・所在地の順) */
   .footer__inner { padding: 64px 0 24px; }
