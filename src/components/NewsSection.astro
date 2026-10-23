@@ -1,15 +1,14 @@
 ---
-/* TOP「お知らせ」:EmDash の news コレクションから取得 */
+/* TOP「お知らせ」:EmDash の news コレクションから取得(下の一覧は活動報告・発行物も日付順に混ぜた最新 3 件) */
 import EntryList from "./EntryList.astro";
-import { listEntries } from "../lib/cms";
+import { listEntries, listMergedNews } from "../lib/cms";
 
 const [urgent, normal] = await Promise.all([
 	listEntries("news", { term: "emergency", limit: 2 }),
-	listEntries("news", { term: ["donation", "campaign", "info"], limit: 3 }),
+	listMergedNews({ terms: ["donation", "campaign", "info"], limit: 3 }),
 ]);
 if (Astro.cache?.enabled) {
 	if (urgent.cacheHint) Astro.cache.set(urgent.cacheHint);
-	if (normal.cacheHint) Astro.cache.set(normal.cacheHint);
 }
 ---
 <section class="news" id="news" aria-labelledby="news-title">

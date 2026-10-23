@@ -136,7 +136,7 @@ export async function loadArchive(
 	if (yearParam !== null && yearParam !== "" && !/^\d{4}$/.test(yearParam)) return null;
 	const page = pageParam ? Number(pageParam) : 1;
 	const year = yearParam ? Number(yearParam) : undefined;
-	if (isMergedNews(key, opts)) return loadMergedNews(url, opts.term, page, year);
+	if (isMergedNews(key, opts)) return loadMergedNews(opts.term, page, year);
 
 	const { dates, error: datesError } = await getPublishedDates(key, opts.term, opts.taxonomy);
 	const years = [...new Set(dates.map(jstYear))].sort((a, b) => b - a);
@@ -182,21 +182,48 @@ export function isMergedNews(key: CollectionKey, opts: { term?: string; taxonomy
 	return key === "news" && !opts.taxonomy && (!opts.term || opts.term === NEWS_MERGE.term);
 }
 
+/** お知らせ(terms のカテゴリ。省略時は全て)+活動報告+発行物の一覧行を日付順に混ぜる */
+async function mergedNewsRows(terms?: string[]) {
+	const lists = await Promise.all([publishedRows("news", terms), ...NEWS_MERGE.collections.map((c) => publishedRows(c))]);
+	return lists.flat().sort((a, b) => (a.published_at < b.published_at ? 1 : a.published_at > b.published_at ? -1 : 0));
+}
+
+/** 混ぜた一覧行 → 表示用の項目(お知らせはカテゴリのタグ、活動報告・発行物は NEWS_MERGE.term のタグ) */
+async function mergedItems(rows: Awaited<ReturnType<typeof publishedRows>>): Promise<ListItem[]> {
+	const conf = COLLECTIONS.news;
+	const newsIds = rows.filter((r) => r.collection === "news").map((r) => r.id);
+	const termsByEntry = (newsIds.length ? await getTermsForEntries("news", newsIds, conf.taxonomy) : new Map()) as Map<string, any[]>;
+	const mergeTerm = conf.terms.find((t) => t.slug === NEWS_MERGE.term)!;
+	return rows.map((r) => {
+		const date = new Date(r.published_at);
+		const terms =
+			r.collection === "news"
+				? (termsByEntry.get(r.id) ?? []).map((t: any) => ({ slug: t.slug, label: t.label, tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" }))
+				: [{ slug: mergeTerm.slug, label: mergeTerm.label, tag: mergeTerm.tag }];
+		return { slug: r.slug, title: r.title, href: `${COLLECTIONS[r.collection].base}${r.slug}/`, date, terms, data: { title: r.title, publishedAt: date } };
+	});
+}
+
+/** お知らせ(terms のカテゴリ)+活動報告+発行物の最新 limit 件(TOP の「お知らせ」欄など) */
+export async function listMergedNews(opts: { terms?: string[]; limit: number }): Promise<{ items: ListItem[]; error?: unknown }> {
+	try {
+		return { items: await mergedItems((await mergedNewsRows(opts.terms)).slice(0, opts.limit)) };
+	} catch (error) {
+		console.error("[cms] お知らせ一覧(活動報告・発行物を含む)の取得に失敗", error);
+		return { items: [], error };
+	}
+}
+
 /**
  * お知らせ+活動報告+発行物を日付順に混ぜた一覧ページのデータ(src/data/site.ts の NEWS_MERGE)。
  * 件数が少ない(数百件)ため、3 つの一覧行(スラッグ・タイトル・公開日)を読んで並べ替え、表示するページ分だけタグを取得する。
  */
-async function loadMergedNews(url: URL, term: string | undefined, page: number, year: number | undefined): Promise<ArchiveData | null> {
-	const conf = COLLECTIONS.news;
-	const perPage = conf.perPage;
+async function loadMergedNews(term: string | undefined, page: number, year: number | undefined): Promise<ArchiveData | null> {
+	const perPage = COLLECTIONS.news.perPage;
 	let rows: Awaited<ReturnType<typeof publishedRows>> = [];
 	let error: unknown;
 	try {
-		const lists = await Promise.all([
-			publishedRows("news", term ? [term] : undefined),
-			...NEWS_MERGE.collections.map((c) => publishedRows(c)),
-		]);
-		rows = lists.flat().sort((a, b) => (a.published_at < b.published_at ? 1 : a.published_at > b.published_at ? -1 : 0));
+		rows = await mergedNewsRows(term ? [term] : undefined);
 	} catch (e) {
 		error = e;
 		console.error("[cms] お知らせ一覧(活動報告・発行物を含む)の取得に失敗", e);
@@ -205,19 +232,7 @@ async function loadMergedNews(url: URL, term: string | undefined, page: number, 
 	const filtered = year ? rows.filter((r) => jstYear(r.published_at) === year) : rows;
 	const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
 	if (page > totalPages && !error) return null;
-	const slice = filtered.slice((page - 1) * perPage, page * perPage);
-
-	const newsIds = slice.filter((r) => r.collection === "news").map((r) => r.id);
-	const termsByEntry = (newsIds.length ? await getTermsForEntries("news", newsIds, conf.taxonomy) : new Map()) as Map<string, any[]>;
-	const mergeTerm = conf.terms.find((t) => t.slug === NEWS_MERGE.term)!;
-	const items: ListItem[] = slice.map((r) => {
-		const date = new Date(r.published_at);
-		const terms =
-			r.collection === "news"
-				? (termsByEntry.get(r.id) ?? []).map((t: any) => ({ slug: t.slug, label: t.label, tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" }))
-				: [{ slug: mergeTerm.slug, label: mergeTerm.label, tag: mergeTerm.tag }];
-		return { slug: r.slug, title: r.title, href: `${COLLECTIONS[r.collection].base}${r.slug}/`, date, terms, data: { title: r.title, publishedAt: date } };
-	});
+	const items = await mergedItems(filtered.slice((page - 1) * perPage, page * perPage));
 	return { items, page, totalPages, total: filtered.length, years, year, error };
 }
 
