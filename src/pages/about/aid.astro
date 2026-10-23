@@ -20,10 +20,10 @@ const activities = [
 ];
 
 const flow = [
-	{ title: "支援の要請", text: "国際カリタスの緊急支援要請（EA）や、現地の各国カリタス・国内団体からの申請を受けます。", img: { src: "/assets/img/sub/aid/aid-flow-01.jpg", width: 482, height: 273 } },
-	{ title: "審査", text: "カリタスジャパン委員会が、緊急性・必要性・実施体制を審議します。", img: { src: "/assets/img/sub/aid/aid-flow-02.jpg", width: 482, height: 274 } },
-	{ title: "支援の実施", text: "現地のカリタスや団体をパートナーとして、支援を届けます。", img: { src: "/assets/img/sub/aid/aid-flow-03.jpg", width: 482, height: 275, sp: { src: "/assets/img/sub/aid/aid-flow-03-sp.jpg", width: 994, height: 540 } } },
-	{ title: "視察と報告", text: "事業を視察し、支援がどのように使われたかを報告します。", img: { src: "/assets/img/sub/aid/aid-flow-04.jpg", width: 482, height: 274, sp: { src: "/assets/img/sub/aid/aid-flow-04-sp.jpg", width: 996, height: 538 } } },
+	{ title: "支援の要請", text: "国際カリタスの緊急支援要請（EA）や、現地の各国カリタス・国内団体からの申請を受けます。", img: { src: "/assets/img/sub/aid/aid-flow-01.jpg", width: 729, height: 411 } },
+	{ title: "審査", text: "カリタスジャパン委員会が、緊急性・必要性・実施体制を審議します。", img: { src: "/assets/img/sub/aid/aid-flow-02.jpg", width: 729, height: 411 } },
+	{ title: "支援の実施", text: "現地のカリタスや団体をパートナーとして、支援を届けます。", img: { src: "/assets/img/sub/aid/aid-flow-03.jpg", width: 723, height: 411, sp: { src: "/assets/img/sub/aid/aid-flow-03-sp.jpg", width: 723, height: 411 } } },
+	{ title: "視察と報告", text: "事業を視察し、支援がどのように使われたかを報告します。", img: { src: "/assets/img/sub/aid/aid-flow-04.jpg", width: 723, height: 411, sp: { src: "/assets/img/sub/aid/aid-flow-04-sp.jpg", width: 723, height: 411 } } },
 ];
 
 // リンク先:お知らせの「支援・災害」ごとの一覧(/news/{slug}/。項目は管理画面の「支援・災害」)
@@ -68,7 +68,7 @@ const history = [
 					<p>カリタスジャパンの援助活動では、全世界のカリタスと連携し、各地で厳しい生活を余儀なくされている人々の自立を後押しします。緊急災害や戦災からの復興、貧困の撲滅、人権、教育、保健衛生などを優先事項として「今、最も必要とされている支援」を行います。</p>
 				</div>
 			</div>
-			<picture><source media="(max-width: 767.98px)" srcset="/assets/img/sub/aid/aid-purpose-sp.jpg" width="764" height="572" /><img class="media-row__img" src="/assets/img/sub/aid/aid-purpose.jpg" alt="土を掘り起こして作業する女性たち" width="764" height="454" loading="lazy" decoding="async" /></picture>
+			<picture><source media="(max-width: 767.98px)" srcset="/assets/img/sub/aid/aid-purpose-sp.jpg" width="1308" height="780" /><img class="media-row__img" src="/assets/img/sub/aid/aid-purpose.jpg" alt="土を掘り起こして作業する女性たち" width="1308" height="780" loading="lazy" decoding="async" /></picture>
 		</div>
 	</section>
 
@@ -110,7 +110,7 @@ const history = [
 						{g.items.map((it) => (
 							<li class="aid-history__item">
 								<a class="aid-history__link" href={it.href}>
-									<img class="aid-history__thumb" src={it.img ? `/assets/img/sub/aid/${it.img}` : "/assets/img/sub/common/noimage.jpg"} alt="" width="264" height="176" loading="lazy" decoding="async" />
+									<img class="aid-history__thumb" src={it.img ? `/assets/img/sub/aid/${it.img}` : "/assets/img/sub/common/noimage.jpg"} alt="" width="396" height="264" loading="lazy" decoding="async" />
 									<span class="aid-history__title" set:html={it.label} />
 								</a>
 							</li>
