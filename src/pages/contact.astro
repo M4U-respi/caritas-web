@@ -55,30 +55,30 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 				<!-- TODO(要確認): 送信先未定。確認・完了画面のカンプなし -->
 				<form class="form-body" id="contact-form" action="/api/contact" method="post" novalidate>
 					<!-- 迷惑送信対策(人には見えない欄。入力があれば破棄) -->
-					<p class="visually-hidden" aria-hidden="true"><label>空欄のままにしてください<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></p>
+					<p class="visually-hidden" aria-hidden="true"><label>空欄のままにしてください<input type="text" name="hp_note" tabindex="-1" autocomplete="off" /></label></p>
 					<div class="form-row">
 						<label class="form-row__label" for="cf-name">お名前<span class="form-badge form-badge--req">必須</span></label>
 						<div>
-							<input class="form-input" id="cf-name" name="name" type="text" autocomplete="name" placeholder="例: 鈴木 一郎" required aria-describedby="cf-name-err" />
+							<input class="form-input" id="cf-name" name="name" type="text" maxlength="100" autocomplete="name" placeholder="例: 鈴木 一郎" required aria-describedby="cf-name-err" />
 							<p class="form-error" id="cf-name-err" aria-live="polite"></p>
 						</div>
 					</div>
 					<div class="form-row">
 						<label class="form-row__label" for="cf-email">メールアドレス<span class="form-badge form-badge--req">必須</span></label>
 						<div>
-							<input class="form-input" id="cf-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="例: example@caritas.jp" required aria-describedby="cf-email-help cf-email-err" />
+							<input class="form-input" id="cf-email" name="email" type="email" maxlength="254" autocomplete="email" inputmode="email" placeholder="例: example@caritas.jp" required aria-describedby="cf-email-help cf-email-err" />
 							<p class="form-help" id="cf-email-help">ご返信先としてお使いします。</p>
 							<p class="form-error" id="cf-email-err" aria-live="polite"></p>
 						</div>
 					</div>
 					<div class="form-row">
 						<label class="form-row__label" for="cf-subject">ご用件<span class="form-badge form-badge--opt">任意</span></label>
-						<div><input class="form-input" id="cf-subject" name="subject" type="text" placeholder="例: 資料の請求について" /></div>
+						<div><input class="form-input" id="cf-subject" name="subject" type="text" maxlength="200" placeholder="例: 資料の請求について" /></div>
 					</div>
 					<div class="form-row form-row--textarea">
 						<label class="form-row__label" for="cf-message">メッセージ本文<span class="form-badge form-badge--req">必須</span></label>
 						<div>
-							<textarea class="form-input" id="cf-message" name="message" rows="4" placeholder="お問い合わせの内容をご記入ください。" required aria-describedby="cf-message-err"></textarea>
+							<textarea class="form-input" id="cf-message" name="message" rows="4" maxlength="10000" placeholder="お問い合わせの内容をご記入ください。" required aria-describedby="cf-message-err"></textarea>
 							<p class="form-error" id="cf-message-err" aria-live="polite"></p>
 						</div>
 					</div>
@@ -92,7 +92,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 						<p class="sub-note">ご記入いただいた個人情報は、お問い合わせへの対応にのみ使用します。詳しくはプライバシーポリシーをご覧ください。</p>
 					</div>
 
-					{turnstileSiteKey && <div class="form-turnstile cf-turnstile" data-sitekey={turnstileSiteKey} data-language="ja" data-theme="light"></div>}
+					{turnstileSiteKey && <div class="form-turnstile cf-turnstile" data-sitekey={turnstileSiteKey} data-action="contact" data-language="ja" data-theme="light"></div>}
 					<button class="form-submit" type="submit"><span>入力内容を確認する</span><svg width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></button>
 					<p class="form-status" id="cf-status" role="status" hidden></p>
 					<p class="sub-note note-hang">※ 迷惑行為を防ぐため、Cloudflare Turnstile を使用しています。プライバシーポリシーもあわせてご確認ください。</p>

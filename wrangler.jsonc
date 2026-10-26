@@ -12,7 +12,17 @@
 		"CONTACT_TO": "ueno@respiration-inc.com",
 		// Cloudflare Turnstile のサイトキー(公開値)。シークレットキーは Worker のシークレット TURNSTILE_SECRET_KEY
 		"TURNSTILE_SITE_KEY": "0x4AAAAAAFbFNepGqqS-iqd7",
+		// お問い合わせフォーム:Turnstile を許可するホスト名(カンマ区切り)。正式公開時は本番ドメインを追加する
+		"CONTACT_HOSTS": "caritas-web.respiration.workers.dev",
 	},
+	// お問い合わせフォーム:同じ IP からの送信回数の制限(1 分に 3 回まで)
+	"ratelimits": [
+		{
+			"name": "CONTACT_RL",
+			"namespace_id": "1001",
+			"simple": { "limit": 3, "period": 60 },
+		},
+	],
 	"observability": {
 		"enabled": true,
 	},
