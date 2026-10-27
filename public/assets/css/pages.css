@@ -1314,8 +1314,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--news .news-urgent__foot .btn-outline { width: 100%; max-width: 300px; min-height: 48px; font-size: 15px; }
 
   /* カテゴリタブ:3 + 2 の 2 段 */
-  .cms-archive--news .cat-tabs__nav { margin-inline: 0; }
-  .cms-archive--news .cat-tabs__nav::after { display: none; }
   .cms-archive--news .cat-tabs__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); padding: 0; overflow: visible; }
   .cms-archive--news .cat-tabs__list > li { grid-column: span 2; border-bottom: 1px solid var(--c-line-gray); }
   .cms-archive--news .cat-tabs__list > li:nth-child(n + 4) { grid-column: span 3; }
@@ -1330,7 +1328,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--news .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
   .cms-archive--news .entry-row__meta { margin-top: 16px; gap: 8px 10px; }
   .cms-archive--news .entry-row__date { font-size: 12px; }
-  .cms-archive--news .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 13.5px; line-height: 27px; letter-spacing: 0; -webkit-line-clamp: unset; } /* 活動報告と同じ(「月間活動報告2026年10月」を 1 行に) */
+  .cms-archive--news .entry-row__title { display: block; margin-top: 10px; font-size: 13.5px; line-height: 27px; letter-spacing: 0; } /* 活動報告と同じ(「月間活動報告2026年10月」を 1 行に) */
   .cms-archive--news .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 13px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
   .cms-archive--news .entry-row__arrow { display: none; }
 
@@ -1362,8 +1360,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--report, .cms-archive--publication { padding-top: 64px; }
 
   /* カテゴリタブ:3 等分 */
-  .cms-archive--report .cat-tabs__nav, .cms-archive--publication .cat-tabs__nav { margin-inline: 0; border-bottom: 1px solid var(--c-line-gray); }
-  .cms-archive--report .cat-tabs__nav::after, .cms-archive--publication .cat-tabs__nav::after { display: none; }
+  .cms-archive--report .cat-tabs__nav, .cms-archive--publication .cat-tabs__nav { border-bottom: 1px solid var(--c-line-gray); }
   .cms-archive--report .cat-tabs__list, .cms-archive--publication .cat-tabs__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; padding: 0; overflow: visible; }
   .cms-archive--report .cat-tabs__link, .cms-archive--publication .cat-tabs__link { justify-content: center; height: 52px; padding: 0 4px; font-size: 15px; }
   .cms-archive--report .cat-tabs__link::after, .cms-archive--publication .cat-tabs__link::after { height: 2px; }
@@ -1384,7 +1381,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--report .entry-row__body { flex: 1; }
   .cms-archive--report .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
   .cms-archive--report .entry-row__date { font-size: 12px; }
-  .cms-archive--report .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 13.5px; line-height: 27px; letter-spacing: 0; -webkit-line-clamp: unset; } /* 「月間活動報告2026年10月」が 2 列でも 1 行に収まる大きさ(幅 375px 以上の端末) */
+  .cms-archive--report .entry-row__title { display: block; margin-top: 10px; font-size: 13.5px; line-height: 27px; letter-spacing: 0; } /* 「月間活動報告2026年10月」が 2 列でも 1 行に収まる大きさ(幅 375px 以上の端末) */
   .cms-archive--report .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 13px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
   .cms-archive--report .entry-row__arrow { align-self: flex-end; margin-top: 16px; }
 
