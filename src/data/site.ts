@@ -17,7 +17,7 @@ export const SNS = {
 	youtube: "https://www.youtube.com/@caritasjapan9712",
 };
 
-export interface NavLink {
+interface NavLink {
 	label: string;
 	href: string;
 }
@@ -70,17 +70,17 @@ export const COLLECTIONS = {
 export type CollectionKey = keyof typeof COLLECTIONS;
 
 /**
- * お知らせの「支援・災害」分類(災害・紛争ごとのページ /news/{slug}/)
- * - 中カテゴリ(news_category)とは独立した分類。項目は管理画面の「支援・災害」で追加・編集する
- * - スラッグは小文字(URL の大文字は小文字へリダイレクト)。中カテゴリのスラッグと重複させないこと
- */
-/**
  * お知らせの一覧(「全て」と下記カテゴリ)に、活動報告・発行物の記事も日付順に混ぜて表示する。
  * 記事の登録は管理画面のそれぞれ(活動報告・発行物)で行い、お知らせには登録しない。
  * 混ぜた記事のリンク先は各コレクションの URL(/report/{id}/ ・ /publication/{id}/)、タグはこのカテゴリのもの。
  */
 export const NEWS_MERGE = { term: "info", collections: ["report", "publication"] } as const;
 
+/**
+ * お知らせの「支援・災害」分類(災害・紛争ごとのページ /news/{slug}/)
+ * - 中カテゴリ(news_category)とは独立した分類。項目は管理画面の「支援・災害」で追加・編集する
+ * - スラッグは小文字(URL の大文字は小文字へリダイレクト)。中カテゴリのスラッグと重複させないこと
+ */
 export const NEWS_AID = {
 	taxonomy: "news_aid",
 	// TODO(要確認): 災害・紛争ページのヒーロー文言(カンプなし)
@@ -125,7 +125,7 @@ export const GNAV: (NavLink & { children?: NavLink[]; spFlat?: boolean })[] = [
 ];
 
 /** 「カリタスジャパンとは」配下のページ(関連ページナビ・パンくず) */
-export const ABOUT_PAGES: NavLink[] = [
+const ABOUT_PAGES: NavLink[] = [
 	{ label: "カリタスジャパンとは", href: "/about/" },
 	{ label: "成り立ちと歴史", href: "/about/history/" },
 	{ label: "四旬節「愛の献金」", href: "/about/lent/" },

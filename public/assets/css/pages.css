@@ -69,7 +69,7 @@ a.tag:hover { opacity: .7; }
   .gnav__item.is-open > .gnav__sub { display: block; }
   .gnav__item--has-child:hover > .gnav__sub,
   .gnav__item--has-child:focus-within > .gnav__sub { transform: none; }
-  .gnav__item--sp-flat > .gnav__sub { display: none !important; }
+  html .gnav__item.gnav__item--sp-flat > .gnav__sub { display: none; } /* html を付けて .js なし時の表示(style.css)と .is-open より優先 */
   .gnav__sub-link { min-height: 55px; padding: 0 18px 0 16px; font-size: 15px; font-weight: 400; letter-spacing: 0; white-space: normal; }
   .gnav__sub-link:hover { background: none; color: var(--c-red); }
   .gnav__sub-chevron { width: 7px; height: 12px; }
@@ -81,7 +81,7 @@ a.tag:hover { opacity: .7; }
 }
 
 /* ==========================================================================
-   下層ページ 共通パーツ(SUBPAGES_SPEC 1 章)
+   下層ページ 共通パーツ
    ========================================================================== */
 :root {
   --c-line-gray: #C9C9C9;
@@ -130,13 +130,12 @@ picture > source { display: none; }
 .sub-section:has(+ .section--green) { padding-bottom: calc(104px + var(--curve)); }
 
 .section--green {
-  --green-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
   margin-top: calc(var(--curve) * -1); padding: calc(var(--curve) + 86px) 0 104px;
   background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* 地図を横幅 100%・セクションの高さいっぱいに伸縮(PC/SP 共通。上辺のアールは mask で切り抜き) */
   color: var(--c-white);
-  -webkit-mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
-          mask: var(--green-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
+  -webkit-mask: var(--section-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
+          mask: var(--section-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
 }
 .section--green .section-label { color: var(--c-white); }
 .section--green .heading-lg { color: var(--c-yellow); }
@@ -609,7 +608,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .page-empty p + p { margin-top: 24px; }
 
 /* ==========================================================================
-   CMS 一覧・記事詳細(report / publication / news。SUBPAGES_SPEC 3 章)
+   CMS 一覧・記事詳細(report / publication / news)
    ========================================================================== */
 /* ---------- 一覧 ---------- */
 .cms-archive { padding: 110px 0 120px; background: var(--c-white); }
@@ -633,7 +632,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .year-filter select {
   width: 100%; height: 40px; padding: 0 36px 0 16px; border: 1px solid var(--c-line-gray); border-radius: 4px;
   background: var(--c-white); font: inherit; font-size: 14px; font-weight: 400; color: var(--c-text-strong);
-  appearance: none; -webkit-appearance: none; cursor: pointer;
+  appearance: none; cursor: pointer;
 }
 .year-filter select:focus-visible { outline: 2px solid var(--c-teal); outline-offset: 1px; }
 .year-filter__submit {
@@ -768,15 +767,15 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .ways__card:hover .circle-arrow { transform: translateX(4px); }
 
 /* ---------- 受付中の募金 ---------- */
-.funds { display: grid; gap: 24px; scroll-margin-top: calc(var(--header-h) + 24px); }
+.funds { display: grid; gap: 24px; }
 #funds { scroll-margin-top: var(--header-h); }
 .funds__box { padding: 32px 40px; }
 .funds__title { padding-bottom: 20px; border-bottom: 2px solid var(--c-text-strong); }
 .funds__table { width: 100%; border-collapse: collapse; }
 .funds__table th, .funds__table td { height: 73px; padding: 12px 0; border-bottom: 1px solid var(--c-line); text-align: left; vertical-align: middle; }
-.funds__name { width: 244px; padding-right: 24px !important; font-size: 16px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; color: var(--c-text-strong); white-space: nowrap; }
+.funds__table .funds__name { width: 244px; padding-right: 24px; font-size: 16px; font-weight: 700; line-height: 1.5; letter-spacing: .02em; color: var(--c-text-strong); white-space: nowrap; }
 .funds__desc { font-size: 14px; font-weight: 400; line-height: 1.7; color: var(--c-text); }
-.funds__code { width: 1%; padding-left: 24px !important; font-size: 22px; font-weight: 700; line-height: 1; text-align: right !important; color: var(--c-red); white-space: nowrap; font-variant-numeric: lining-nums; }
+.funds__table .funds__code { width: 1%; padding-left: 24px; font-size: 22px; font-weight: 700; line-height: 1; text-align: right; color: var(--c-red); white-space: nowrap; font-variant-numeric: lining-nums; }
 
 /* ---------- 郵便局・銀行から ---------- */
 .donate-bank { padding-bottom: 12px; scroll-margin-top: var(--header-h); }
@@ -894,7 +893,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .ways__title { font-size: 20px; }
   .amounts__list { gap: 8px; }
   .amounts__num { font-size: 18px; }
-  .funds__name { width: 200px; }
+  .funds__table .funds__name { width: 200px; }
 }
 
 /* ==========================================================================
@@ -964,7 +963,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .flow--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } /* .flow の 2 列指定を 3 枚のときだけ戻す */
   .def-table--wide th { width: 200px; }
   .funds__box { padding: 28px 32px; }
-  .funds__name { width: auto; white-space: normal; }
+  .funds__table .funds__name { width: auto; white-space: normal; }
   .bequest { grid-template-columns: minmax(0, 1fr); }
   .bequest__pdf { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 32px; align-items: start; }
   .bequest__pdf-title { grid-column: 1 / -1; }
@@ -1023,18 +1022,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .records__title br { display: none; } /* 2 列用の改行 */
   .records__item:nth-child(2) { border-top: 0; }
 
-  .cat-tabs__nav { position: relative; margin-inline: calc(var(--gutter) * -1); }
-  .cat-tabs__list { gap: 4px; overflow-x: auto; padding-inline: calc(var(--gutter) - 12px); scrollbar-width: none; }
-  .cat-tabs__list::-webkit-scrollbar { display: none; }
-  .cat-tabs__nav::after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 32px; background: linear-gradient(90deg, rgba(255, 255, 255, 0), #FFF); pointer-events: none; }
-  .cat-tabs__link { height: 48px; padding: 0 12px; font-size: 15px; }
-  .cat-tabs__aside { align-self: stretch; }
-  .entry-rows { margin-top: 24px; }
-  .entry-row__link { align-items: flex-start; gap: 14px; padding: 20px 0; }
-  .entry-row__thumb { width: 104px; }
-  .entry-row__title { margin-top: 6px; display: -webkit-box; overflow: hidden; -webkit-box-orient: vertical; -webkit-line-clamp: 3; font-size: 15px; }
-  .entry-row__excerpt { display: none; }
-  .entry-row__arrow { align-self: center; }
   .pagination { gap: 4px; margin-top: 48px; }
   .pagination__list { gap: 6px; }
   .pagination__num { width: 36px; height: 36px; }
@@ -1078,13 +1065,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .page-body { padding: 40px 0 80px; }
   .cms-archive { padding: 56px 0 80px; }
   .cms-archive:has(+ .section--green) { padding-bottom: calc(64px + var(--curve)); }
-  .news-urgent--bordered { margin-bottom: 48px; }
-  .year-filter { width: 100%; }
-  .year-filter__select { flex: 1; width: auto; }
-  .pub-card__inner { gap: 16px; min-height: 0; padding: 20px 0; }
-  .pub-card__title { margin-top: 8px; font-size: 15px; line-height: 1.7; }
-  .pub-card__excerpt { margin-top: 8px; font-size: 13px; line-height: 1.8; }
-  .pub-card__cover { width: 96px; }
+  .pub-card__inner { min-height: 0; }
   .pub-about__box { padding: 24px 20px; }
   .prose__gallery-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; } /* 角丸は外側の四隅のみ(枠で処理) */
   .prose__table, .prose__table tbody, .prose__table tr, .prose__table th, .prose__table td { display: block; width: auto; }
@@ -1092,7 +1073,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .prose__table tr { padding: 14px 0 16px; border-bottom: 1px solid var(--c-line); }
   .prose__table th, .prose__table td { padding: 0; border: 0; white-space: normal; font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .prose__table td { margin-top: 4px; }
-  .btn-pill--red { width: 100%; }
 
   .flow--cols-3 { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .flow--text .flow__body { padding: 18px 20px 20px; }
@@ -1108,10 +1088,10 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .funds__title { padding-bottom: 14px; }
   .funds__table, .funds__table tbody { display: block; }
   .funds__table tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 24px; padding: 20px 0; border-bottom: 1px solid var(--c-line); }
-  .funds__table th, .funds__table td { height: auto; padding: 0 !important; border: 0; }
-  .funds__name { font-size: 15px; }
+  .funds__table th, .funds__table td, .funds__table .funds__name, .funds__table .funds__code { height: auto; padding: 0; border: 0; }
+  .funds__table .funds__name { font-size: 15px; }
   .funds__desc { grid-column: 1; grid-row: 2; margin-top: 16px; line-height: 25px; }
-  .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 18px; }
+  .funds__table .funds__code { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 18px; }
   .bank__box { padding: 24px 16px; }
   .bank__grid, .bank__grid--postal { gap: 12px; }
   .bank .tel-card { flex-direction: row; align-items: center; padding: 12px 16px; min-height: 64px; }

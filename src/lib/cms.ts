@@ -14,13 +14,12 @@ export interface ListItem {
 	data: Record<string, any>;
 }
 
-export interface ListOptions {
+interface ListOptions {
 	term?: string | string[];
 	/** term を絞り込む分類(省略時はコレクションのカテゴリ分類) */
 	taxonomy?: string;
 	limit?: number;
-	cursor?: string;
-	/** ページ番号方式の一覧用(cursor とは併用不可) */
+	/** ページ番号方式の一覧用 */
 	offset?: number;
 	/** 公開日(日本時間)の年で絞り込む */
 	year?: number;
@@ -32,7 +31,7 @@ function yearRange(year: number) {
 }
 
 /** Date | ISO 文字列 → 日本時間の年 */
-export function jstYear(d: Date | string): number {
+function jstYear(d: Date | string): number {
 	const t = typeof d === "string" ? Date.parse(d) : d.getTime();
 	return new Date(t + 9 * 3600 * 1000).getUTCFullYear();
 }
@@ -62,7 +61,7 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	const res = await getEmDashCollection(key, {
 		orderBy: { published_at: "desc" },
 		limit: opts.limit ?? 20,
-		...(opts.cursor ? { cursor: opts.cursor } : opts.offset ? { offset: opts.offset } : {}),
+		...(opts.offset ? { offset: opts.offset } : {}),
 		...(Object.keys(where).length ? { where } : {}),
 	} as any);
 	const entries = res.entries ?? [];
@@ -70,7 +69,7 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 		? await getTermsForEntries(key, entries.map((e: any) => e.data.id), conf.taxonomy)
 		: new Map();
 	const items: ListItem[] = entries.map((e: any) => toItem(key, e, termsByEntry as Map<string, any[]>));
-	return { items, error: res.error, cacheHint: res.cacheHint, nextCursor: res.nextCursor, hasMore: res.hasMore };
+	return { items, error: res.error, cacheHint: res.cacheHint };
 }
 
 /**
@@ -78,7 +77,7 @@ export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
  * EmDash のクエリ API には件数取得が無いため、公開日の列だけを直接読む
  * (公開中 = status 'published' かつ削除されていない。EmDash の公開判定と同じ条件)。
  */
-export async function getPublishedDates(key: CollectionKey, term?: string, taxonomy?: string): Promise<{ dates: string[]; error?: unknown }> {
+async function getPublishedDates(key: CollectionKey, term?: string, taxonomy?: string): Promise<{ dates: string[]; error?: unknown }> {
 	const conf = COLLECTIONS[key];
 	try {
 		const db: any = await getDb();
@@ -114,7 +113,6 @@ export interface ArchiveData {
 	items: ListItem[];
 	page: number;
 	totalPages: number;
-	total: number;
 	years: number[];
 	year?: number;
 	error?: unknown;
@@ -146,7 +144,7 @@ export async function loadArchive(
 
 	const res = await listEntries(key, { term: opts.term, taxonomy: opts.taxonomy, year, limit: perPage, offset: (page - 1) * perPage });
 	if (opts.cache?.enabled && res.cacheHint) opts.cache.set(res.cacheHint);
-	return { items: res.items, page, totalPages, total, years, year, error: res.error ?? datesError };
+	return { items: res.items, page, totalPages, years, year, error: res.error ?? datesError };
 }
 
 /** 公開中の記事の一覧行(スラッグ・タイトル・公開日。新しい順)。term を指定するとその分類の記事のみ */
@@ -178,7 +176,7 @@ async function publishedRows(collection: CollectionKey, terms?: string[], taxono
 }
 
 /** お知らせの一覧に活動報告・発行物を混ぜるか(「全て」と NEWS_MERGE.term のカテゴリ) */
-export function isMergedNews(key: CollectionKey, opts: { term?: string; taxonomy?: string }) {
+function isMergedNews(key: CollectionKey, opts: { term?: string; taxonomy?: string }) {
 	return key === "news" && !opts.taxonomy && (!opts.term || opts.term === NEWS_MERGE.term);
 }
 
@@ -233,7 +231,7 @@ async function loadMergedNews(term: string | undefined, page: number, year: numb
 	const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
 	if (page > totalPages && !error) return null;
 	const items = await mergedItems(filtered.slice((page - 1) * perPage, page * perPage));
-	return { items, page, totalPages, total: filtered.length, years, year, error };
+	return { items, page, totalPages, years, year, error };
 }
 
 /** 記事詳細の前後記事(前=1 つ古い記事、次=1 つ新しい記事) */

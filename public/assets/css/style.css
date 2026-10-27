@@ -5,6 +5,8 @@
    ========================================================================== */
 
 :root {
+  /* セクション上辺のアール(VALUE・下層の緑セクションの mask で共通利用) */
+  --section-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   --c-red: #D80011;
   --c-red-dark: #B8000E;
   --c-teal: #008982;
@@ -293,13 +295,12 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
    ========================================================================== */
 .value {
   /* 上辺カーブ: セクション自体を MISSION に食い込ませ、マスクで放物線に切り抜く(背景の地図をカーブ内にも連続させるため) */
-  --value-curve: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 42' preserveAspectRatio='none'%3E%3Cpath d='M0 42 Q720 -42 1440 42 Z'/%3E%3C/svg%3E");
   position: relative; z-index: 1;
   margin-top: calc(var(--curve) * -1); padding-top: var(--curve);
   background: var(--c-green) url(../img/bg-value-map.png) center top / 100% 100% no-repeat; /* 地図を横幅 100%・セクションの高さいっぱいに伸縮(PC/SP 共通) */
   color: var(--c-white);
-  -webkit-mask: var(--value-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
-          mask: var(--value-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
+  -webkit-mask: var(--section-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
+          mask: var(--section-curve) center top / 100% var(--curve) no-repeat, linear-gradient(#000, #000) center bottom / 100% calc(100% - var(--curve) + 1px) no-repeat;
 }
 .value__inner { width: min(1124px, 100% - var(--gutter) * 2); margin-inline: auto; padding: 95px 0 134px; }
 .value__title { color: var(--c-yellow); }
@@ -766,7 +767,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .social { padding: 67px 0 66px; background-size: 356px auto; background-position: center 33px; } /* デザイン SP:紋章の見た目幅 約 338px(左右 20px 内) */
   .social__text { margin-top: 8px; font-size: 15px; line-height: 27px; }
   .social__btns { display: grid; gap: 12px; margin-top: 26px; }
-  .social__btn, .social__btn--wide { width: 100%; min-height: 47px; }
+  .social__btn { width: 100%; min-height: 47px; }
   .social__embed { width: 100%; margin-top: 44px; }
   .social__embed-frame { height: 511px; }
 

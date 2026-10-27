@@ -11,7 +11,7 @@ export const CONTACT = {
 	telHref: "tel:0356324439",
 };
 
-export interface Fund {
+interface Fund {
 	/** 募金名 */
 	name: string;
 	/** 説明 */

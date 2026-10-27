@@ -2,7 +2,7 @@
 (function () {
   'use strict';
 
-  // 読み込み完了フラグ(index.html のフェイルセーフが参照)
+  // 読み込み完了フラグ(Layout.astro のフェイルセーフが参照)
   window.__caritasReady = true;
   document.documentElement.classList.add('js');
 
@@ -90,13 +90,9 @@
     });
 
     var onChange = function () { if (!mq.matches && isOpen) setOpen(false, false); };
-    if (mq.addEventListener) mq.addEventListener('change', onChange);
-    else if (mq.addListener) mq.addListener(onChange);
+    mq.addEventListener('change', onChange);
   })();
 
-  /* ------------------------------------------------------------------
-     FV カルーセル(フェード / 自動再生 約6秒)
-     ------------------------------------------------------------------ */
   /* ------------------------------------------------------------------
      画面下の固定寄付ボタン(〜1099px):先頭のビジュアルが見えなくなったら下からスライドで出現
      TOP:.fv / 下層:.sub-hero(直後に写真帯があればそこまで) / それ以外:記事見出し
@@ -121,6 +117,9 @@
     }).observe(target);
   })();
 
+  /* ------------------------------------------------------------------
+     FV カルーセル(フェード / 自動再生 約6秒)
+     ------------------------------------------------------------------ */
   (function initCarousel() {
     var root = document.getElementById('fv');
     if (!root) return;
@@ -231,8 +230,7 @@
       if (toggle) toggle.hidden = reduceMotion.matches;
       restart();
     };
-    if (reduceMotion.addEventListener) reduceMotion.addEventListener('change', onMotionChange);
-    else if (reduceMotion.addListener) reduceMotion.addListener(onMotionChange);
+    reduceMotion.addEventListener('change', onMotionChange);
 
     restart();
   })();

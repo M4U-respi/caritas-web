@@ -1,7 +1,7 @@
 ---
 /*
  * /publication/{slug}/ … slug がカテゴリ(src/data/site.ts の COLLECTIONS.publication.terms)ならカテゴリ一覧、
- * それ以外は発行物の詳細(表紙・概要・PDF・本文)。記事のスラッグにカテゴリと同じ文字列は使わないこと。
+ * それ以外は発行物の詳細(本文。PDF などは本文内のリンクから)。記事のスラッグにカテゴリと同じ文字列は使わないこと。
  * 404 の判定はレスポンス開始前に行う必要があるため、データ取得はここ(ページ)で行う。
  */
 import { getEmDashEntry } from "emdash";
