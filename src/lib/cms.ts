@@ -204,7 +204,7 @@ async function rowExtras(rows: { id: string; collection: CollectionKey }[]) {
 		for (const c of [...new Set(rows.map((r) => r.collection))]) {
 			const ids = rows.filter((r) => r.collection === c).map((r) => r.id);
 			const found: any[] = await db.selectFrom(`ec_${c}`).selectAll().where("id", "in", ids).execute();
-			for (const f of found) out.set(f.id, { image: parse(f.featured_image ?? f.cover), excerpt: autoExcerpt(parse(f.content)) });
+			for (const f of found) out.set(f.id, { image: parse(f.featured_image), excerpt: autoExcerpt(parse(f.content)) });
 		}
 	} catch (error) {
 		console.error("[cms] 一覧の画像・抜粋の取得に失敗", error);
@@ -232,7 +232,7 @@ async function mergedItems(rows: Awaited<ReturnType<typeof publishedRows>>): Pro
 			href: `${COLLECTIONS[r.collection].base}${r.slug}/`,
 			date,
 			terms,
-			data: { title: r.title, publishedAt: date, featured_image: x?.image ?? null, cover: x?.image ?? null, excerpt: x?.excerpt ?? "" },
+			data: { title: r.title, publishedAt: date, featured_image: x?.image ?? null, excerpt: x?.excerpt ?? "" },
 		};
 	});
 }

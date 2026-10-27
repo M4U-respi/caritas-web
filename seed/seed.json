@@ -102,14 +102,9 @@
 					"searchable": true
 				},
 				{
-					"slug": "cover",
-					"label": "表紙画像",
+					"slug": "featured_image",
+					"label": "アイキャッチ画像",
 					"type": "image"
-				},
-				{
-					"slug": "file",
-					"label": "PDFファイル",
-					"type": "file"
 				},
 				{
 					"slug": "content",

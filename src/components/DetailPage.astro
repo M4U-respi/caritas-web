@@ -34,7 +34,7 @@ const termTags = terms.map((t) => ({
 	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
 }));
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
-const ogImage = (d.featured_image ?? d.cover)?.src;
+const ogImage = d.featured_image?.src;
 ---
 <Layout title={d.title} description={autoExcerpt(d.content, 120) || undefined} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
 	<Breadcrumb items={[{ label: conf.label, href: conf.base }, { label: d.title }]} />
