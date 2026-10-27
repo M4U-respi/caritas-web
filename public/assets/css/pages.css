@@ -1357,6 +1357,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   /* 記事詳細 */
   .article { padding-top: 46px; }
   .article__title { font-size: 28px; line-height: 42px; word-break: normal; }
+  .article--report .article__title { font-size: 26px; letter-spacing: .02em; } /* 活動報告:「月間活動報告2026年10月」が 1 行に収まる大きさ */
   .article__meta { margin-top: 18px; }
   .prose { margin-top: 32px; font-size: 15px; line-height: 30px; }
   .prose__figure, .prose__gallery { margin-top: 24px; }
@@ -1403,7 +1404,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--report .entry-row__body { flex: 1; }
   .cms-archive--report .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
   .cms-archive--report .entry-row__date { font-size: 12px; }
-  .cms-archive--report .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 15px; line-height: 30px; letter-spacing: 0; -webkit-line-clamp: unset; }
+  .cms-archive--report .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 14px; line-height: 28px; letter-spacing: -.05em; -webkit-line-clamp: unset; } /* 「月間活動報告2026年10月」が 2 列でも 1 行に収まる大きさ(幅 360px の端末まで) */
   .cms-archive--report .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 14px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
   .cms-archive--report .entry-row__arrow { align-self: flex-end; margin-top: 16px; }
 
