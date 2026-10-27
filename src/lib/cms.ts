@@ -203,9 +203,8 @@ async function rowExtras(rows: { id: string; collection: CollectionKey }[]) {
 		const db: any = await getDb();
 		for (const c of [...new Set(rows.map((r) => r.collection))]) {
 			const ids = rows.filter((r) => r.collection === c).map((r) => r.id);
-			const imageCol = c === "publication" ? "cover" : "featured_image";
-			const found: any[] = await db.selectFrom(`ec_${c}`).select(["id", `${imageCol} as image`, "content"]).where("id", "in", ids).execute();
-			for (const f of found) out.set(f.id, { image: parse(f.image), excerpt: autoExcerpt(parse(f.content)) });
+			const found: any[] = await db.selectFrom(`ec_${c}`).selectAll().where("id", "in", ids).execute();
+			for (const f of found) out.set(f.id, { image: parse(f.featured_image ?? f.cover), excerpt: autoExcerpt(parse(f.content)) });
 		}
 	} catch (error) {
 		console.error("[cms] 一覧の画像・抜粋の取得に失敗", error);
