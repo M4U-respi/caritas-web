@@ -22,6 +22,8 @@ interface Props {
 const { title, description, image, preloadImage, preloadImageSp, content, bodyClass } = Astro.props;
 const fullTitle = title ? `${title}｜${SITE.titleSuffix}` : SITE.defaultTitle;
 const pageDescription = description ?? SITE.description;
+/** SNS 共有用の画像(未指定のページはサイト共通の OGP 画像。トップの写真+ロゴ、1200×630) */
+const pageImage = image || new URL("/assets/img/ogp.jpg", Astro.url).href;
 
 const pageCtx = createPublicPageContext({
 	Astro,
@@ -30,7 +32,7 @@ const pageCtx = createPublicPageContext({
 	title: fullTitle,
 	pageTitle: title ?? SITE.defaultTitle,
 	description: pageDescription,
-	image,
+	image: pageImage,
 	content,
 	siteName: SITE.name,
 });
@@ -43,6 +45,9 @@ const pageCtx = createPublicPageContext({
 		<title>{fullTitle}</title>
 		<meta name="description" content={pageDescription} />
 		<meta name="format-detection" content="telephone=no" />
+		<link rel="icon" href="/favicon.ico" sizes="48x48" />
+		<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
