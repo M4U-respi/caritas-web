@@ -1350,7 +1350,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--news .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
   .cms-archive--news .entry-row__meta { margin-top: 16px; gap: 8px 10px; }
   .cms-archive--news .entry-row__date { font-size: 12px; }
-  .cms-archive--news .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 15px; line-height: 30px; letter-spacing: 0; -webkit-line-clamp: unset; }
+  .cms-archive--news .entry-row__title { display: block; margin-top: 10px; overflow: visible; font-size: 14px; line-height: 28px; letter-spacing: -.05em; -webkit-line-clamp: unset; } /* 活動報告と同じ(「月間活動報告2026年10月」を 1 行に) */
   .cms-archive--news .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 14px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
   .cms-archive--news .entry-row__arrow { display: none; }
 
