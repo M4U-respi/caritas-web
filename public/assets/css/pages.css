@@ -680,12 +680,11 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .prose { margin-top: 56px; font-size: 16px; font-weight: 400; line-height: 32px; letter-spacing: 0; color: var(--c-text); }
 .prose > :first-child { margin-top: 0; }
 .prose p { margin-top: 16px; }
-.prose .prose__lead { font-weight: 700; color: var(--c-text-strong); }
 .prose h2 {
   margin-top: 64px; padding-bottom: 14px; border-bottom: 2px solid var(--c-text-strong);
   font-size: 20px; font-weight: 700; line-height: 1.6; letter-spacing: .03em; color: var(--c-red);
 }
-.prose .prose__lead + h2, .prose > h2:first-child { margin-top: 32px; }
+.prose > h2:first-child { margin-top: 32px; }
 .prose h2 + * { margin-top: 24px; }
 .prose h3 { margin-top: 80px; font-size: 20px; font-weight: 700; line-height: 1.6; letter-spacing: .03em; color: var(--c-text-strong); }
 .prose h3 + * { margin-top: 20px; }

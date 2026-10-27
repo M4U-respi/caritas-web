@@ -4,6 +4,7 @@
 import { getEmDashCollection, getTermsForEntries } from "emdash";
 import { getDb } from "emdash/runtime";
 import { COLLECTIONS, NEWS_MERGE, type CollectionKey } from "../data/site";
+import { autoExcerpt } from "./excerpt";
 
 export interface ListItem {
 	slug: string;
@@ -43,7 +44,8 @@ function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): L
 		title: e.data.title,
 		href: `${conf.base}${e.id}/`,
 		date: e.data.publishedAt ?? e.data.createdAt ?? null,
-		data: e.data,
+		// 抜粋は本文の書き出しから自動で作る(管理画面の「概要」欄は廃止)
+		data: { ...e.data, excerpt: autoExcerpt(e.data.content) },
 		terms: ((termsByEntry.get(e.data.id) ?? []) as any[]).map((t) => ({
 			slug: t.slug,
 			label: t.label,
@@ -186,19 +188,53 @@ async function mergedNewsRows(terms?: string[]) {
 	return lists.flat().sort((a, b) => (a.published_at < b.published_at ? 1 : a.published_at > b.published_at ? -1 : 0));
 }
 
+/** 表示するページ分の記事の画像(アイキャッチ・表紙)と本文の抜粋(id → 値) */
+async function rowExtras(rows: { id: string; collection: CollectionKey }[]) {
+	const out = new Map<string, { image: any; excerpt: string }>();
+	const parse = (v: unknown) => {
+		if (typeof v !== "string") return v ?? null;
+		try {
+			return JSON.parse(v);
+		} catch {
+			return null;
+		}
+	};
+	try {
+		const db: any = await getDb();
+		for (const c of [...new Set(rows.map((r) => r.collection))]) {
+			const ids = rows.filter((r) => r.collection === c).map((r) => r.id);
+			const imageCol = c === "publication" ? "cover" : "featured_image";
+			const found: any[] = await db.selectFrom(`ec_${c}`).select(["id", `${imageCol} as image`, "content"]).where("id", "in", ids).execute();
+			for (const f of found) out.set(f.id, { image: parse(f.image), excerpt: autoExcerpt(parse(f.content)) });
+		}
+	} catch (error) {
+		console.error("[cms] 一覧の画像・抜粋の取得に失敗", error);
+	}
+	return out;
+}
+
 /** 混ぜた一覧行 → 表示用の項目(お知らせはカテゴリのタグ、活動報告・発行物は NEWS_MERGE.term のタグ) */
 async function mergedItems(rows: Awaited<ReturnType<typeof publishedRows>>): Promise<ListItem[]> {
 	const conf = COLLECTIONS.news;
 	const newsIds = rows.filter((r) => r.collection === "news").map((r) => r.id);
 	const termsByEntry = (newsIds.length ? await getTermsForEntries("news", newsIds, conf.taxonomy) : new Map()) as Map<string, any[]>;
 	const mergeTerm = conf.terms.find((t) => t.slug === NEWS_MERGE.term)!;
+	const extra = await rowExtras(rows);
 	return rows.map((r) => {
 		const date = new Date(r.published_at);
 		const terms =
 			r.collection === "news"
 				? (termsByEntry.get(r.id) ?? []).map((t: any) => ({ slug: t.slug, label: t.label, tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" }))
 				: [{ slug: mergeTerm.slug, label: mergeTerm.label, tag: mergeTerm.tag }];
-		return { slug: r.slug, title: r.title, href: `${COLLECTIONS[r.collection].base}${r.slug}/`, date, terms, data: { title: r.title, publishedAt: date } };
+		const x = extra.get(r.id);
+		return {
+			slug: r.slug,
+			title: r.title,
+			href: `${COLLECTIONS[r.collection].base}${r.slug}/`,
+			date,
+			terms,
+			data: { title: r.title, publishedAt: date, featured_image: x?.image ?? null, cover: x?.image ?? null, excerpt: x?.excerpt ?? "" },
+		};
 	});
 }
 

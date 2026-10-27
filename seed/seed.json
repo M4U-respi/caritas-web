@@ -39,16 +39,6 @@
 					"type": "image"
 				},
 				{
-					"slug": "excerpt",
-					"label": "概要(一覧・SNS共有用)",
-					"type": "text"
-				},
-				{
-					"slug": "lead",
-					"label": "リード文(本文冒頭に太字で表示。任意)",
-					"type": "text"
-				},
-				{
 					"slug": "content",
 					"label": "本文",
 					"type": "portableText",
@@ -81,16 +71,6 @@
 					"slug": "featured_image",
 					"label": "アイキャッチ画像",
 					"type": "image"
-				},
-				{
-					"slug": "excerpt",
-					"label": "概要(一覧・SNS共有用)",
-					"type": "text"
-				},
-				{
-					"slug": "lead",
-					"label": "リード文(本文冒頭に太字で表示。任意)",
-					"type": "text"
 				},
 				{
 					"slug": "content",
@@ -130,11 +110,6 @@
 					"slug": "file",
 					"label": "PDFファイル",
 					"type": "file"
-				},
-				{
-					"slug": "excerpt",
-					"label": "概要(一覧・SNS共有用)",
-					"type": "text"
 				},
 				{
 					"slug": "content",

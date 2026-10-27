@@ -5,6 +5,7 @@
  * 発行物もお知らせと同じ構成(PDF などのダウンロードは本文内のリンクから)。
  */
 import { getEntryTerms } from "emdash";
+import { autoExcerpt } from "../lib/excerpt";
 import Layout from "../layouts/Layout.astro";
 import Breadcrumb from "./Breadcrumb.astro";
 import PostNav from "./PostNav.astro";
@@ -35,7 +36,7 @@ const termTags = terms.map((t) => ({
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 const ogImage = (d.featured_image ?? d.cover)?.src;
 ---
-<Layout title={d.title} description={d.excerpt} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
+<Layout title={d.title} description={autoExcerpt(d.content, 120) || undefined} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
 	<Breadcrumb items={[{ label: conf.label, href: conf.base }, { label: d.title }]} />
 
 	<article class={`article article--${collection}`}>
@@ -48,7 +49,7 @@ const ogImage = (d.featured_image ?? d.cover)?.src;
 				</p>
 			</header>
 
-			<Prose value={d.content} lead={d.lead} />
+			<Prose value={d.content} />
 
 			<div class="article__foot">
 				<PostNav prev={adjacent.prev} next={adjacent.next} />
