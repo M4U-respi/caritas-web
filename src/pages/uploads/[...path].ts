@@ -4,6 +4,7 @@
  *   GET /uploads/report/2026/10/example.pdf  … 活動報告用
  *   GET /uploads/publication/2025/11/WAC31.pdf … 発行物用
  * - 実体は R2(MEDIA)の uploads/news/… ・uploads/report/… ・uploads/publication/… に格納(旧サイトから移行したファイル)
+ * - 動画の途中再生・iPhone での再生のため Range リクエスト(206)に対応する
  * - 種類は拡張子で決め、画像・PDF・動画・音声だけをブラウザ内で表示する。それ以外(HTML・SVG・Office 文書など)は
  *   ダウンロードさせ、サイト上でスクリプトとして動かないようにする(保存時の Content-Type は信用しない)
  */
@@ -29,7 +30,8 @@ export const GET: APIRoute = async ({ params, request }) => {
 	const path = params.path;
 	if (!path || !/^(news|report|publication)\//.test(path) || path.split("/").includes("..")) return new Response("Not found", { status: 404 });
 	const bucket = (env as { MEDIA: R2Bucket }).MEDIA;
-	const obj = await bucket.get(`uploads/${path}`, { onlyIf: request.headers });
+	const wantsRange = request.headers.has("Range");
+	const obj = await bucket.get(`uploads/${path}`, { onlyIf: request.headers, ...(wantsRange ? { range: request.headers } : {}) });
 	if (!obj) return new Response("Not found", { status: 404 });
 
 	const headers = new Headers();
@@ -48,6 +50,16 @@ export const GET: APIRoute = async ({ params, request }) => {
 	headers.set("ETag", obj.httpEtag);
 	// 同じ名前で差し替えたときに反映されるよう 1 日(immutable にしない)
 	headers.set("Cache-Control", "public, max-age=86400");
+	headers.set("Accept-Ranges", "bytes");
 	if (!("body" in obj)) return new Response(null, { status: 304, headers });
+	const r = obj.range as { offset?: number; length?: number; suffix?: number } | undefined;
+	if (wantsRange && r) {
+		const offset = r.suffix !== undefined ? obj.size - r.suffix : (r.offset ?? 0);
+		const length = r.suffix !== undefined ? r.suffix : (r.length ?? obj.size - offset);
+		headers.set("Content-Range", `bytes ${offset}-${offset + length - 1}/${obj.size}`);
+		headers.set("Content-Length", String(length));
+		return new Response(obj.body, { status: 206, headers });
+	}
+	headers.set("Content-Length", String(obj.size));
 	return new Response(obj.body, { headers });
 };
