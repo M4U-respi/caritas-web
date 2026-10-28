@@ -1,5 +1,6 @@
 ---
-/* 本文の画像(角丸 8px+キャプション 12px) */
+/* 本文の画像(角丸 8px+キャプション 12px)。横長は --wide(記事詳細で最大 680px)、縦長・正方形は最大 480px
+   サイズが分からない画像は data-shape="auto" を付け、読み込み後に main.js が横長かどうかを判定する */
 import { proseImageSrc } from "./media";
 
 const { node } = Astro.props as any;
@@ -7,9 +8,11 @@ const src = proseImageSrc(node);
 const alt = node?.alt ?? node?.asset?.alt ?? "";
 const width = node?.width ?? node?.asset?.width;
 const height = node?.height ?? node?.asset?.height;
+const known = Number(width) > 0 && Number(height) > 0;
+const wide = known && Number(width) > Number(height);
 ---
 {src && (
-	<figure class="prose__figure">
+	<figure class:list={["prose__figure", { "prose__figure--wide": wide }]} data-shape={known ? undefined : "auto"}>
 		<img src={src} alt={alt} width={width} height={height} loading="lazy" decoding="async" />
 		{node.caption && <figcaption>{node.caption}</figcaption>}
 	</figure>
