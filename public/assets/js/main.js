@@ -276,15 +276,4 @@
     build();
     window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(build, 300); });
   })();
-
-  /* ------------------------------------------------------------------
-     記事本文の画像: サイズ情報のない画像は読み込み後に形を判定し、横長なら --wide(最大 680px)にする
-     ------------------------------------------------------------------ */
-  Array.prototype.forEach.call(document.querySelectorAll('.prose__figure[data-shape="auto"] img'), function (img) {
-    function judge() {
-      if (!img.naturalWidth) return;
-      img.parentElement.classList.toggle('prose__figure--wide', img.naturalWidth > img.naturalHeight);
-    }
-    if (img.complete) judge(); else img.addEventListener('load', judge, { once: true });
-  });
 })();
