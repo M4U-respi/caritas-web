@@ -711,8 +711,9 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .prose__gallery-grid { display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); overflow: hidden; border-radius: 8px; }
 .prose__gallery-grid img { width: 100%; height: 100%; aspect-ratio: 432 / 325; object-fit: cover; }
 .prose__figure + h2, .prose__gallery + h2 { margin-top: 32px; }
-/* 記事詳細(お知らせ・活動報告・発行物):本文の画像・埋め込み動画・動画は最大 480px で中央に置く(キャプションも中央) */
-.article .prose__figure, .article .prose__gallery, .article .prose .emdash-iframe, .article .prose .emdash-video { max-width: 480px; margin-inline: auto; }
+/* 記事詳細(お知らせ・活動報告・発行物):本文の画像は最大 480px、埋め込み動画・動画は最大 680px で中央に置く(キャプションも中央) */
+.article .prose__figure, .article .prose__gallery { max-width: 480px; margin-inline: auto; }
+.article .prose .emdash-iframe, .article .prose .emdash-video { max-width: 680px; margin-inline: auto; }
 .article .prose figcaption { text-align: center; }
 .prose__table-wrap { margin-top: 24px; }
 .prose__table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--c-line); font-size: 16px; line-height: 1.6; }
