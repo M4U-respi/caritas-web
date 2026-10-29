@@ -132,8 +132,22 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	const { pathname } = context.url;
 	// CMS(管理画面・API)は EmDash 側で専用のヘッダーと認証があるため対象外
 	if (pathname.startsWith("/_emdash/") || pathname === "/_emdash") return next();
-	return withSecurityHeaders(await gate(context, next));
+	const res = await gate(context, next);
+	return withSecurityHeaders(pathname === "/sitemap.xml" ? await addPagesSitemap(res, context.url.origin) : res);
 });
+
+/** EmDash のサイトマップ索引(/sitemap.xml)に、固定ページ用の /sitemap-pages.xml を加える */
+async function addPagesSitemap(res: Response, origin: string): Promise<Response> {
+	if (!res.ok || !(res.headers.get("Content-Type") ?? "").includes("xml")) return res;
+	const xml = await res.text();
+	const headers = new Headers(res.headers);
+	headers.delete("Content-Length");
+	if (!xml.includes("</sitemapindex>") || xml.includes("/sitemap-pages.xml")) return new Response(xml, { status: res.status, headers });
+	// 記事のサイトマップと同じホスト(管理画面の「サイト URL」)を使う
+	const base = /<loc>(https?:\/\/[^<]+?)\/sitemap-/.exec(xml)?.[1] ?? origin;
+	const entry = `  <sitemap>\n    <loc>${base}/sitemap-pages.xml</loc>\n  </sitemap>\n`;
+	return new Response(xml.replace("</sitemapindex>", `${entry}</sitemapindex>`), { status: res.status, headers });
+}
 
 async function gate(context: Parameters<Parameters<typeof defineMiddleware>[0]>[0], next: () => Promise<Response>): Promise<Response> {
 	const password = (env as { SITE_PASSWORD?: string }).SITE_PASSWORD;

@@ -3,8 +3,10 @@ import Layout from "../layouts/Layout.astro";
 import NewsSection from "../components/NewsSection.astro";
 import Donation from "../components/Donation.astro";
 import Partners from "../components/Partners.astro";
+import OrganizationJsonLd from "../components/OrganizationJsonLd.astro";
 ---
 <Layout preloadImage="/assets/img/fv-01.jpg" preloadImageSp="/assets/img/fv-01-sp.jpg">
+	<OrganizationJsonLd />
 	<!-- ==================== FV カルーセル ==================== -->
 	<section class="fv" id="fv" role="region" aria-roledescription="カルーセル" aria-label="メインビジュアル">
 	  <div class="fv__slides" id="fv-slides" aria-live="off">

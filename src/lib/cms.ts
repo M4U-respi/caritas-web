@@ -297,3 +297,14 @@ export async function getTerm(taxonomy: string, slug: string): Promise<{ slug: s
 		return null;
 	}
 }
+
+/** 分類の項目一覧(スラッグ・名前)。取得できなければ空配列 */
+export async function listTerms(taxonomy: string): Promise<{ slug: string; label: string }[]> {
+	try {
+		const db: any = await getDb();
+		return await db.selectFrom("taxonomies").select(["slug", "label"]).where("name", "=", taxonomy).orderBy("slug").execute();
+	} catch (error) {
+		console.error(`[cms] ${taxonomy} の一覧の取得に失敗`, error);
+		return [];
+	}
+}

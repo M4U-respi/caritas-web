@@ -1,0 +1,39 @@
+---
+/*
+ * 団体情報の構造化データ(JSON-LD・schema.org/NGO)。トップページに置く。
+ * 名称・住所・電話・SNS はフッター・お問い合わせページと同じ内容(変えるときは両方を直す)
+ */
+import { SITE, SNS } from "../data/site";
+
+const origin = Astro.url.origin;
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "NGO",
+	"@id": `${origin}/#organization`,
+	name: SITE.name,
+	alternateName: "Caritas Japan",
+	url: `${origin}/`,
+	logo: `${origin}/assets/img/logo.png`,
+	description: SITE.description,
+	address: {
+		"@type": "PostalAddress",
+		postalCode: "135-8585",
+		addressCountry: "JP",
+		addressRegion: "東京都",
+		addressLocality: "江東区",
+		streetAddress: "潮見2-10-10 日本カトリック会館6F",
+	},
+	telephone: "+81-3-5632-4439",
+	faxNumber: "+81-3-5632-4464",
+	memberOf: { "@type": "Organization", name: "Caritas Internationalis", url: "https://www.caritas.org/" },
+	sameAs: [SNS.facebook, SNS.instagram, SNS.youtube],
+};
+// < > & と改行文字をエスケープ(Breadcrumb と同じ)
+const ldJson = JSON.stringify(jsonLd)
+	.replace(/</g, "\\u003c")
+	.replace(/>/g, "\\u003e")
+	.replace(/&/g, "\\u0026")
+	.replace(/ /g, "\\u2028")
+	.replace(/ /g, "\\u2029");
+---
+<script type="application/ld+json" set:html={ldJson} />
