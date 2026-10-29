@@ -4,6 +4,7 @@
  * items: [{ label: "カリタスジャパンとは", href: "/about/" }, { label: "援助活動" }]
  */
 import { SITE } from "../data/site";
+import { toJsonLd } from "../lib/jsonld";
 
 export interface Crumb { label: string; href?: string }
 interface Props { items: Crumb[]; class?: string }
@@ -22,13 +23,8 @@ const jsonLd = {
 		...(c.href || i === last ? { item: new URL(c.href ?? Astro.url.pathname, origin).href } : {}),
 	})),
 };
-// 構造化データ(JSON-LD)。記事タイトルなどに「</script>」が含まれても script タグを抜けないよう < > & と改行文字をエスケープ
-const ldJson = JSON.stringify(jsonLd)
-	.replace(/</g, "\\u003c")
-	.replace(/>/g, "\\u003e")
-	.replace(/&/g, "\\u0026")
-	.replace(/\u2028/g, "\\u2028")
-	.replace(/\u2029/g, "\\u2029");
+// 構造化データ(JSON-LD)。エスケープは src/lib/jsonld.ts
+const ldJson = toJsonLd(jsonLd);
 ---
 <nav class:list={["breadcrumb", cls]} aria-label="パンくずリスト">
 	<ol class="breadcrumb__list">

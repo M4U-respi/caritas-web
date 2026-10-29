@@ -4,6 +4,7 @@
  * 名称・住所・電話・SNS はフッター・お問い合わせページと同じ内容(変えるときは両方を直す)
  */
 import { SITE, SNS } from "../data/site";
+import { toJsonLd } from "../lib/jsonld";
 
 const origin = Astro.url.origin;
 const jsonLd = {
@@ -28,12 +29,6 @@ const jsonLd = {
 	memberOf: { "@type": "Organization", name: "Caritas Internationalis", url: "https://www.caritas.org/" },
 	sameAs: [SNS.facebook, SNS.instagram, SNS.youtube],
 };
-// < > & と改行文字をエスケープ(Breadcrumb と同じ)
-const ldJson = JSON.stringify(jsonLd)
-	.replace(/</g, "\\u003c")
-	.replace(/>/g, "\\u003e")
-	.replace(/&/g, "\\u0026")
-	.replace(/ /g, "\\u2028")
-	.replace(/ /g, "\\u2029");
+const ldJson = toJsonLd(jsonLd);
 ---
 <script type="application/ld+json" set:html={ldJson} />
