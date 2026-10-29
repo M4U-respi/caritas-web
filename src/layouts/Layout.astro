@@ -33,6 +33,8 @@ const pageCtx = createPublicPageContext({
 	pageTitle: title ?? SITE.defaultTitle,
 	description: pageDescription,
 	image: pageImage,
+	/* 正規 URL(クエリを除く)。EmDashHead が canonical・og:url として出力する */
+	canonical: new URL(Astro.url.pathname, Astro.url.origin).href,
 	content,
 	siteName: SITE.name,
 });
@@ -43,7 +45,6 @@ const pageCtx = createPublicPageContext({
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{fullTitle}</title>
-		<meta name="description" content={pageDescription} />
 		<meta name="format-detection" content="telephone=no" />
 		<link rel="icon" href="/favicon.ico" sizes="48x48" />
 		<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />

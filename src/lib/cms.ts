@@ -37,6 +37,12 @@ function jstYear(d: Date | string): number {
 	return new Date(t + 9 * 3600 * 1000).getUTCFullYear();
 }
 
+/** 分類の項目 → 表示用タグ(色は src/data/site.ts のカテゴリ設定。未設定のカテゴリは blue) */
+export function toTermTags(key: CollectionKey, terms: readonly { slug: string; label: string }[]): ListItem["terms"] {
+	const conf = COLLECTIONS[key];
+	return terms.map((t) => ({ slug: t.slug, label: t.label, tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" }));
+}
+
 function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): ListItem {
 	const conf = COLLECTIONS[key];
 	return {
@@ -46,11 +52,7 @@ function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): L
 		date: e.data.publishedAt ?? e.data.createdAt ?? null,
 		// 抜粋は本文の書き出しから自動で作る(管理画面の「概要」欄は廃止)
 		data: { ...e.data, excerpt: autoExcerpt(e.data.content) },
-		terms: ((termsByEntry.get(e.data.id) ?? []) as any[]).map((t) => ({
-			slug: t.slug,
-			label: t.label,
-			tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
-		})),
+		terms: toTermTags(key, termsByEntry.get(e.data.id) ?? []),
 	};
 }
 
@@ -223,7 +225,7 @@ async function mergedItems(rows: Awaited<ReturnType<typeof publishedRows>>): Pro
 		const date = new Date(r.published_at);
 		const terms =
 			r.collection === "news"
-				? (termsByEntry.get(r.id) ?? []).map((t: any) => ({ slug: t.slug, label: t.label, tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue" }))
+				? toTermTags("news", termsByEntry.get(r.id) ?? [])
 				: [{ slug: mergeTerm.slug, label: mergeTerm.label, tag: mergeTerm.tag }];
 		const x = extra.get(r.id);
 		return {
@@ -276,8 +278,8 @@ export async function getAdjacentEntries(key: CollectionKey, entry: any) {
 	if (!at) return { prev: null, next: null };
 	const iso = new Date(at).toISOString();
 	const [older, newer] = await Promise.all([
-		getEmDashCollection(key, { orderBy: { published_at: "desc" }, limit: 1, where: { published_at: { lt: iso } } } as any),
-		getEmDashCollection(key, { orderBy: { published_at: "asc" }, limit: 1, where: { published_at: { gt: iso } } } as any),
+		getEmDashCollection(key, { orderBy: { published_at: "desc" }, limit: 1, where: { published_at: { lt: iso } } }),
+		getEmDashCollection(key, { orderBy: { published_at: "asc" }, limit: 1, where: { published_at: { gt: iso } } }),
 	]);
 	const pick = (r: any) => (r.entries ?? [])[0];
 	const link = (e: any) => (e ? { href: `${conf.base}${e.id}/`, title: e.data.title as string } : null);

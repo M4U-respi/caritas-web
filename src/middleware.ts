@@ -165,7 +165,16 @@ async function gate(context: Parameters<Parameters<typeof defineMiddleware>[0]>[
 	const cookie = context.cookies.get(COOKIE)?.value;
 	if (cookie && (await safeEqual(cookie, token))) {
 		const res = await next();
-		res.headers.set("X-Robots-Tag", "noindex, nofollow");
+		try {
+			res.headers.set("X-Robots-Tag", "noindex, nofollow");
+			// 合言葉で守られたページ(HTML)を共有キャッシュ(CDN)に載せない
+			if ((res.headers.get("Content-Type") ?? "").includes("text/html")) {
+				res.headers.set("Cache-Control", "private, no-store");
+				res.headers.append("Vary", "Cookie");
+			}
+		} catch {
+			// ヘッダーが変更できないレスポンスはそのまま返す
+		}
 		return res;
 	}
 

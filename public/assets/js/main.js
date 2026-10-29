@@ -2,8 +2,6 @@
 (function () {
   'use strict';
 
-  // 読み込み完了フラグ(Layout.astro のフェイルセーフが参照)
-  window.__caritasReady = true;
   document.documentElement.classList.add('js');
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -262,9 +260,12 @@
     if (!iframe) return;
     var frame = iframe.parentElement;
     var last = '';
+    var initW = +iframe.getAttribute('width'), initH = +iframe.getAttribute('height');
     function build() {
       var w = Math.max(180, Math.min(500, Math.floor(frame.clientWidth)));
       var h = Math.max(70, Math.floor(frame.clientHeight));
+      // HTML に書いた初期サイズとほぼ同じ(枠線ぶんの差)なら読み込み直さない(二重読み込み防止)
+      if (!last && Math.abs(w - initW) <= 8 && Math.abs(h - initH) <= 8) { last = w + 'x' + h; return; }
       var key = w + 'x' + h;
       if (key === last) return;
       last = key;
@@ -276,4 +277,7 @@
     build();
     window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(build, 300); });
   })();
+
+  // 読み込み完了フラグ(Layout.astro のフェイルセーフが参照)。途中で例外が起きたときは立たず、4 秒後に .js が外れて内容が必ず表示される
+  window.__caritasReady = true;
 })();

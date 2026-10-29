@@ -54,11 +54,9 @@ a.tag:hover { opacity: .7; }
     display: none;
     position: static;
     width: auto;
-    min-width: 0;
     margin: 0 0 0 8px;
     background: none;
     border: 0;
-    border-radius: 0;
     box-shadow: none;
     opacity: 1;
     visibility: visible;
@@ -119,7 +117,7 @@ picture > source { display: none; }
 }
 .sub-hero__lead { margin-top: 15px; font-size: 18px; font-weight: 700; line-height: 36px; letter-spacing: 0; color: var(--c-text); }
 .sub-hero__curve { color: var(--c-white); }
-/* 改行位置を指定したリード(寄付ページ)は幅を制限しない */
+/* 見出しは文節単位で改行する(word-break: auto-phrase 非対応のブラウザは通常の改行) */
 .sub-hero__title, .sub-head__title, .timeline__head, .policy h2 { word-break: auto-phrase; }
 
 /* ---------- セクション(白 / クリーム / 緑) ---------- */
@@ -242,12 +240,11 @@ picture > source { display: none; }
 .list-box__item:nth-child(-n + 2) { padding-top: 0; }
 .list-box--single .list-box__item:nth-child(2) { padding-top: 18px; }
 .list-box__item:last-child { border-bottom: 0; padding-bottom: 0; }
-.list-box--single .list-box__item:last-child { padding-bottom: 0; }
 .list-box__title { font-size: 18px; font-weight: 700; line-height: 1.5; letter-spacing: .03em; color: var(--c-red); }
 .list-box__text { margin-top: 10px; font-size: 14px; font-weight: 400; line-height: 25px; letter-spacing: 0; }
 
 /* ---------- フロー(ステップ)カード ---------- */
-.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px; counter-reset: none; }
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 36px; }
 .flow--cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .flow--cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .flow__item { position: relative; display: flex; flex-direction: column; border: 1px solid var(--c-line); border-radius: 8px; background: var(--c-white); }
@@ -909,8 +906,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .sub-section { padding: 88px 0 96px; }
   .section--green + .sub-section, .section--green + .sub-section--roomy { padding-top: 80px; }
-  .sub-section--purpose { padding-top: 88px; }
-  .sub-section--purpose:has(+ .section--green) { padding-bottom: calc(88px + var(--curve)); }
   .sub-section:has(+ .section--green) { padding-bottom: calc(88px + var(--curve)); }
   .section--green { padding: calc(var(--curve) + 72px) 0 88px; }
   .sub-head__title, .manual__title { font-size: 28px; }
@@ -986,7 +981,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .breadcrumb__item:last-child span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
   .breadcrumb__item + .breadcrumb__item::before { margin: 0 8px; }
   .section--green + .sub-section, .section--green + .sub-section--roomy { padding-top: 56px; }
-  .sub-section--purpose:has(+ .section--green) { padding-bottom: calc(64px + var(--curve)); }
   .sub-section:has(+ .section--green) { padding-bottom: calc(64px + var(--curve)); }
   .dioceses__body { width: 100%; }
 
@@ -1031,13 +1025,13 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   .tel-box { padding: 20px; }
   .tel-box__grid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .tel-card { flex-wrap: nowrap; min-height: 64px; padding: 12px 16px; border-radius: 8px; }
+  .tel-card { min-height: 64px; padding: 12px 16px; border-radius: 8px; }
   .tel-card__label { font-size: 15px; }
   .tel-card__label:has(img) { display: grid; grid-template-columns: 36px auto; width: 80px; } /* アイコン中央・ラベル/番号の左端を揃える */
   .tel-card__label img { justify-self: center; }
   .tel-card__num { margin-left: 16px; font-size: 24px; letter-spacing: .03em; }
   .tel-card--wide .tel-card__label { flex: none; width: 69px; line-height: 25px; }
-  .tel-card--wide { display: flex; padding-block: 18px; padding-right: 8px; }
+  .tel-card--wide { padding-block: 18px; padding-right: 8px; }
   .tel-card__addr { margin: 0; font-size: 14px; line-height: 25px; }
   .tel-card__addr .u-sp { display: block; width: 0; height: 0; }
   .contact-tel { padding-bottom: calc(64px + var(--curve)); }
@@ -1159,8 +1153,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .sub-head__title, .manual__title { margin-top: 14px; font-size: 24px; line-height: 1.5; letter-spacing: .05em; }
   .sub-head__lead { margin-top: 10px; line-height: 29px; }
   .section--green .sub-head__title, .section--green .manual__title { margin-top: 28px; }
-  .sub-head--lg .sub-head__title { font-size: 32px; line-height: 1.55; }
-  /* 寄付ページの一部見出し(デザイン 32px) */
+  .sub-head--lg .sub-head__title { font-size: 32px; line-height: 1.55; } /* 寄付ページの一部見出し(デザイン 32px) */
   .section--green .sub-head__lead { margin-top: 16px; line-height: 27px; }
   .sub-head--lead-sm .sub-head__lead { font-size: 15px; line-height: 27px; }
   .sub-head + * { margin-top: 32px; }
@@ -1205,21 +1198,20 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .link-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
   .way-card--white { flex-direction: column-reverse; justify-content: flex-end; min-height: 0; border-radius: 8px; }
   .way-card--white .way-card__photo { flex: none; aspect-ratio: 163 / 110; }
-  .way-card--white .way-card__panel { grid-template-columns: auto 1fr; align-items: center; column-gap: 14px; display: block; width: auto; padding: 16px 10px 20px 12px; }
+  .way-card--white .way-card__panel { display: block; width: auto; padding: 16px 10px 20px 12px; }
   .way-card--white .way-card__num { font-size: 16px; }
   .way-card--white .way-card__title { margin-top: 6px; gap: 4px; justify-content: space-between; font-size: 16px; line-height: 30px; white-space: nowrap; }
   .way-card--white .way-card__title br { display: inline; }
   .way-card--white .way-card__arrow { width: 22px; height: 22px; }
-  .way-card--white .way-card__arrow svg { width: 5.5px; height: 8px; margin-left: 1px; }
-  /* デザイン SP のヌキ矢印(約 3.5×7px) */
-  .way-card--white .way-card__text { padding-right: 14px; grid-column: auto; margin-top: 6px; font-size: 14px; line-height: 25px; }
+  .way-card--white .way-card__arrow svg { width: 5.5px; height: 8px; margin-left: 1px; } /* デザイン SP のヌキ矢印(約 3.5×7px) */
+  .way-card--white .way-card__text { padding-right: 14px; margin-top: 6px; font-size: 14px; line-height: 25px; }
 
   /* 表:項目名と内容を横並び */
   .def-table, .def-table tbody { display: table; width: 100%; }
   .def-table tr { display: table-row; padding: 0; border: 0; }
   .def-table th, .def-table td { display: table-cell; padding: 16px 0; vertical-align: top; font-size: 15px; line-height: 30px; }
   .def-table th { width: 104px; padding-left: 16px; }
-  .def-table td { padding-right: 16px; margin: 0; }
+  .def-table td { padding-right: 16px; }
   .def-table .u-sp { display: block; width: 0; height: 0; }
 
   /* FAQ */
@@ -1243,7 +1235,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .timeline__row { padding: 16px 0; }
   .timeline__row:first-child { padding-top: 16px; }
   .timeline__year { padding: 0; padding-left: 16px; font-size: 15px; line-height: 30px; }
-  .timeline__text { margin-top: 0; padding: 0 20px 0 0; font-size: 15px; line-height: 30px; }
+  .timeline__text { padding: 0 20px 0 0; font-size: 15px; line-height: 30px; }
   .timeline__name { letter-spacing: .03em; }
   .timeline__era + .timeline__era { margin-top: 56px; }
 
@@ -1253,7 +1245,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .campaign-box__body { width: auto; padding: 28px 20px 0; }
   .list-box__title { font-size: 16px; line-height: 32px; letter-spacing: 0; }
   .media-row__img { aspect-ratio: 335 / 258; object-fit: cover; }
-  .sub-section--purpose { padding-top: 70px; }
 
   /* フロー:縦積み、写真が上 */
   .flow { grid-template-columns: minmax(0, 1fr); gap: 37px; }
@@ -1302,19 +1293,19 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 
   /* 緊急支援ボックス:日付を左、タイトルを右 */
   .cms-archive--news .news-urgent--bordered { margin-bottom: 64px; border-radius: 8px; }
-  .cms-archive--news .news-urgent__head { min-height: 74px; padding: 10px 16px; }
+  .cms-archive--news .news-urgent__head { min-height: 74px; }
   .cms-archive--news .news-urgent__lead { margin-left: 16px; font-size: 15px; font-weight: 400; line-height: 27px; letter-spacing: 0; }
-  .cms-archive--news .news-urgent__badge { flex: none; width: 82px; height: 32px; }
+  .cms-archive--news .news-urgent__badge { flex: none; }
   .cms-archive--news .news-list--urgent .news-list__link { grid-template-columns: 85px minmax(0, 1fr) auto; column-gap: 0; padding: 12px 16px 13px; }
   .cms-archive--news .news-list--urgent .news-list__meta { grid-column: 1; grid-row: 1; align-self: start; padding-top: 1px; }
-  .cms-archive--news .news-list--urgent .news-list__date { font-size: 14px; line-height: 25px; color: var(--c-text-mute); }
+  .cms-archive--news .news-list--urgent .news-list__date { line-height: 25px; }
   .cms-archive--news .news-list--urgent .news-list__title { grid-column: 2; grid-row: 1; font-size: 15px; font-weight: 500; line-height: 27px; letter-spacing: 0; }
   .cms-archive--news .news-list--urgent .news-list__chevron { grid-column: 3; grid-row: 1; margin-left: 16px; }
   .cms-archive--news .news-urgent__foot { padding: 14px 16px 16px; }
-  .cms-archive--news .news-urgent__foot .btn-outline { width: 100%; max-width: 300px; min-height: 48px; font-size: 15px; }
+  .cms-archive--news .news-urgent__foot .btn-outline { min-height: 48px; font-size: 15px; }
 
   /* カテゴリタブ:3 + 2 の 2 段 */
-  .cms-archive--news .cat-tabs__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); padding: 0; overflow: visible; }
+  .cms-archive--news .cat-tabs__list { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .cms-archive--news .cat-tabs__list > li { grid-column: span 2; border-bottom: 1px solid var(--c-line-gray); }
   .cms-archive--news .cat-tabs__list > li:nth-child(n + 4) { grid-column: span 3; }
   .cms-archive--news .cat-tabs__link { justify-content: center; height: 60px; padding: 0 4px; font-size: 15px; }
@@ -1327,8 +1318,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--news .entry-row { margin-bottom: 20px; }
   .cms-archive--news .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
   .cms-archive--news .entry-row__meta { margin-top: 16px; gap: 8px 10px; }
-  .cms-archive--news .entry-row__date { font-size: 12px; }
-  .cms-archive--news .entry-row__title { display: block; margin-top: 10px; font-size: 13.5px; line-height: 27px; letter-spacing: 0; } /* 活動報告と同じ(「月間活動報告2026年10月」を 1 行に) */
+  .cms-archive--news .entry-row__title { margin-top: 10px; font-size: 13.5px; line-height: 27px; letter-spacing: 0; } /* 活動報告と同じ(「月間活動報告2026年10月」を 1 行に) */
   .cms-archive--news .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 13px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
   .cms-archive--news .entry-row__arrow { display: none; }
 
@@ -1360,28 +1350,23 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--report, .cms-archive--publication { padding-top: 64px; }
 
   /* カテゴリタブ:3 等分 */
-  .cms-archive--report .cat-tabs__nav, .cms-archive--publication .cat-tabs__nav { border-bottom: 1px solid var(--c-line-gray); }
-  .cms-archive--report .cat-tabs__list, .cms-archive--publication .cat-tabs__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; padding: 0; overflow: visible; }
+  .cms-archive--publication .cat-tabs__nav { border-bottom: 1px solid var(--c-line-gray); } /* 活動報告は .cat-tabs--has-aside で付与済み */
+  .cms-archive--report .cat-tabs__list, .cms-archive--publication .cat-tabs__list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; }
   .cms-archive--report .cat-tabs__link, .cms-archive--publication .cat-tabs__link { justify-content: center; height: 52px; padding: 0 4px; font-size: 15px; }
   .cms-archive--report .cat-tabs__link::after, .cms-archive--publication .cat-tabs__link::after { height: 2px; }
   .cms-archive--publication .cat-tabs { border-bottom: 0; }
 
   /* 年で絞り込む:右寄せ */
-  .cms-archive--report .cat-tabs__aside { align-self: flex-end; margin-top: 16px; }
-  .cms-archive--report .year-filter { width: auto; gap: 12px; }
-  .cms-archive--report .year-filter__label { font-size: 12px; }
-  .cms-archive--report .year-filter__select { flex: none; width: 144px; }
-  .cms-archive--report .year-filter select { height: 40px; font-size: 14px; }
+  .cms-archive--report .cat-tabs__aside { margin-top: 16px; }
+  .cms-archive--report .year-filter__select { flex: none; }
 
   /* 記事一覧:2 列カード(写真が上・矢印は右下) */
   .cms-archive--report .entry-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 15px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--c-line); }
   .cms-archive--report .entry-row { margin-bottom: 24px; }
   .cms-archive--report .entry-row__link { flex-direction: column; align-items: stretch; gap: 0; height: 100%; padding: 0 0 24px; }
   .cms-archive--report .entry-row__thumb { width: 100%; aspect-ratio: 160 / 105; border-radius: 6px; }
-  .cms-archive--report .entry-row__body { flex: 1; }
-  .cms-archive--report .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
-  .cms-archive--report .entry-row__date { font-size: 12px; }
-  .cms-archive--report .entry-row__title { display: block; margin-top: 10px; font-size: 13.5px; line-height: 27px; letter-spacing: 0; } /* 「月間活動報告2026年10月」が 2 列でも 1 行に収まる大きさ(幅 375px 以上の端末) */
+  .cms-archive--report .entry-row__meta { gap: 6px 16px; margin-top: 16px; }
+  .cms-archive--report .entry-row__title { margin-top: 10px; font-size: 13.5px; line-height: 27px; letter-spacing: 0; } /* 「月間活動報告2026年10月」が 2 列でも 1 行に収まる大きさ(幅 375px 以上の端末) */
   .cms-archive--report .entry-row__excerpt { display: block; margin-top: 8px; overflow: visible; font-size: 13px; line-height: 25px; letter-spacing: 0; -webkit-line-clamp: unset; }
   .cms-archive--report .entry-row__arrow { align-self: flex-end; margin-top: 16px; }
 
@@ -1391,7 +1376,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .cms-archive--publication .pub-card:nth-child(-n + 2) { border-top: 1px solid var(--c-line); }
   .cms-archive--publication .pub-card__inner { flex-direction: column-reverse; justify-content: flex-end; align-items: stretch; gap: 0; padding: 20px 0 24px; }
   .cms-archive--publication .pub-card__cover { width: 100%; } /* 縦横比は PC と同じ 163:230(冊子の表紙と同じ比率) */
-  .cms-archive--publication .pub-card__body .entry-row__meta { flex-wrap: wrap; gap: 6px 16px; margin-top: 16px; }
+  .cms-archive--publication .pub-card__body .entry-row__meta { gap: 6px 16px; margin-top: 16px; }
   .cms-archive--publication .pub-card__title { margin-top: 10px; font-size: 15px; line-height: 30px; letter-spacing: 0; }
   .cms-archive--publication .pub-card__excerpt { margin-top: 8px; font-size: 14px; line-height: 25px; letter-spacing: 0; }
   .pub-about__list { font-size: 15px; line-height: 30px; }

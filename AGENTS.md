@@ -16,7 +16,7 @@ npx emdash types   # 起動中サイトから型を再生成
 
 - `src/data/site.ts` … ナビ・フッター・CMS コレクション定義(URL やカテゴリを変えるときはここ)
 - `src/layouts/Layout.astro` … 共通レイアウト(EmDashHead / BodyStart / BodyEnd を含む)
-- `src/components/` … Header / Footer / NewsSection / ArchivePage / DetailPage / StaticPage / PageHeader / EntryList
+- `src/components/` … Header / Footer / NewsSection / ArchivePage / DetailPage / PageHeader / EntryList / prose(記事本文の表示)
 - `src/lib/cms.ts` … EmDash 取得ヘルパー(listEntries)
 - `src/middleware.ts` … 開発サイトの合言葉ゲート(`vars.SITE_PASSWORD` があるときだけ有効。`/_emdash/` は対象外)
 - `public/assets/` … CSS・JS・画像(TOP デザインの静的コーディングから移植)

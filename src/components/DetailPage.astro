@@ -6,6 +6,7 @@
  */
 import { getEntryTerms } from "emdash";
 import { autoExcerpt } from "../lib/excerpt";
+import { toTermTags } from "../lib/cms";
 import Layout from "../layouts/Layout.astro";
 import Breadcrumb from "./Breadcrumb.astro";
 import PostNav from "./PostNav.astro";
@@ -28,11 +29,7 @@ const conf = COLLECTIONS[collection];
 const d: any = entry.data;
 const terms = ((await getEntryTerms(collection, d.id, conf.taxonomy)) ?? []) as any[];
 const date = d.publishedAt ?? d.createdAt;
-const termTags = terms.map((t) => ({
-	slug: t.slug,
-	label: t.label,
-	tag: conf.terms.find((x) => x.slug === t.slug)?.tag ?? "blue",
-}));
+const termTags = toTermTags(collection, terms);
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 const ogImage = d.featured_image?.src;
 ---

@@ -45,9 +45,10 @@ export const POST: APIRoute = async ({ request }) => {
 
 	// 迷惑送信対策 0:形式・サイズの確認(大きすぎる送信で処理時間を使わされないよう、読み込む前に確認)
 	const type = request.headers.get("content-type") ?? "";
-	const size = Number(request.headers.get("content-length") ?? "0");
+	const size = Number(request.headers.get("content-length"));
 	if (!/^(multipart\/form-data|application\/x-www-form-urlencoded)/i.test(type)) return json({ ok: false, error: "bad_request" }, 400);
-	if (size > MAX_BYTES) return json({ ok: false, error: "too_large" }, 413);
+	// Content-Length が無い(chunked)・数値でない送信も受け付けない
+	if (!Number.isFinite(size) || size <= 0 || size > MAX_BYTES) return json({ ok: false, error: "too_large" }, 413);
 
 	// 迷惑送信対策 1:同じ IP からの送信回数を制限(1 分に 3 回まで。各拠点ごとのおおよその制限)
 	const ip = request.headers.get("CF-Connecting-IP") ?? "unknown";

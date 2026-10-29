@@ -1,5 +1,13 @@
 # 静的ファイル(画像・CSS・JS・PDF など、Worker を通らずに配信されるもの)のセキュリティ用ヘッダー
 # ページ(HTML)のヘッダーは src/middleware.ts で付ける
+# X-Robots-Tag: noindex は公開前(合言葉ゲート中)だけ。正式公開時に削除する
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+  X-Robots-Tag: noindex
+
+# CSS・JS は Layout.astro で ?v=(ビルドごとに変わる)を付けて読み込むため長期キャッシュ
+/assets/css/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/js/*
+  Cache-Control: public, max-age=31536000, immutable

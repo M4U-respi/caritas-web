@@ -94,7 +94,6 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 
 					{turnstileSiteKey && <div class="form-turnstile cf-turnstile" data-sitekey={turnstileSiteKey} data-action="contact" data-language="ja" data-theme="light"></div>}
 					<button class="form-submit" type="submit"><span>入力内容を確認する</span><svg width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></button>
-					<p class="form-status" id="cf-status" role="status" hidden></p>
 					<p class="sub-note note-hang">※ 迷惑行為を防ぐため、Cloudflare Turnstile を使用しています。プライバシーポリシーもあわせてご確認ください。</p>
 				</form>
 
@@ -126,7 +125,6 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 	const form = document.getElementById("contact-form") as HTMLFormElement | null;
 	if (form) {
 		const $ = <T extends HTMLElement>(id: string) => document.getElementById(id) as T;
-		const status = $<HTMLParagraphElement>("cf-status");
 		const confirmBox = $<HTMLDivElement>("cf-confirm");
 		const confirmList = $<HTMLDListElement>("cf-confirm-list");
 		const sendBtn = $<HTMLButtonElement>("cf-send");
@@ -137,7 +135,7 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 		const setStep = (n: number) => steps.forEach((li, i) => (i === n ? li.setAttribute("aria-current", "step") : li.removeAttribute("aria-current")));
 		const show = (el: HTMLElement) => {
 			[form, confirmBox, done].forEach((x) => (x.hidden = x !== el));
-			el.closest(".form-card")?.scrollIntoView({ behavior: "smooth", block: "start" });
+			el.closest(".form-card")?.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
 		};
 
 		// TODO(要確認): エラー文言
@@ -166,7 +164,6 @@ const lead = "寄付や募金のお手続き、資料のご請求、取材のお
 			const results = checks.map(([id, errId, fn]) => validate(id, errId, fn));
 			const firstNg = results.indexOf(false);
 			if (firstNg >= 0) {
-				status.hidden = true;
 				$(checks[firstNg][0]).focus();
 				return;
 			}
