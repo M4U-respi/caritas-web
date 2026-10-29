@@ -44,7 +44,7 @@ export const COLLECTIONS = {
 		en: "REPORT",
 		base: "/report/",
 		taxonomy: "report_category",
-		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
+		// カテゴリページのヒーロー文言は一覧トップと同じ(了承済み)
 		hero: { en: "REPORTS", ja: "報告", lead: "毎月の活動と、年度ごとの総括をご報告します。募金の受け入れと支出の状況もこちらでご確認いただけます。" },
 		perPage: 10,
 		terms: [
@@ -57,7 +57,7 @@ export const COLLECTIONS = {
 		en: "PUBLICATION",
 		base: "/publication/",
 		taxonomy: "publication_category",
-		// カテゴリページのヒーロー文言はカンプなし → 一覧トップと同じ(要確認)
+		// カテゴリページのヒーロー文言は一覧トップと同じ(了承済み)
 		hero: { en: "PUBLICATIONS", ja: "刊行物", lead: "機関誌「We are Caritas」や、四旬節の小冊子、セミナーの講演録などを発行しています。いずれも無料でお送りしています。" },
 		perPage: 6,
 		terms: [
@@ -83,7 +83,7 @@ export const NEWS_MERGE = { term: "info", collections: ["report", "publication"]
  */
 export const NEWS_AID = {
 	taxonomy: "news_aid",
-	// TODO(要確認): 災害・紛争ページのヒーロー文言(カンプなし)
+	// 災害・紛争ページのヒーロー文言(了承済み)
 	hero: (label: string) => ({ en: "SUPPORT", ja: "支援", lead: `${label}に関するお知らせと、支援の経過をお伝えします。` }),
 } as const;
 
