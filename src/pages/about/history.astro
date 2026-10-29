@@ -5,10 +5,20 @@ import Donation from "../../components/Donation.astro";
 import RelatedNav from "../../components/RelatedNav.astro";
 import Partners from "../../components/Partners.astro";
 
-// TODO(要確認): リードは「1946年」からだが年表は 1966 年から(カンプどおり表示)
 const lead = "1946年のララ物資の配布から現在まで、カリタスジャパンの歩みをご紹介します。";
 
 const eras: { period: string; name: string; rows: [string, string][] }[] = [
+	{
+		period: "1946 – 1965",
+		name: "社団法人「カリタス会」",
+		rows: [
+			["1946", "終戦直後、日本政府が「LARA救済物資中央委員会」を設立。カトリック教会を窓口としたララ物資、ケア物資の配布が行われた。"],
+			["1948", "「社団法人 日本カリタス会」創立。バチカン国務省の回状を受け、全国教区長会議および教区連盟理事会が「社団法人カリタス会（貧困者救済会）」を全国的に設立。"],
+			["1951", "「Caritas Internationalis（国際カリタス）」創設。カトリック教会の社会福祉機構として教皇ピオ十二世が創設した。"],
+			["1956", "「日本カリタス会」がカトリック中央協議会の「社会福祉部」となることが決定。"],
+			["1958", "6月23日、カトリック中央協議会館で「日本カリタス会 第1回総会」を開催。"],
+		],
+	},
 	{
 		period: "1966 – 1969",
 		name: "社会福祉司教委員会",
