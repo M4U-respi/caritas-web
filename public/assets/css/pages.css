@@ -597,6 +597,8 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .policy-link:hover::after { transform: translateX(4px); }
 .policy-pdf { display: inline-block; padding: 0 4px; color: var(--c-red); text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
 .policy-pdf:hover { text-decoration: none; }
+.policy p a:not([class]) { color: var(--c-red); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.policy p a:not([class]):hover { text-decoration: none; }
 .policy-date { margin-top: 48px; text-align: right; }
 .policy-contact { margin-top: 16px; padding: 20px 28px; }
 .policy-contact__name { font-weight: 700; color: var(--c-text-strong); }
