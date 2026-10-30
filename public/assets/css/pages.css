@@ -37,6 +37,7 @@ a.tag:hover { opacity: .7; }
   opacity: 1; visibility: visible; transform: translate(-50%, 0);
   transition: opacity var(--ease), transform var(--ease), visibility 0s;
 }
+.gnav__item--has-child.is-dismissed > .gnav__sub { opacity: 0; visibility: hidden; transform: translate(-50%, -6px); } /* Esc で閉じた状態(main.js) */
 .gnav__sub > li + li { border-top: 1px solid var(--c-line); }
 .gnav__sub-link {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;

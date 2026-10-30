@@ -155,12 +155,23 @@ const related = collection === "news" || collection === "report" || collection =
 	<Partners class={related ? "partners--after-nav" : undefined} />
 	{collection === "report" && (
 		<script is:inline>
-			/* 年を選ぶと即時に絞り込む(JS 無効時は「絞り込む」ボタンで送信) */
+			/* マウス・タッチで年を選ぶと即時に絞り込む。キーボード(矢印キー)で選んだときは移動せず、
+			   「絞り込む」ボタンを表示して Enter またはボタンで確定(JS 無効時も「絞り込む」ボタンで送信) */
 			document.querySelectorAll(".year-filter").forEach(function (form) {
 				form.classList.add("is-auto");
 				var select = form.querySelector("select");
-				select.addEventListener("change", function () {
+				var byKey = false;
+				var go = function () {
 					location.href = select.value ? select.dataset.base + "?year=" + encodeURIComponent(select.value) : select.dataset.base;
+				};
+				select.addEventListener("keydown", function (e) {
+					if (e.key === "Enter") { e.preventDefault(); go(); return; }
+					byKey = true;
+				});
+				select.addEventListener("pointerdown", function () { byKey = false; });
+				select.addEventListener("change", function () {
+					if (byKey) { form.classList.remove("is-auto"); return; }
+					go();
 				});
 			});
 		</script>

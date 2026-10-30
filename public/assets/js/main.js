@@ -92,6 +92,34 @@
   })();
 
   /* ------------------------------------------------------------------
+     PC のドロップダウン(ホバー / フォーカスで開く):Esc で閉じる
+     閉じた項目は、マウスが離れるかフォーカスが外れるまで閉じたまま。サブ項目にいたら親リンクへ戻す
+     ------------------------------------------------------------------ */
+  (function initGnavEsc() {
+    var items = document.querySelectorAll('.gnav__item--has-child');
+    if (!items.length) return;
+    var pc = window.matchMedia('(min-width: 1100px)');
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Escape' || !pc.matches) return;
+      Array.prototype.forEach.call(items, function (item) {
+        if (!item.matches(':hover, :focus-within') || item.classList.contains('is-dismissed')) return;
+        var sub = item.querySelector('.gnav__sub');
+        if (sub && sub.contains(document.activeElement)) item.querySelector('.gnav__link').focus();
+        item.classList.add('is-dismissed');
+        e.preventDefault();
+      });
+    });
+    Array.prototype.forEach.call(items, function (item) {
+      item.addEventListener('mouseleave', function () {
+        if (!item.contains(document.activeElement)) item.classList.remove('is-dismissed');
+      });
+      item.addEventListener('focusout', function (e) {
+        if (!item.contains(e.relatedTarget)) item.classList.remove('is-dismissed');
+      });
+    });
+  })();
+
+  /* ------------------------------------------------------------------
      画面下の固定寄付ボタン(〜1099px):先頭のビジュアルが見えなくなったら下からスライドで出現
      TOP:.fv / 下層:.sub-hero(直後に写真帯があればそこまで) / それ以外:記事見出し
      ------------------------------------------------------------------ */
@@ -194,7 +222,6 @@
       if (reduceMotion.matches) toggle.hidden = true;
       toggle.addEventListener('click', function () {
         userStopped = !userStopped;
-        toggle.setAttribute('aria-pressed', String(userStopped));
         toggle.textContent = userStopped ? 'スライドの自動再生を再開' : 'スライドの自動再生を停止';
         restart();
       });
