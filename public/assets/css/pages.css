@@ -878,7 +878,6 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 .mission-card__label { display: flex; align-items: center; gap: 8px; min-height: 63px; padding: 8px 20px; font-size: 15px; font-weight: 700; line-height: 1.5; letter-spacing: 0; color: var(--c-text-strong); }
 .mission-card__label::before { content: ""; flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--mc); }
 .mission-card__img { display: block; width: 100%; aspect-ratio: 344 / 200; object-fit: cover; border-top: 4px solid var(--mc); border-radius: 8px; }
-.mission-way--support .mission-card__img { border-top: 0; } /* デザイン:「支える」の写真だけ上の色線なし */
 
 /* ==========================================================================
    下層: 1024〜1339px(PC 狭め)
