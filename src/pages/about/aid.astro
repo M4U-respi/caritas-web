@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { pageMeta } from "../../data/pages";
 import PageHeader from "../../components/PageHeader.astro";
 import SectionHead from "../../components/SectionHead.astro";
 import GreenSection from "../../components/GreenSection.astro";
@@ -53,8 +54,10 @@ const history = [
 		],
 	},
 ];
+
+const meta = pageMeta("/about/aid/");
 ---
-<Layout title="援助活動" description={lead}>
+<Layout title={meta.title} description={meta.description}>
 	<PageHeader title="援助活動" en="AID" ja="援助" lead={lead} crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
 
 	<!-- 援助活動の目的 -->

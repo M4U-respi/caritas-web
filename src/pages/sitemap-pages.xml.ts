@@ -6,32 +6,17 @@
  * - 固定ページを増やしたら STATIC_PAGES に追加する
  */
 import type { APIRoute } from "astro";
-import { COLLECTIONS, NEWS_AID } from "../data/site";
+import { PAGE_PATHS } from "../data/pages";
+import { COLLECTIONS, NEWS_AID, absUrl } from "../data/site";
 import { listTerms } from "../lib/cms";
 
 export const prerender = false;
 
-/** src/pages の固定ページ(404・API を除く) */
-const STATIC_PAGES = [
-	"/",
-	"/mission/",
-	"/about/",
-	"/about/history/",
-	"/about/lent/",
-	"/about/aid/",
-	"/about/social/",
-	"/donate/",
-	"/donate/card/",
-	"/donate/monthly/",
-	"/contact/",
-	"/site-policy/",
-	"/privacy-policy/",
-];
-
 const escapeXml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-export const GET: APIRoute = async ({ url }) => {
-	const paths = [...STATIC_PAGES];
+export const GET: APIRoute = async () => {
+	/** 固定ページは src/data/pages.ts(404・API は含めない) */
+	const paths = [...PAGE_PATHS];
 	// 一覧とカテゴリ
 	for (const c of Object.values(COLLECTIONS)) {
 		paths.push(c.base);
@@ -43,7 +28,8 @@ export const GET: APIRoute = async ({ url }) => {
 	const body = [
 		'<?xml version="1.0" encoding="UTF-8"?>',
 		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-		...[...new Set(paths)].map((p) => `  <url><loc>${escapeXml(new URL(p, url.origin).href)}</loc></url>`),
+		// URL は本番ドメイン基準(canonical と同じ。src/data/site.ts の SITE.origin)
+		...[...new Set(paths)].map((p) => `  <url><loc>${escapeXml(absUrl(p))}</loc></url>`),
 		"</urlset>",
 	].join("\n");
 	return new Response(body, { headers: { "Content-Type": "application/xml; charset=utf-8", "Cache-Control": "public, max-age=3600" } });

@@ -1,5 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { pageMeta } from "../../data/pages";
+import { FAQ } from "../../data/faq";
 import PageHeader from "../../components/PageHeader.astro";
 import PhotoStrip from "../../components/PhotoStrip.astro";
 import SectionHead from "../../components/SectionHead.astro";
@@ -8,8 +10,6 @@ import DonateNotice from "../../components/DonateNotice.astro";
 import Faq from "../../components/Faq.astro";
 import RelatedNav from "../../components/RelatedNav.astro";
 import Partners from "../../components/Partners.astro";
-
-const description = "毎月継続してご支援くださる方を、マンスリーサポーターと呼んでいます。支援を長く続けるためには、先の見通しが立つことがなによりの力になります。";
 
 const strip = [
 	{ src: "/assets/img/sub/donate/monthly-strip-01.jpg", alt: "祭壇に並べられたロザリオと献金箱", width: 714, height: 800 },
@@ -45,16 +45,12 @@ const notice = [
 	{ th: "匿名での<br class=\"u-sp-only\" />ご支援", td: "献金者名簿への氏名の掲載を控えたい場合は、匿名希望の旨をお知らせください。" },
 ];
 
-const faq = [
-	{ q: "マンスリーサポーターとは何ですか。", a: "毎月継続してご支援くださる方のことです。個人のほか、ご家族、仲間、学校、小教区、修道院などのグループでもご登録いただけます。", open: true },
-	{ q: "いくらから始められますか。", a: "募金額はご自由に設定いただけます。途中での変更も可能ですので、事務局までご連絡ください。" },
-	{ q: "オンラインで申し込めますか。", a: "お申し込みには申込書のご提出が必要です。申込書（PDF）を印刷してご記入のうえ事務局までご返送いただくか、郵送でのご請求も承ります。" },
-	{ q: "引き落としはいつから始まりますか。", a: "口座自動振替の場合、各月20日を申込書返送の期日としており、原則として返送いただいた月の翌々月10日から引き落としが始まります。" },
-	{ q: "領収書はいつ発行されますか。", a: "通常払込みの場合は毎回、口座自動振替の場合は年1回まとめて発行します。" },
-	{ q: "寄付金控除は受けられますか。", a: "受けられません。マンスリーサポーターの募金も寄付金控除の対象外です。" },
-];
+/* よくあるご質問(本文に表示。同じ内容が FAQPage の構造化データになる) */
+const faq = FAQ["/donate/monthly/"].items;
+
+const meta = pageMeta("/donate/monthly/");
 ---
-<Layout title="マンスリーサポーター" bodyClass="page-donate page-donate-monthly" description={description}>
+<Layout title={meta.title} bodyClass="page-donate page-donate-monthly" description={meta.description} faq={faq}>
 	<PageHeader title="マンスリーサポーター" en="MONTHLY SUPPORTER" ja="毎月の支援" crumbs={[{ label: "寄付する", href: "/donate/" }]}>
 		<Fragment slot="lead">毎月継続してご支援くださる方を、マンスリーサポーターと呼んでいます。<br />支援を長く続けるためには、先の見通しが立つことがなによりの力になります。</Fragment>
 	</PageHeader>

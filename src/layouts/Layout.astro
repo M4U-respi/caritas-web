@@ -3,7 +3,9 @@ import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-import { SITE } from "../data/site";
+import { SITE, absUrl, canonicalPath } from "../data/site";
+import { buildGraph, type FaqItem, type PageType } from "../lib/seo";
+import { toJsonLd } from "../lib/jsonld";
 
 interface Props {
 	/** ページ名(未指定ならサイト既定タイトル) */
@@ -17,13 +19,45 @@ interface Props {
 	/** CMSコンテンツページの場合に指定 */
 	content?: { collection: string; id: string; slug?: string | null };
 	bodyClass?: string;
+	/** 構造化データのページ種別(既定は WebPage) */
+	pageType?: PageType;
+	/** pageType="Article" のとき、記事ごとの公開日・更新日(ISO 文字列) */
+	article?: { datePublished?: string | null; dateModified?: string | null };
+	/** 本文に表示している FAQ。表示していないものを渡さないこと(構造化データだけの申告は不可) */
+	faq?: FaqItem[];
+	/** canonical に残すクエリ(一覧のページ送り・年の絞り込み。例 "?page=2") */
+	canonicalQuery?: string;
+	/** robots(例 "noindex, nofollow")。既定は出力しない=index,follow */
+	robots?: string;
+	/** 表示しているパンくずがあるか(既定は TOP 以外 true) */
+	hasBreadcrumb?: boolean;
 }
 
-const { title, description, image, preloadImage, preloadImageSp, content, bodyClass } = Astro.props;
-const fullTitle = title ? `${title}｜${SITE.titleSuffix}` : SITE.defaultTitle;
+const {
+	title,
+	description,
+	image,
+	preloadImage,
+	preloadImageSp,
+	content,
+	bodyClass,
+	pageType = "WebPage",
+	article,
+	faq,
+	canonicalQuery = "",
+	robots,
+	hasBreadcrumb,
+} = Astro.props;
+/* 団体名を後ろに付ける。ただし title にすでに「カリタスジャパン」が入っているページには付けない */
+const fullTitle = !title ? SITE.defaultTitle : title.includes(SITE.name) ? title : `${title}｜${SITE.titleSuffix}`;
 const pageDescription = description ?? SITE.description;
 /** SNS 共有用の画像(未指定のページはサイト共通の OGP 画像。トップの写真+ロゴ、1200×630) */
-const pageImage = image || new URL("/assets/img/ogp.jpg", Astro.url).href;
+const pageImage = image || absUrl("/assets/img/ogp.jpg");
+/** ページの URL(本番ドメイン + 末尾スラッシュをそろえたパス)。パンくずの `@id` の元 */
+const pageUrl = absUrl(canonicalPath(Astro.url.pathname));
+/** 正規 URL(+ 一覧のページ送り・年の絞り込み) */
+const canonical = pageUrl + canonicalQuery;
+const showBreadcrumb = hasBreadcrumb ?? Astro.url.pathname !== "/";
 
 const pageCtx = createPublicPageContext({
 	Astro,
@@ -34,10 +68,31 @@ const pageCtx = createPublicPageContext({
 	description: pageDescription,
 	image: pageImage,
 	/* 正規 URL(クエリを除く)。EmDashHead が canonical・og:url として出力する */
-	canonical: new URL(Astro.url.pathname, Astro.url.origin).href,
+	canonical,
 	content,
-	siteName: SITE.name,
+	/*
+	 * siteName はあえて渡さない。渡すと EmDash が og:site_name のほかに
+	 * 素の WebSite の JSON-LD も出し、下の @graph の WebSite と二重になるため。
+	 * og:site_name・og:locale はこの下で自前で出す。
+	 */
+	...(robots ? { seo: { robots } } : {}),
 });
+
+/* 構造化データ(@graph)。記事ごとの SEO 設定(管理画面)で noindex にしたページでは出さない */
+const graphJson = toJsonLd(
+	buildGraph({
+		url: canonical,
+		pageUrl,
+		title: fullTitle,
+		headline: title ?? SITE.defaultTitle,
+		description: pageDescription,
+		image: pageImage,
+		type: pageType,
+		hasBreadcrumb: showBreadcrumb,
+		article,
+		faq,
+	}),
+);
 ---
 <!doctype html>
 <html lang="ja">
@@ -46,6 +101,9 @@ const pageCtx = createPublicPageContext({
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>{fullTitle}</title>
 		<meta name="format-detection" content="telephone=no" />
+		<!-- og:site_name・og:locale は EmDashHead が出さないぶんをここで補う(上の pageCtx のコメント参照) -->
+		<meta property="og:site_name" content={SITE.name} />
+		<meta property="og:locale" content="ja_JP" />
 		<link rel="icon" href="/favicon.ico" sizes="48x48" />
 		<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
 		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -76,6 +134,8 @@ const pageCtx = createPublicPageContext({
 			})();
 		</script>
 		<EmDashHead page={pageCtx} />
+		<!-- 構造化データ(JSON-LD)。組み立ては src/lib/seo.ts、エスケープは src/lib/jsonld.ts -->
+		<script type="application/ld+json" set:html={graphJson} />
 	</head>
 	<body class={bodyClass}>
 		<EmDashBodyStart page={pageCtx} />

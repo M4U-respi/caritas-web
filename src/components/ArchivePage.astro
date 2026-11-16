@@ -47,8 +47,20 @@ const pageTitle = [current ? `${current.label}｜${conf.label}` : conf.label, ye
 const crumbs = current ? [{ label: conf.label, href: conf.base }] : [];
 const basePath = current ? `${conf.base}${current.slug}/` : conf.base;
 const related = collection === "news" || collection === "report" || collection === "publication" ? collection : null;
+/*
+ * canonical は絞り込み・ページ送りを含めて自分自身を指す(2ページ目を1ページ目に正規化しない)。
+ * ?page / ?year 以外のクエリ(計測用パラメータなど)は落とす
+ */
+const canonicalQuery = [year ? `year=${year}` : "", page > 1 ? `page=${page}` : ""].filter(Boolean).join("&");
+/** 一覧トップの meta description(カテゴリ・災害ごとのページは画面のリード文) */
+const description = current ? hero.lead : conf.metaDescription;
 ---
-<Layout title={pageTitle} description={hero.lead}>
+<Layout
+	title={pageTitle}
+	description={description}
+	pageType="CollectionPage"
+	canonicalQuery={canonicalQuery ? `?${canonicalQuery}` : ""}
+>
 	<PageHeader title={title} en={hero.en} ja={hero.ja} lead={hero.lead} crumbs={crumbs} />
 
 	<section class:list={["cms-archive", `cms-archive--${collection}`, showUrgent && "cms-archive--urgent"]} aria-label={`${title}の一覧`}>

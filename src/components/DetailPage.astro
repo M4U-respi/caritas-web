@@ -14,7 +14,7 @@ import Prose from "./prose/Prose.astro";
 import Donation from "./Donation.astro";
 import RelatedNav from "./RelatedNav.astro";
 import Partners from "./Partners.astro";
-import { COLLECTIONS, formatDate, isoDate, type CollectionKey } from "../data/site";
+import { COLLECTIONS, SITE, formatDate, isoDate, type CollectionKey } from "../data/site";
 
 interface Link { href: string; title: string }
 interface Props {
@@ -32,8 +32,18 @@ const date = d.publishedAt ?? d.createdAt;
 const termTags = toTermTags(collection, terms);
 const related = collection === "news" ? "news" : collection === "publication" ? "publication" : null;
 const ogImage = d.featured_image?.src;
+/* 構造化データの日付は記事ごとの実データ(公開日・更新日)。公開日が無ければ作成日 */
+const toIso = (v: Date | string | null | undefined) => (v ? new Date(v).toISOString() : null);
+const articleDates = { datePublished: toIso(date), dateModified: toIso(d.updatedAt) ?? toIso(date) };
 ---
-<Layout title={d.title} description={autoExcerpt(d.content, 120) || undefined} image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, Astro.url).href : undefined} content={{ collection, id: d.id, slug }}>
+<Layout
+	title={d.title}
+	description={autoExcerpt(d.content, 120) || undefined}
+	image={ogImage && /^https?:/.test(ogImage) ? ogImage : ogImage ? new URL(ogImage, SITE.origin).href : undefined}
+	content={{ collection, id: d.id, slug }}
+	pageType="Article"
+	article={articleDates}
+>
 	<Breadcrumb items={[{ label: conf.label, href: conf.base }, { label: d.title }]} />
 
 	<article class={`article article--${collection}`}>

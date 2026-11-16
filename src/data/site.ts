@@ -4,12 +4,56 @@
  */
 
 export const SITE = {
+	/**
+	 * 本番ドメイン。canonical・OGP・構造化データ・sitemap.xml・llms.txt は
+	 * すべてこの値を基準に絶対 URL を作る(確認用サイトで開いても本番 URL を出す)。
+	 * 確認用サイト(caritas-web.respiration.workers.dev)は合言葉ゲート+noindex で
+	 * 閉じているため、検索結果に出ることはない。公開先が変わるときはここを直す。
+	 */
+	origin: "https://www.caritas.jp",
 	name: "カリタスジャパン",
 	titleSuffix: "カリタスジャパン",
 	defaultTitle: "カリタスジャパン｜世界と、つながる。",
+	/** TOP の meta description(TOP に書いてあることだけから起こす) */
 	description:
-		"あなたの想いが、だれかにつながる。カリタスジャパンは、国内外で困難な状況にある人々に寄り添い続ける、カトリック教会の公式な援助機関です。",
+		"あなたの想いが、だれかにつながる。カリタスジャパンは、国内外で困難な状況にある人々に寄り添い続ける、カトリック教会の公式な援助機関です。世界160以上の国と地域のカリタスからなる国際カリタスの一員として、支える・参加する・分かち合う・祈る、4つの関わり方をご案内します。",
 };
+
+/** サイト内のパス → 本番ドメインの絶対 URL */
+export function absUrl(path: string): string {
+	return new URL(path, SITE.origin).href;
+}
+
+/**
+ * canonical 用にパスをそろえる。
+ * サイト内リンクは末尾スラッシュ付きで書いているため、`/about` で来たときも
+ * `/about/` を正規 URL として示し、同じ内容が2つの URL で拾われないようにする。
+ */
+export function canonicalPath(pathname: string): string {
+	if (pathname.endsWith("/")) return pathname;
+	// 拡張子付き(/robots.txt など)はそのまま
+	return pathname.split("/").pop()?.includes(".") ? pathname : `${pathname}/`;
+}
+
+/**
+ * 団体情報(構造化データ・llms.txt 用)。
+ * フッター・お問い合わせページ・団体概要の表と同じ内容。変えるときは両方を直す。
+ */
+export const ORG = {
+	legalName: "宗教法人カトリック中央協議会 カリタスジャパン",
+	alternateName: "Caritas Japan",
+	postalCode: "135-8585",
+	addressRegion: "東京都",
+	addressLocality: "江東区",
+	streetAddress: "潮見2-10-10 日本カトリック会館6F",
+	address: "〒135-8585 東京都江東区潮見2-10-10 日本カトリック会館6F",
+	telephone: "03-5632-4439",
+	telephoneIntl: "+81-3-5632-4439",
+	faxNumber: "03-5632-4464",
+	faxNumberIntl: "+81-3-5632-4464",
+	parent: { name: "宗教法人カトリック中央協議会", url: "https://www.cbcj.catholic.jp/" },
+	member: { name: "国際カリタス(Caritas Internationalis)", url: "https://www.caritas.org/" },
+} as const;
 
 export const SNS = {
 	facebook: "https://www.facebook.com/caritasjapan/",
@@ -31,6 +75,9 @@ export const COLLECTIONS = {
 		taxonomy: "news_category",
 		/** 一覧のヒーロー(ラベル英/和・リード)と 1 ページの件数 */
 		hero: { en: "NEWS", ja: "新着情報", lead: "募金の受付や緊急支援、キャンペーン、事務局からのご連絡をお伝えします。" },
+		/** 一覧トップの meta description(画面のリード文より長く書けるぶん、ページに書いてあることを足す) */
+		metaDescription:
+			"カリタスジャパンからのお知らせです。募金の受け付けや緊急支援の経過、啓発・キャンペーンのご案内、事務局からのご連絡を、緊急支援・募金・献金・啓発・キャンペーン・事務局からの4つのカテゴリに分けてお伝えします。",
 		perPage: 10,
 		terms: [
 			{ slug: "emergency", label: "緊急支援", tag: "red", hero: { en: "EMERGENCY", ja: "緊急", lead: "災害や紛争に対する緊急募金の受付と、その後の支援の経過をお伝えします。" } },
@@ -46,6 +93,8 @@ export const COLLECTIONS = {
 		taxonomy: "report_category",
 		// カテゴリページのヒーロー文言は一覧トップと同じ(了承済み)
 		hero: { en: "REPORTS", ja: "報告", lead: "毎月の活動と、年度ごとの総括をご報告します。募金の受け入れと支出の状況もこちらでご確認いただけます。" },
+		metaDescription:
+			"毎月の活動と、年度ごとの総括をご報告します。募金の受け入れと支出の状況もこちらでご確認いただけます。年次報告と活動レポートの2つに分けて掲載し、公開年で絞り込んでご覧いただけます。",
 		perPage: 10,
 		terms: [
 			{ slug: "annual", label: "年次報告", tag: "red" },
@@ -59,6 +108,8 @@ export const COLLECTIONS = {
 		taxonomy: "publication_category",
 		// カテゴリページのヒーロー文言は一覧トップと同じ(了承済み)
 		hero: { en: "PUBLICATIONS", ja: "刊行物", lead: "機関誌「We are Caritas」や、四旬節の小冊子、セミナーの講演録などを発行しています。いずれも無料でお送りしています。" },
+		metaDescription:
+			"機関誌「We are Caritas」や、四旬節の小冊子、セミナーの講演録などを発行しています。いずれも無料でお送りしています。ご希望の発行物名と部数、送り先を事務局までお知らせください。在庫のある号のみお送りできます。",
 		perPage: 6,
 		terms: [
 			{ slug: "we-are-caritas", label: "We are Caritas", tag: "red" },

@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { pageMeta } from "../data/pages";
 import PageHeader from "../components/PageHeader.astro";
 import SectionHead from "../components/SectionHead.astro";
 import Partners from "../components/Partners.astro";
@@ -9,8 +10,10 @@ import { env } from "cloudflare:workers";
 const turnstileSiteKey = (env as { TURNSTILE_SITE_KEY?: string }).TURNSTILE_SITE_KEY;
 
 const lead = "寄付や募金のお手続き、資料のご請求、取材のお申し込みなど、お気軽にお問い合わせください。";
+
+const meta = pageMeta("/contact/");
 ---
-<Layout title="お問い合わせ" bodyClass="page-contact" description={lead}>
+<Layout title={meta.title} bodyClass="page-contact" description={meta.description} pageType="ContactPage">
 	<PageHeader title="お問い合わせ" en="CONTACT" ja="ご連絡" lead={lead} />
 
 	<!-- お電話・FAX -->

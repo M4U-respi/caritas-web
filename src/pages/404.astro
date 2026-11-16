@@ -2,7 +2,11 @@
 import Layout from "../layouts/Layout.astro";
 import PageHeader from "../components/PageHeader.astro";
 ---
-<Layout title="ページが見つかりません">
+<Layout
+	title="ページが見つかりません"
+	description="お探しのページは移動または削除された可能性があります。カリタスジャパンのトップページから、お探しの内容をご覧ください。"
+	robots="noindex, follow"
+>
 	<PageHeader title="ページが見つかりません" en="404 NOT FOUND" />
 	<div class="page-body l-container">
 		<div class="page-empty">

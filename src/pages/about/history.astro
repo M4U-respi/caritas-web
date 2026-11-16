@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { pageMeta } from "../../data/pages";
 import PageHeader from "../../components/PageHeader.astro";
 import Donation from "../../components/Donation.astro";
 import RelatedNav from "../../components/RelatedNav.astro";
@@ -63,8 +64,10 @@ const eras: { period: string; name: string; rows: [string, string][] }[] = [
 		],
 	},
 ];
+
+const meta = pageMeta("/about/history/");
 ---
-<Layout title="成り立ちと歴史" description={lead}>
+<Layout title={meta.title} description={meta.description}>
 	<PageHeader title="成り立ちと歴史" en="HISTORY" ja="歩み" lead={lead} crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
 
 	<div class="sub-section history-body">

@@ -1,11 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { pageMeta } from "../data/pages";
 import PageHeader from "../components/PageHeader.astro";
 import Partners from "../components/Partners.astro";
 
 const lead = "皆様の個人情報の取り扱いについて定めています。";
+
+const meta = pageMeta("/privacy-policy/");
 ---
-<Layout title="プライバシーポリシー" description={lead}>
+<Layout title={meta.title} description={meta.description}>
 	<PageHeader title="プライバシーポリシー" en="PRIVACY POLICY" ja="個人情報" lead={lead}>
 		<Fragment slot="title">プライバシー<br class="u-sp-only" />ポリシー</Fragment>
 	</PageHeader>

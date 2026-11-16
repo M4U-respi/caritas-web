@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import { pageMeta } from "../../data/pages";
 import PageHeader from "../../components/PageHeader.astro";
 import SectionHead from "../../components/SectionHead.astro";
 import GreenSection from "../../components/GreenSection.astro";
@@ -49,8 +50,10 @@ const records: { title: string; desc: string; items: [string, number, string, st
 		],
 	},
 ];
+
+const meta = pageMeta("/about/social/");
 ---
-<Layout title="啓発活動" description={lead}>
+<Layout title={meta.title} description={meta.description}>
 	<PageHeader title="啓発活動" en="ADVOCACY" ja="啓発" lead={lead} crumbs={[{ label: "カリタスジャパンとは", href: "/about/" }]} />
 
 	<!-- 啓発活動の目的 -->

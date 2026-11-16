@@ -1,11 +1,14 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { pageMeta } from "../data/pages";
 import PageHeader from "../components/PageHeader.astro";
 import Partners from "../components/Partners.astro";
 
 const lead = "当サイトのご利用にあたって、著作権やロゴマークの取り扱い、リンクについて定めています。";
+
+const meta = pageMeta("/site-policy/");
 ---
-<Layout title="サイトポリシー" description={lead}>
+<Layout title={meta.title} description={meta.description}>
 	<PageHeader title="サイトポリシー" en="SITE POLICY" ja="規約" lead={lead} />
 
 	<div class="policy-body">

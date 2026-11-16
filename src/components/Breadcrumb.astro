@@ -3,8 +3,9 @@
  * パンくず。先頭の「ホーム」は自動で付く。最後の項目が現在地(リンクなし・aria-current)。
  * items: [{ label: "カリタスジャパンとは", href: "/about/" }, { label: "援助活動" }]
  */
-import { SITE } from "../data/site";
+import { SITE, absUrl, canonicalPath } from "../data/site";
 import { toJsonLd } from "../lib/jsonld";
+import { breadcrumbId } from "../lib/seo";
 
 export interface Crumb { label: string; href?: string }
 interface Props { items: Crumb[]; class?: string }
@@ -12,15 +13,17 @@ const { items, class: cls } = Astro.props;
 const list: Crumb[] = [{ label: "ホーム", href: "/" }, ...items];
 const last = list.length - 1;
 
-const origin = Astro.site?.origin ?? Astro.url.origin;
+/* URL は本番ドメイン基準の絶対 URL。`@id` は Layout の @graph の WebPage から参照される */
+const current = absUrl(canonicalPath(Astro.url.pathname));
 const jsonLd = {
 	"@context": "https://schema.org",
 	"@type": "BreadcrumbList",
+	"@id": breadcrumbId(current),
 	itemListElement: list.map((c, i) => ({
 		"@type": "ListItem",
 		position: i + 1,
 		name: i === 0 ? SITE.name : c.label,
-		...(c.href || i === last ? { item: new URL(c.href ?? Astro.url.pathname, origin).href } : {}),
+		...(c.href ? { item: absUrl(c.href) } : i === last ? { item: current } : {}),
 	})),
 };
 // 構造化データ(JSON-LD)。エスケープは src/lib/jsonld.ts

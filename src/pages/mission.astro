@@ -3,6 +3,7 @@
  * わたしたちの想い(デザイン「07 mission」/ SP「SP07 mission」)
  */
 import Layout from "../layouts/Layout.astro";
+import { pageMeta } from "../data/pages";
 import PageHeader from "../components/PageHeader.astro";
 import PhotoStrip from "../components/PhotoStrip.astro";
 import Donation from "../components/Donation.astro";
@@ -63,8 +64,10 @@ const ways: Way[] = [
 		],
 	},
 ];
+
+const meta = pageMeta("/mission/");
 ---
-<Layout title="わたしたちの想い" description={`世界とつながる。${lead}`}>
+<Layout title={meta.title} description={meta.description}>
 	<PageHeader title="世界とつながる" current="わたしたちの想い" en="MISSION" ja="わたしたちの想い" lead={lead} flat>
 		<Fragment slot="title"><em class="u-red">世界</em>とつながる</Fragment>
 	</PageHeader>

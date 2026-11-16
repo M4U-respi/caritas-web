@@ -3,10 +3,20 @@ import Layout from "../layouts/Layout.astro";
 import NewsSection from "../components/NewsSection.astro";
 import Donation from "../components/Donation.astro";
 import Partners from "../components/Partners.astro";
-import OrganizationJsonLd from "../components/OrganizationJsonLd.astro";
+import { pageMeta } from "../data/pages";
+
+const meta = pageMeta("/");
+/*
+ * 団体情報(NGO)の構造化データは、全ページ共通で Layout の @graph が出す
+ * (以前ここに置いていた OrganizationJsonLd は src/lib/seo.ts へ移した)
+ */
 ---
-<Layout preloadImage="/assets/img/fv-01.jpg" preloadImageSp="/assets/img/fv-01-sp.jpg">
-	<OrganizationJsonLd />
+<Layout
+	description={meta.description}
+	pageType="CollectionPage"
+	preloadImage="/assets/img/fv-01.jpg"
+	preloadImageSp="/assets/img/fv-01-sp.jpg"
+>
 	<!-- ==================== FV カルーセル ==================== -->
 	<section class="fv" id="fv" role="region" aria-roledescription="カルーセル" aria-label="メインビジュアル">
 	  <div class="fv__slides" id="fv-slides" aria-live="off">
