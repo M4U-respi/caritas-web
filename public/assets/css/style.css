@@ -490,14 +490,14 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 .footer__logo img { width: 228px; height: 57px; }
 .footer__org { margin-top: 18px; font-size: 14px; font-weight: 700; line-height: 25px; letter-spacing: 0; }
 .footer__addr { font-size: 14px; line-height: 25px; letter-spacing: 0; }
-.footer__contact { display: flex; align-items: center; margin-top: 15px; }
-.footer__tel { width: 249px; font-size: 12px; font-weight: 400; line-height: 22px; }
+.footer__contact { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 15px; } /* 電話・FAX(横並び)の下に SNS アイコン */
+.footer__tel { display: flex; flex-wrap: wrap; gap: 0 20px; font-size: 12px; font-weight: 400; line-height: 22px; }
 .footer__tel > div { display: flex; }
 .footer__tel dt { width: 36px; }
-.footer__sns { display: flex; gap: 7px; }
+.footer__sns { display: flex; gap: 14px; }
 .footer__sns a { display: block; }
 .footer__sns a:hover { opacity: .8; }
-.footer__sns img { width: 34px; height: 34px; } /* 白黒(白抜き)のアイコン。ヘッダーのメニューはブランド色のまま */
+.footer__sns img { width: 24px; height: 24px; } /* 白黒(白抜き)のアイコン。ヘッダーのメニューはブランド色のまま */
 .footer__nav { display: flex; gap: 74px; padding-top: 0; }
 .footer__col:nth-child(1) { width: 190px; }
 .footer__col:nth-child(2) { width: 79px; }
@@ -808,9 +808,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .footer__logo { margin-left: 0; }
   .footer__logo img { width: 220px; height: auto; }
   .footer__org { margin-top: 24px; }
-  .footer__contact { justify-content: space-between; gap: 16px; margin-top: 14px; }
-  .footer__tel { width: auto; }
-  .footer__sns { gap: 8px; margin: 0 -4px 0 0; }
+  .footer__contact { margin-top: 14px; }
   .footer__bottom { display: block; margin-top: 46px; padding-top: 21px; }
   .footer__sub { flex-wrap: nowrap; gap: 0 16px; font-size: 13px; letter-spacing: 0; white-space: nowrap; }
   .footer__sub a { display: inline-block; line-height: 29px; }
