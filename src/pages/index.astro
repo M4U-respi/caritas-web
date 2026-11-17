@@ -176,7 +176,7 @@ const meta = pageMeta("/");
 	    <div class="social__body reveal">
 	      <p class="section-label"><span lang="en">SOCIAL</span><span class="section-label__slash" aria-hidden="true"></span><span>公式SNS</span></p>
 	      <h2 class="heading-lg" id="social-title"><em class="u-red">現地</em>からの最新の様子</h2>
-	      <p class="social__text">発災直後の状況や、支援先からの短い報告など、お知らせに載せるまでもない細かな動きはFacebookでお伝えしています。更新はこちらのほうが早くなります。</p>
+	      <p class="social__text">発災直後の状況や、支援先からの短い報告など、お知らせに載せるまでもない細かな動きはSNSでお伝えしています。更新はこちらのほうが早くなります。</p>
 	      <ul class="social__btns">
 	        <li><a class="btn-outline btn-outline--md social__btn social__btn--wide" href="https://www.facebook.com/caritasjapan/" target="_blank" rel="noopener"><span>Facebookページを見る</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
 	        <li><a class="btn-outline btn-outline--md social__btn" href="https://www.instagram.com/caritas_japan/" target="_blank" rel="noopener"><span>Instagram</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron"/></svg></a></li>
@@ -184,12 +184,12 @@ const meta = pageMeta("/");
 	      </ul>
 	    </div>
 	    <div class="social__embed reveal">
-	      <!-- Facebook Page Plugin(タイムライン)。幅は main.js でコンテナ幅に合わせて再設定(180〜500px) -->
+	      <!-- Instagram のプロフィール埋め込み(最新6件)。
+	           Facebook のページプラグインは、このページに対して古い版が返されて投稿が表示されないため、
+	           Facebook の公式 API で投稿を取得できるようになるまでの代わり。高さは CSS で幅に合わせる -->
 	      <div class="social__embed-frame">
-	        <iframe class="social__embed-iframe" data-fb-page="https://www.facebook.com/caritasjapan/"
-	          src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fcaritasjapan%2F&amp;tabs=timeline&amp;width=380&amp;height=514&amp;small_header=true&amp;adapt_container_width=true&amp;hide_cover=false&amp;show_facepile=false"
-	          width="380" height="514" title="カリタスジャパン Facebookページ" loading="lazy" scrolling="no" allowfullscreen
-	          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+	        <iframe class="social__embed-iframe" src="https://www.instagram.com/caritas_japan/embed/"
+	          title="カリタスジャパン Instagram" loading="lazy" scrolling="no"></iframe>
 	      </div>
 	    </div>
 	  </div>

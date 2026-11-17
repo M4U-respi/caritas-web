@@ -407,8 +407,9 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 .social__btns { display: flex; flex-wrap: wrap; gap: 15px 16px; margin-top: 40px; max-width: 560px; }
 .social__btn { width: 250px; min-height: 40px; font-size: 14px; }
 .social__btn--wide { width: 264px; }
-.social__embed { flex: none; width: 380px; }
-.social__embed-frame { height: 514px; overflow: hidden; border: 1px solid #CACACA; border-radius: 10px; background: var(--c-white); }
+.social__embed { flex: none; width: 380px; container-type: inline-size; }
+/* Instagram のプロフィール埋め込みは高さ = 147px + 幅の2/3(3列2段の正方形)。枠線2px と余白を足す */
+.social__embed-frame { height: calc(152px + (100cqw - 2px) * 2 / 3); overflow: hidden; border: 1px solid #CACACA; border-radius: 10px; background: var(--c-white); }
 .social__embed-iframe { display: block; width: 100%; height: 100%; border: 0; }
 
 /* ==========================================================================
@@ -655,7 +656,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .social__body { max-width: none; }
   .social__btns { max-width: none; }
   .social__embed { max-width: 100%; margin: 48px auto 0; }
-  .social__embed-frame { height: 480px; }
 
   .photo-strip__item { height: 260px; }
 
@@ -769,7 +769,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .social__btns { display: grid; gap: 12px; margin-top: 26px; }
   .social__btn { width: 100%; min-height: 47px; }
   .social__embed { width: 100%; margin-top: 44px; }
-  .social__embed-frame { height: 511px; }
 
   /* 写真帯(4 枚横並び)。デザインどおり写真は幅合わせで全体を見せ、上辺カーブは PC と同じ比率(1440 で 42px)の浅いアーチ */
   .photo-strip:not(.photo-strip--arch-bottom) .photo-strip__curve { height: calc(100vw * 42 / 1440); }

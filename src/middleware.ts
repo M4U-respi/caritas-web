@@ -53,7 +53,7 @@ const CSP = [
 	"font-src 'self' https://fonts.gstatic.com",
 	"img-src 'self' data: blob: https:",
 	"media-src 'self' https:",
-	"frame-src https://www.facebook.com https://challenges.cloudflare.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com",
+	"frame-src https://www.facebook.com https://www.instagram.com https://challenges.cloudflare.com https://www.youtube.com https://www.youtube-nocookie.com https://player.vimeo.com",
 	"connect-src 'self' https://challenges.cloudflare.com",
 	"form-action 'self'",
 	"frame-ancestors 'self'",
