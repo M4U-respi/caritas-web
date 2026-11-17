@@ -234,7 +234,7 @@ export const FOOTER_NAV: { heading: string; links: NavLink[] }[] = [
 			{ label: "寄付する", href: "/donate/" },
 			{ label: "クレジットカードで寄付", href: "/donate/card/" },
 			{ label: "マンスリーサポーター", href: "/donate/monthly/" },
-			{ label: "受け付け中の募金", href: "/donate/#funds" },
+			{ label: "受付中の募金", href: "/donate/#funds" },
 		],
 	},
 ];
