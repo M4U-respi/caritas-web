@@ -37,11 +37,7 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 				</ul>
 			</nav>
 			<div class="header__actions">
-				<!-- TODO(要確認): 言語切替の方式・対象言語は検討中 -->
-				<a class="lang-btn" href="#" data-todo="url" lang="ja">
-					<svg width="14" height="14" aria-hidden="true"><use href="#i-globe" /></svg>
-					<span>日本語</span>
-				</a>
+				<!-- 言語切替ボタンは一旦外している(方式・対象言語が決まったら戻す。CSS の .lang-btn は残してある) -->
 				<a class="btn-donate header__donate" href="/donate/">
 					<svg class="btn-donate__icon" width="16" height="16" aria-hidden="true"><use href="#i-heart" /></svg>
 					<span>寄付で支援する</span>
@@ -69,11 +65,7 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 			</div>
 		</div>
 
-		<!-- 〜1099px:ヘッダー右上の言語ボタン -->
-		<a class="lang-btn lang-btn--bar" href="#" data-todo="url" lang="ja">
-			<svg width="13" height="13" aria-hidden="true"><use href="#i-globe" /></svg>
-			<span>日本語</span>
-		</a>
+		<!-- 〜1099px の言語ボタン(.lang-btn--bar)も一旦外している -->
 		<button class="hamburger" id="menu-toggle" type="button" aria-expanded="false" aria-controls="global-menu" aria-label="メニューを開く">
 			<span class="hamburger__bars" aria-hidden="true"><span></span><span></span><span></span></span>
 		</button>

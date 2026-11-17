@@ -167,7 +167,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 .header__logo { flex: none; display: block; }
 .header__logo img { width: 191px; height: 48px; }
 .header__menu { flex: 1; display: flex; align-items: center; min-width: 0; }
-.gnav { margin-left: clamp(20px, calc(92px - (1440px - 100vw) * .22), 92px); }
+.gnav { margin-left: auto; padding-left: 20px; } /* 言語ボタンを外した分、右(寄付ボタン側)へ寄せる */
 .gnav__list { display: flex; align-items: center; gap: clamp(16px, calc(49px - (1440px - 100vw) * .1), 49px); }
 .gnav__link {
   display: flex; align-items: center; gap: 9px; min-height: 44px;
@@ -181,7 +181,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 .gnav__link:hover { color: var(--c-red); }
 .gnav__link:hover .gnav__label::after { transform: scaleX(1); }
 .gnav__caret { flex: none; transform: rotate(90deg); }
-.header__actions { display: flex; align-items: center; gap: clamp(12px, calc(24px - (1440px - 100vw) * .04), 24px); margin-left: auto; }
+.header__actions { display: flex; align-items: center; gap: clamp(12px, calc(24px - (1440px - 100vw) * .04), 24px); margin-left: clamp(30px, calc(68px - (1440px - 100vw) * .112), 68px); }
 .lang-btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 5px;
   width: 97px; height: 30px; border: 1px solid #C9C9C9; border-radius: 4px; background: var(--c-white);
