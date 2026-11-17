@@ -497,7 +497,7 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 .footer__sns { display: flex; gap: 7px; }
 .footer__sns a { display: block; }
 .footer__sns a:hover { opacity: .8; }
-.footer__sns img { width: 41px; height: 41px; }
+.footer__sns img { width: 34px; height: 34px; } /* 白黒(白抜き)のアイコン。ヘッダーのメニューはブランド色のまま */
 .footer__nav { display: flex; gap: 74px; padding-top: 0; }
 .footer__col:nth-child(1) { width: 190px; }
 .footer__col:nth-child(2) { width: 79px; }
@@ -811,7 +811,6 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
   .footer__contact { justify-content: space-between; gap: 16px; margin-top: 14px; }
   .footer__tel { width: auto; }
   .footer__sns { gap: 8px; margin: 0 -4px 0 0; }
-  .footer__sns img { width: 40px; height: 40px; }
   .footer__bottom { display: block; margin-top: 46px; padding-top: 21px; }
   .footer__sub { flex-wrap: nowrap; gap: 0 16px; font-size: 13px; letter-spacing: 0; white-space: nowrap; }
   .footer__sub a { display: inline-block; line-height: 29px; }
