@@ -28,11 +28,13 @@ const meta = pageMeta("/");
 	    </div>
 	    <div class="fv__slide fv__slide--02" role="group" aria-roledescription="スライド" aria-label="2 / 3" aria-hidden="true">
 	      <picture>
+        <source media="(max-width: 450px)" srcset="/assets/img/fv-02-sp.jpg" width="1380" height="1594">
         <img src="/assets/img/fv-02.jpg" alt="青いポロシャツの女性たち" width="2880" height="1594" loading="lazy" decoding="async">
       </picture>
 	    </div>
 	    <div class="fv__slide fv__slide--03" role="group" aria-roledescription="スライド" aria-label="3 / 3" aria-hidden="true">
 	      <picture>
+        <source media="(max-width: 450px)" srcset="/assets/img/fv-03-sp.jpg" width="1280" height="1594">
         <img src="/assets/img/fv-03.jpg" alt="高齢の女性と赤いジャケットの男性" width="2880" height="1594" loading="lazy" decoding="async">
       </picture>
 	    </div>
@@ -68,8 +70,8 @@ const meta = pageMeta("/");
 	    </div>
 	    <!-- 注意: 小円は必ず大円の左下に重ねる(素材の補完ピクセルを隠すため) -->
 	    <div class="mission__media reveal">
-	      <img class="mission__photo mission__photo--main" src="/assets/img/mission-main.jpg" alt="支援先で子どもたちと向き合う女性" width="1500" height="1500" loading="lazy" decoding="async">
-	      <img class="mission__photo mission__photo--sub" src="/assets/img/mission-sub.jpg" alt="横断幕を囲む参加者の集合写真" width="1000" height="1000" loading="lazy" decoding="async">
+	      <img class="mission__photo mission__photo--main" src="/assets/img/mission-main.jpg" srcset="/assets/img/mission-main-700.jpg 700w, /assets/img/mission-main-1000.jpg 1000w, /assets/img/mission-main.jpg 1500w" sizes="(max-width: 767.98px) 86vw, 606px" alt="支援先で子どもたちと向き合う女性" width="1500" height="1500" loading="lazy" decoding="async">
+	      <img class="mission__photo mission__photo--sub" src="/assets/img/mission-sub.jpg" srcset="/assets/img/mission-sub-400.jpg 400w, /assets/img/mission-sub-600.jpg 600w, /assets/img/mission-sub.jpg 1000w" sizes="(max-width: 767.98px) 36vw, 247px" alt="横断幕を囲む参加者の集合写真" width="1000" height="1000" loading="lazy" decoding="async">
 	    </div>
 	  </div>
 	</section>
