@@ -14,3 +14,8 @@
   Cache-Control: public, max-age=31536000, immutable
 /assets/js/*
   Cache-Control: public, max-age=31536000, immutable
+
+# 画像はファイル名にバージョンが付かない(差し替えても同じ名前)ため、1日だけキャッシュする。
+# 期限切れ後は古い画像を出しつつ裏で取り直す(stale-while-revalidate)ので、差し替えは遅くとも次の再読み込みで反映される
+/assets/img/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
