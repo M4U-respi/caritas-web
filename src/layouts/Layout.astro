@@ -165,6 +165,11 @@ const graphJson = toJsonLd(
 			<svg class="fixed-donate__chevron" width="7" height="12" aria-hidden="true"><use href="#i-chevron" /></svg>
 		</a>
 
+		<!-- ページ上部へ戻るボタン(少しスクロールすると右下に出現。表示と動作は main.js) -->
+		<button class="pagetop" type="button" aria-label="ページの先頭へ戻る">
+			<svg width="10" height="15" aria-hidden="true"><use href="#i-chevron" /></svg>
+		</button>
+
 		<script is:inline src={`/assets/js/main.js?v=${__ASSET_VER__}`} defer onerror="document.documentElement.classList.remove('js')"></script>
 		<EmDashBodyEnd page={pageCtx} />
 	</body>

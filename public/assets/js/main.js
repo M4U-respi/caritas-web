@@ -144,6 +144,30 @@
   })();
 
   /* ------------------------------------------------------------------
+     ページ上部へ戻るボタン:画面1枚ぶん(最低 400px)スクロールしたら出現
+     スクロールの動きは CSS の scroll-behavior に任せる(動きを減らす設定では即時)
+     ------------------------------------------------------------------ */
+  (function initPagetop() {
+    var btn = document.querySelector('.pagetop');
+    if (!btn) return;
+    var ticking = false;
+    function update() {
+      ticking = false;
+      btn.classList.toggle('is-shown', window.scrollY > Math.max(400, window.innerHeight * 0.8));
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }, { passive: true });
+    update();
+    btn.addEventListener('click', function () {
+      window.scrollTo(0, 0);
+      // キーボード操作でもページ先頭から読み進められるよう、フォーカスをロゴへ移す
+      var logo = document.querySelector('.header__logo');
+      if (logo) logo.focus({ preventScroll: true });
+    });
+  })();
+
+  /* ------------------------------------------------------------------
      FV カルーセル(フェード / 自動再生 約6秒)
      ------------------------------------------------------------------ */
   (function initCarousel() {

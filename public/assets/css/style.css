@@ -825,6 +825,28 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 }
 
 /* ==========================================================================
+   ページ上部へ戻るボタン(main.js がスクロール量を見て .is-shown を付与)
+   ========================================================================== */
+.pagetop {
+  position: fixed; right: 24px; bottom: 24px; z-index: 90;
+  display: grid; place-items: center; width: 48px; height: 48px; padding: 0;
+  border: 0; border-radius: 50%; background: var(--c-teal); color: var(--c-white);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .18); cursor: pointer;
+  opacity: 0; visibility: hidden; transform: translateY(8px);
+  transition: opacity var(--ease), transform var(--ease), visibility 0s linear .25s, bottom .35s ease, background-color var(--ease);
+}
+.pagetop.is-shown { opacity: 1; visibility: visible; transform: none; transition: opacity var(--ease), transform var(--ease), visibility 0s, bottom .35s ease, background-color var(--ease); }
+.pagetop:hover { background: #006E68; }
+.pagetop svg { transform: rotate(-90deg); }
+html:not(.js) .pagetop { display: none; }
+@media (max-width: 1099.98px) {
+  .pagetop { right: 16px; bottom: calc(16px + env(safe-area-inset-bottom, 0px)); width: 44px; height: 44px; }
+  /* 画面下の固定寄付ボタンが出ている間は、その上に逃がす */
+  .fixed-donate.is-shown ~ .pagetop { bottom: calc(48px + 12px + env(safe-area-inset-bottom, 0px)); }
+  body.is-menu-open .pagetop { display: none; }
+}
+
+/* ==========================================================================
    reduced motion / print
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
@@ -834,4 +856,5 @@ a, button { transition: color var(--ease), background-color var(--ease), border-
 @media print {
   .js .reveal { opacity: 1; transform: none; }
   .header { position: static; }
+  .pagetop { display: none; }
 }
