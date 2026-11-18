@@ -78,14 +78,14 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 	</div>
 </header>
 
-<!-- 緊急バナー(内容は管理画面のお知らせ「緊急」チェック。2 件のときは自動で切り替え、停止ボタン付き) -->
+<!-- 緊急バナー(内容は管理画面のお知らせ「緊急」チェック。「緊急」の枠は固定で、2 件のときは記事タイトルだけ自動で切り替え、停止ボタン付き) -->
 {alerts.length > 0 && (
 	<aside class:list={["alert-bar", alerts.length > 1 && "alert-bar--roll"]} aria-label="緊急のお知らせ" data-alert-bar>
+		<span class="alert-bar__badge alert-bar__badge--fixed" aria-hidden="true">緊急</span>
 		<ul class="alert-bar__list">
 			{alerts.map((item, i) => (
 				<li class:list={["alert-bar__item", i === 0 && "is-active"]}>
 					<a class="alert-bar__link" href={item.href}>
-						<span class="alert-bar__badge">緊急</span>
 						<span class="alert-bar__text">{item.title}</span>
 						<svg class="alert-bar__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
 					</a>
