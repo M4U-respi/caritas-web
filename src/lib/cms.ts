@@ -24,6 +24,17 @@ interface ListOptions {
 	offset?: number;
 	/** 公開日(日本時間)の年で絞り込む */
 	year?: number;
+	/** 項目の値で絞り込む(例 { urgent: true }) */
+	where?: Record<string, unknown>;
+}
+
+/**
+ * 「緊急」にチェックの入ったお知らせ(新しい順に 2 件)。
+ * TOP の緊急支援枠・お知らせ一覧の緊急支援ボックス・全ページ上部の赤帯で共通に使う
+ */
+export const URGENT_LIMIT = 2;
+export function listUrgentNews() {
+	return listEntries("news", { where: { urgent: true }, limit: URGENT_LIMIT });
 }
 
 /** 日本時間の年 → 公開日の範囲(UTC の ISO 文字列) */
@@ -59,7 +70,7 @@ function toItem(key: CollectionKey, e: any, termsByEntry: Map<string, any[]>): L
 /** コレクションの記事一覧をカテゴリ付きで取得(新しい順) */
 export async function listEntries(key: CollectionKey, opts: ListOptions = {}) {
 	const conf = COLLECTIONS[key];
-	const where: Record<string, any> = {};
+	const where: Record<string, any> = { ...opts.where };
 	if (opts.term) where[opts.taxonomy ?? conf.taxonomy] = opts.term;
 	if (opts.year) where.published_at = yearRange(opts.year);
 	const res = await getEmDashCollection(key, {

@@ -1,6 +1,12 @@
 ---
 import { GNAV, SNS } from "../data/site";
+import { listUrgentNews } from "../lib/cms";
 const path = Astro.url.pathname;
+// 緊急バナー:お知らせで「緊急」にチェックの入った記事(最新 2 件)のタイトルを表示。0 件なら出さない
+const urgent = await listUrgentNews();
+if (urgent.error) console.error("[header] 緊急バナーの取得に失敗", urgent.error);
+if (urgent.cacheHint && Astro.cache?.enabled) Astro.cache.set(urgent.cacheHint);
+const alerts = urgent.items;
 const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 ---
 <header class="header" id="header">
@@ -72,11 +78,24 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 	</div>
 </header>
 
-<!-- 緊急バナー(文言・リンクはここで変更) -->
-<aside class="alert-bar" aria-label="緊急のお知らせ">
-	<a class="alert-bar__link" href="/news/emergency/">
-		<span class="alert-bar__badge">緊急</span>
-		<span class="alert-bar__text">令和8年熊本地震 緊急募金へのご協力をお願いいたします</span>
-		<svg class="alert-bar__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
-	</a>
-</aside>
+<!-- 緊急バナー(内容は管理画面のお知らせ「緊急」チェック。2 件のときは自動で切り替え、停止ボタン付き) -->
+{alerts.length > 0 && (
+	<aside class:list={["alert-bar", alerts.length > 1 && "alert-bar--roll"]} aria-label="緊急のお知らせ" data-alert-bar>
+		<ul class="alert-bar__list">
+			{alerts.map((item, i) => (
+				<li class:list={["alert-bar__item", i === 0 && "is-active"]}>
+					<a class="alert-bar__link" href={item.href}>
+						<span class="alert-bar__badge">緊急</span>
+						<span class="alert-bar__text">{item.title}</span>
+						<svg class="alert-bar__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg>
+					</a>
+				</li>
+			))}
+		</ul>
+		{alerts.length > 1 && (
+			<button class="alert-bar__toggle" type="button" aria-label="緊急のお知らせの切り替えを停止" data-label-play="緊急のお知らせの切り替えを再開" data-label-pause="緊急のお知らせの切り替えを停止">
+				<span class="alert-bar__toggle-icon" aria-hidden="true"></span>
+			</button>
+		)}
+	</aside>
+)}

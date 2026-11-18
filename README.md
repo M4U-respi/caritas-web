@@ -43,11 +43,12 @@ Astro + EmDash(CMS)+ Cloudflare Workers で構築したカリタスジャパン�
 
 | コレクション | URL | カテゴリ(スラッグ) | 項目 |
 |---|---|---|---|
-| お知らせ `news` | 一覧 `/news/`・記事 `/news/{slug}/`・カテゴリ `/news/{term}/`(記事のスラッグにカテゴリと同じ文字列は使わない) | 緊急支援 `emergency` / 募金・献金 `donation` / 啓発・キャンペーン `campaign` / 事務局から `info` | タイトル・アイキャッチ画像・本文 |
+| お知らせ `news` | 一覧 `/news/`・記事 `/news/{slug}/`・カテゴリ `/news/{term}/`(記事のスラッグにカテゴリと同じ文字列は使わない) | 支援 `support` / 募金・献金 `donation` / 啓発・キャンペーン `campaign` / 事務局から `info` | タイトル・アイキャッチ画像・本文・緊急 |
 | 活動報告 `report` | `/report/` ほか同様 | 年次報告 `annual` / 活動レポート `monthly` | タイトル・アイキャッチ画像・本文 |
 | 発行物 `publication` | `/publication/` ほか同様 | We are Caritas `we-are-caritas` / 小冊子・資料 `booklet` | タイトル・アイキャッチ画像(表紙)・本文(PDF は本文中にリンク) |
 
-- TOP の「お知らせ」は、緊急支援の最新2件と、それ以外のカテゴリの最新3件を自動表示します。
+- 記事の「緊急」にチェックを入れると、最新2件が TOP の緊急支援枠・お知らせ一覧の緊急支援ボックス・全ページ上部の赤帯(2件のときは自動切り替え)に表示されます。0件なら枠も赤帯も出ません。
+- TOP の「お知らせ」の一覧は、募金・献金/啓発・キャンペーン/事務局からの最新3件を自動表示します。
 - カテゴリを追加・変更する場合は、管理画面で項目を追加したうえで `src/data/site.ts` の `COLLECTIONS` にも同じスラッグを追加してください(タブ表示とタグの色に使用)。
 - 一覧は 1 ページ 10 件(発行物は 6 件)。`?page=n` でページ送り、活動報告は `?year=YYYY` で公開日(日本時間)の年で絞り込み。件数は `src/data/site.ts` の `perPage`。
 - 記事詳細のアイキャッチ画像は一覧のサムネイルにのみ使います(デザインどおり本文には出しません)。一覧の抜粋と meta description は本文の書き出しから自動で作ります(一覧は約60文字)。本文中の「※」で始まる段落は注記(小さいグレー文字)、画像の直後のキャプションは中央の小さい文字になります。本文の画像は最大 480px、埋め込み動画・動画は最大 680px で中央に表示します。
@@ -60,7 +61,7 @@ Astro + EmDash(CMS)+ Cloudflare Workers で構築したカリタスジャパン�
 | `src/data/site.ts` | ナビ・フッターのリンク、CMS コレクション定義、SNS URL |
 | `src/data/donate.ts` | 寄付ページの募金一覧(番号)・カード寄付の金額・事務局の電話/FAX |
 | `src/layouts/Layout.astro` | 全ページ共通の `<head>`・ヘッダー・フッター |
-| `src/components/Header.astro` | グローバルナビ(ドロップダウン)・**緊急バナーの文言とリンク** |
+| `src/components/Header.astro` | グローバルナビ(ドロップダウン)・緊急バナー(内容は管理画面の「緊急」チェック) |
 | `src/components/Footer.astro` | フッター |
 | `src/components/NewsSection.astro` | TOP のお知らせ |
 | `src/components/ArchivePage.astro` / `DetailPage.astro` | CMS の一覧・記事ページ |

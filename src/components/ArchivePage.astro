@@ -5,7 +5,7 @@
  * - report: カテゴリタブ+年で絞り込み → 一覧行 → 災害対応マニュアル → 寄付 → 関連団体
  * - publication: カテゴリタブ → 発行物カード(2 列)→ 発行物について(緑)→ 寄付 → 関連ナビ → 関連団体
  * - news: (一覧トップのみ)緊急支援ボックス → カテゴリタブ → 一覧行 → 寄付 → 関連ナビ → 関連団体
- *   (支援・災害ごとの一覧 aid はカテゴリタブなし)
+ *   (災害・紛争ごとの一覧 aid はカテゴリタブなし)
  */
 import { Image } from "emdash/ui";
 import Layout from "../layouts/Layout.astro";
@@ -20,13 +20,13 @@ import SectionHead from "./SectionHead.astro";
 import Donation from "./Donation.astro";
 import RelatedNav from "./RelatedNav.astro";
 import Partners from "./Partners.astro";
-import { listEntries, type ArchiveData } from "../lib/cms";
+import { listUrgentNews, type ArchiveData } from "../lib/cms";
 import { COLLECTIONS, NEWS_AID, formatDate, isoDate, type CollectionKey } from "../data/site";
 
 interface Props {
 	collection: CollectionKey;
 	term?: string;
-	/** 支援・災害ごとの一覧(お知らせのみ) */
+	/** 災害・紛争ごとの一覧(お知らせのみ) */
 	aid?: { slug: string; label: string };
 	data: ArchiveData;
 }
@@ -37,9 +37,9 @@ const hero = aid ? NEWS_AID.hero(aid.label) : (current && "hero" in current ? cu
 const { items, page, totalPages, years, year, error } = data;
 if (error) console.error(`[${collection}] 一覧の取得に失敗`, error);
 
-// お知らせ一覧トップ(1 ページ目)の緊急支援ボックス:緊急支援の最新 3 件
+// お知らせ一覧トップ(1 ページ目)の緊急支援ボックス:「緊急」にチェックの入った最新 2 件
 const showUrgent = collection === "news" && !term && !aid && page === 1;
-const urgent = showUrgent ? await listEntries("news", { term: "emergency", limit: 3 }) : null;
+const urgent = showUrgent ? await listUrgentNews() : null;
 if (urgent?.cacheHint && Astro.cache?.enabled) Astro.cache.set(urgent.cacheHint);
 
 const title = current ? current.label : conf.label;
@@ -76,7 +76,7 @@ const description = current ? hero.lead : conf.metaDescription;
 					</div>
 					<EntryList items={urgent.items} variant="urgent" showTags={false} />
 					<div class="news-urgent__foot">
-						<a class="btn-outline btn-outline--sm" href="/news/emergency/"><span>緊急支援の一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
+						<a class="btn-outline btn-outline--sm" href="/news/support/"><span>支援の一覧へ</span><svg class="btn-outline__chevron" width="6" height="10" aria-hidden="true"><use href="#i-chevron" /></svg></a>
 					</div>
 				</section>
 			)}

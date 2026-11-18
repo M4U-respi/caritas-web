@@ -43,6 +43,11 @@
 					"label": "本文",
 					"type": "portableText",
 					"searchable": true
+				},
+				{
+					"slug": "urgent",
+					"label": "緊急（トップの緊急枠・全ページ上部の赤帯に表示）",
+					"type": "boolean"
 				}
 			]
 		},
@@ -126,8 +131,8 @@
 			],
 			"terms": [
 				{
-					"slug": "emergency",
-					"label": "緊急支援"
+					"slug": "support",
+					"label": "支援"
 				},
 				{
 					"slug": "donation",
@@ -145,8 +150,8 @@
 		},
 		{
 			"name": "news_aid",
-			"label": "支援・災害",
-			"labelSingular": "支援・災害",
+			"label": "災害・紛争",
+			"labelSingular": "災害・紛争",
 			"hierarchical": false,
 			"collections": [
 				"news"

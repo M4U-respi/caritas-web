@@ -22,7 +22,7 @@ export const GET: APIRoute = async () => {
 		paths.push(c.base);
 		for (const t of c.terms) paths.push(`${c.base}${t.slug}/`);
 	}
-	// 災害・紛争ごとのページ(管理画面の「支援・災害」)
+	// 災害・紛争ごとのページ(管理画面の「災害・紛争」)
 	for (const t of await listTerms(NEWS_AID.taxonomy)) paths.push(`${COLLECTIONS.news.base}${t.slug}/`);
 
 	const body = [
