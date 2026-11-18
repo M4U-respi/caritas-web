@@ -135,7 +135,7 @@ export const NEWS_MERGE = { term: "info", collections: ["report", "publication"]
 export const NEWS_AID = {
 	taxonomy: "news_aid",
 	// 災害・紛争ページのヒーロー文言(了承済み)
-	hero: (label: string) => ({ en: "SUPPORT", ja: "支援", lead: `${label}に関するお知らせと、支援の経過をお伝えします。` }),
+	hero: (label: string) => ({ en: "UPDATES", ja: "経過", lead: `${label}に関するお知らせと、支援の経過をお伝えします。` }),
 } as const;
 
 const termLinks = (key: CollectionKey): NavLink[] =>
