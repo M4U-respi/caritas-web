@@ -17,6 +17,7 @@
 			"label": "お知らせ",
 			"labelSingular": "お知らせ",
 			"urlPattern": "/news/{slug}/",
+			"dateField": "publishedAt",
 			"supports": [
 				"drafts",
 				"revisions",
