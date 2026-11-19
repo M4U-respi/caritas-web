@@ -57,6 +57,7 @@
 			"label": "活動報告",
 			"labelSingular": "活動報告",
 			"urlPattern": "/report/{slug}/",
+			"dateField": "publishedAt",
 			"supports": [
 				"drafts",
 				"revisions",
@@ -91,6 +92,7 @@
 			"label": "発行物",
 			"labelSingular": "発行物",
 			"urlPattern": "/publication/{slug}/",
+			"dateField": "publishedAt",
 			"supports": [
 				"drafts",
 				"revisions",
