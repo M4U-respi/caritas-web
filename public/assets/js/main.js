@@ -120,14 +120,13 @@
   })();
 
   /* ------------------------------------------------------------------
-     緊急バナー(2 件のとき):5 秒ごとに切り替え。停止ボタン、マウスを載せている間・フォーカス中は止める
+     緊急バナー(2 件のとき):5 秒ごとに切り替え。マウスを載せている間・フォーカス中は止める
      ------------------------------------------------------------------ */
   (function initAlertBar() {
     var bar = document.querySelector('.alert-bar--roll');
     if (!bar) return;
     var items = bar.querySelectorAll('.alert-bar__item');
-    var btn = bar.querySelector('.alert-bar__toggle');
-    var cur = 0, paused = false, hover = false, focus = false;
+    var cur = 0, hover = false, focus = false;
     function show(n) {
       if (n === cur) return;
       var prev = items[cur];
@@ -138,7 +137,7 @@
       items[cur].classList.add('is-active');
     }
     setInterval(function () {
-      if (!paused && !hover && !focus && !document.hidden) show((cur + 1) % items.length);
+      if (!hover && !focus && !document.hidden) show((cur + 1) % items.length);
     }, 5000);
     bar.addEventListener('mouseenter', function () { hover = true; });
     bar.addEventListener('mouseleave', function () { hover = false; });
@@ -148,11 +147,6 @@
       Array.prototype.forEach.call(items, function (item, i) { if (item.contains(e.target)) show(i); });
     });
     bar.addEventListener('focusout', function (e) { if (!bar.contains(e.relatedTarget)) focus = false; });
-    btn.addEventListener('click', function () {
-      paused = !paused;
-      btn.classList.toggle('is-paused', paused);
-      btn.setAttribute('aria-label', btn.getAttribute(paused ? 'data-label-play' : 'data-label-pause'));
-    });
   })();
 
   /* ------------------------------------------------------------------

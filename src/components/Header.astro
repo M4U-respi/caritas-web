@@ -78,7 +78,7 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 	</div>
 </header>
 
-<!-- 緊急バナー(内容は管理画面のお知らせ「緊急」チェック。「緊急」の枠は固定で、2 件のときは記事タイトルだけ自動で切り替え、停止ボタン付き) -->
+<!-- 緊急バナー(内容は管理画面のお知らせ「緊急」チェック。「緊急」の枠は固定で、2 件のときは記事タイトルだけ自動で切り替え(マウスを載せている間・フォーカス中は停止)) -->
 {alerts.length > 0 && (
 	<aside class:list={["alert-bar", alerts.length > 1 && "alert-bar--roll"]} aria-label="緊急のお知らせ" data-alert-bar>
 		<span class="alert-bar__badge alert-bar__badge--fixed" aria-hidden="true">緊急</span>
@@ -92,10 +92,5 @@ const isCurrent = (href: string) => href !== "/" && path.startsWith(href);
 				</li>
 			))}
 		</ul>
-		{alerts.length > 1 && (
-			<button class="alert-bar__toggle" type="button" aria-label="緊急のお知らせの切り替えを停止" data-label-play="緊急のお知らせの切り替えを再開" data-label-pause="緊急のお知らせの切り替えを停止">
-				<span class="alert-bar__toggle-icon" aria-hidden="true"></span>
-			</button>
-		)}
 	</aside>
 )}

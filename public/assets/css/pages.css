@@ -1390,7 +1390,7 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
   .faq__item::details-content { transition: none; }
 }
 
-/* ---------- 緊急バナー(全ページ上部。「緊急」の枠は固定、2 件のときはタイトルだけ縦に切り替え+停止ボタン) ---------- */
+/* ---------- 緊急バナー(全ページ上部。「緊急」の枠は固定、2 件のときはタイトルだけ縦に切り替え) ---------- */
 .alert-bar { position: relative; }
 .alert-bar__badge--fixed { position: absolute; top: 50%; left: 24px; z-index: 1; margin-top: -12px; color: var(--c-white); font-family: var(--ff-sans); pointer-events: none; }
 .alert-bar .alert-bar__link { padding-left: 84px; }
@@ -1403,24 +1403,9 @@ textarea.form-input { height: 126px; min-height: 126px; padding-block: 14px; lin
 }
 .alert-bar--roll .alert-bar__item.is-active { opacity: 1; pointer-events: auto; transform: none; }
 .alert-bar--roll .alert-bar__item.is-leaving { transform: translateY(-100%); }
-.alert-bar--roll .alert-bar__link { padding-right: 72px; }
-.alert-bar__toggle {
-  position: absolute; top: 50%; right: 24px; display: grid; place-items: center;
-  width: 32px; height: 32px; margin-top: -16px; padding: 0;
-  border: 1px solid rgba(255, 255, 255, .7); border-radius: 50%; background: transparent; color: var(--c-white); cursor: pointer;
-}
-.alert-bar__toggle:hover { background: rgba(255, 255, 255, .15); }
-.alert-bar__toggle:focus-visible { outline: 2px solid var(--c-white); outline-offset: 2px; }
-.alert-bar__toggle-icon { box-sizing: border-box; width: 9px; height: 11px; border-right: 3px solid currentColor; border-left: 3px solid currentColor; }
-.alert-bar__toggle.is-paused .alert-bar__toggle-icon {
-  width: 0; height: 0; margin-left: 3px;
-  border-style: solid; border-width: 6px 0 6px 9px; border-color: transparent transparent transparent currentColor;
-}
 @media (max-width: 767.98px) {
   .alert-bar__badge--fixed { left: 20px; }
   .alert-bar .alert-bar__link { padding-left: 76px; }
-  .alert-bar--roll .alert-bar__link { padding-right: 60px; }
-  .alert-bar__toggle { right: 16px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .alert-bar--roll .alert-bar__item { transition: none; }
